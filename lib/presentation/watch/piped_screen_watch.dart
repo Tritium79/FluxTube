@@ -6,9 +6,12 @@ import 'package:fluxtube/application/application.dart';
 import 'package:fluxtube/core/colors.dart';
 import 'package:fluxtube/core/constants.dart';
 import 'package:fluxtube/core/enums.dart';
+import 'package:fluxtube/domain/watch/models/piped/video/watch_resp.dart';
 import 'package:fluxtube/generated/l10n.dart';
 import 'package:fluxtube/widgets/widgets.dart';
 
+import 'widgets/omni_video_player_widget.dart';
+import 'widgets/player_error_widget.dart';
 import 'widgets/sections/sections.dart';
 import 'widgets/widgets.dart';
 
@@ -17,10 +20,12 @@ class PipedScreenWatch extends StatefulWidget {
     super.key,
     required this.id,
     required this.channelId,
+    this.useOmniPlayer = false,
   });
 
   final String id;
   final String channelId;
+  final bool useOmniPlayer;
 
   @override
   State<PipedScreenWatch> createState() => _PipedScreenWatchState();
@@ -79,10 +84,14 @@ class _PipedScreenWatchState extends State<PipedScreenWatch> {
                     ? true
                     : false;
 
-                if (state.fetchWatchInfoStatus == ApiStatus.error ||
-                    (state.fetchWatchInfoStatus == ApiStatus.loaded &&
-                        settingsState.isHlsPlayer &&
-                        watchInfo.hls == null)) {
+                // Check if there's a player URL issue (HLS null when HLS mode enabled)
+                final bool hasPlayerUrlError =
+                    state.fetchWatchInfoStatus == ApiStatus.loaded &&
+                    settingsState.isHlsPlayer &&
+                    watchInfo.hls == null;
+
+                // Only show full-screen error for API fetch failures
+                if (state.fetchWatchInfoStatus == ApiStatus.error) {
                   return ErrorRetryWidget(
                     lottie: 'assets/cat-404.zip',
                     onTap: () => BlocProvider.of<WatchBloc>(context)
@@ -127,21 +136,35 @@ class _PipedScreenWatchState extends State<PipedScreenWatch> {
                                           child: cIndicator(context),
                                         ),
                                       )
-                                    : VideoPlayerWidget(
-                                        videoId: widget.id,
-                                        watchInfo: state.watchResp,
-                                        defaultQuality:
-                                            settingsState.defaultQuality,
-                                        playbackPosition: savedState
-                                                .videoInfo?.playbackPosition ??
-                                            0,
-                                        isSaved: isSaved,
-                                        isHlsPlayer: settingsState.isHlsPlayer,
-                                        subtitles: state.fetchSubtitlesStatus ==
-                                                ApiStatus.loading
-                                            ? []
-                                            : state.subtitles,
-                                      ),
+                                    : hasPlayerUrlError
+                                        ? PlayerErrorWidget(
+                                            message: locals.hlsPlayer == 'HLS Player'
+                                                ? 'HLS stream unavailable for this video. Try disabling HLS in settings.'
+                                                : 'Video stream unavailable',
+                                            onRetry: () => BlocProvider.of<WatchBloc>(context)
+                                                .add(WatchEvent.getWatchInfo(id: widget.id)),
+                                          )
+                                        : widget.useOmniPlayer
+                                            ? _buildOmniPlayer(
+                                                state.watchResp,
+                                                settingsState.isHlsPlayer,
+                                                savedState.videoInfo?.playbackPosition ?? 0,
+                                              )
+                                            : VideoPlayerWidget(
+                                                videoId: widget.id,
+                                                watchInfo: state.watchResp,
+                                                defaultQuality:
+                                                    settingsState.defaultQuality,
+                                                playbackPosition: savedState
+                                                        .videoInfo?.playbackPosition ??
+                                                    0,
+                                                isSaved: isSaved,
+                                                isHlsPlayer: settingsState.isHlsPlayer,
+                                                subtitles: state.fetchSubtitlesStatus ==
+                                                        ApiStatus.loading
+                                                    ? []
+                                                    : state.subtitles,
+                                              ),
                                 Padding(
                                   padding: const EdgeInsets.only(
                                       top: 12, left: 20, right: 20),
@@ -290,6 +313,42 @@ class _PipedScreenWatchState extends State<PipedScreenWatch> {
             );
           },
         );
+      },
+    );
+  }
+
+  Widget _buildOmniPlayer(WatchResp watchInfo, bool isHlsPlayer, int startPosition) {
+    // Try to get stream URL: prefer HLS if enabled, otherwise use first available video stream
+    String? streamUrl;
+    bool isHls = false;
+
+    if (isHlsPlayer && watchInfo.hls != null) {
+      streamUrl = watchInfo.hls;
+      isHls = true;
+    } else if (watchInfo.videoStreams.isNotEmpty) {
+      // Get first non-video-only stream
+      final videoStream = watchInfo.videoStreams
+          .where((v) => v.videoOnly == false)
+          .firstOrNull;
+      streamUrl = videoStream?.url ?? watchInfo.videoStreams.first.url;
+    } else if (watchInfo.hls != null) {
+      // Fallback to HLS
+      streamUrl = watchInfo.hls;
+      isHls = true;
+    }
+
+    if (streamUrl == null) {
+      return const PlayerErrorWidget(
+        message: 'No stream URL available',
+      );
+    }
+
+    return OmniVideoPlayerWidget.network(
+      url: streamUrl,
+      startPosition: startPosition,
+      isHls: isHls,
+      onControllerCreated: (controller) {
+        // Controller can be used for playback position tracking if needed
       },
     );
   }

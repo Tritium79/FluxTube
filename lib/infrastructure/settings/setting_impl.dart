@@ -98,6 +98,7 @@ class SettingImpl implements SettingsService {
       {"name": relatedVideoVisibility, "default": "false"},
       {"name": instanceApiUrl, "default": BaseUrl.kBaseUrl},
       {"name": youtubeService, "default": YouTubeServices.iframe.name},
+      {"name": playerTypeKey, "default": PlayerType.betterPlayer.name},
       {"name": pipDisabled, "default": "false"},
       // Add more settings here
     ];
@@ -254,6 +255,16 @@ class SettingImpl implements SettingsService {
     return _setSetting(
       settingName: youtubeService,
       value: service,
+      toStringValue: (v) => v.name,
+    );
+  }
+
+  @override
+  Future<Either<MainFailure, PlayerType>> setPlayerType(
+      {required PlayerType playerType}) async {
+    return _setSetting(
+      settingName: playerTypeKey,
+      value: playerType,
       toStringValue: (v) => v.name,
     );
   }

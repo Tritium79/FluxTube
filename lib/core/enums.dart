@@ -6,6 +6,11 @@ enum YouTubeServices {
   omniPlayer,
 }
 
+enum PlayerType {
+  betterPlayer,
+  omniPlayer,
+}
+
 enum ApiStatus {
   initial,
   loading,

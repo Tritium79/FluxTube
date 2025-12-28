@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluxtube/application/application.dart';
@@ -23,16 +22,39 @@ class ScreenWatch extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SettingsBloc, SettingsState>(
         builder: (context, settingsState) {
-      if (settingsState.ytService == YouTubeServices.piped.name) {
-        return PipedScreenWatch(id: id, channelId: channelId);
-      } else if (settingsState.ytService == YouTubeServices.explode.name) {
-        return ExplodeScreenWatch(id: id, channelId: channelId);
-      } else if (settingsState.ytService == YouTubeServices.iframe.name) {
-        return IFramScreenWatch(id: id, channelId: channelId);
-      } else if (settingsState.ytService == YouTubeServices.omniPlayer.name) {
+      final ytService = settingsState.ytService;
+      final playerType = settingsState.playerType;
+      final useOmniPlayer = playerType == PlayerType.omniPlayer.name;
+
+      // If Omni Player is selected as YouTube Service, use OmniScreenWatch
+      // (handles YouTube playback directly using its built-in YouTube support)
+      if (ytService == YouTubeServices.omniPlayer.name) {
         return OmniScreenWatch(id: id, channelId: channelId);
+      }
+
+      // For other services, use service-specific screens
+      // They will use either BetterPlayer or OmniPlayer based on playerType
+      if (ytService == YouTubeServices.piped.name) {
+        return PipedScreenWatch(
+          id: id,
+          channelId: channelId,
+          useOmniPlayer: useOmniPlayer,
+        );
+      } else if (ytService == YouTubeServices.explode.name) {
+        return ExplodeScreenWatch(
+          id: id,
+          channelId: channelId,
+          useOmniPlayer: useOmniPlayer,
+        );
+      } else if (ytService == YouTubeServices.iframe.name) {
+        return IFramScreenWatch(id: id, channelId: channelId);
       } else {
-        return InvidiousScreenWatch(id: id, channelId: channelId);
+        // Invidious
+        return InvidiousScreenWatch(
+          id: id,
+          channelId: channelId,
+          useOmniPlayer: useOmniPlayer,
+        );
       }
     });
   }

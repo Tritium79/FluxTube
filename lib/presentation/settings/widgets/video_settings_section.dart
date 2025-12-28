@@ -51,12 +51,23 @@ final _services = [
     child: Text("IFrame"),
   ),
   const DropdownMenuItem(
+    value: YouTubeServices.invidious,
+    child: Text("Invidious"),
+  ),
+  const DropdownMenuItem(
     value: YouTubeServices.omniPlayer,
     child: Text("Omni Player"),
   ),
+];
+
+final _playerTypes = [
   const DropdownMenuItem(
-    value: YouTubeServices.invidious,
-    child: Text("Invidious"),
+    value: PlayerType.betterPlayer,
+    child: Text("Better Player"),
+  ),
+  const DropdownMenuItem(
+    value: PlayerType.omniPlayer,
+    child: Text("Omni Player"),
   ),
 ];
 
@@ -121,6 +132,23 @@ class VideoSettingsSection extends StatelessWidget {
                         ),
                       );
                     }
+                  }),
+            ),
+            // Player Type dropdown - available for all YouTube services
+            ListTile(
+              title: Text("Player Type",
+                  style: Theme.of(context).textTheme.titleMedium),
+              subtitle: const Text("Video player engine"),
+              leading: const Icon(CupertinoIcons.play_rectangle),
+              trailing: DropdownButton(
+                  value: PlayerType.values.firstWhere(
+                      (e) => e.name == state.playerType,
+                      orElse: () => PlayerType.betterPlayer),
+                  items: _playerTypes,
+                  onChanged: (playerType) {
+                    if (playerType == null) return;
+                    BlocProvider.of<SettingsBloc>(context)
+                        .add(SettingsEvent.setPlayerType(playerType: playerType));
                   }),
             ),
             ListTile(

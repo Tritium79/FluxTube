@@ -9,4 +9,5 @@ const commentsVisibility = 'comments-visibility';
 const relatedVideoVisibility = 'related-video-visibility';
 const instanceApiUrl = 'instance-api';
 const youtubeService = 'yt-service';
+const playerTypeKey = 'player-type';
 const pipDisabled = 'pip-disabled';

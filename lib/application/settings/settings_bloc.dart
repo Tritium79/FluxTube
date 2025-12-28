@@ -52,6 +52,8 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
 
       final String ytService =
           settingsMap[youtubeService] ?? YouTubeServices.iframe.name;
+      final String playerTypeValue =
+          settingsMap[playerTypeKey] ?? PlayerType.betterPlayer.name;
 
       final String instanceApi;
       log('YT Service: $ytService');
@@ -69,6 +71,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
 
       newState = newState.copyWith(instance: instanceApi);
       newState = newState.copyWith(ytService: ytService);
+      newState = newState.copyWith(playerType: playerTypeValue);
 
       if (defaultLanguage != null) {
         newState = newState.copyWith(defaultLanguage: defaultLanguage);
@@ -421,6 +424,15 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
         }
         return state.copyWith(ytService: r.name);
       });
+      emit(_state);
+    });
+
+    on<SetPlayerType>((event, emit) async {
+      final _result =
+          await settingsService.setPlayerType(playerType: event.playerType);
+      final _state = _result.fold(
+          (MainFailure f) => state.copyWith(playerType: state.playerType),
+          (PlayerType r) => state.copyWith(playerType: r.name));
       emit(_state);
     });
 

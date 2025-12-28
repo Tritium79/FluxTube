@@ -6,6 +6,7 @@ import 'package:fluxtube/application/application.dart';
 import 'package:fluxtube/core/colors.dart';
 import 'package:fluxtube/core/constants.dart';
 import 'package:fluxtube/core/enums.dart';
+import 'package:fluxtube/domain/watch/models/invidious/video/invidious_watch_resp.dart';
 import 'package:fluxtube/generated/l10n.dart';
 import 'package:fluxtube/widgets/widgets.dart';
 
@@ -15,16 +16,20 @@ import 'widgets/invidious/like_section.dart';
 import 'widgets/invidious/related_video_section.dart';
 import 'widgets/invidious/subscribe_section.dart';
 import 'widgets/invidious/video_player_widget.dart';
+import 'widgets/omni_video_player_widget.dart';
+import 'widgets/player_error_widget.dart';
 
 class InvidiousScreenWatch extends StatefulWidget {
   const InvidiousScreenWatch({
     super.key,
     required this.id,
     required this.channelId,
+    this.useOmniPlayer = false,
   });
 
   final String id;
   final String channelId;
+  final bool useOmniPlayer;
 
   @override
   State<InvidiousScreenWatch> createState() => _InvidiousScreenWatchState();
@@ -84,10 +89,14 @@ class _InvidiousScreenWatchState extends State<InvidiousScreenWatch> {
                     ? true
                     : false;
 
-                if (state.fetchInvidiousWatchInfoStatus == ApiStatus.error ||
-                    (state.fetchInvidiousWatchInfoStatus == ApiStatus.loaded &&
-                        settingsState.isHlsPlayer &&
-                        watchInfo.dashUrl == null)) {
+                // Check if there's a player URL issue (DASH null when HLS/DASH mode enabled)
+                final bool hasPlayerUrlError =
+                    state.fetchInvidiousWatchInfoStatus == ApiStatus.loaded &&
+                    settingsState.isHlsPlayer &&
+                    watchInfo.dashUrl == null;
+
+                // Only show full-screen error for API fetch failures
+                if (state.fetchInvidiousWatchInfoStatus == ApiStatus.error) {
                   return ErrorRetryWidget(
                     lottie: 'assets/cat-404.zip',
                     onTap: () => BlocProvider.of<WatchBloc>(context)
@@ -132,21 +141,33 @@ class _InvidiousScreenWatchState extends State<InvidiousScreenWatch> {
                                           child: cIndicator(context),
                                         ),
                                       )
-                                    : InvidiousVideoPlayerWidget(
-                                        videoId: widget.id,
-                                        watchInfo: state.invidiousWatchResp,
-                                        defaultQuality:
-                                            settingsState.defaultQuality,
-                                        playbackPosition: savedState
-                                                .videoInfo?.playbackPosition ??
-                                            0,
-                                        isSaved: isSaved,
-                                        isHlsPlayer: settingsState.isHlsPlayer,
-                                        subtitles: state.fetchSubtitlesStatus ==
-                                                ApiStatus.loading
-                                            ? []
-                                            : state.subtitles,
-                                      ),
+                                    : hasPlayerUrlError
+                                        ? PlayerErrorWidget(
+                                            message: 'DASH stream unavailable for this video. Try disabling HLS in settings.',
+                                            onRetry: () => BlocProvider.of<WatchBloc>(context)
+                                                .add(WatchEvent.getInvidiousWatchInfo(id: widget.id)),
+                                          )
+                                        : widget.useOmniPlayer
+                                            ? _buildOmniPlayer(
+                                                state.invidiousWatchResp,
+                                                settingsState.isHlsPlayer,
+                                                savedState.videoInfo?.playbackPosition ?? 0,
+                                              )
+                                            : InvidiousVideoPlayerWidget(
+                                                videoId: widget.id,
+                                                watchInfo: state.invidiousWatchResp,
+                                                defaultQuality:
+                                                    settingsState.defaultQuality,
+                                                playbackPosition: savedState
+                                                        .videoInfo?.playbackPosition ??
+                                                    0,
+                                                isSaved: isSaved,
+                                                isHlsPlayer: settingsState.isHlsPlayer,
+                                                subtitles: state.fetchSubtitlesStatus ==
+                                                        ApiStatus.loading
+                                                    ? []
+                                                    : state.subtitles,
+                                              ),
                                 Padding(
                                   padding: const EdgeInsets.only(
                                       top: 12, left: 20, right: 20),
@@ -295,6 +316,40 @@ class _InvidiousScreenWatchState extends State<InvidiousScreenWatch> {
             );
           },
         );
+      },
+    );
+  }
+
+  Widget _buildOmniPlayer(InvidiousWatchResp watchInfo, bool isHlsPlayer, int startPosition) {
+    // Try to get stream URL: prefer DASH if enabled, otherwise use first available format stream
+    String? streamUrl;
+    bool isHls = false;
+
+    if (isHlsPlayer && watchInfo.dashUrl != null) {
+      streamUrl = watchInfo.dashUrl;
+      // DASH is similar to HLS for adaptive streaming
+      isHls = true;
+    } else if (watchInfo.formatStreams != null && watchInfo.formatStreams!.isNotEmpty) {
+      // Get first format stream
+      streamUrl = watchInfo.formatStreams!.first.url;
+    } else if (watchInfo.dashUrl != null) {
+      // Fallback to DASH
+      streamUrl = watchInfo.dashUrl;
+      isHls = true;
+    }
+
+    if (streamUrl == null) {
+      return const PlayerErrorWidget(
+        message: 'No stream URL available',
+      );
+    }
+
+    return OmniVideoPlayerWidget.network(
+      url: streamUrl,
+      startPosition: startPosition,
+      isHls: isHls,
+      onControllerCreated: (controller) {
+        // Controller can be used for playback position tracking if needed
       },
     );
   }

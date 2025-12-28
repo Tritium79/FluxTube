@@ -6,12 +6,15 @@ import 'package:fluxtube/application/application.dart';
 import 'package:fluxtube/core/colors.dart';
 import 'package:fluxtube/core/constants.dart';
 import 'package:fluxtube/core/enums.dart';
+import 'package:fluxtube/domain/watch/models/explode/explode_watch.dart';
 import 'package:fluxtube/generated/l10n.dart';
 import 'package:fluxtube/presentation/watch/widgets/explode/description_section.dart';
 import 'package:fluxtube/presentation/watch/widgets/explode/like_section.dart';
 import 'package:fluxtube/presentation/watch/widgets/explode/subscribe_section.dart';
 import 'package:fluxtube/presentation/watch/widgets/explode/video_player_widget.dart';
 import 'package:fluxtube/presentation/watch/widgets/invidious/comment_widgets.dart';
+import 'package:fluxtube/presentation/watch/widgets/omni_video_player_widget.dart';
+import 'package:fluxtube/presentation/watch/widgets/player_error_widget.dart';
 import 'package:fluxtube/widgets/widgets.dart';
 
 import 'widgets/explode/related_video_section.dart';
@@ -21,10 +24,12 @@ class ExplodeScreenWatch extends StatefulWidget {
     super.key,
     required this.id,
     required this.channelId,
+    this.useOmniPlayer = false,
   });
 
   final String id;
   final String channelId;
+  final bool useOmniPlayer;
 
   @override
   State<ExplodeScreenWatch> createState() => _ExplodeScreenWatchState();
@@ -79,6 +84,13 @@ class _ExplodeScreenWatchState extends State<ExplodeScreenWatch> {
                 ? true
                 : false;
 
+            // Check if there's a stream URL error (no muxed streams and no live URL)
+            final bool hasStreamError =
+                state.fetchExplodeWatchInfoStatus == ApiStatus.loaded &&
+                state.fetchExplodeMuxedStreamsStatus == ApiStatus.loaded &&
+                (state.muxedStreams == null || state.muxedStreams!.isEmpty) &&
+                state.liveStreamUrl == null;
+
             if (state.fetchExplodeWatchInfoStatus == ApiStatus.error) {
               return ErrorRetryWidget(
                 lottie: 'assets/cat-404.zip',
@@ -130,27 +142,41 @@ class _ExplodeScreenWatchState extends State<ExplodeScreenWatch> {
                                       child: cIndicator(context),
                                     ),
                                   )
-                                : ExplodeVideoPlayerWidget(
-                                    videoId: widget.id,
-                                    watchInfo: state.explodeWatchResp,
-                                    defaultQuality:
-                                        settingsState.defaultQuality,
-                                    playbackPosition: savedState
-                                            .videoInfo?.playbackPosition ??
-                                        0,
-                                    isSaved: isSaved,
-                                    liveUrl: state.liveStreamUrl,
-                                    availableVideoTracks:
-                                        state.muxedStreams ?? [],
-                                    subtitles: (state.fetchSubtitlesStatus ==
-                                                ApiStatus.loading ||
-                                            state.fetchSubtitlesStatus ==
-                                                ApiStatus.initial)
-                                        ? []
-                                        : state.subtitles,
-                                    selectedVideoBasicDetails:
-                                        state.selectedVideoBasicDetails,
-                                  ),
+                                : hasStreamError
+                                    ? PlayerErrorWidget(
+                                        message: 'Video streams unavailable. This video may be restricted or age-gated.',
+                                        onRetry: () {
+                                          BlocProvider.of<WatchBloc>(context)
+                                              .add(WatchEvent.getExplodeMuxStreamInfo(id: widget.id));
+                                        },
+                                      )
+                                    : widget.useOmniPlayer
+                                        ? _buildOmniPlayer(
+                                            state.muxedStreams ?? [],
+                                            state.liveStreamUrl,
+                                            savedState.videoInfo?.playbackPosition ?? 0,
+                                          )
+                                        : ExplodeVideoPlayerWidget(
+                                            videoId: widget.id,
+                                            watchInfo: state.explodeWatchResp,
+                                            defaultQuality:
+                                                settingsState.defaultQuality,
+                                            playbackPosition: savedState
+                                                    .videoInfo?.playbackPosition ??
+                                                0,
+                                            isSaved: isSaved,
+                                            liveUrl: state.liveStreamUrl,
+                                            availableVideoTracks:
+                                                state.muxedStreams ?? [],
+                                            subtitles: (state.fetchSubtitlesStatus ==
+                                                        ApiStatus.loading ||
+                                                    state.fetchSubtitlesStatus ==
+                                                        ApiStatus.initial)
+                                                ? []
+                                                : state.subtitles,
+                                            selectedVideoBasicDetails:
+                                                state.selectedVideoBasicDetails,
+                                          ),
                             BlocBuilder<WatchBloc, WatchState>(
                               builder: (context, state) {
                                 return Padding(
@@ -306,5 +332,33 @@ class _ExplodeScreenWatchState extends State<ExplodeScreenWatch> {
         );
       });
     });
+  }
+
+  Widget _buildOmniPlayer(List<MyMuxedStreamInfo> muxedStreams, String? liveUrl, int startPosition) {
+    // Try to get stream URL: prefer muxed streams, fallback to live URL
+    String? streamUrl;
+
+    if (muxedStreams.isNotEmpty) {
+      // Get first muxed stream URL
+      streamUrl = muxedStreams.first.url;
+    } else if (liveUrl != null) {
+      // Fallback to live stream URL
+      streamUrl = liveUrl;
+    }
+
+    if (streamUrl == null) {
+      return const PlayerErrorWidget(
+        message: 'No stream URL available',
+      );
+    }
+
+    return OmniVideoPlayerWidget.network(
+      url: streamUrl,
+      startPosition: startPosition,
+      isHls: liveUrl != null && muxedStreams.isEmpty,
+      onControllerCreated: (controller) {
+        // Controller can be used for playback position tracking if needed
+      },
+    );
   }
 }

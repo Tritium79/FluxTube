@@ -3270,7 +3270,10 @@ mixin _$SettingsState {
   String get ytService => throw _privateConstructorUsedError;
   bool get initialized => throw _privateConstructorUsedError;
   ApiStatus get settingsStatus => throw _privateConstructorUsedError;
-  bool get isPipDisabled => throw _privateConstructorUsedError;
+  bool get isPipDisabled =>
+      throw _privateConstructorUsedError; // Connection status tracking for UI feedback
+  String? get connectingToInstance => throw _privateConstructorUsedError;
+  bool get isTestingConnection => throw _privateConstructorUsedError;
 
   /// Create a copy of SettingsState
   /// with the given fields replaced by the non-null parameter values.
@@ -3304,7 +3307,9 @@ abstract class $SettingsStateCopyWith<$Res> {
       String ytService,
       bool initialized,
       ApiStatus settingsStatus,
-      bool isPipDisabled});
+      bool isPipDisabled,
+      String? connectingToInstance,
+      bool isTestingConnection});
 }
 
 /// @nodoc
@@ -3341,6 +3346,8 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
     Object? initialized = null,
     Object? settingsStatus = null,
     Object? isPipDisabled = null,
+    Object? connectingToInstance = freezed,
+    Object? isTestingConnection = null,
   }) {
     return _then(_value.copyWith(
       defaultLanguage: null == defaultLanguage
@@ -3419,6 +3426,14 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
           ? _value.isPipDisabled
           : isPipDisabled // ignore: cast_nullable_to_non_nullable
               as bool,
+      connectingToInstance: freezed == connectingToInstance
+          ? _value.connectingToInstance
+          : connectingToInstance // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isTestingConnection: null == isTestingConnection
+          ? _value.isTestingConnection
+          : isTestingConnection // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -3450,7 +3465,9 @@ abstract class _$$InitialImplCopyWith<$Res>
       String ytService,
       bool initialized,
       ApiStatus settingsStatus,
-      bool isPipDisabled});
+      bool isPipDisabled,
+      String? connectingToInstance,
+      bool isTestingConnection});
 }
 
 /// @nodoc
@@ -3485,6 +3502,8 @@ class __$$InitialImplCopyWithImpl<$Res>
     Object? initialized = null,
     Object? settingsStatus = null,
     Object? isPipDisabled = null,
+    Object? connectingToInstance = freezed,
+    Object? isTestingConnection = null,
   }) {
     return _then(_$InitialImpl(
       defaultLanguage: null == defaultLanguage
@@ -3563,6 +3582,14 @@ class __$$InitialImplCopyWithImpl<$Res>
           ? _value.isPipDisabled
           : isPipDisabled // ignore: cast_nullable_to_non_nullable
               as bool,
+      connectingToInstance: freezed == connectingToInstance
+          ? _value.connectingToInstance
+          : connectingToInstance // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isTestingConnection: null == isTestingConnection
+          ? _value.isTestingConnection
+          : isTestingConnection // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -3589,7 +3616,9 @@ class _$InitialImpl implements _Initial {
       required this.ytService,
       required this.initialized,
       required this.settingsStatus,
-      required this.isPipDisabled})
+      required this.isPipDisabled,
+      required this.connectingToInstance,
+      required this.isTestingConnection})
       : _pipedInstances = pipedInstances,
         _invidiousInstances = invidiousInstances;
 
@@ -3644,10 +3673,15 @@ class _$InitialImpl implements _Initial {
   final ApiStatus settingsStatus;
   @override
   final bool isPipDisabled;
+// Connection status tracking for UI feedback
+  @override
+  final String? connectingToInstance;
+  @override
+  final bool isTestingConnection;
 
   @override
   String toString() {
-    return 'SettingsState(defaultLanguage: $defaultLanguage, defaultQuality: $defaultQuality, defaultRegion: $defaultRegion, themeMode: $themeMode, version: $version, isHistoryVisible: $isHistoryVisible, isDislikeVisible: $isDislikeVisible, isHlsPlayer: $isHlsPlayer, isHideComments: $isHideComments, isHideRelated: $isHideRelated, pipedInstances: $pipedInstances, pipedInstanceStatus: $pipedInstanceStatus, instance: $instance, invidiousInstances: $invidiousInstances, invidiousInstanceStatus: $invidiousInstanceStatus, ytService: $ytService, initialized: $initialized, settingsStatus: $settingsStatus, isPipDisabled: $isPipDisabled)';
+    return 'SettingsState(defaultLanguage: $defaultLanguage, defaultQuality: $defaultQuality, defaultRegion: $defaultRegion, themeMode: $themeMode, version: $version, isHistoryVisible: $isHistoryVisible, isDislikeVisible: $isDislikeVisible, isHlsPlayer: $isHlsPlayer, isHideComments: $isHideComments, isHideRelated: $isHideRelated, pipedInstances: $pipedInstances, pipedInstanceStatus: $pipedInstanceStatus, instance: $instance, invidiousInstances: $invidiousInstances, invidiousInstanceStatus: $invidiousInstanceStatus, ytService: $ytService, initialized: $initialized, settingsStatus: $settingsStatus, isPipDisabled: $isPipDisabled, connectingToInstance: $connectingToInstance, isTestingConnection: $isTestingConnection)';
   }
 
   @override
@@ -3692,7 +3726,11 @@ class _$InitialImpl implements _Initial {
             (identical(other.settingsStatus, settingsStatus) ||
                 other.settingsStatus == settingsStatus) &&
             (identical(other.isPipDisabled, isPipDisabled) ||
-                other.isPipDisabled == isPipDisabled));
+                other.isPipDisabled == isPipDisabled) &&
+            (identical(other.connectingToInstance, connectingToInstance) ||
+                other.connectingToInstance == connectingToInstance) &&
+            (identical(other.isTestingConnection, isTestingConnection) ||
+                other.isTestingConnection == isTestingConnection));
   }
 
   @override
@@ -3716,7 +3754,9 @@ class _$InitialImpl implements _Initial {
         ytService,
         initialized,
         settingsStatus,
-        isPipDisabled
+        isPipDisabled,
+        connectingToInstance,
+        isTestingConnection
       ]);
 
   /// Create a copy of SettingsState
@@ -3748,7 +3788,9 @@ abstract class _Initial implements SettingsState {
       required final String ytService,
       required final bool initialized,
       required final ApiStatus settingsStatus,
-      required final bool isPipDisabled}) = _$InitialImpl;
+      required final bool isPipDisabled,
+      required final String? connectingToInstance,
+      required final bool isTestingConnection}) = _$InitialImpl;
 
   @override
   String get defaultLanguage;
@@ -3787,7 +3829,11 @@ abstract class _Initial implements SettingsState {
   @override
   ApiStatus get settingsStatus;
   @override
-  bool get isPipDisabled;
+  bool get isPipDisabled; // Connection status tracking for UI feedback
+  @override
+  String? get connectingToInstance;
+  @override
+  bool get isTestingConnection;
 
   /// Create a copy of SettingsState
   /// with the given fields replaced by the non-null parameter values.

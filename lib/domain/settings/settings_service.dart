@@ -29,4 +29,8 @@ abstract class SettingsService {
       {required YouTubeServices service});
   Future<Either<MainFailure, bool>> togglePipPlayer(
       {required bool isPipDisabled});
+  Future<Either<MainFailure, String>> findWorkingPipedInstance({
+    required List<Instance> instances,
+    void Function(String instanceName)? onTestingInstance,
+  });
 }

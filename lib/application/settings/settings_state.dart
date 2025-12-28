@@ -22,6 +22,9 @@ class SettingsState with _$SettingsState {
     required bool initialized,
     required ApiStatus settingsStatus,
     required bool isPipDisabled,
+    // Connection status tracking for UI feedback
+    required String? connectingToInstance,
+    required bool isTestingConnection,
   }) = _Initial;
 
   factory SettingsState.initialize() => SettingsState(
@@ -45,5 +48,7 @@ class SettingsState with _$SettingsState {
         initialized: false,
         settingsStatus: ApiStatus.initial,
         isPipDisabled: false,
+        connectingToInstance: null,
+        isTestingConnection: false,
       );
 }

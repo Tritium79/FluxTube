@@ -468,11 +468,17 @@ class SettingImpliment implements SettingsService {
       for (final instanceData in data) {
         final instanceInfo = instanceData[1] as Map<String, dynamic>;
 
-        instances.add(Instance(
-          name: instanceData[0] as String,
-          api: instanceInfo['uri'] as String,
-          locations: instanceInfo['region'] as String,
-        ));
+        // Only include instances with API enabled and HTTPS type
+        final apiEnabled = instanceInfo['api'] == true;
+        final isHttps = instanceInfo['type'] == 'https';
+
+        if (isHttps) {
+          instances.add(Instance(
+            name: '${instanceData[0] as String}${apiEnabled ? '' : ' (API disabled)'}',
+            api: instanceInfo['uri'] as String,
+            locations: instanceInfo['region'] as String? ?? 'Unknown',
+          ));
+        }
       }
 
       return Right(instances);
@@ -505,5 +511,38 @@ class SettingImpliment implements SettingsService {
     } catch (e) {
       return const Left(MainFailure.serverFailure());
     }
+  }
+
+  @override
+  Future<Either<MainFailure, String>> findWorkingPipedInstance({
+    required List<Instance> instances,
+    void Function(String instanceName)? onTestingInstance,
+  }) async {
+    final dio = Dio();
+    dio.options.connectTimeout = const Duration(seconds: 5);
+    dio.options.receiveTimeout = const Duration(seconds: 5);
+
+    for (final instance in instances) {
+      try {
+        // Notify caller which instance is being tested
+        onTestingInstance?.call(instance.name);
+
+        final testUrl = '${instance.api}trending?region=US';
+        final response = await dio.get(testUrl);
+        if (response.statusCode == 200 && response.data != null) {
+          // Verify response is valid JSON array (trending returns array of videos)
+          if (response.data is List && (response.data as List).isNotEmpty) {
+            dio.close();
+            return Right(instance.api);
+          }
+        }
+      } catch (_) {
+        // Continue to next instance
+        continue;
+      }
+    }
+
+    dio.close();
+    return const Left(MainFailure.serverFailure());
   }
 }

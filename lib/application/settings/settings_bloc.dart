@@ -216,29 +216,67 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       }
       emit(state.copyWith(
         pipedInstanceStatus: ApiStatus.loading,
+        isTestingConnection: true,
+        connectingToInstance: 'Fetching instances...',
       ));
       final _result = await settingsService.fetchInstances();
-      final _state = _result.fold(
-          (MainFailure f) => state.copyWith(
-              pipedInstanceStatus: ApiStatus.error,
-              pipedInstances: state.pipedInstances), (List<Instance> r) {
-        if (state.ytService != YouTubeServices.invidious.name) {
-          final instance = r.firstWhere(
-              (element) => element.api == state.instance,
-              orElse: () => r.first);
 
-          BaseUrl.updateBaseUrl(instance.api);
+      if (_result.isLeft()) {
+        emit(state.copyWith(
+          pipedInstanceStatus: ApiStatus.error,
+          pipedInstances: state.pipedInstances,
+          isTestingConnection: false,
+          connectingToInstance: null,
+        ));
+        return;
+      }
 
-          return state.copyWith(
-              pipedInstanceStatus: ApiStatus.loaded,
-              pipedInstances: r,
-              instance: instance.api);
-        } else {
-          return state.copyWith(
-              pipedInstanceStatus: ApiStatus.loaded, pipedInstances: r);
-        }
-      });
-      emit(_state);
+      final instances = _result.getOrElse(() => []);
+
+      if (state.ytService != YouTubeServices.invidious.name) {
+        // Try to find a working instance with status updates
+        final workingInstanceResult = await settingsService.findWorkingPipedInstance(
+          instances: instances,
+          onTestingInstance: (instanceName) {
+            // Emit state update for each instance being tested
+            emit(state.copyWith(
+              pipedInstanceStatus: ApiStatus.loading,
+              pipedInstances: instances,
+              isTestingConnection: true,
+              connectingToInstance: instanceName,
+            ));
+          },
+        );
+
+        final String workingInstanceApi = workingInstanceResult.fold(
+          (failure) {
+            log('No working piped instance found, using first available');
+            return instances.isNotEmpty ? instances.first.api : state.instance;
+          },
+          (workingApi) {
+            log('Found working piped instance: $workingApi');
+            return workingApi;
+          },
+        );
+
+        BaseUrl.updateBaseUrl(workingInstanceApi);
+
+        emit(state.copyWith(
+          pipedInstanceStatus: ApiStatus.loaded,
+          pipedInstances: instances,
+          instance: workingInstanceApi,
+          isTestingConnection: false,
+          connectingToInstance: null,
+        ));
+      } else {
+        emit(state.copyWith(
+          pipedInstanceStatus: ApiStatus.loaded,
+          pipedInstances: instances,
+          isTestingConnection: false,
+          connectingToInstance: null,
+        ));
+      }
+
       add(SetInstance(instanceApi: state.instance));
     });
 

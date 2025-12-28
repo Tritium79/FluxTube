@@ -32,23 +32,56 @@ class SplashScreenState extends State<SplashScreen> {
       body: BlocBuilder<SettingsBloc, SettingsState>(builder: (context, state) {
         return BlocBuilder<SubscribeBloc, SubscribeState>(
           builder: (context, subscribeState) {
-            if (state.settingsStatus == ApiStatus.loading ||
-                subscribeState.subscribeStatus == ApiStatus.loading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (state.settingsStatus == ApiStatus.loaded &&
-                subscribeState.subscribeStatus == ApiStatus.loaded) {
-              _handleState(state, subscribeState);
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else {
-              _handleState(state, subscribeState);
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
+            _handleState(state, subscribeState);
+
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const CircularProgressIndicator(),
+                  const SizedBox(height: 24),
+                  // Show connection status when testing instances
+                  if (state.isTestingConnection && state.connectingToInstance != null)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 32),
+                      child: Column(
+                        children: [
+                          Text(
+                            'Connecting to API...',
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            state.connectingToInstance!,
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
+                            ),
+                            textAlign: TextAlign.center,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                    )
+                  else if (state.settingsStatus == ApiStatus.loading)
+                    Text(
+                      'Loading settings...',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
+                      ),
+                    )
+                  else if (subscribeState.subscribeStatus == ApiStatus.loading)
+                    Text(
+                      'Loading subscriptions...',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
+                      ),
+                    ),
+                ],
+              ),
+            );
           },
         );
       }),
@@ -58,24 +91,39 @@ class SplashScreenState extends State<SplashScreen> {
   void _handleState(SettingsState state, SubscribeState subscribeState) async {
     final settingsBloc = BlocProvider.of<SettingsBloc>(context);
 
-    if (state.ytService != YouTubeServices.piped.name && state.initialized) {
-      if (state.invidiousInstances.isEmpty &&
-          state.invidiousInstanceStatus != ApiStatus.loading) {
-        settingsBloc.add(SettingsEvent.fetchInvidiousInstances());
+    // Fetch instances based on service type
+    // For invidious: fetch invidious instances
+    // For piped/iframe/explode: fetch piped instances (they all use piped API for feeds)
+    if (state.initialized) {
+      if (state.ytService == YouTubeServices.invidious.name) {
+        if (state.invidiousInstances.isEmpty &&
+            state.invidiousInstanceStatus != ApiStatus.loading) {
+          settingsBloc.add(SettingsEvent.fetchInvidiousInstances());
+        }
+      } else {
+        // piped, iframe, and explode all use piped API for trending/search/channels
+        if (state.pipedInstances.isEmpty &&
+            state.pipedInstanceStatus != ApiStatus.loading) {
+          settingsBloc.add(SettingsEvent.fetchPipedInstances());
+        }
       }
-    } else if (state.ytService == YouTubeServices.piped.name &&
-        state.initialized) {
-      if (state.pipedInstances.isEmpty &&
-          state.pipedInstanceStatus != ApiStatus.loading) {
-        settingsBloc.add(SettingsEvent.fetchPipedInstances());
-      }
+    }
+
+    // Check if instances are ready
+    final bool instancesReady;
+    if (state.ytService == YouTubeServices.invidious.name) {
+      instancesReady = state.invidiousInstanceStatus == ApiStatus.loaded ||
+          state.invidiousInstanceStatus == ApiStatus.error;
+    } else {
+      // piped, iframe, explode all need piped instances
+      instancesReady = state.pipedInstanceStatus == ApiStatus.loaded ||
+          state.pipedInstanceStatus == ApiStatus.error;
     }
 
     // go to home screen
     if ((state.settingsStatus == ApiStatus.loaded ||
             state.settingsStatus == ApiStatus.error) &&
-        (state.pipedInstanceStatus == ApiStatus.loaded ||
-            state.invidiousInstanceStatus == ApiStatus.loaded) &&
+        instancesReady &&
         (subscribeState.subscribeStatus == ApiStatus.loaded ||
             subscribeState.subscribeStatus == ApiStatus.error)) {
       {

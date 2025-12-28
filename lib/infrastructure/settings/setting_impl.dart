@@ -49,6 +49,39 @@ class SettingImpl implements SettingsService {
     }
   }
 
+  /// Generic method to set any setting value
+  /// Eliminates duplicate code across all setting methods
+  Future<Either<MainFailure, T>> _setSetting<T>({
+    required String settingName,
+    required T value,
+    required String Function(T) toStringValue,
+  }) async {
+    try {
+      await isar.writeTxn(() async {
+        final existingSetting = await isar.settingsDBValues
+            .filter()
+            .nameEqualTo(settingName)
+            .findFirst();
+
+        final stringValue = toStringValue(value);
+
+        if (existingSetting == null) {
+          final newSetting = SettingsDBValue()
+            ..name = settingName
+            ..value = stringValue;
+          await isar.settingsDBValues.put(newSetting);
+        } else {
+          existingSetting.value = stringValue;
+          await isar.settingsDBValues.put(existingSetting);
+        }
+      });
+
+      return Right(value);
+    } catch (e) {
+      return const Left(MainFailure.serverFailure());
+    }
+  }
+
   // Initialize settings state during app startup
   @override
   Future<List<Map<String, String>>> initializeSettings() async {
@@ -85,295 +118,97 @@ class SettingImpl implements SettingsService {
   @override
   Future<Either<MainFailure, String>> selectDefaultLanguage(
       {required String language}) async {
-    try {
-      // Begin a write transaction
-      await isar.writeTxn(() async {
-        // Check if selectedDefaultLanguage exists in the database
-        final existingLanguageSetting = await isar.settingsDBValues
-            .filter()
-            .nameEqualTo(selectedDefaultLanguage)
-            .findFirst();
-
-        if (existingLanguageSetting == null) {
-          // If it doesn't exist, create a new entry with the default value "en"
-          final newLanguageSetting = SettingsDBValue()
-            ..name = selectedDefaultLanguage
-            ..value = language;
-          await isar.settingsDBValues.put(newLanguageSetting);
-        } else {
-          // If it exists, update it with the provided language
-          existingLanguageSetting.value = language;
-          await isar.settingsDBValues.put(existingLanguageSetting);
-        }
-      });
-
-      // Return the selected language
-      return Right(language);
-    } catch (e) {
-      // Handle errors and return a failure
-      return const Left(MainFailure.serverFailure());
-    }
+    return _setSetting(
+      settingName: selectedDefaultLanguage,
+      value: language,
+      toStringValue: (v) => v,
+    );
   }
 
   // DEFAULT QUALITY SET
-
   @override
   Future<Either<MainFailure, String>> selectDefaultQuality(
       {required String quality}) async {
-    try {
-      // Begin a write transaction
-      await isar.writeTxn(() async {
-        // Check if selectedDefaultQuality exists in the database
-        final existingQualitySetting = await isar.settingsDBValues
-            .filter()
-            .nameEqualTo(selectedDefaultQuality)
-            .findFirst();
-
-        if (existingQualitySetting == null) {
-          // If it doesn't exist, create a new entry with the default value "360p"
-          final newQualitySetting = SettingsDBValue()
-            ..name = selectedDefaultQuality
-            ..value = quality;
-          await isar.settingsDBValues.put(newQualitySetting);
-        } else {
-          // If it exists, update it with the provided quality
-          existingQualitySetting.value = quality;
-          await isar.settingsDBValues.put(existingQualitySetting);
-        }
-      });
-
-      // Return the selected quality
-      return Right(quality);
-    } catch (e) {
-      // Handle errors and return a failure
-      return const Left(MainFailure.serverFailure());
-    }
+    return _setSetting(
+      settingName: selectedDefaultQuality,
+      value: quality,
+      toStringValue: (v) => v,
+    );
   }
 
   // CONTENT REGION SET
-
   @override
   Future<Either<MainFailure, String>> selectRegion(
       {required String region}) async {
-    try {
-      // Begin a write transaction
-      await isar.writeTxn(() async {
-        // Check if selectedDefaultQuality exists in the database
-        final existingRegionSetting = await isar.settingsDBValues
-            .filter()
-            .nameEqualTo(selectedDefaultRegion)
-            .findFirst();
-
-        if (existingRegionSetting == null) {
-          // If it doesn't exist, create a new entry with the default value "360p"
-          final newRegionSetting = SettingsDBValue()
-            ..name = selectedDefaultRegion
-            ..value = region;
-          await isar.settingsDBValues.put(newRegionSetting);
-        } else {
-          // If it exists, update it with the provided quality
-          existingRegionSetting.value = region;
-          await isar.settingsDBValues.put(existingRegionSetting);
-        }
-      });
-
-      // Return the selected quality
-      return Right(region);
-    } catch (e) {
-      // Handle errors and return a failure
-      return const Left(MainFailure.serverFailure());
-    }
+    return _setSetting(
+      settingName: selectedDefaultRegion,
+      value: region,
+      toStringValue: (v) => v,
+    );
   }
 
   // THEME TOGGLE
-
   @override
   Future<Either<MainFailure, String>> setTheme(
       {required String themeMode}) async {
-    try {
-      // Begin a write transaction
-      await isar.writeTxn(() async {
-        // Check if selectedDefaultQuality exists in the database
-        final existingThemeSetting = await isar.settingsDBValues
-            .filter()
-            .nameEqualTo(selectedTheme)
-            .findFirst();
-
-        if (existingThemeSetting == null) {
-          // If it doesn't exist, create a new entry with the default value "light"
-          final newThemeSetting = SettingsDBValue()
-            ..name = selectedTheme
-            ..value = themeMode;
-          await isar.settingsDBValues.put(newThemeSetting);
-        } else {
-          // If it exists, update it with the provided theme
-          existingThemeSetting.value = themeMode;
-          await isar.settingsDBValues.put(existingThemeSetting);
-        }
-      });
-
-      // Return the selected theme
-      return Right(themeMode);
-    } catch (e) {
-      // Handle errors and return a failure
-      return const Left(MainFailure.serverFailure());
-    }
+    return _setSetting(
+      settingName: selectedTheme,
+      value: themeMode,
+      toStringValue: (v) => v,
+    );
   }
 
   // HISTORY VISIBILITY TOGGLE SETTING
   @override
   Future<Either<MainFailure, bool>> toggleHistoryVisibility(
       {required bool isHistoryVisible}) async {
-    try {
-      // Begin a write transaction
-      await isar.writeTxn(() async {
-        // Check if historyVisibility exists in the database
-        final existingHistoryVisibilitySetting = await isar.settingsDBValues
-            .filter()
-            .nameEqualTo(historyVisibility)
-            .findFirst();
-
-        if (existingHistoryVisibilitySetting == null) {
-          // If it doesn't exist, create a new entry with the default value "false"
-          final newHistoryVisibilitySetting = SettingsDBValue()
-            ..name = historyVisibility
-            ..value = isHistoryVisible.toString();
-          await isar.settingsDBValues.put(newHistoryVisibilitySetting);
-        } else {
-          // If it exists, update it with the provided settings
-          existingHistoryVisibilitySetting.value = isHistoryVisible.toString();
-          await isar.settingsDBValues.put(existingHistoryVisibilitySetting);
-        }
-      });
-
-      // Return the selected settings
-      return Right(isHistoryVisible);
-    } catch (e) {
-      // Handle errors and return a failure
-      return const Left(MainFailure.serverFailure());
-    }
+    return _setSetting(
+      settingName: historyVisibility,
+      value: isHistoryVisible,
+      toStringValue: (v) => v.toString(),
+    );
   }
 
   // DISLIKE VISIBILITY TOGGLE SETTING
   @override
   Future<Either<MainFailure, bool>> toggleDislikeVisibility(
       {required bool isDislikeVisible}) async {
-    try {
-      // Begin a write transaction
-      await isar.writeTxn(() async {
-        // Check if dislikeVisibility exists in the database
-        final existingDislikeVisibilitySetting = await isar.settingsDBValues
-            .filter()
-            .nameEqualTo(dislikeVisibility)
-            .findFirst();
-
-        if (existingDislikeVisibilitySetting == null) {
-          // If it doesn't exist, create a new entry with the default value "false"
-          final newDislikeVisibilitySetting = SettingsDBValue()
-            ..name = dislikeVisibility
-            ..value = isDislikeVisible.toString();
-          await isar.settingsDBValues.put(newDislikeVisibilitySetting);
-        } else {
-          // If it exists, update it with the provided settings
-          existingDislikeVisibilitySetting.value = isDislikeVisible.toString();
-          await isar.settingsDBValues.put(existingDislikeVisibilitySetting);
-        }
-      });
-
-      // Return the selected settings
-      return Right(isDislikeVisible);
-    } catch (e) {
-      // Handle errors and return a failure
-      return const Left(MainFailure.serverFailure());
-    }
+    return _setSetting(
+      settingName: dislikeVisibility,
+      value: isDislikeVisible,
+      toStringValue: (v) => v.toString(),
+    );
   }
 
   // HLS PLAYER TOGGLE SETTING
   @override
   Future<Either<MainFailure, bool>> toggleHlsPlayer(
       {required bool isHlsPlayer}) async {
-    try {
-      // Begin a write transaction
-      await isar.writeTxn(() async {
-        // Check if tlsPlayer exists in the database
-        final existingHlsPlayerSetting = await isar.settingsDBValues
-            .filter()
-            .nameEqualTo(hlsPlayer)
-            .findFirst();
-
-        if (existingHlsPlayerSetting == null) {
-          // If it doesn't exist, create a new entry with the default value "false"
-          final newHlsPlayerSetting = SettingsDBValue()
-            ..name = hlsPlayer
-            ..value = isHlsPlayer.toString();
-          await isar.settingsDBValues.put(newHlsPlayerSetting);
-        } else {
-          // If it exists, update it with the provided settings
-          existingHlsPlayerSetting.value = isHlsPlayer.toString();
-          await isar.settingsDBValues.put(existingHlsPlayerSetting);
-        }
-      });
-
-      // Return the selected settings
-      return Right(isHlsPlayer);
-    } catch (e) {
-      // Handle errors and return a failure
-      return const Left(MainFailure.serverFailure());
-    }
+    return _setSetting(
+      settingName: hlsPlayer,
+      value: isHlsPlayer,
+      toStringValue: (v) => v.toString(),
+    );
   }
 
   @override
   Future<Either<MainFailure, bool>> toggleHideComments(
       {required bool isHideComments}) async {
-    try {
-      await isar.writeTxn(() async {
-        final existingCommentsSetting = await isar.settingsDBValues
-            .filter()
-            .nameEqualTo(commentsVisibility)
-            .findFirst();
-
-        if (existingCommentsSetting == null) {
-          final newCommentsSetting = SettingsDBValue()
-            ..name = commentsVisibility
-            ..value = isHideComments.toString();
-          await isar.settingsDBValues.put(newCommentsSetting);
-        } else {
-          existingCommentsSetting.value = isHideComments.toString();
-          await isar.settingsDBValues.put(existingCommentsSetting);
-        }
-      });
-
-      return Right(isHideComments);
-    } catch (e) {
-      return const Left(MainFailure.serverFailure());
-    }
+    return _setSetting(
+      settingName: commentsVisibility,
+      value: isHideComments,
+      toStringValue: (v) => v.toString(),
+    );
   }
 
   @override
   Future<Either<MainFailure, bool>> toggleHideRelatedVideos(
       {required bool isHideRelated}) async {
-    try {
-      await isar.writeTxn(() async {
-        final existingRelatedSetting = await isar.settingsDBValues
-            .filter()
-            .nameEqualTo(relatedVideoVisibility)
-            .findFirst();
-
-        if (existingRelatedSetting == null) {
-          final newRelatedSetting = SettingsDBValue()
-            ..name = relatedVideoVisibility
-            ..value = isHideRelated.toString();
-          await isar.settingsDBValues.put(newRelatedSetting);
-        } else {
-          existingRelatedSetting.value = isHideRelated.toString();
-          await isar.settingsDBValues.put(existingRelatedSetting);
-        }
-      });
-
-      return Right(isHideRelated);
-    } catch (e) {
-      return const Left(MainFailure.serverFailure());
-    }
+    return _setSetting(
+      settingName: relatedVideoVisibility,
+      value: isHideRelated,
+      toStringValue: (v) => v.toString(),
+    );
   }
 
   @override
@@ -406,55 +241,21 @@ class SettingImpl implements SettingsService {
   @override
   Future<Either<MainFailure, String>> setInstance(
       {required String instanceApi}) async {
-    try {
-      await isar.writeTxn(() async {
-        final existingInstanceSetting = await isar.settingsDBValues
-            .filter()
-            .nameEqualTo(instanceApiUrl)
-            .findFirst();
-
-        if (existingInstanceSetting == null) {
-          final newInstanceSetting = SettingsDBValue()
-            ..name = instanceApiUrl
-            ..value = instanceApi;
-          await isar.settingsDBValues.put(newInstanceSetting);
-        } else {
-          existingInstanceSetting.value = instanceApi;
-          await isar.settingsDBValues.put(existingInstanceSetting);
-        }
-      });
-
-      return Right(instanceApi);
-    } catch (e) {
-      return const Left(MainFailure.serverFailure());
-    }
+    return _setSetting(
+      settingName: instanceApiUrl,
+      value: instanceApi,
+      toStringValue: (v) => v,
+    );
   }
 
   @override
   Future<Either<MainFailure, YouTubeServices>> setTYService(
       {required YouTubeServices service}) async {
-    try {
-      await isar.writeTxn(() async {
-        final existingYTServiceSetting = await isar.settingsDBValues
-            .filter()
-            .nameEqualTo(youtubeService)
-            .findFirst();
-
-        if (existingYTServiceSetting == null) {
-          final newYTServiceSetting = SettingsDBValue()
-            ..name = youtubeService
-            ..value = service.name;
-          await isar.settingsDBValues.put(newYTServiceSetting);
-        } else {
-          existingYTServiceSetting.value = service.name;
-          await isar.settingsDBValues.put(existingYTServiceSetting);
-        }
-      });
-
-      return Right(service);
-    } catch (e) {
-      return const Left(MainFailure.serverFailure());
-    }
+    return _setSetting(
+      settingName: youtubeService,
+      value: service,
+      toStringValue: (v) => v.name,
+    );
   }
 
   @override
@@ -489,28 +290,11 @@ class SettingImpl implements SettingsService {
 
   @override
   Future<Either<MainFailure, bool>> togglePipPlayer({required bool isPipDisabled}) async {
-    try {
-      await isar.writeTxn(() async {
-        final existingPipSetting = await isar.settingsDBValues
-            .filter()
-            .nameEqualTo(pipDisabled)
-            .findFirst();
-
-        if (existingPipSetting == null) {
-          final newPipSetting = SettingsDBValue()
-            ..name = pipDisabled
-            ..value = isPipDisabled.toString();
-          await isar.settingsDBValues.put(newPipSetting);
-        } else {
-          existingPipSetting.value = isPipDisabled.toString();
-          await isar.settingsDBValues.put(existingPipSetting);
-        }
-      });
-
-      return Right(isPipDisabled);
-    } catch (e) {
-      return const Left(MainFailure.serverFailure());
-    }
+    return _setSetting(
+      settingName: pipDisabled,
+      value: isPipDisabled,
+      toStringValue: (v) => v.toString(),
+    );
   }
 
   @override

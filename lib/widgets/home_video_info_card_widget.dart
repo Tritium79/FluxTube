@@ -86,7 +86,7 @@ class HomeVideoInfoCardWidget extends StatelessWidget {
                               'channelId': channelId
                             },
                             queryParameters: {
-                              'avtarUrl': cardInfo?.uploaderAvatar
+                              'avatarUrl': cardInfo?.uploaderAvatar
                             }),
                         child: SubscribeRowWidget(
                           uploaderUrl: cardInfo?.uploaderAvatar ?? '',

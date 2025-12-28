@@ -32,7 +32,7 @@ class ChannelInfoSection extends StatelessWidget {
             onTap: () => context.goNamed('channel', pathParameters: {
               'channelId': channelId,
             }, queryParameters: {
-              'avtarUrl': watchInfo.uploaderAvatar,
+              'avatarUrl': watchInfo.uploaderAvatar,
             }),
             child: SubscribeRowWidget(
               subscribed: isSubscribed,

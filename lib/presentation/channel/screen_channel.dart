@@ -16,11 +16,11 @@ import 'package:fluxtube/presentation/settings/utils/launch_url.dart';
 import 'package:fluxtube/widgets/widgets.dart';
 
 class ScreenChannel extends StatelessWidget {
-  const ScreenChannel({super.key, required String? channelId, avtarUrl})
+  const ScreenChannel({super.key, required String? channelId, avatarUrl})
       : _channelId = channelId,
-        _avtarUrl = avtarUrl;
+        _avatarUrl = avatarUrl;
   final String? _channelId;
-  final String? _avtarUrl;
+  final String? _avatarUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +114,7 @@ class ScreenChannel extends StatelessWidget {
                                     state.invidiousChannelResp!.subCount,
                                 thumbnail: state.invidiousChannelResp
                                         ?.authorThumbnails?.last.url ??
-                                    _avtarUrl,
+                                    _avatarUrl,
                                 isSubscribed: _isSubscribed,
                                 channelId: _channelId ?? '',
                                 locals: locals,
@@ -184,7 +184,7 @@ class ScreenChannel extends StatelessWidget {
                               channelName: channelInfo.name,
                               isVerified: channelInfo.verified,
                               subscriberCount: channelInfo.subscriberCount,
-                              thumbnail: channelInfo.avatarUrl ?? _avtarUrl,
+                              thumbnail: channelInfo.avatarUrl ?? _avatarUrl,
                               isSubscribed: _isSubscribed,
                               channelId: _channelId ?? '',
                               locals: locals,

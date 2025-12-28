@@ -46,7 +46,7 @@ class _ScreenSearchState extends State<ScreenSearch> {
                         state.fetchSearchResultStatus == ApiStatus.loaded) &&
                     state.suggestions.isNotEmpty &&
                     _textEditingController.text.isNotEmpty) {
-                  return SearchSuggessionSection(
+                  return SearchSuggestionSection(
                     textEditingController: _textEditingController,
                     state: state,
                   );
@@ -83,7 +83,7 @@ class _ScreenSearchState extends State<ScreenSearch> {
                         state.fetchSearchResultStatus == ApiStatus.loaded) &&
                     state.suggestions.isNotEmpty &&
                     _textEditingController.text.isNotEmpty) {
-                  return SearchSuggessionSection(
+                  return SearchSuggestionSection(
                     textEditingController: _textEditingController,
                     state: state,
                   );

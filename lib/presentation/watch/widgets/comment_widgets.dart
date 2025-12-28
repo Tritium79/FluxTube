@@ -97,7 +97,7 @@ class CommentSection extends StatelessWidget {
                                 'channelId':
                                     storeComment.commentorUrl!.split("/").last,
                               }, queryParameters: {
-                                'avtarUrl': storeComment.thumbnail,
+                                'avatarUrl': storeComment.thumbnail,
                               }),
                             ),
                             if (storeComment.replyCount != null &&
@@ -196,7 +196,7 @@ class CommentSection extends StatelessWidget {
                                           .split("/")
                                           .last,
                                     }, queryParameters: {
-                                      'avtarUrl': storeComment.thumbnail,
+                                      'avatarUrl': storeComment.thumbnail,
                                     }),
                                   );
                                 } else {

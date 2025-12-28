@@ -105,7 +105,7 @@ class InvidiousCommentSection extends StatelessWidget {
                                       .goNamed('channel', pathParameters: {
                                     'channelId': storeComment.authorId!,
                                   }, queryParameters: {
-                                    'avtarUrl': storeComment
+                                    'avatarUrl': storeComment
                                         .authorThumbnails!.first.url,
                                   }),
                                 ),
@@ -215,7 +215,7 @@ class InvidiousCommentSection extends StatelessWidget {
                                         .goNamed('channel', pathParameters: {
                                       'channelId': storeComment.authorId!,
                                     }, queryParameters: {
-                                      'avtarUrl': storeComment
+                                      'avatarUrl': storeComment
                                           .authorThumbnails!.first.url,
                                     }),
                                   );

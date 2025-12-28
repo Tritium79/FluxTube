@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fluxtube/application/search/search_bloc.dart';
 import 'package:fluxtube/core/constants.dart';
 
-class SearchSuggessionSection extends StatelessWidget {
-  const SearchSuggessionSection({
+class InvidiousSearchSuggestionSection extends StatelessWidget {
+  const InvidiousSearchSuggestionSection({
     super.key,
     required TextEditingController textEditingController,
     required this.state,
@@ -16,14 +16,14 @@ class SearchSuggessionSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.separated(
         itemBuilder: (context, index) => GestureDetector(
-              onTap: () => _textEditingController.value =
-                  TextEditingValue(text: state.suggestions[index] ?? ''),
+              onTap: () => _textEditingController.value = TextEditingValue(
+                  text: state.invidiousSuggestionResult[index] ?? ''),
               child: Padding(
                 padding: const EdgeInsets.only(left: 15),
-                child: Text(state.suggestions[index]),
+                child: Text(state.invidiousSuggestionResult[index]),
               ),
             ),
         separatorBuilder: (context, index) => kHeightBox10,
-        itemCount: state.suggestions.length);
+        itemCount: state.invidiousSuggestionResult.length);
   }
 }

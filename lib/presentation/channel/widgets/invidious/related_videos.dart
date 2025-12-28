@@ -85,7 +85,7 @@ class InvidiousChannelRelatedVideoSection extends StatelessWidget {
                   child: InvidiousChannelRelatedVideoInfoCardWidget(
                     channelId: channelId,
                     latestVideo: videoInfo,
-                    autherUrl: channelInfo.authorThumbnails!.last.url,
+                    authorUrl: channelInfo.authorThumbnails!.last.url,
                     subscribeRowVisible: false,
                   ),
                 );

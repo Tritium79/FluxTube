@@ -43,7 +43,7 @@ class ChannelWidget extends StatelessWidget {
           : context.goNamed('channel', pathParameters: {
               'channelId': _channelId,
             }, queryParameters: {
-              'avtarUrl': _thumbnail,
+              'avatarUrl': _thumbnail,
             }),
       child: SizedBox(
         height: 150,

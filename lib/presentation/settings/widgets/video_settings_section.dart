@@ -56,8 +56,8 @@ final _services = [
   ),
 ];
 
-class VideoSettingsSecction extends StatelessWidget {
-  const VideoSettingsSecction({super.key});
+class VideoSettingsSection extends StatelessWidget {
+  const VideoSettingsSection({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -176,73 +176,3 @@ class VideoSettingsSecction extends StatelessWidget {
     );
   }
 }
-
-// SettingsSection videoSettingsSection(
-//     S locals, BuildContext context, SettingsState state) {
-//   return SettingsSection(
-//     title: Text(
-//       locals.video,
-//       style: Theme.of(context).textTheme.bodyMedium,
-//     ),
-//     tiles: [
-//       SettingsTile(
-//         title: Text(locals.defaultQuality),
-//         leading: const Icon(Icons.hd_sharp),
-//         trailing: DropdownButton(
-//             value: state.defaultQuality,
-//             items: _qualities,
-//             onChanged: (quality) => BlocProvider.of<SettingsBloc>(context).add(
-//                 SettingsEvent.getDefaultQuality(quality: quality.toString()))),
-//       ),
-//       SettingsTile(
-//         title: const Text("YouTube Service"),
-//         leading: const Icon(Icons.network_cell),
-//         trailing: DropdownButton(
-//             value: YouTubeServices.values
-//                 .firstWhere((e) => e.name == state.ytService),
-//             items: _services,
-//             onChanged: (service) {
-//               BlocProvider.of<SettingsBloc>(context)
-//                   .add(SettingsEvent.setYTService(service: service!));
-//               if (state.ytService != YouTubeServices.piped.name) {
-//                 BlocProvider.of<SettingsBloc>(context)
-//                     .add(SettingsEvent.fetchInvidiousInstances());
-//               } else {
-//                 BlocProvider.of<SettingsBloc>(context)
-//                     .add(SettingsEvent.fetchPipedInstances());
-//               }
-//             }),
-//       ),
-//       SettingsTile.switchTile(
-//         initialValue: state.isHlsPlayer,
-//         title: Text(locals.hlsPlayer),
-//         description: Text(locals.enableHlsPlayerDescription),
-//         leading: const Icon(CupertinoIcons.play),
-//         onToggle: (_) {
-//           BlocProvider.of<SettingsBloc>(context)
-//               .add(SettingsEvent.toggleHlsPlayer());
-//         },
-//       ),
-//       SettingsTile.switchTile(
-//         initialValue: !state.isHistoryVisible,
-//         title: Text(locals.history),
-//         description: Text(locals.disableVideoHistory),
-//         leading: const Icon(Icons.history),
-//         onToggle: (_) {
-//           BlocProvider.of<SettingsBloc>(context)
-//               .add(SettingsEvent.toggleHistoryVisibility());
-//         },
-//       ),
-//       SettingsTile.switchTile(
-//         initialValue: state.isDislikeVisible,
-//         title: Text(locals.retrieveDislikes),
-//         description: Text(locals.retrieveDislikeCounts),
-//         leading: const Icon(CupertinoIcons.hand_thumbsdown),
-//         onToggle: (_) {
-//           BlocProvider.of<SettingsBloc>(context)
-//               .add(SettingsEvent.toggleDislikeVisibility());
-//         },
-//       ),
-//     ],
-//   );
-// }

@@ -29,7 +29,7 @@ class ScreenSettings extends StatelessWidget {
                 kHeightBox15,
                 DistractionFreeSettingsSection(),
                 kHeightBox15,
-                VideoSettingsSecction(),
+                VideoSettingsSection(),
                 kHeightBox15,
                 AboutSection()
               ],

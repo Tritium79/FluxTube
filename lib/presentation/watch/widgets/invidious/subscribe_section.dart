@@ -32,7 +32,7 @@ class InvidiousChannelInfoSection extends StatelessWidget {
             onTap: () => context.goNamed('channel', pathParameters: {
               'channelId': channelId,
             }, queryParameters: {
-              'avtarUrl': watchInfo.authorThumbnails?.first.url,
+              'avatarUrl': watchInfo.authorThumbnails?.first.url,
             }),
             child: SubscribeRowWidget(
               subscribed: isSubscribed,

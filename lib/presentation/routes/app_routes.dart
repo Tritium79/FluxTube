@@ -41,7 +41,7 @@ final GoRouter router = GoRouter(
           builder: (BuildContext context, GoRouterState state) {
             return ScreenChannel(
               channelId: state.pathParameters['channelId']!,
-              avtarUrl: state.uri.queryParameters['avtarUrl'],
+              avatarUrl: state.uri.queryParameters['avatarUrl'],
             );
           },
         ),

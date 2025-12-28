@@ -32,7 +32,7 @@ class ExplodeChannelInfoSection extends StatelessWidget {
             onTap: () => context.goNamed('channel', pathParameters: {
               'channelId': channelId,
             }, queryParameters: {
-              'avtarUrl': state.selectedVideoBasicDetails?.channelThumbnailUrl,
+              'avatarUrl': state.selectedVideoBasicDetails?.channelThumbnailUrl,
             }),
             child: SubscribeRowWidget(
               subscribed: isSubscribed,

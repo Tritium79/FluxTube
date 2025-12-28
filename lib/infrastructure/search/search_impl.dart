@@ -11,7 +11,7 @@ import 'package:injectable/injectable.dart';
 import '../../domain/core/api_end_points.dart';
 
 @LazySingleton(as: SearchService)
-class SearchImplimentation implements SearchService {
+class SearchImpl implements SearchService {
   //Piped
 
   ///[getSearchResult] used to fetch search result from Piped.

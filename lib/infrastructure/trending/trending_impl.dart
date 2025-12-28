@@ -10,7 +10,7 @@ import 'package:fluxtube/domain/trending/trending_service.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: TrendingService)
-class TrendingImpliment implements TrendingService {
+class TrendingImpl implements TrendingService {
   ///[getTrendingData] used to fetch Trending data from Piped.
   @override
   Future<Either<MainFailure, List<TrendingResp>>> getTrendingData(

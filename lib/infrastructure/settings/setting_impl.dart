@@ -17,7 +17,7 @@ import 'package:path_provider/path_provider.dart';
 import '../../core/settings.dart';
 
 @LazySingleton(as: SettingsService)
-class SettingImpliment implements SettingsService {
+class SettingImpl implements SettingsService {
   static late Isar isar;
 
   // Initialize the database
@@ -486,7 +486,7 @@ class SettingImpliment implements SettingsService {
       return const Left(MainFailure.serverFailure());
     }
   }
-  
+
   @override
   Future<Either<MainFailure, bool>> togglePipPlayer({required bool isPipDisabled}) async {
     try {

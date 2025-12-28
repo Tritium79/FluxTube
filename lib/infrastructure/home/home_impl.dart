@@ -11,7 +11,7 @@ import 'package:injectable/injectable.dart';
 import '../../domain/core/api_end_points.dart';
 
 @LazySingleton(as: HomeServices)
-class HomeImpliment extends HomeServices {
+class HomeImpl extends HomeServices {
   @override
   Future<Either<MainFailure, List<TrendingResp>>> getHomeFeedData(
       {required List<Subscribe> channels}) async {

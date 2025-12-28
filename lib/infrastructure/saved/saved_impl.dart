@@ -2,13 +2,13 @@ import 'package:dartz/dartz.dart';
 import 'package:fluxtube/domain/core/failure/main_failure.dart';
 import 'package:fluxtube/domain/saved/models/local_store.dart';
 import 'package:fluxtube/domain/saved/saved_services.dart';
-import 'package:fluxtube/infrastructure/settings/setting_impliment.dart';
+import 'package:fluxtube/infrastructure/settings/setting_impl.dart';
 import 'package:injectable/injectable.dart';
 import 'package:isar_community/isar.dart';
 
 @LazySingleton(as: SavedServices)
-class SavedImplimentation extends SavedServices {
-  Isar isar = SettingImpliment.isar;
+class SavedImpl extends SavedServices {
+  Isar isar = SettingImpl.isar;
 
 // add new video info to local database
   Future<void> _addVideoInformations(LocalStoreVideoInfo videoInfo) async {
@@ -46,7 +46,7 @@ class SavedImplimentation extends SavedServices {
     }
   }
 
-  // delete video info impliment
+  // delete video info
 
   @override
   Future<Either<MainFailure, List<LocalStoreVideoInfo>>> deleteVideoInfo(

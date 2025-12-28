@@ -12,7 +12,7 @@ import 'package:fluxtube/application/watch/watch_bloc.dart';
 import 'package:fluxtube/core/app_info.dart';
 import 'package:fluxtube/core/app_theme.dart';
 import 'package:fluxtube/core/locals.dart';
-import 'package:fluxtube/infrastructure/settings/setting_impliment.dart';
+import 'package:fluxtube/infrastructure/settings/setting_impl.dart';
 import 'package:fluxtube/presentation/routes/app_routes.dart';
 import 'package:fluxtube/presentation/routes/bloc_observer.dart';
 
@@ -21,7 +21,7 @@ import 'core/di/injectable.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = AppBlocObserver();
-  await SettingImpliment.initializeDB();
+  await SettingImpl.initializeDB();
   // Initialize GetIt and register dependencies
   configureInjection();
   runApp(const MyApp());

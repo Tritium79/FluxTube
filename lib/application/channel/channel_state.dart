@@ -15,6 +15,7 @@ class ChannelState with _$ChannelState {
     // INVIDIOUS
 
     required InvidiousChannelResp? invidiousChannelResp,
+    required int invidiousPage,
   }) = _ChannelState;
 
   factory ChannelState.initialize() => ChannelState(
@@ -26,9 +27,10 @@ class ChannelState with _$ChannelState {
         pipedChannelResp: null,
         channelDetailsFetchStatus: ApiStatus.initial,
 
-        // EXPLODE
+        // INVIDIOUS
 
         invidiousChannelResp: null,
         moreChannelDetailsFetchStatus: ApiStatus.initial,
+        invidiousPage: 1,
       );
 }

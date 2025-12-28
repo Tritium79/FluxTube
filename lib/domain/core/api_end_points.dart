@@ -22,4 +22,5 @@ class InvidiousApiEndpoints {
   static String get watch => "${BaseUrl.kInvidiousBaseUrl}/api/v1/videos/";
   static String get comments => "${BaseUrl.kInvidiousBaseUrl}/api/v1/comments/";
   static String get channel => "${BaseUrl.kInvidiousBaseUrl}/api/v1/channels/";
+  static String get channelVideos => "${BaseUrl.kInvidiousBaseUrl}/api/v1/channels/";
 }

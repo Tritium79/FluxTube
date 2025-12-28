@@ -26,16 +26,13 @@ import 'package:fluxtube/domain/subscribes/subscribe_services.dart' as _i479;
 import 'package:fluxtube/domain/trending/trending_service.dart' as _i60;
 import 'package:fluxtube/domain/watch/watch_service.dart' as _i719;
 import 'package:fluxtube/infrastructure/channel/channel_impl.dart' as _i112;
-import 'package:fluxtube/infrastructure/home/home_impliment.dart' as _i278;
-import 'package:fluxtube/infrastructure/saved/saved_impliment.dart' as _i740;
-import 'package:fluxtube/infrastructure/search/search_impliment.dart' as _i422;
-import 'package:fluxtube/infrastructure/settings/setting_impliment.dart'
-    as _i780;
-import 'package:fluxtube/infrastructure/subscribe/subscribe_impliment.dart'
-    as _i374;
-import 'package:fluxtube/infrastructure/trending/trending_impliment.dart'
-    as _i419;
-import 'package:fluxtube/infrastructure/watch/watch_impliment.dart' as _i850;
+import 'package:fluxtube/infrastructure/home/home_impl.dart' as _i764;
+import 'package:fluxtube/infrastructure/saved/saved_impl.dart' as _i979;
+import 'package:fluxtube/infrastructure/search/search_impl.dart' as _i568;
+import 'package:fluxtube/infrastructure/settings/setting_impl.dart' as _i290;
+import 'package:fluxtube/infrastructure/subscribe/subscribe_impl.dart' as _i848;
+import 'package:fluxtube/infrastructure/trending/trending_impl.dart' as _i1069;
+import 'package:fluxtube/infrastructure/watch/watch_impl.dart' as _i796;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
@@ -50,18 +47,18 @@ extension GetItInjectableX on _i174.GetIt {
       environment,
       environmentFilter,
     );
+    gh.lazySingleton<_i479.SubscribeServices>(() => _i848.SubscribeImpl());
     gh.lazySingleton<_i914.ChannelServices>(() => _i112.ChannelImpl());
-    gh.lazySingleton<_i722.SavedServices>(() => _i740.SavedImplimentation());
-    gh.lazySingleton<_i816.SettingsService>(() => _i780.SettingImpliment());
-    gh.lazySingleton<_i719.WatchService>(() => _i850.WatchImpliment());
-    gh.lazySingleton<_i811.HomeServices>(() => _i278.HomeImpliment());
+    gh.lazySingleton<_i719.WatchService>(() => _i796.WatchImpl());
+    gh.lazySingleton<_i947.SearchService>(() => _i568.SearchImpl());
+    gh.lazySingleton<_i60.TrendingService>(() => _i1069.TrendingImpl());
     gh.factory<_i771.WatchBloc>(
         () => _i771.WatchBloc(gh<_i719.WatchService>()));
-    gh.lazySingleton<_i479.SubscribeServices>(() => _i374.SubscribeImpliment());
     gh.factory<_i187.SubscribeBloc>(
         () => _i187.SubscribeBloc(gh<_i479.SubscribeServices>()));
-    gh.lazySingleton<_i947.SearchService>(() => _i422.SearchImplimentation());
-    gh.lazySingleton<_i60.TrendingService>(() => _i419.TrendingImpliment());
+    gh.lazySingleton<_i722.SavedServices>(() => _i979.SavedImpl());
+    gh.lazySingleton<_i816.SettingsService>(() => _i290.SettingImpl());
+    gh.lazySingleton<_i811.HomeServices>(() => _i764.HomeImpl());
     gh.factory<_i112.SettingsBloc>(
         () => _i112.SettingsBloc(gh<_i816.SettingsService>()));
     gh.factory<_i20.ChannelBloc>(

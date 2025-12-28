@@ -15,7 +15,7 @@ import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import '../../domain/core/api_end_points.dart';
 
 @LazySingleton(as: WatchService)
-class WatchImpliment implements WatchService {
+class WatchImpl implements WatchService {
   //Piped
 
   ///[getVideoData] used to fetch video data from Piped.

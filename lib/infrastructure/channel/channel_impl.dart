@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:fluxtube/domain/channel/channel_services.dart';
 import 'package:fluxtube/domain/channel/models/invidious/invidious_channel_resp.dart';
+import 'package:fluxtube/domain/channel/models/invidious/latest_video.dart';
 import 'package:fluxtube/domain/channel/models/piped/channel_resp.dart';
 import 'package:fluxtube/domain/core/api_end_points.dart';
 import 'package:fluxtube/domain/core/failure/main_failure.dart';
@@ -100,6 +101,37 @@ class ChannelImpl extends ChannelServices {
       }
     } catch (e) {
       log('Err on getInvidiousChannelData: $e');
+      return const Left(MainFailure.clientFailure());
+    } finally {
+      dioClient.close();
+    }
+  }
+
+  ///[getMoreInvidiousChannelVideos] fetches more channel videos from the Invidious API
+  @override
+  Future<Either<MainFailure, List<LatestVideo>>> getMoreInvidiousChannelVideos(
+      {required String channelId, required int page}) async {
+    final dioClient = Dio();
+    try {
+      final Response response = await dioClient.get(
+        "${InvidiousApiEndpoints.channelVideos}$channelId/videos?page=$page",
+        options: Options(
+          followRedirects: false,
+          validateStatus: (status) => true,
+        ),
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final List<dynamic> data = response.data['videos'] ?? response.data;
+        final List<LatestVideo> videos = data
+            .map((json) => LatestVideo.fromJson(json as Map<String, dynamic>))
+            .toList();
+        return Right(videos);
+      } else {
+        log('Err on getMoreInvidiousChannelVideos: ${response.statusCode}');
+        return const Left(MainFailure.serverFailure());
+      }
+    } catch (e) {
+      log('Err on getMoreInvidiousChannelVideos: $e');
       return const Left(MainFailure.clientFailure());
     } finally {
       dioClient.close();

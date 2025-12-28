@@ -5,11 +5,11 @@ import 'package:fluxtube/domain/subscribes/subscribe_services.dart';
 import 'package:injectable/injectable.dart';
 import 'package:isar_community/isar.dart';
 
-import '../settings/setting_impliment.dart';
+import '../settings/setting_impl.dart';
 
 @LazySingleton(as: SubscribeServices)
-class SubscribeImpliment extends SubscribeServices {
-  Isar isar = SettingImpliment.isar;
+class SubscribeImpl extends SubscribeServices {
+  Isar isar = SettingImpl.isar;
 
   // add new channel info to local database
   Future<void> _addSubscribeInformations(Subscribe subscribeInfo) async {
@@ -45,7 +45,7 @@ class SubscribeImpliment extends SubscribeServices {
     }
   }
 
-  // delete subscriber info impliment
+  // delete subscriber info
   @override
   Future<Either<MainFailure, List<Subscribe>>> deleteSubscriberInfo(
       {required Id id}) async {

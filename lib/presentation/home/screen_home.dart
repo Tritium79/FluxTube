@@ -21,6 +21,9 @@ class ScreenHome extends StatelessWidget {
     final locals = S.of(context);
 
     return BlocBuilder<SettingsBloc, SettingsState>(
+      buildWhen: (previous, current) =>
+          previous.ytService != current.ytService ||
+          previous.defaultRegion != current.defaultRegion,
       builder: (context, settingsState) {
         return SafeArea(
           child: NestedScrollView(

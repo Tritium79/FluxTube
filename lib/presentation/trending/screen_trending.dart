@@ -23,6 +23,9 @@ class ScreenTrending extends StatelessWidget {
     // );
 
     return BlocBuilder<SettingsBloc, SettingsState>(
+      buildWhen: (previous, current) =>
+          previous.ytService != current.ytService ||
+          previous.defaultRegion != current.defaultRegion,
       builder: (
         context,
         settingsState,
@@ -51,6 +54,11 @@ class ScreenTrending extends StatelessWidget {
                             region: settingsState.defaultRegion));
                   },
                   child: BlocBuilder<TrendingBloc, TrendingState>(
+                    buildWhen: (previous, current) =>
+                        previous.fetchTrendingStatus != current.fetchTrendingStatus ||
+                        previous.fetchInvidiousTrendingStatus != current.fetchInvidiousTrendingStatus ||
+                        previous.trendingResult != current.trendingResult ||
+                        previous.invidiousTrendingResult != current.invidiousTrendingResult,
                     builder: (context, state) {
                       if (settingsState.ytService ==
                           YouTubeServices.invidious.name) {

@@ -40,13 +40,28 @@ class InvidiousScreenWatch extends StatelessWidget {
         .add(SubscribeEvent.checkSubscribeInfo(id: channelId));
 
     return BlocBuilder<SettingsBloc, SettingsState>(
+      buildWhen: (previous, current) =>
+          previous.defaultQuality != current.defaultQuality ||
+          previous.isHlsPlayer != current.isHlsPlayer ||
+          previous.isPipDisabled != current.isPipDisabled ||
+          previous.isHideRelated != current.isHideRelated,
       builder: (context, settingsState) {
         return BlocBuilder<WatchBloc, WatchState>(
-          buildWhen: (previous, current) {
-            return previous != current;
-          },
+          buildWhen: (previous, current) =>
+              previous.fetchInvidiousWatchInfoStatus != current.fetchInvidiousWatchInfoStatus ||
+              previous.fetchSubtitlesStatus != current.fetchSubtitlesStatus ||
+              previous.invidiousWatchResp != current.invidiousWatchResp ||
+              previous.isDescriptionTapped != current.isDescriptionTapped ||
+              previous.isTapComments != current.isTapComments ||
+              previous.subtitles != current.subtitles ||
+              previous.oldId != current.oldId ||
+              previous.selectedVideoBasicDetails != current.selectedVideoBasicDetails,
           builder: (context, state) {
             return BlocBuilder<SavedBloc, SavedState>(
+              buildWhen: (previous, current) =>
+                  previous.videoInfo?.id != current.videoInfo?.id ||
+                  previous.videoInfo?.isSaved != current.videoInfo?.isSaved ||
+                  previous.videoInfo?.playbackPosition != current.videoInfo?.playbackPosition,
               builder: (context, savedState) {
                 if ((state.oldId != id || state.oldId == null) &&
                     !(state.fetchInvidiousWatchInfoStatus ==

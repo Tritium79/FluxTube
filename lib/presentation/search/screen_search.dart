@@ -35,8 +35,16 @@ class _ScreenSearchState extends State<ScreenSearch> {
             textEditingController: _textEditingController, theme: theme),
       ),
       body: SafeArea(child: BlocBuilder<SettingsBloc, SettingsState>(
+        buildWhen: (previous, current) =>
+            previous.ytService != current.ytService,
         builder: (context, settingsState) {
           return BlocBuilder<SearchBloc, SearchState>(
+            buildWhen: (previous, current) =>
+                previous.isSuggestionDisplay != current.isSuggestionDisplay ||
+                previous.fetchSuggestionStatus != current.fetchSuggestionStatus ||
+                previous.fetchSearchResultStatus != current.fetchSearchResultStatus ||
+                previous.suggestions != current.suggestions ||
+                previous.result != current.result,
             builder: (context, state) {
               // INVIDIOUS
               if (settingsState.ytService == YouTubeServices.invidious.name) {

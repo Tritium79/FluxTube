@@ -39,6 +39,10 @@ class ScreenChannel extends StatelessWidget {
           previous.subscribedChannels != current.subscribedChannels,
       builder: (context, subscribeState) {
         return BlocBuilder<ChannelBloc, ChannelState>(
+          buildWhen: (previous, current) =>
+              previous.channelDetailsFetchStatus != current.channelDetailsFetchStatus ||
+              previous.pipedChannelResp != current.pipedChannelResp ||
+              previous.invidiousChannelResp != current.invidiousChannelResp,
           builder: (context, state) {
             if (state.channelDetailsFetchStatus == ApiStatus.loading ||
                 state.channelDetailsFetchStatus == ApiStatus.initial) {

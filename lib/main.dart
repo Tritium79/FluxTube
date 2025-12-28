@@ -43,6 +43,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => getIt<ChannelBloc>()),
       ],
       child: BlocBuilder<SettingsBloc, SettingsState>(
+        buildWhen: (previous, current) =>
+            previous.themeMode != current.themeMode ||
+            previous.defaultLanguage != current.defaultLanguage,
         builder: (context, state) {
           return MaterialApp.router(
             title: AppInfo.myApp.name,

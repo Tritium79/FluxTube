@@ -105,7 +105,7 @@ class WatchBloc extends Bloc<WatchEvent, WatchState> {
       //initialte loading, and toggle comments
       emit(state.copyWith(
         fetchMoreCommentsStatus: ApiStatus.loading,
-        isMoreCommetsFetchCompleted: false,
+        isMoreCommentsFetchCompleted: false,
       ));
 
       //get reply comments list
@@ -120,7 +120,7 @@ class WatchBloc extends Bloc<WatchEvent, WatchState> {
         if (resp.nextpage == null) {
           return state.copyWith(
             fetchMoreCommentsStatus: ApiStatus.loaded,
-            isMoreCommetsFetchCompleted: true,
+            isMoreCommentsFetchCompleted: true,
           );
         } else {
           final updatedComments = CommentsResp(
@@ -145,7 +145,7 @@ class WatchBloc extends Bloc<WatchEvent, WatchState> {
       //initialte loading, and toggle comments
       emit(state.copyWith(
         fetchMoreCommentRepliesStatus: ApiStatus.loading,
-        isMoreReplyCommetsFetchCompleted: false,
+        isMoreReplyCommentsFetchCompleted: false,
       ));
 
       //get reply comments list
@@ -160,7 +160,7 @@ class WatchBloc extends Bloc<WatchEvent, WatchState> {
         if (resp.nextpage == null) {
           return state.copyWith(
             fetchMoreCommentRepliesStatus: ApiStatus.loaded,
-            isMoreReplyCommetsFetchCompleted: true,
+            isMoreReplyCommentsFetchCompleted: true,
           );
         } else {
           final updatedReplies = CommentsResp(
@@ -377,7 +377,7 @@ class WatchBloc extends Bloc<WatchEvent, WatchState> {
     on<GetMoreInvidiousComments>((event, emit) async {
       emit(state.copyWith(
         fetchMoreInvidiousCommentsStatus: ApiStatus.loading,
-        isMoreInvidiousCommetsFetchCompleted: false,
+        isMoreInvidiousCommentsFetchCompleted: false,
       ));
 
       final result = await watchService.getInvidiousMoreCommentsData(
@@ -393,7 +393,7 @@ class WatchBloc extends Bloc<WatchEvent, WatchState> {
           if (resp.continuation == null) {
             return state.copyWith(
               fetchMoreInvidiousCommentsStatus: ApiStatus.loaded,
-              isMoreInvidiousCommetsFetchCompleted: true,
+              isMoreInvidiousCommentsFetchCompleted: true,
             );
           } else {
             final updatedComments = InvidiousCommentsResp(
@@ -416,7 +416,7 @@ class WatchBloc extends Bloc<WatchEvent, WatchState> {
     on<GetMoreInvidiousReplyComments>((event, emit) async {
       emit(state.copyWith(
         fetchMoreInvidiousCommentRepliesStatus: ApiStatus.loading,
-        isMoreInvidiousReplyCommetsFetchCompleted: false,
+        isMoreInvidiousReplyCommentsFetchCompleted: false,
       ));
 
       final result = await watchService.getInvidiousMoreCommentsData(
@@ -432,7 +432,7 @@ class WatchBloc extends Bloc<WatchEvent, WatchState> {
           if (resp.continuation == null) {
             return state.copyWith(
               fetchMoreInvidiousCommentRepliesStatus: ApiStatus.loaded,
-              isMoreInvidiousReplyCommetsFetchCompleted: true,
+              isMoreInvidiousReplyCommentsFetchCompleted: true,
             );
           } else {
             final updatedReplies = InvidiousCommentsResp(

@@ -37,7 +37,7 @@ class InvidiousCommentSection extends StatelessWidget {
               _scrollController.position.maxScrollExtent &&
           !(state.fetchMoreInvidiousCommentRepliesStatus ==
               ApiStatus.loading) &&
-          !state.isMoreInvidiousCommetsFetchCompleted) {
+          !state.isMoreInvidiousCommentsFetchCompleted) {
         BlocProvider.of<WatchBloc>(context).add(
             WatchEvent.getMoreInvidiousComments(
                 id: videoId,
@@ -51,7 +51,7 @@ class InvidiousCommentSection extends StatelessWidget {
               _scrollControllerReply.position.maxScrollExtent &&
           !(state.fetchMoreInvidiousCommentRepliesStatus ==
               ApiStatus.loading) &&
-          !state.isMoreInvidiousReplyCommetsFetchCompleted) {
+          !state.isMoreInvidiousReplyCommentsFetchCompleted) {
         BlocProvider.of<WatchBloc>(context).add(
             WatchEvent.getMoreInvidiousReplyComments(
                 id: videoId,
@@ -139,7 +139,7 @@ class InvidiousCommentSection extends StatelessWidget {
                               ],
                             );
                           } else {
-                            if (state.isMoreInvidiousCommetsFetchCompleted) {
+                            if (state.isMoreInvidiousCommentsFetchCompleted) {
                               return const SizedBox();
                             } else {
                               return cIndicator(context);
@@ -221,7 +221,7 @@ class InvidiousCommentSection extends StatelessWidget {
                                   );
                                 } else {
                                   if (state
-                                          .isMoreInvidiousReplyCommetsFetchCompleted ||
+                                          .isMoreInvidiousReplyCommentsFetchCompleted ||
                                       (index == commentCount)) {
                                     return const SizedBox();
                                   } else {

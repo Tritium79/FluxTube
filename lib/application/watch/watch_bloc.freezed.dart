@@ -5840,10 +5840,10 @@ mixin _$WatchState {
   ApiStatus get fetchCommentsStatus => throw _privateConstructorUsedError;
   ApiStatus get fetchCommentRepliesStatus => throw _privateConstructorUsedError;
   ApiStatus get fetchMoreCommentsStatus => throw _privateConstructorUsedError;
-  bool get isMoreCommetsFetchCompleted => throw _privateConstructorUsedError;
+  bool get isMoreCommentsFetchCompleted => throw _privateConstructorUsedError;
   ApiStatus get fetchMoreCommentRepliesStatus =>
       throw _privateConstructorUsedError;
-  bool get isMoreReplyCommetsFetchCompleted =>
+  bool get isMoreReplyCommentsFetchCompleted =>
       throw _privateConstructorUsedError; //EXPLODE
   ExplodeWatchResp get explodeWatchResp => throw _privateConstructorUsedError;
   ApiStatus get fetchExplodeWatchInfoStatus =>
@@ -5874,11 +5874,11 @@ mixin _$WatchState {
       throw _privateConstructorUsedError;
   ApiStatus get fetchMoreInvidiousCommentsStatus =>
       throw _privateConstructorUsedError;
-  bool get isMoreInvidiousCommetsFetchCompleted =>
+  bool get isMoreInvidiousCommentsFetchCompleted =>
       throw _privateConstructorUsedError;
   ApiStatus get fetchMoreInvidiousCommentRepliesStatus =>
       throw _privateConstructorUsedError;
-  bool get isMoreInvidiousReplyCommetsFetchCompleted =>
+  bool get isMoreInvidiousReplyCommentsFetchCompleted =>
       throw _privateConstructorUsedError;
 
   /// Create a copy of WatchState
@@ -5909,9 +5909,9 @@ abstract class $WatchStateCopyWith<$Res> {
       ApiStatus fetchCommentsStatus,
       ApiStatus fetchCommentRepliesStatus,
       ApiStatus fetchMoreCommentsStatus,
-      bool isMoreCommetsFetchCompleted,
+      bool isMoreCommentsFetchCompleted,
       ApiStatus fetchMoreCommentRepliesStatus,
-      bool isMoreReplyCommetsFetchCompleted,
+      bool isMoreReplyCommentsFetchCompleted,
       ExplodeWatchResp explodeWatchResp,
       ApiStatus fetchExplodeWatchInfoStatus,
       ApiStatus fetchSubtitlesStatus,
@@ -5929,9 +5929,9 @@ abstract class $WatchStateCopyWith<$Res> {
       InvidiousCommentsResp invidiousCommentReplies,
       ApiStatus fetchInvidiousCommentRepliesStatus,
       ApiStatus fetchMoreInvidiousCommentsStatus,
-      bool isMoreInvidiousCommetsFetchCompleted,
+      bool isMoreInvidiousCommentsFetchCompleted,
       ApiStatus fetchMoreInvidiousCommentRepliesStatus,
-      bool isMoreInvidiousReplyCommetsFetchCompleted});
+      bool isMoreInvidiousReplyCommentsFetchCompleted});
 }
 
 /// @nodoc
@@ -5963,9 +5963,9 @@ class _$WatchStateCopyWithImpl<$Res, $Val extends WatchState>
     Object? fetchCommentsStatus = null,
     Object? fetchCommentRepliesStatus = null,
     Object? fetchMoreCommentsStatus = null,
-    Object? isMoreCommetsFetchCompleted = null,
+    Object? isMoreCommentsFetchCompleted = null,
     Object? fetchMoreCommentRepliesStatus = null,
-    Object? isMoreReplyCommetsFetchCompleted = null,
+    Object? isMoreReplyCommentsFetchCompleted = null,
     Object? explodeWatchResp = null,
     Object? fetchExplodeWatchInfoStatus = null,
     Object? fetchSubtitlesStatus = null,
@@ -5983,9 +5983,9 @@ class _$WatchStateCopyWithImpl<$Res, $Val extends WatchState>
     Object? invidiousCommentReplies = null,
     Object? fetchInvidiousCommentRepliesStatus = null,
     Object? fetchMoreInvidiousCommentsStatus = null,
-    Object? isMoreInvidiousCommetsFetchCompleted = null,
+    Object? isMoreInvidiousCommentsFetchCompleted = null,
     Object? fetchMoreInvidiousCommentRepliesStatus = null,
-    Object? isMoreInvidiousReplyCommetsFetchCompleted = null,
+    Object? isMoreInvidiousReplyCommentsFetchCompleted = null,
   }) {
     return _then(_value.copyWith(
       oldId: freezed == oldId
@@ -6044,17 +6044,18 @@ class _$WatchStateCopyWithImpl<$Res, $Val extends WatchState>
           ? _value.fetchMoreCommentsStatus
           : fetchMoreCommentsStatus // ignore: cast_nullable_to_non_nullable
               as ApiStatus,
-      isMoreCommetsFetchCompleted: null == isMoreCommetsFetchCompleted
-          ? _value.isMoreCommetsFetchCompleted
-          : isMoreCommetsFetchCompleted // ignore: cast_nullable_to_non_nullable
+      isMoreCommentsFetchCompleted: null == isMoreCommentsFetchCompleted
+          ? _value.isMoreCommentsFetchCompleted
+          : isMoreCommentsFetchCompleted // ignore: cast_nullable_to_non_nullable
               as bool,
       fetchMoreCommentRepliesStatus: null == fetchMoreCommentRepliesStatus
           ? _value.fetchMoreCommentRepliesStatus
           : fetchMoreCommentRepliesStatus // ignore: cast_nullable_to_non_nullable
               as ApiStatus,
-      isMoreReplyCommetsFetchCompleted: null == isMoreReplyCommetsFetchCompleted
-          ? _value.isMoreReplyCommetsFetchCompleted
-          : isMoreReplyCommetsFetchCompleted // ignore: cast_nullable_to_non_nullable
+      isMoreReplyCommentsFetchCompleted: null ==
+              isMoreReplyCommentsFetchCompleted
+          ? _value.isMoreReplyCommentsFetchCompleted
+          : isMoreReplyCommentsFetchCompleted // ignore: cast_nullable_to_non_nullable
               as bool,
       explodeWatchResp: null == explodeWatchResp
           ? _value.explodeWatchResp
@@ -6125,20 +6126,20 @@ class _$WatchStateCopyWithImpl<$Res, $Val extends WatchState>
           ? _value.fetchMoreInvidiousCommentsStatus
           : fetchMoreInvidiousCommentsStatus // ignore: cast_nullable_to_non_nullable
               as ApiStatus,
-      isMoreInvidiousCommetsFetchCompleted: null ==
-              isMoreInvidiousCommetsFetchCompleted
-          ? _value.isMoreInvidiousCommetsFetchCompleted
-          : isMoreInvidiousCommetsFetchCompleted // ignore: cast_nullable_to_non_nullable
+      isMoreInvidiousCommentsFetchCompleted: null ==
+              isMoreInvidiousCommentsFetchCompleted
+          ? _value.isMoreInvidiousCommentsFetchCompleted
+          : isMoreInvidiousCommentsFetchCompleted // ignore: cast_nullable_to_non_nullable
               as bool,
       fetchMoreInvidiousCommentRepliesStatus: null ==
               fetchMoreInvidiousCommentRepliesStatus
           ? _value.fetchMoreInvidiousCommentRepliesStatus
           : fetchMoreInvidiousCommentRepliesStatus // ignore: cast_nullable_to_non_nullable
               as ApiStatus,
-      isMoreInvidiousReplyCommetsFetchCompleted: null ==
-              isMoreInvidiousReplyCommetsFetchCompleted
-          ? _value.isMoreInvidiousReplyCommetsFetchCompleted
-          : isMoreInvidiousReplyCommetsFetchCompleted // ignore: cast_nullable_to_non_nullable
+      isMoreInvidiousReplyCommentsFetchCompleted: null ==
+              isMoreInvidiousReplyCommentsFetchCompleted
+          ? _value.isMoreInvidiousReplyCommentsFetchCompleted
+          : isMoreInvidiousReplyCommentsFetchCompleted // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
   }
@@ -6167,9 +6168,9 @@ abstract class _$$InitialImplCopyWith<$Res>
       ApiStatus fetchCommentsStatus,
       ApiStatus fetchCommentRepliesStatus,
       ApiStatus fetchMoreCommentsStatus,
-      bool isMoreCommetsFetchCompleted,
+      bool isMoreCommentsFetchCompleted,
       ApiStatus fetchMoreCommentRepliesStatus,
-      bool isMoreReplyCommetsFetchCompleted,
+      bool isMoreReplyCommentsFetchCompleted,
       ExplodeWatchResp explodeWatchResp,
       ApiStatus fetchExplodeWatchInfoStatus,
       ApiStatus fetchSubtitlesStatus,
@@ -6187,9 +6188,9 @@ abstract class _$$InitialImplCopyWith<$Res>
       InvidiousCommentsResp invidiousCommentReplies,
       ApiStatus fetchInvidiousCommentRepliesStatus,
       ApiStatus fetchMoreInvidiousCommentsStatus,
-      bool isMoreInvidiousCommetsFetchCompleted,
+      bool isMoreInvidiousCommentsFetchCompleted,
       ApiStatus fetchMoreInvidiousCommentRepliesStatus,
-      bool isMoreInvidiousReplyCommetsFetchCompleted});
+      bool isMoreInvidiousReplyCommentsFetchCompleted});
 }
 
 /// @nodoc
@@ -6219,9 +6220,9 @@ class __$$InitialImplCopyWithImpl<$Res>
     Object? fetchCommentsStatus = null,
     Object? fetchCommentRepliesStatus = null,
     Object? fetchMoreCommentsStatus = null,
-    Object? isMoreCommetsFetchCompleted = null,
+    Object? isMoreCommentsFetchCompleted = null,
     Object? fetchMoreCommentRepliesStatus = null,
-    Object? isMoreReplyCommetsFetchCompleted = null,
+    Object? isMoreReplyCommentsFetchCompleted = null,
     Object? explodeWatchResp = null,
     Object? fetchExplodeWatchInfoStatus = null,
     Object? fetchSubtitlesStatus = null,
@@ -6239,9 +6240,9 @@ class __$$InitialImplCopyWithImpl<$Res>
     Object? invidiousCommentReplies = null,
     Object? fetchInvidiousCommentRepliesStatus = null,
     Object? fetchMoreInvidiousCommentsStatus = null,
-    Object? isMoreInvidiousCommetsFetchCompleted = null,
+    Object? isMoreInvidiousCommentsFetchCompleted = null,
     Object? fetchMoreInvidiousCommentRepliesStatus = null,
-    Object? isMoreInvidiousReplyCommetsFetchCompleted = null,
+    Object? isMoreInvidiousReplyCommentsFetchCompleted = null,
   }) {
     return _then(_$InitialImpl(
       oldId: freezed == oldId
@@ -6300,17 +6301,18 @@ class __$$InitialImplCopyWithImpl<$Res>
           ? _value.fetchMoreCommentsStatus
           : fetchMoreCommentsStatus // ignore: cast_nullable_to_non_nullable
               as ApiStatus,
-      isMoreCommetsFetchCompleted: null == isMoreCommetsFetchCompleted
-          ? _value.isMoreCommetsFetchCompleted
-          : isMoreCommetsFetchCompleted // ignore: cast_nullable_to_non_nullable
+      isMoreCommentsFetchCompleted: null == isMoreCommentsFetchCompleted
+          ? _value.isMoreCommentsFetchCompleted
+          : isMoreCommentsFetchCompleted // ignore: cast_nullable_to_non_nullable
               as bool,
       fetchMoreCommentRepliesStatus: null == fetchMoreCommentRepliesStatus
           ? _value.fetchMoreCommentRepliesStatus
           : fetchMoreCommentRepliesStatus // ignore: cast_nullable_to_non_nullable
               as ApiStatus,
-      isMoreReplyCommetsFetchCompleted: null == isMoreReplyCommetsFetchCompleted
-          ? _value.isMoreReplyCommetsFetchCompleted
-          : isMoreReplyCommetsFetchCompleted // ignore: cast_nullable_to_non_nullable
+      isMoreReplyCommentsFetchCompleted: null ==
+              isMoreReplyCommentsFetchCompleted
+          ? _value.isMoreReplyCommentsFetchCompleted
+          : isMoreReplyCommentsFetchCompleted // ignore: cast_nullable_to_non_nullable
               as bool,
       explodeWatchResp: null == explodeWatchResp
           ? _value.explodeWatchResp
@@ -6381,20 +6383,20 @@ class __$$InitialImplCopyWithImpl<$Res>
           ? _value.fetchMoreInvidiousCommentsStatus
           : fetchMoreInvidiousCommentsStatus // ignore: cast_nullable_to_non_nullable
               as ApiStatus,
-      isMoreInvidiousCommetsFetchCompleted: null ==
-              isMoreInvidiousCommetsFetchCompleted
-          ? _value.isMoreInvidiousCommetsFetchCompleted
-          : isMoreInvidiousCommetsFetchCompleted // ignore: cast_nullable_to_non_nullable
+      isMoreInvidiousCommentsFetchCompleted: null ==
+              isMoreInvidiousCommentsFetchCompleted
+          ? _value.isMoreInvidiousCommentsFetchCompleted
+          : isMoreInvidiousCommentsFetchCompleted // ignore: cast_nullable_to_non_nullable
               as bool,
       fetchMoreInvidiousCommentRepliesStatus: null ==
               fetchMoreInvidiousCommentRepliesStatus
           ? _value.fetchMoreInvidiousCommentRepliesStatus
           : fetchMoreInvidiousCommentRepliesStatus // ignore: cast_nullable_to_non_nullable
               as ApiStatus,
-      isMoreInvidiousReplyCommetsFetchCompleted: null ==
-              isMoreInvidiousReplyCommetsFetchCompleted
-          ? _value.isMoreInvidiousReplyCommetsFetchCompleted
-          : isMoreInvidiousReplyCommetsFetchCompleted // ignore: cast_nullable_to_non_nullable
+      isMoreInvidiousReplyCommentsFetchCompleted: null ==
+              isMoreInvidiousReplyCommentsFetchCompleted
+          ? _value.isMoreInvidiousReplyCommentsFetchCompleted
+          : isMoreInvidiousReplyCommentsFetchCompleted // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -6418,9 +6420,9 @@ class _$InitialImpl implements _Initial {
       required this.fetchCommentsStatus,
       required this.fetchCommentRepliesStatus,
       required this.fetchMoreCommentsStatus,
-      required this.isMoreCommetsFetchCompleted,
+      required this.isMoreCommentsFetchCompleted,
       required this.fetchMoreCommentRepliesStatus,
-      required this.isMoreReplyCommetsFetchCompleted,
+      required this.isMoreReplyCommentsFetchCompleted,
       required this.explodeWatchResp,
       required this.fetchExplodeWatchInfoStatus,
       required this.fetchSubtitlesStatus,
@@ -6438,9 +6440,9 @@ class _$InitialImpl implements _Initial {
       required this.invidiousCommentReplies,
       required this.fetchInvidiousCommentRepliesStatus,
       required this.fetchMoreInvidiousCommentsStatus,
-      required this.isMoreInvidiousCommetsFetchCompleted,
+      required this.isMoreInvidiousCommentsFetchCompleted,
       required this.fetchMoreInvidiousCommentRepliesStatus,
-      required this.isMoreInvidiousReplyCommetsFetchCompleted})
+      required this.isMoreInvidiousReplyCommentsFetchCompleted})
       : _subtitles = subtitles,
         _relatedVideos = relatedVideos,
         _muxedStreams = muxedStreams;
@@ -6476,11 +6478,11 @@ class _$InitialImpl implements _Initial {
   @override
   final ApiStatus fetchMoreCommentsStatus;
   @override
-  final bool isMoreCommetsFetchCompleted;
+  final bool isMoreCommentsFetchCompleted;
   @override
   final ApiStatus fetchMoreCommentRepliesStatus;
   @override
-  final bool isMoreReplyCommetsFetchCompleted;
+  final bool isMoreReplyCommentsFetchCompleted;
 //EXPLODE
   @override
   final ExplodeWatchResp explodeWatchResp;
@@ -6540,15 +6542,15 @@ class _$InitialImpl implements _Initial {
   @override
   final ApiStatus fetchMoreInvidiousCommentsStatus;
   @override
-  final bool isMoreInvidiousCommetsFetchCompleted;
+  final bool isMoreInvidiousCommentsFetchCompleted;
   @override
   final ApiStatus fetchMoreInvidiousCommentRepliesStatus;
   @override
-  final bool isMoreInvidiousReplyCommetsFetchCompleted;
+  final bool isMoreInvidiousReplyCommentsFetchCompleted;
 
   @override
   String toString() {
-    return 'WatchState(oldId: $oldId, isTapComments: $isTapComments, isDescriptionTapped: $isDescriptionTapped, isPipEnabled: $isPipEnabled, title: $title, playBack: $playBack, selectedVideoBasicDetails: $selectedVideoBasicDetails, watchResp: $watchResp, comments: $comments, commentReplies: $commentReplies, fetchWatchInfoStatus: $fetchWatchInfoStatus, fetchCommentsStatus: $fetchCommentsStatus, fetchCommentRepliesStatus: $fetchCommentRepliesStatus, fetchMoreCommentsStatus: $fetchMoreCommentsStatus, isMoreCommetsFetchCompleted: $isMoreCommetsFetchCompleted, fetchMoreCommentRepliesStatus: $fetchMoreCommentRepliesStatus, isMoreReplyCommetsFetchCompleted: $isMoreReplyCommetsFetchCompleted, explodeWatchResp: $explodeWatchResp, fetchExplodeWatchInfoStatus: $fetchExplodeWatchInfoStatus, fetchSubtitlesStatus: $fetchSubtitlesStatus, subtitles: $subtitles, liveStreamUrl: $liveStreamUrl, fetchExplodeLiveStreamStatus: $fetchExplodeLiveStreamStatus, relatedVideos: $relatedVideos, fetchExplodedRelatedVideosStatus: $fetchExplodedRelatedVideosStatus, muxedStreams: $muxedStreams, fetchExplodeMuxedStreamsStatus: $fetchExplodeMuxedStreamsStatus, invidiousWatchResp: $invidiousWatchResp, fetchInvidiousWatchInfoStatus: $fetchInvidiousWatchInfoStatus, invidiousComments: $invidiousComments, fetchInvidiousCommentsStatus: $fetchInvidiousCommentsStatus, invidiousCommentReplies: $invidiousCommentReplies, fetchInvidiousCommentRepliesStatus: $fetchInvidiousCommentRepliesStatus, fetchMoreInvidiousCommentsStatus: $fetchMoreInvidiousCommentsStatus, isMoreInvidiousCommetsFetchCompleted: $isMoreInvidiousCommetsFetchCompleted, fetchMoreInvidiousCommentRepliesStatus: $fetchMoreInvidiousCommentRepliesStatus, isMoreInvidiousReplyCommetsFetchCompleted: $isMoreInvidiousReplyCommetsFetchCompleted)';
+    return 'WatchState(oldId: $oldId, isTapComments: $isTapComments, isDescriptionTapped: $isDescriptionTapped, isPipEnabled: $isPipEnabled, title: $title, playBack: $playBack, selectedVideoBasicDetails: $selectedVideoBasicDetails, watchResp: $watchResp, comments: $comments, commentReplies: $commentReplies, fetchWatchInfoStatus: $fetchWatchInfoStatus, fetchCommentsStatus: $fetchCommentsStatus, fetchCommentRepliesStatus: $fetchCommentRepliesStatus, fetchMoreCommentsStatus: $fetchMoreCommentsStatus, isMoreCommentsFetchCompleted: $isMoreCommentsFetchCompleted, fetchMoreCommentRepliesStatus: $fetchMoreCommentRepliesStatus, isMoreReplyCommentsFetchCompleted: $isMoreReplyCommentsFetchCompleted, explodeWatchResp: $explodeWatchResp, fetchExplodeWatchInfoStatus: $fetchExplodeWatchInfoStatus, fetchSubtitlesStatus: $fetchSubtitlesStatus, subtitles: $subtitles, liveStreamUrl: $liveStreamUrl, fetchExplodeLiveStreamStatus: $fetchExplodeLiveStreamStatus, relatedVideos: $relatedVideos, fetchExplodedRelatedVideosStatus: $fetchExplodedRelatedVideosStatus, muxedStreams: $muxedStreams, fetchExplodeMuxedStreamsStatus: $fetchExplodeMuxedStreamsStatus, invidiousWatchResp: $invidiousWatchResp, fetchInvidiousWatchInfoStatus: $fetchInvidiousWatchInfoStatus, invidiousComments: $invidiousComments, fetchInvidiousCommentsStatus: $fetchInvidiousCommentsStatus, invidiousCommentReplies: $invidiousCommentReplies, fetchInvidiousCommentRepliesStatus: $fetchInvidiousCommentRepliesStatus, fetchMoreInvidiousCommentsStatus: $fetchMoreInvidiousCommentsStatus, isMoreInvidiousCommentsFetchCompleted: $isMoreInvidiousCommentsFetchCompleted, fetchMoreInvidiousCommentRepliesStatus: $fetchMoreInvidiousCommentRepliesStatus, isMoreInvidiousReplyCommentsFetchCompleted: $isMoreInvidiousReplyCommentsFetchCompleted)';
   }
 
   @override
@@ -6582,16 +6584,15 @@ class _$InitialImpl implements _Initial {
                 other.fetchCommentRepliesStatus == fetchCommentRepliesStatus) &&
             (identical(other.fetchMoreCommentsStatus, fetchMoreCommentsStatus) ||
                 other.fetchMoreCommentsStatus == fetchMoreCommentsStatus) &&
-            (identical(other.isMoreCommetsFetchCompleted, isMoreCommetsFetchCompleted) ||
-                other.isMoreCommetsFetchCompleted ==
-                    isMoreCommetsFetchCompleted) &&
+            (identical(other.isMoreCommentsFetchCompleted, isMoreCommentsFetchCompleted) ||
+                other.isMoreCommentsFetchCompleted ==
+                    isMoreCommentsFetchCompleted) &&
             (identical(other.fetchMoreCommentRepliesStatus, fetchMoreCommentRepliesStatus) ||
                 other.fetchMoreCommentRepliesStatus ==
                     fetchMoreCommentRepliesStatus) &&
-            (identical(other.isMoreReplyCommetsFetchCompleted,
-                    isMoreReplyCommetsFetchCompleted) ||
-                other.isMoreReplyCommetsFetchCompleted ==
-                    isMoreReplyCommetsFetchCompleted) &&
+            (identical(other.isMoreReplyCommentsFetchCompleted, isMoreReplyCommentsFetchCompleted) ||
+                other.isMoreReplyCommentsFetchCompleted ==
+                    isMoreReplyCommentsFetchCompleted) &&
             (identical(other.explodeWatchResp, explodeWatchResp) ||
                 other.explodeWatchResp == explodeWatchResp) &&
             (identical(other.fetchExplodeWatchInfoStatus, fetchExplodeWatchInfoStatus) ||
@@ -6604,8 +6605,10 @@ class _$InitialImpl implements _Initial {
             (identical(other.liveStreamUrl, liveStreamUrl) ||
                 other.liveStreamUrl == liveStreamUrl) &&
             (identical(other.fetchExplodeLiveStreamStatus, fetchExplodeLiveStreamStatus) ||
-                other.fetchExplodeLiveStreamStatus == fetchExplodeLiveStreamStatus) &&
-            const DeepCollectionEquality().equals(other._relatedVideos, _relatedVideos) &&
+                other.fetchExplodeLiveStreamStatus ==
+                    fetchExplodeLiveStreamStatus) &&
+            const DeepCollectionEquality()
+                .equals(other._relatedVideos, _relatedVideos) &&
             (identical(other.fetchExplodedRelatedVideosStatus, fetchExplodedRelatedVideosStatus) || other.fetchExplodedRelatedVideosStatus == fetchExplodedRelatedVideosStatus) &&
             const DeepCollectionEquality().equals(other._muxedStreams, _muxedStreams) &&
             (identical(other.fetchExplodeMuxedStreamsStatus, fetchExplodeMuxedStreamsStatus) || other.fetchExplodeMuxedStreamsStatus == fetchExplodeMuxedStreamsStatus) &&
@@ -6616,9 +6619,9 @@ class _$InitialImpl implements _Initial {
             (identical(other.invidiousCommentReplies, invidiousCommentReplies) || other.invidiousCommentReplies == invidiousCommentReplies) &&
             (identical(other.fetchInvidiousCommentRepliesStatus, fetchInvidiousCommentRepliesStatus) || other.fetchInvidiousCommentRepliesStatus == fetchInvidiousCommentRepliesStatus) &&
             (identical(other.fetchMoreInvidiousCommentsStatus, fetchMoreInvidiousCommentsStatus) || other.fetchMoreInvidiousCommentsStatus == fetchMoreInvidiousCommentsStatus) &&
-            (identical(other.isMoreInvidiousCommetsFetchCompleted, isMoreInvidiousCommetsFetchCompleted) || other.isMoreInvidiousCommetsFetchCompleted == isMoreInvidiousCommetsFetchCompleted) &&
+            (identical(other.isMoreInvidiousCommentsFetchCompleted, isMoreInvidiousCommentsFetchCompleted) || other.isMoreInvidiousCommentsFetchCompleted == isMoreInvidiousCommentsFetchCompleted) &&
             (identical(other.fetchMoreInvidiousCommentRepliesStatus, fetchMoreInvidiousCommentRepliesStatus) || other.fetchMoreInvidiousCommentRepliesStatus == fetchMoreInvidiousCommentRepliesStatus) &&
-            (identical(other.isMoreInvidiousReplyCommetsFetchCompleted, isMoreInvidiousReplyCommetsFetchCompleted) || other.isMoreInvidiousReplyCommetsFetchCompleted == isMoreInvidiousReplyCommetsFetchCompleted));
+            (identical(other.isMoreInvidiousReplyCommentsFetchCompleted, isMoreInvidiousReplyCommentsFetchCompleted) || other.isMoreInvidiousReplyCommentsFetchCompleted == isMoreInvidiousReplyCommentsFetchCompleted));
   }
 
   @override
@@ -6638,9 +6641,9 @@ class _$InitialImpl implements _Initial {
         fetchCommentsStatus,
         fetchCommentRepliesStatus,
         fetchMoreCommentsStatus,
-        isMoreCommetsFetchCompleted,
+        isMoreCommentsFetchCompleted,
         fetchMoreCommentRepliesStatus,
-        isMoreReplyCommetsFetchCompleted,
+        isMoreReplyCommentsFetchCompleted,
         explodeWatchResp,
         fetchExplodeWatchInfoStatus,
         fetchSubtitlesStatus,
@@ -6658,9 +6661,9 @@ class _$InitialImpl implements _Initial {
         invidiousCommentReplies,
         fetchInvidiousCommentRepliesStatus,
         fetchMoreInvidiousCommentsStatus,
-        isMoreInvidiousCommetsFetchCompleted,
+        isMoreInvidiousCommentsFetchCompleted,
         fetchMoreInvidiousCommentRepliesStatus,
-        isMoreInvidiousReplyCommetsFetchCompleted
+        isMoreInvidiousReplyCommentsFetchCompleted
       ]);
 
   /// Create a copy of WatchState
@@ -6688,9 +6691,9 @@ abstract class _Initial implements WatchState {
           required final ApiStatus fetchCommentsStatus,
           required final ApiStatus fetchCommentRepliesStatus,
           required final ApiStatus fetchMoreCommentsStatus,
-          required final bool isMoreCommetsFetchCompleted,
+          required final bool isMoreCommentsFetchCompleted,
           required final ApiStatus fetchMoreCommentRepliesStatus,
-          required final bool isMoreReplyCommetsFetchCompleted,
+          required final bool isMoreReplyCommentsFetchCompleted,
           required final ExplodeWatchResp explodeWatchResp,
           required final ApiStatus fetchExplodeWatchInfoStatus,
           required final ApiStatus fetchSubtitlesStatus,
@@ -6708,9 +6711,9 @@ abstract class _Initial implements WatchState {
           required final InvidiousCommentsResp invidiousCommentReplies,
           required final ApiStatus fetchInvidiousCommentRepliesStatus,
           required final ApiStatus fetchMoreInvidiousCommentsStatus,
-          required final bool isMoreInvidiousCommetsFetchCompleted,
+          required final bool isMoreInvidiousCommentsFetchCompleted,
           required final ApiStatus fetchMoreInvidiousCommentRepliesStatus,
-          required final bool isMoreInvidiousReplyCommetsFetchCompleted}) =
+          required final bool isMoreInvidiousReplyCommentsFetchCompleted}) =
       _$InitialImpl;
 
 //
@@ -6743,11 +6746,11 @@ abstract class _Initial implements WatchState {
   @override
   ApiStatus get fetchMoreCommentsStatus;
   @override
-  bool get isMoreCommetsFetchCompleted;
+  bool get isMoreCommentsFetchCompleted;
   @override
   ApiStatus get fetchMoreCommentRepliesStatus;
   @override
-  bool get isMoreReplyCommetsFetchCompleted; //EXPLODE
+  bool get isMoreReplyCommentsFetchCompleted; //EXPLODE
   @override
   ExplodeWatchResp get explodeWatchResp;
   @override
@@ -6783,11 +6786,11 @@ abstract class _Initial implements WatchState {
   @override
   ApiStatus get fetchMoreInvidiousCommentsStatus;
   @override
-  bool get isMoreInvidiousCommetsFetchCompleted;
+  bool get isMoreInvidiousCommentsFetchCompleted;
   @override
   ApiStatus get fetchMoreInvidiousCommentRepliesStatus;
   @override
-  bool get isMoreInvidiousReplyCommetsFetchCompleted;
+  bool get isMoreInvidiousReplyCommentsFetchCompleted;
 
   /// Create a copy of WatchState
   /// with the given fields replaced by the non-null parameter values.

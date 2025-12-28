@@ -36,7 +36,7 @@ class CommentSection extends StatelessWidget {
       if (_scrollController.position.pixels ==
               _scrollController.position.maxScrollExtent &&
           !(state.fetchMoreCommentsStatus == ApiStatus.loading) &&
-          !state.isMoreCommetsFetchCompleted) {
+          !state.isMoreCommentsFetchCompleted) {
         BlocProvider.of<WatchBloc>(context).add(WatchEvent.getMoreCommentsData(
             id: videoId, nextPage: state.comments.nextpage));
       }
@@ -47,7 +47,7 @@ class CommentSection extends StatelessWidget {
       if (_scrollControllerReply.position.pixels ==
               _scrollControllerReply.position.maxScrollExtent &&
           !(state.fetchMoreCommentRepliesStatus == ApiStatus.loading) &&
-          !state.isMoreReplyCommetsFetchCompleted) {
+          !state.isMoreReplyCommentsFetchCompleted) {
         BlocProvider.of<WatchBloc>(context).add(
             WatchEvent.getMoreReplyCommentsData(
                 id: videoId, nextPage: state.commentReplies.nextpage));
@@ -125,7 +125,7 @@ class CommentSection extends StatelessWidget {
                           ],
                         );
                       } else {
-                        if (state.isMoreCommetsFetchCompleted) {
+                        if (state.isMoreCommentsFetchCompleted) {
                           return const SizedBox();
                         } else {
                           return cIndicator(context);
@@ -200,7 +200,7 @@ class CommentSection extends StatelessWidget {
                                     }),
                                   );
                                 } else {
-                                  if (state.isMoreReplyCommetsFetchCompleted ||
+                                  if (state.isMoreReplyCommentsFetchCompleted ||
                                       (index == commentCount)) {
                                     return const SizedBox();
                                   } else {

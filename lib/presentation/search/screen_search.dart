@@ -40,6 +40,14 @@ class _ScreenSearchState extends State<ScreenSearch> {
     }
   }
 
+  void _performSearch(String query, String serviceType) {
+    BlocProvider.of<SearchBloc>(context).add(SearchEvent.getSearchResult(
+      query: query,
+      filter: _selectedFilter,
+      serviceType: serviceType,
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -129,6 +137,7 @@ class _ScreenSearchState extends State<ScreenSearch> {
                         return NewPipeSearchSuggestionSection(
                           textEditingController: _textEditingController,
                           state: state,
+                          onSearch: (query) => _performSearch(query, settingsState.ytService),
                         );
                       } else if (state.fetchNewPipeSearchResultStatus == ApiStatus.loading ||
                           (_textEditingController.text.trim().isNotEmpty &&
@@ -170,6 +179,7 @@ class _ScreenSearchState extends State<ScreenSearch> {
                         return SearchSuggestionSection(
                           textEditingController: _textEditingController,
                           state: state,
+                          onSearch: (query) => _performSearch(query, settingsState.ytService),
                         );
                       } else if (state.fetchSearchResultStatus == ApiStatus.loading ||
                           state.fetchSearchResultStatus == ApiStatus.initial) {
@@ -207,6 +217,7 @@ class _ScreenSearchState extends State<ScreenSearch> {
                         return SearchSuggestionSection(
                           textEditingController: _textEditingController,
                           state: state,
+                          onSearch: (query) => _performSearch(query, settingsState.ytService),
                         );
                       } else if (state.fetchSearchResultStatus == ApiStatus.loading ||
                           (_textEditingController.text.trim().isNotEmpty &&
@@ -251,34 +262,40 @@ class _ScreenSearchState extends State<ScreenSearch> {
     final isSelected = _selectedFilter == filter;
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
-    return FilterChip(
-      label: Text(
-        label,
-        style: TextStyle(
-          color: isSelected
-              ? (isDarkMode ? kWhiteColor : kWhiteColor)
-              : (isDarkMode ? kWhiteColor.withValues(alpha: 0.8) : kBlackColor),
-          fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+    return Theme(
+      data: Theme.of(context).copyWith(
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+      ),
+      child: FilterChip(
+        label: Text(
+          label,
+          style: TextStyle(
+            color: isSelected
+                ? (isDarkMode ? kWhiteColor : kWhiteColor)
+                : (isDarkMode ? kWhiteColor.withValues(alpha: 0.8) : kBlackColor),
+            fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+          ),
         ),
+        selected: isSelected,
+        onSelected: (_) => _onFilterChanged(filter, serviceType),
+        backgroundColor: isDarkMode
+            ? kWhiteColor.withValues(alpha: 0.1)
+            : kGreyOpacityColor,
+        selectedColor: kRedColor,
+        checkmarkColor: kWhiteColor,
+        side: BorderSide(
+          color: isSelected
+              ? kRedColor
+              : (isDarkMode ? kWhiteColor.withValues(alpha: 0.3) : kGreyColor!.withValues(alpha: 0.3)),
+          width: 1,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        showCheckmark: false,
       ),
-      selected: isSelected,
-      onSelected: (_) => _onFilterChanged(filter, serviceType),
-      backgroundColor: isDarkMode
-          ? kWhiteColor.withValues(alpha: 0.1)
-          : kGreyOpacityColor,
-      selectedColor: kRedColor,
-      checkmarkColor: kWhiteColor,
-      side: BorderSide(
-        color: isSelected
-            ? kRedColor
-            : (isDarkMode ? kWhiteColor.withValues(alpha: 0.3) : kGreyColor!.withValues(alpha: 0.3)),
-        width: 1,
-      ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      showCheckmark: false,
     );
   }
 }

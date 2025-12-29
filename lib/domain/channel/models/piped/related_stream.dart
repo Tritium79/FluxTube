@@ -9,6 +9,7 @@ class RelatedStream {
   String? title;
   String? name;
   String? thumbnail;
+  String? thumbnailUrl;
   String? uploaderName;
   String? uploaderUrl;
   dynamic uploaderAvatar;
@@ -27,6 +28,7 @@ class RelatedStream {
     this.title,
     this.name,
     this.thumbnail,
+    this.thumbnailUrl,
     this.uploaderName,
     this.uploaderUrl,
     this.uploaderAvatar,

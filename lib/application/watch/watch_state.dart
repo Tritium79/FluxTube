@@ -50,6 +50,14 @@ class WatchState with _$WatchState {
     required ApiStatus fetchMoreInvidiousCommentRepliesStatus,
     required bool isMoreInvidiousReplyCommentsFetchCompleted,
 
+    // NEWPIPE
+    required NewPipeWatchResp newPipeWatchResp,
+    required ApiStatus fetchNewPipeWatchInfoStatus,
+    required NewPipeCommentsResp newPipeComments,
+    required ApiStatus fetchNewPipeCommentsStatus,
+    required ApiStatus fetchMoreNewPipeCommentsStatus,
+    required bool isMoreNewPipeCommentsFetchCompleted,
+
   }) = _Initial;
 
   factory WatchState.initialize() => WatchState(
@@ -99,6 +107,14 @@ class WatchState with _$WatchState {
         isMoreInvidiousCommentsFetchCompleted: false,
         fetchMoreInvidiousCommentRepliesStatus: ApiStatus.initial,
         isMoreInvidiousReplyCommentsFetchCompleted: false,
+
+        // NEWPIPE
+        newPipeWatchResp: NewPipeWatchResp(),
+        fetchNewPipeWatchInfoStatus: ApiStatus.initial,
+        newPipeComments: NewPipeCommentsResp(),
+        fetchNewPipeCommentsStatus: ApiStatus.initial,
+        fetchMoreNewPipeCommentsStatus: ApiStatus.initial,
+        isMoreNewPipeCommentsFetchCompleted: false,
 
       );
 }

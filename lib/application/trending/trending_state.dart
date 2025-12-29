@@ -11,10 +11,15 @@ class TrendingState with _$TrendingState {
     required ApiStatus fetchTrendingStatus,
     required ApiStatus fetchFeedStatus,
 
-    // EXPLODE
+    // INVIDIOUS
 
     required ApiStatus fetchInvidiousTrendingStatus,
     required List<InvidiousTrendingResp> invidiousTrendingResult,
+
+    // NEWPIPE
+
+    required ApiStatus fetchNewPipeTrendingStatus,
+    required List<NewPipeTrendingResp> newPipeTrendingResult,
   }) = _Initial;
 
   factory TrendingState.initialize() => const TrendingState(
@@ -27,9 +32,14 @@ class TrendingState with _$TrendingState {
         fetchTrendingStatus: ApiStatus.initial,
         fetchFeedStatus: ApiStatus.initial,
 
-        // EXPLODE
+        // INVIDIOUS
 
         fetchInvidiousTrendingStatus: ApiStatus.initial,
         invidiousTrendingResult: [],
+
+        // NEWPIPE
+
+        fetchNewPipeTrendingStatus: ApiStatus.initial,
+        newPipeTrendingResult: [],
       );
 }

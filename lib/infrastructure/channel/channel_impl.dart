@@ -5,10 +5,12 @@ import 'package:dio/dio.dart';
 import 'package:fluxtube/domain/channel/channel_services.dart';
 import 'package:fluxtube/domain/channel/models/invidious/invidious_channel_resp.dart';
 import 'package:fluxtube/domain/channel/models/invidious/latest_video.dart';
+import 'package:fluxtube/domain/channel/models/newpipe/newpipe_channel_resp.dart';
 import 'package:fluxtube/domain/channel/models/piped/channel_resp.dart';
 import 'package:fluxtube/domain/channel/models/piped/tab_content.dart';
 import 'package:fluxtube/domain/core/api_end_points.dart';
 import 'package:fluxtube/domain/core/failure/main_failure.dart';
+import 'package:fluxtube/infrastructure/newpipe/newpipe_channel.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: ChannelServices)
@@ -164,6 +166,22 @@ class ChannelImpl extends ChannelServices {
       return const Left(MainFailure.clientFailure());
     } finally {
       dioClient.close();
+    }
+  }
+
+  //NewPipe
+
+  ///[getNewPipeChannelData] fetches channel data from NewPipe Extractor
+  @override
+  Future<Either<MainFailure, NewPipeChannelResp>> getNewPipeChannelData(
+      {required String channelId}) async {
+    try {
+      log('NewPipe: Getting channel data for $channelId');
+      final result = await NewPipeChannel.getChannel(channelId);
+      return Right(result);
+    } catch (e) {
+      log('Err on getNewPipeChannelData: $e');
+      return Left(MainFailure.unknown(message: e.toString()));
     }
   }
 }

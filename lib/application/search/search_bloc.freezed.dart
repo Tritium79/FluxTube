@@ -704,7 +704,18 @@ mixin _$SearchState {
   ApiStatus get fetchMoreInvidiousSearchResultStatus =>
       throw _privateConstructorUsedError;
   bool get isMoreInvidiousFetchCompleted => throw _privateConstructorUsedError;
-  int? get page => throw _privateConstructorUsedError;
+  int? get page => throw _privateConstructorUsedError; // NEWPIPE
+  ApiStatus get fetchNewPipeSearchResultStatus =>
+      throw _privateConstructorUsedError;
+  NewPipeSearchResp? get newPipeSearchResult =>
+      throw _privateConstructorUsedError;
+  ApiStatus get fetchNewPipeSuggestionStatus =>
+      throw _privateConstructorUsedError;
+  List<dynamic> get newPipeSuggestionResult =>
+      throw _privateConstructorUsedError;
+  ApiStatus get fetchMoreNewPipeSearchResultStatus =>
+      throw _privateConstructorUsedError;
+  bool get isMoreNewPipeFetchCompleted => throw _privateConstructorUsedError;
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.
@@ -733,7 +744,13 @@ abstract class $SearchStateCopyWith<$Res> {
       List<dynamic> invidiousSuggestionResult,
       ApiStatus fetchMoreInvidiousSearchResultStatus,
       bool isMoreInvidiousFetchCompleted,
-      int? page});
+      int? page,
+      ApiStatus fetchNewPipeSearchResultStatus,
+      NewPipeSearchResp? newPipeSearchResult,
+      ApiStatus fetchNewPipeSuggestionStatus,
+      List<dynamic> newPipeSuggestionResult,
+      ApiStatus fetchMoreNewPipeSearchResultStatus,
+      bool isMoreNewPipeFetchCompleted});
 }
 
 /// @nodoc
@@ -765,6 +782,12 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
     Object? fetchMoreInvidiousSearchResultStatus = null,
     Object? isMoreInvidiousFetchCompleted = null,
     Object? page = freezed,
+    Object? fetchNewPipeSearchResultStatus = null,
+    Object? newPipeSearchResult = freezed,
+    Object? fetchNewPipeSuggestionStatus = null,
+    Object? newPipeSuggestionResult = null,
+    Object? fetchMoreNewPipeSearchResultStatus = null,
+    Object? isMoreNewPipeFetchCompleted = null,
   }) {
     return _then(_value.copyWith(
       isSuggestionDisplay: null == isSuggestionDisplay
@@ -824,6 +847,31 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
           ? _value.page
           : page // ignore: cast_nullable_to_non_nullable
               as int?,
+      fetchNewPipeSearchResultStatus: null == fetchNewPipeSearchResultStatus
+          ? _value.fetchNewPipeSearchResultStatus
+          : fetchNewPipeSearchResultStatus // ignore: cast_nullable_to_non_nullable
+              as ApiStatus,
+      newPipeSearchResult: freezed == newPipeSearchResult
+          ? _value.newPipeSearchResult
+          : newPipeSearchResult // ignore: cast_nullable_to_non_nullable
+              as NewPipeSearchResp?,
+      fetchNewPipeSuggestionStatus: null == fetchNewPipeSuggestionStatus
+          ? _value.fetchNewPipeSuggestionStatus
+          : fetchNewPipeSuggestionStatus // ignore: cast_nullable_to_non_nullable
+              as ApiStatus,
+      newPipeSuggestionResult: null == newPipeSuggestionResult
+          ? _value.newPipeSuggestionResult
+          : newPipeSuggestionResult // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>,
+      fetchMoreNewPipeSearchResultStatus: null ==
+              fetchMoreNewPipeSearchResultStatus
+          ? _value.fetchMoreNewPipeSearchResultStatus
+          : fetchMoreNewPipeSearchResultStatus // ignore: cast_nullable_to_non_nullable
+              as ApiStatus,
+      isMoreNewPipeFetchCompleted: null == isMoreNewPipeFetchCompleted
+          ? _value.isMoreNewPipeFetchCompleted
+          : isMoreNewPipeFetchCompleted // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -850,7 +898,13 @@ abstract class _$$SearchStateImplCopyWith<$Res>
       List<dynamic> invidiousSuggestionResult,
       ApiStatus fetchMoreInvidiousSearchResultStatus,
       bool isMoreInvidiousFetchCompleted,
-      int? page});
+      int? page,
+      ApiStatus fetchNewPipeSearchResultStatus,
+      NewPipeSearchResp? newPipeSearchResult,
+      ApiStatus fetchNewPipeSuggestionStatus,
+      List<dynamic> newPipeSuggestionResult,
+      ApiStatus fetchMoreNewPipeSearchResultStatus,
+      bool isMoreNewPipeFetchCompleted});
 }
 
 /// @nodoc
@@ -880,6 +934,12 @@ class __$$SearchStateImplCopyWithImpl<$Res>
     Object? fetchMoreInvidiousSearchResultStatus = null,
     Object? isMoreInvidiousFetchCompleted = null,
     Object? page = freezed,
+    Object? fetchNewPipeSearchResultStatus = null,
+    Object? newPipeSearchResult = freezed,
+    Object? fetchNewPipeSuggestionStatus = null,
+    Object? newPipeSuggestionResult = null,
+    Object? fetchMoreNewPipeSearchResultStatus = null,
+    Object? isMoreNewPipeFetchCompleted = null,
   }) {
     return _then(_$SearchStateImpl(
       isSuggestionDisplay: null == isSuggestionDisplay
@@ -939,6 +999,31 @@ class __$$SearchStateImplCopyWithImpl<$Res>
           ? _value.page
           : page // ignore: cast_nullable_to_non_nullable
               as int?,
+      fetchNewPipeSearchResultStatus: null == fetchNewPipeSearchResultStatus
+          ? _value.fetchNewPipeSearchResultStatus
+          : fetchNewPipeSearchResultStatus // ignore: cast_nullable_to_non_nullable
+              as ApiStatus,
+      newPipeSearchResult: freezed == newPipeSearchResult
+          ? _value.newPipeSearchResult
+          : newPipeSearchResult // ignore: cast_nullable_to_non_nullable
+              as NewPipeSearchResp?,
+      fetchNewPipeSuggestionStatus: null == fetchNewPipeSuggestionStatus
+          ? _value.fetchNewPipeSuggestionStatus
+          : fetchNewPipeSuggestionStatus // ignore: cast_nullable_to_non_nullable
+              as ApiStatus,
+      newPipeSuggestionResult: null == newPipeSuggestionResult
+          ? _value._newPipeSuggestionResult
+          : newPipeSuggestionResult // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>,
+      fetchMoreNewPipeSearchResultStatus: null ==
+              fetchMoreNewPipeSearchResultStatus
+          ? _value.fetchMoreNewPipeSearchResultStatus
+          : fetchMoreNewPipeSearchResultStatus // ignore: cast_nullable_to_non_nullable
+              as ApiStatus,
+      isMoreNewPipeFetchCompleted: null == isMoreNewPipeFetchCompleted
+          ? _value.isMoreNewPipeFetchCompleted
+          : isMoreNewPipeFetchCompleted // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -960,10 +1045,17 @@ class _$SearchStateImpl implements _SearchState {
       required final List<dynamic> invidiousSuggestionResult,
       required this.fetchMoreInvidiousSearchResultStatus,
       required this.isMoreInvidiousFetchCompleted,
-      this.page})
+      this.page,
+      required this.fetchNewPipeSearchResultStatus,
+      required this.newPipeSearchResult,
+      required this.fetchNewPipeSuggestionStatus,
+      required final List<dynamic> newPipeSuggestionResult,
+      required this.fetchMoreNewPipeSearchResultStatus,
+      required this.isMoreNewPipeFetchCompleted})
       : _suggestions = suggestions,
         _invidiousSearchResult = invidiousSearchResult,
-        _invidiousSuggestionResult = invidiousSuggestionResult;
+        _invidiousSuggestionResult = invidiousSuggestionResult,
+        _newPipeSuggestionResult = newPipeSuggestionResult;
 
 //
   @override
@@ -1016,10 +1108,30 @@ class _$SearchStateImpl implements _SearchState {
   final bool isMoreInvidiousFetchCompleted;
   @override
   final int? page;
+// NEWPIPE
+  @override
+  final ApiStatus fetchNewPipeSearchResultStatus;
+  @override
+  final NewPipeSearchResp? newPipeSearchResult;
+  @override
+  final ApiStatus fetchNewPipeSuggestionStatus;
+  final List<dynamic> _newPipeSuggestionResult;
+  @override
+  List<dynamic> get newPipeSuggestionResult {
+    if (_newPipeSuggestionResult is EqualUnmodifiableListView)
+      return _newPipeSuggestionResult;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_newPipeSuggestionResult);
+  }
+
+  @override
+  final ApiStatus fetchMoreNewPipeSearchResultStatus;
+  @override
+  final bool isMoreNewPipeFetchCompleted;
 
   @override
   String toString() {
-    return 'SearchState(isSuggestionDisplay: $isSuggestionDisplay, fetchSearchResultStatus: $fetchSearchResultStatus, result: $result, fetchSuggestionStatus: $fetchSuggestionStatus, suggestions: $suggestions, fetchMoreSearchResultStatus: $fetchMoreSearchResultStatus, isMoreFetchCompleted: $isMoreFetchCompleted, fetchInvidiousSearchResultStatus: $fetchInvidiousSearchResultStatus, invidiousSearchResult: $invidiousSearchResult, fetchInvidiousSuggestionStatus: $fetchInvidiousSuggestionStatus, invidiousSuggestionResult: $invidiousSuggestionResult, fetchMoreInvidiousSearchResultStatus: $fetchMoreInvidiousSearchResultStatus, isMoreInvidiousFetchCompleted: $isMoreInvidiousFetchCompleted, page: $page)';
+    return 'SearchState(isSuggestionDisplay: $isSuggestionDisplay, fetchSearchResultStatus: $fetchSearchResultStatus, result: $result, fetchSuggestionStatus: $fetchSuggestionStatus, suggestions: $suggestions, fetchMoreSearchResultStatus: $fetchMoreSearchResultStatus, isMoreFetchCompleted: $isMoreFetchCompleted, fetchInvidiousSearchResultStatus: $fetchInvidiousSearchResultStatus, invidiousSearchResult: $invidiousSearchResult, fetchInvidiousSuggestionStatus: $fetchInvidiousSuggestionStatus, invidiousSuggestionResult: $invidiousSuggestionResult, fetchMoreInvidiousSearchResultStatus: $fetchMoreInvidiousSearchResultStatus, isMoreInvidiousFetchCompleted: $isMoreInvidiousFetchCompleted, page: $page, fetchNewPipeSearchResultStatus: $fetchNewPipeSearchResultStatus, newPipeSearchResult: $newPipeSearchResult, fetchNewPipeSuggestionStatus: $fetchNewPipeSuggestionStatus, newPipeSuggestionResult: $newPipeSuggestionResult, fetchMoreNewPipeSearchResultStatus: $fetchMoreNewPipeSearchResultStatus, isMoreNewPipeFetchCompleted: $isMoreNewPipeFetchCompleted)';
   }
 
   @override
@@ -1041,44 +1153,61 @@ class _$SearchStateImpl implements _SearchState {
                     fetchMoreSearchResultStatus) &&
             (identical(other.isMoreFetchCompleted, isMoreFetchCompleted) ||
                 other.isMoreFetchCompleted == isMoreFetchCompleted) &&
-            (identical(other.fetchInvidiousSearchResultStatus,
-                    fetchInvidiousSearchResultStatus) ||
+            (identical(other.fetchInvidiousSearchResultStatus, fetchInvidiousSearchResultStatus) ||
                 other.fetchInvidiousSearchResultStatus ==
                     fetchInvidiousSearchResultStatus) &&
             const DeepCollectionEquality()
                 .equals(other._invidiousSearchResult, _invidiousSearchResult) &&
-            (identical(other.fetchInvidiousSuggestionStatus,
-                    fetchInvidiousSuggestionStatus) ||
+            (identical(other.fetchInvidiousSuggestionStatus, fetchInvidiousSuggestionStatus) ||
                 other.fetchInvidiousSuggestionStatus ==
                     fetchInvidiousSuggestionStatus) &&
             const DeepCollectionEquality().equals(
                 other._invidiousSuggestionResult, _invidiousSuggestionResult) &&
-            (identical(other.fetchMoreInvidiousSearchResultStatus,
-                    fetchMoreInvidiousSearchResultStatus) ||
+            (identical(other.fetchMoreInvidiousSearchResultStatus, fetchMoreInvidiousSearchResultStatus) ||
                 other.fetchMoreInvidiousSearchResultStatus ==
                     fetchMoreInvidiousSearchResultStatus) &&
             (identical(other.isMoreInvidiousFetchCompleted, isMoreInvidiousFetchCompleted) ||
-                other.isMoreInvidiousFetchCompleted == isMoreInvidiousFetchCompleted) &&
-            (identical(other.page, page) || other.page == page));
+                other.isMoreInvidiousFetchCompleted ==
+                    isMoreInvidiousFetchCompleted) &&
+            (identical(other.page, page) || other.page == page) &&
+            (identical(other.fetchNewPipeSearchResultStatus, fetchNewPipeSearchResultStatus) ||
+                other.fetchNewPipeSearchResultStatus ==
+                    fetchNewPipeSearchResultStatus) &&
+            (identical(other.newPipeSearchResult, newPipeSearchResult) ||
+                other.newPipeSearchResult == newPipeSearchResult) &&
+            (identical(other.fetchNewPipeSuggestionStatus, fetchNewPipeSuggestionStatus) ||
+                other.fetchNewPipeSuggestionStatus ==
+                    fetchNewPipeSuggestionStatus) &&
+            const DeepCollectionEquality()
+                .equals(other._newPipeSuggestionResult, _newPipeSuggestionResult) &&
+            (identical(other.fetchMoreNewPipeSearchResultStatus, fetchMoreNewPipeSearchResultStatus) || other.fetchMoreNewPipeSearchResultStatus == fetchMoreNewPipeSearchResultStatus) &&
+            (identical(other.isMoreNewPipeFetchCompleted, isMoreNewPipeFetchCompleted) || other.isMoreNewPipeFetchCompleted == isMoreNewPipeFetchCompleted));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      isSuggestionDisplay,
-      fetchSearchResultStatus,
-      result,
-      fetchSuggestionStatus,
-      const DeepCollectionEquality().hash(_suggestions),
-      fetchMoreSearchResultStatus,
-      isMoreFetchCompleted,
-      fetchInvidiousSearchResultStatus,
-      const DeepCollectionEquality().hash(_invidiousSearchResult),
-      fetchInvidiousSuggestionStatus,
-      const DeepCollectionEquality().hash(_invidiousSuggestionResult),
-      fetchMoreInvidiousSearchResultStatus,
-      isMoreInvidiousFetchCompleted,
-      page);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        isSuggestionDisplay,
+        fetchSearchResultStatus,
+        result,
+        fetchSuggestionStatus,
+        const DeepCollectionEquality().hash(_suggestions),
+        fetchMoreSearchResultStatus,
+        isMoreFetchCompleted,
+        fetchInvidiousSearchResultStatus,
+        const DeepCollectionEquality().hash(_invidiousSearchResult),
+        fetchInvidiousSuggestionStatus,
+        const DeepCollectionEquality().hash(_invidiousSuggestionResult),
+        fetchMoreInvidiousSearchResultStatus,
+        isMoreInvidiousFetchCompleted,
+        page,
+        fetchNewPipeSearchResultStatus,
+        newPipeSearchResult,
+        fetchNewPipeSuggestionStatus,
+        const DeepCollectionEquality().hash(_newPipeSuggestionResult),
+        fetchMoreNewPipeSearchResultStatus,
+        isMoreNewPipeFetchCompleted
+      ]);
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.
@@ -1104,7 +1233,13 @@ abstract class _SearchState implements SearchState {
       required final List<dynamic> invidiousSuggestionResult,
       required final ApiStatus fetchMoreInvidiousSearchResultStatus,
       required final bool isMoreInvidiousFetchCompleted,
-      final int? page}) = _$SearchStateImpl;
+      final int? page,
+      required final ApiStatus fetchNewPipeSearchResultStatus,
+      required final NewPipeSearchResp? newPipeSearchResult,
+      required final ApiStatus fetchNewPipeSuggestionStatus,
+      required final List<dynamic> newPipeSuggestionResult,
+      required final ApiStatus fetchMoreNewPipeSearchResultStatus,
+      required final bool isMoreNewPipeFetchCompleted}) = _$SearchStateImpl;
 
 //
   @override
@@ -1134,7 +1269,19 @@ abstract class _SearchState implements SearchState {
   @override
   bool get isMoreInvidiousFetchCompleted;
   @override
-  int? get page;
+  int? get page; // NEWPIPE
+  @override
+  ApiStatus get fetchNewPipeSearchResultStatus;
+  @override
+  NewPipeSearchResp? get newPipeSearchResult;
+  @override
+  ApiStatus get fetchNewPipeSuggestionStatus;
+  @override
+  List<dynamic> get newPipeSuggestionResult;
+  @override
+  ApiStatus get fetchMoreNewPipeSearchResultStatus;
+  @override
+  bool get isMoreNewPipeFetchCompleted;
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.

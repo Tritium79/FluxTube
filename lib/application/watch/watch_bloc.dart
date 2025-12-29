@@ -4,6 +4,8 @@ import 'package:fluxtube/domain/core/failure/main_failure.dart';
 import 'package:fluxtube/domain/watch/models/basic_info.dart';
 import 'package:fluxtube/domain/watch/models/invidious/comments/invidious_comments_resp.dart';
 import 'package:fluxtube/domain/watch/models/invidious/video/invidious_watch_resp.dart';
+import 'package:fluxtube/domain/watch/models/newpipe/newpipe_comments_resp.dart';
+import 'package:fluxtube/domain/watch/models/newpipe/newpipe_watch_resp.dart';
 import 'package:fluxtube/domain/watch/models/piped/comments/comments_resp.dart';
 import 'package:fluxtube/domain/watch/models/explode/explode_watch.dart';
 import 'package:fluxtube/domain/watch/watch_service.dart';
@@ -456,6 +458,96 @@ class WatchBloc extends Bloc<WatchEvent, WatchState> {
       emit(state.copyWith(
         playBack: event.playBack ?? 0,
       ));
+    });
+
+    // NEWPIPE
+    on<GetNewPipeWatchInfo>((event, emit) async {
+      emit(state.copyWith(
+        newPipeWatchResp: NewPipeWatchResp(),
+        fetchNewPipeWatchInfoStatus: ApiStatus.loading,
+        isTapComments: false,
+        isDescriptionTapped: false,
+      ));
+
+      final result = await watchService.getNewPipeVideoData(id: event.id);
+
+      final _state = result.fold(
+        (MainFailure failure) => state.copyWith(
+          fetchNewPipeWatchInfoStatus: ApiStatus.error,
+        ),
+        (NewPipeWatchResp resp) => state.copyWith(
+          newPipeWatchResp: resp,
+          fetchNewPipeWatchInfoStatus: ApiStatus.loaded,
+          oldId: event.id,
+        ),
+      );
+
+      emit(_state);
+    });
+
+    on<GetNewPipeComments>((event, emit) async {
+      emit(state.copyWith(
+        newPipeComments: NewPipeCommentsResp(),
+        fetchNewPipeCommentsStatus: ApiStatus.loading,
+        isTapComments: !state.isTapComments,
+      ));
+
+      if (state.isTapComments == true) {
+        final result = await watchService.getNewPipeCommentsData(id: event.id);
+
+        final _state = result.fold(
+          (MainFailure failure) => state.copyWith(
+            fetchNewPipeCommentsStatus: ApiStatus.error,
+          ),
+          (NewPipeCommentsResp resp) => state.copyWith(
+            newPipeComments: resp,
+            fetchNewPipeCommentsStatus: ApiStatus.loaded,
+          ),
+        );
+
+        emit(_state);
+      } else {
+        emit(state.copyWith(fetchNewPipeCommentsStatus: ApiStatus.initial));
+      }
+    });
+
+    on<GetMoreNewPipeComments>((event, emit) async {
+      emit(state.copyWith(
+        fetchMoreNewPipeCommentsStatus: ApiStatus.loading,
+        isMoreNewPipeCommentsFetchCompleted: false,
+      ));
+
+      final result = await watchService.getNewPipeMoreCommentsData(
+        id: event.id,
+        nextPage: event.nextPage!,
+      );
+
+      final _state = result.fold(
+        (MainFailure failure) => state.copyWith(
+          fetchMoreNewPipeCommentsStatus: ApiStatus.error,
+        ),
+        (NewPipeCommentsResp resp) {
+          if (resp.nextPage == null) {
+            return state.copyWith(
+              fetchMoreNewPipeCommentsStatus: ApiStatus.loaded,
+              isMoreNewPipeCommentsFetchCompleted: true,
+            );
+          } else {
+            final updatedComments = NewPipeCommentsResp(
+              comments: [...(state.newPipeComments.comments ?? []), ...(resp.comments ?? [])],
+              nextPage: resp.nextPage,
+              commentCount: state.newPipeComments.commentCount,
+              isDisabled: state.newPipeComments.isDisabled,
+            );
+            return state.copyWith(
+              fetchMoreNewPipeCommentsStatus: ApiStatus.loaded,
+              newPipeComments: updatedComments,
+            );
+          }
+        },
+      );
+
+      emit(_state);
     });
   }
 }

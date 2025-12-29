@@ -7,6 +7,7 @@ import 'package:fluxtube/core/constants.dart';
 import 'package:fluxtube/core/enums.dart';
 import 'package:fluxtube/generated/l10n.dart';
 import 'package:fluxtube/presentation/trending/widgets/invidious/trending_videos_section.dart';
+import 'package:fluxtube/presentation/trending/widgets/newpipe/trending_videos_section.dart';
 import 'package:fluxtube/presentation/trending/widgets/piped/trending_videos_section.dart';
 import 'package:fluxtube/widgets/widgets.dart';
 
@@ -53,10 +54,22 @@ class ScreenHome extends StatelessWidget {
                             current.fetchTrendingStatus ||
                         previous.fetchInvidiousTrendingStatus !=
                             current.fetchInvidiousTrendingStatus ||
+                        previous.fetchNewPipeTrendingStatus !=
+                            current.fetchNewPipeTrendingStatus ||
                         previous.fetchFeedStatus != current.fetchFeedStatus;
                   },
                   builder: (context, trendingState) {
                     if (settingsState.ytService ==
+                        YouTubeServices.newpipe.name) {
+                      return _buildNewPipeTrendingOrFeedSection(
+                        trendingState,
+                        locals,
+                        context,
+                        subscribeState,
+                        trendingBloc,
+                        settingsState,
+                      );
+                    } else if (settingsState.ytService ==
                         YouTubeServices.invidious.name) {
                       return _buildInvidiousTrendingOrFeedSection(
                         trendingState,
@@ -144,6 +157,81 @@ class ScreenHome extends StatelessWidget {
     if (trendingState.feedResult.isEmpty ||
         trendingState.fetchFeedStatus == ApiStatus.error) {
       log("Feed Error or empty - showing trending");
+      return _buildErrorOrTrendingSection(
+        context,
+        trendingState,
+        locals,
+        settingsState,
+      );
+    }
+
+    return _buildFeedSection(
+      trendingState,
+      locals,
+      subscribeState,
+      trendingBloc,
+    );
+  }
+
+  Widget _buildNewPipeTrendingOrFeedSection(
+    TrendingState trendingState,
+    S locals,
+    BuildContext context,
+    SubscribeState subscribeState,
+    TrendingBloc trendingBloc,
+    SettingsState settingsState,
+  ) {
+    final homeFeedMode = settingsState.homeFeedMode;
+
+    // Always fetch trending data if not available
+    if (trendingState.newPipeTrendingResult.isEmpty &&
+        !(trendingState.fetchNewPipeTrendingStatus == ApiStatus.error)) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        trendingBloc.add(TrendingEvent.getTrendingData(
+            serviceType: settingsState.ytService,
+            region: settingsState.defaultRegion));
+      });
+    }
+
+    if (trendingState.fetchNewPipeTrendingStatus == ApiStatus.loading ||
+        trendingState.fetchNewPipeTrendingStatus == ApiStatus.initial) {
+      return _buildLoadingList();
+    }
+
+    // Trending Only mode - always show trending
+    if (homeFeedMode == HomeFeedMode.trendingOnly.name) {
+      return _buildErrorOrTrendingSection(
+        context,
+        trendingState,
+        locals,
+        settingsState,
+      );
+    }
+
+    // Feed Only mode - show feed or empty state
+    if (homeFeedMode == HomeFeedMode.feedOnly.name) {
+      if (trendingState.fetchFeedStatus == ApiStatus.loading) {
+        return _buildLoadingList();
+      }
+      if (trendingState.feedResult.isEmpty) {
+        return _buildEmptySubscriptionState(context, locals);
+      }
+      return _buildFeedSection(
+        trendingState,
+        locals,
+        subscribeState,
+        trendingBloc,
+      );
+    }
+
+    // Auto mode (feedOrTrending) - show feed if available, otherwise trending
+    if (trendingState.fetchFeedStatus == ApiStatus.loading) {
+      return _buildLoadingList();
+    }
+
+    if (trendingState.feedResult.isEmpty ||
+        trendingState.fetchFeedStatus == ApiStatus.error) {
+      log("Feed Error or empty - showing NewPipe trending");
       return _buildErrorOrTrendingSection(
         context,
         trendingState,
@@ -250,7 +338,20 @@ class ScreenHome extends StatelessWidget {
     S locals,
     SettingsState settingsState,
   ) {
-    if (settingsState.ytService == YouTubeServices.invidious.name) {
+    // NewPipe error handling
+    if (settingsState.ytService == YouTubeServices.newpipe.name) {
+      if (trendingState.fetchNewPipeTrendingStatus == ApiStatus.error ||
+          trendingState.newPipeTrendingResult.isEmpty) {
+        return ErrorRetryWidget(
+          lottie: 'assets/dog.zip',
+          onTap: () => BlocProvider.of<TrendingBloc>(context).add(
+            TrendingEvent.getForcedTrendingData(
+                serviceType: settingsState.ytService,
+                region: settingsState.defaultRegion),
+          ),
+        );
+      }
+    } else if (settingsState.ytService == YouTubeServices.invidious.name) {
       if (trendingState.fetchInvidiousTrendingStatus == ApiStatus.error ||
           trendingState.invidiousTrendingResult.isEmpty) {
         return ErrorRetryWidget(
@@ -276,7 +377,13 @@ class ScreenHome extends StatelessWidget {
       }
     }
 
-    if (settingsState.ytService == YouTubeServices.invidious.name) {
+    // Return appropriate trending section
+    if (settingsState.ytService == YouTubeServices.newpipe.name) {
+      return NewPipeTrendingVideosSection(
+        locals: locals,
+        state: trendingState,
+      );
+    } else if (settingsState.ytService == YouTubeServices.invidious.name) {
       return InvidiousTrendingVideosSection(
         locals: locals,
         state: trendingState,

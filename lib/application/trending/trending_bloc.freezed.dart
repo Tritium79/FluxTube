@@ -772,10 +772,14 @@ mixin _$TrendingState {
   List<TrendingResp> get feedResult => throw _privateConstructorUsedError;
   ApiStatus get fetchTrendingStatus => throw _privateConstructorUsedError;
   ApiStatus get fetchFeedStatus =>
-      throw _privateConstructorUsedError; // EXPLODE
+      throw _privateConstructorUsedError; // INVIDIOUS
   ApiStatus get fetchInvidiousTrendingStatus =>
       throw _privateConstructorUsedError;
   List<InvidiousTrendingResp> get invidiousTrendingResult =>
+      throw _privateConstructorUsedError; // NEWPIPE
+  ApiStatus get fetchNewPipeTrendingStatus =>
+      throw _privateConstructorUsedError;
+  List<NewPipeTrendingResp> get newPipeTrendingResult =>
       throw _privateConstructorUsedError;
 
   /// Create a copy of TrendingState
@@ -798,7 +802,9 @@ abstract class $TrendingStateCopyWith<$Res> {
       ApiStatus fetchTrendingStatus,
       ApiStatus fetchFeedStatus,
       ApiStatus fetchInvidiousTrendingStatus,
-      List<InvidiousTrendingResp> invidiousTrendingResult});
+      List<InvidiousTrendingResp> invidiousTrendingResult,
+      ApiStatus fetchNewPipeTrendingStatus,
+      List<NewPipeTrendingResp> newPipeTrendingResult});
 }
 
 /// @nodoc
@@ -823,6 +829,8 @@ class _$TrendingStateCopyWithImpl<$Res, $Val extends TrendingState>
     Object? fetchFeedStatus = null,
     Object? fetchInvidiousTrendingStatus = null,
     Object? invidiousTrendingResult = null,
+    Object? fetchNewPipeTrendingStatus = null,
+    Object? newPipeTrendingResult = null,
   }) {
     return _then(_value.copyWith(
       lastUsedRegion: null == lastUsedRegion
@@ -853,6 +861,14 @@ class _$TrendingStateCopyWithImpl<$Res, $Val extends TrendingState>
           ? _value.invidiousTrendingResult
           : invidiousTrendingResult // ignore: cast_nullable_to_non_nullable
               as List<InvidiousTrendingResp>,
+      fetchNewPipeTrendingStatus: null == fetchNewPipeTrendingStatus
+          ? _value.fetchNewPipeTrendingStatus
+          : fetchNewPipeTrendingStatus // ignore: cast_nullable_to_non_nullable
+              as ApiStatus,
+      newPipeTrendingResult: null == newPipeTrendingResult
+          ? _value.newPipeTrendingResult
+          : newPipeTrendingResult // ignore: cast_nullable_to_non_nullable
+              as List<NewPipeTrendingResp>,
     ) as $Val);
   }
 }
@@ -872,7 +888,9 @@ abstract class _$$InitialImplCopyWith<$Res>
       ApiStatus fetchTrendingStatus,
       ApiStatus fetchFeedStatus,
       ApiStatus fetchInvidiousTrendingStatus,
-      List<InvidiousTrendingResp> invidiousTrendingResult});
+      List<InvidiousTrendingResp> invidiousTrendingResult,
+      ApiStatus fetchNewPipeTrendingStatus,
+      List<NewPipeTrendingResp> newPipeTrendingResult});
 }
 
 /// @nodoc
@@ -895,6 +913,8 @@ class __$$InitialImplCopyWithImpl<$Res>
     Object? fetchFeedStatus = null,
     Object? fetchInvidiousTrendingStatus = null,
     Object? invidiousTrendingResult = null,
+    Object? fetchNewPipeTrendingStatus = null,
+    Object? newPipeTrendingResult = null,
   }) {
     return _then(_$InitialImpl(
       lastUsedRegion: null == lastUsedRegion
@@ -925,6 +945,14 @@ class __$$InitialImplCopyWithImpl<$Res>
           ? _value._invidiousTrendingResult
           : invidiousTrendingResult // ignore: cast_nullable_to_non_nullable
               as List<InvidiousTrendingResp>,
+      fetchNewPipeTrendingStatus: null == fetchNewPipeTrendingStatus
+          ? _value.fetchNewPipeTrendingStatus
+          : fetchNewPipeTrendingStatus // ignore: cast_nullable_to_non_nullable
+              as ApiStatus,
+      newPipeTrendingResult: null == newPipeTrendingResult
+          ? _value._newPipeTrendingResult
+          : newPipeTrendingResult // ignore: cast_nullable_to_non_nullable
+              as List<NewPipeTrendingResp>,
     ));
   }
 }
@@ -939,10 +967,13 @@ class _$InitialImpl implements _Initial {
       required this.fetchTrendingStatus,
       required this.fetchFeedStatus,
       required this.fetchInvidiousTrendingStatus,
-      required final List<InvidiousTrendingResp> invidiousTrendingResult})
+      required final List<InvidiousTrendingResp> invidiousTrendingResult,
+      required this.fetchNewPipeTrendingStatus,
+      required final List<NewPipeTrendingResp> newPipeTrendingResult})
       : _trendingResult = trendingResult,
         _feedResult = feedResult,
-        _invidiousTrendingResult = invidiousTrendingResult;
+        _invidiousTrendingResult = invidiousTrendingResult,
+        _newPipeTrendingResult = newPipeTrendingResult;
 
   @override
   final String lastUsedRegion;
@@ -968,7 +999,7 @@ class _$InitialImpl implements _Initial {
   final ApiStatus fetchTrendingStatus;
   @override
   final ApiStatus fetchFeedStatus;
-// EXPLODE
+// INVIDIOUS
   @override
   final ApiStatus fetchInvidiousTrendingStatus;
   final List<InvidiousTrendingResp> _invidiousTrendingResult;
@@ -980,9 +1011,21 @@ class _$InitialImpl implements _Initial {
     return EqualUnmodifiableListView(_invidiousTrendingResult);
   }
 
+// NEWPIPE
+  @override
+  final ApiStatus fetchNewPipeTrendingStatus;
+  final List<NewPipeTrendingResp> _newPipeTrendingResult;
+  @override
+  List<NewPipeTrendingResp> get newPipeTrendingResult {
+    if (_newPipeTrendingResult is EqualUnmodifiableListView)
+      return _newPipeTrendingResult;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_newPipeTrendingResult);
+  }
+
   @override
   String toString() {
-    return 'TrendingState(lastUsedRegion: $lastUsedRegion, trendingResult: $trendingResult, feedResult: $feedResult, fetchTrendingStatus: $fetchTrendingStatus, fetchFeedStatus: $fetchFeedStatus, fetchInvidiousTrendingStatus: $fetchInvidiousTrendingStatus, invidiousTrendingResult: $invidiousTrendingResult)';
+    return 'TrendingState(lastUsedRegion: $lastUsedRegion, trendingResult: $trendingResult, feedResult: $feedResult, fetchTrendingStatus: $fetchTrendingStatus, fetchFeedStatus: $fetchFeedStatus, fetchInvidiousTrendingStatus: $fetchInvidiousTrendingStatus, invidiousTrendingResult: $invidiousTrendingResult, fetchNewPipeTrendingStatus: $fetchNewPipeTrendingStatus, newPipeTrendingResult: $newPipeTrendingResult)';
   }
 
   @override
@@ -1005,7 +1048,13 @@ class _$InitialImpl implements _Initial {
                 other.fetchInvidiousTrendingStatus ==
                     fetchInvidiousTrendingStatus) &&
             const DeepCollectionEquality().equals(
-                other._invidiousTrendingResult, _invidiousTrendingResult));
+                other._invidiousTrendingResult, _invidiousTrendingResult) &&
+            (identical(other.fetchNewPipeTrendingStatus,
+                    fetchNewPipeTrendingStatus) ||
+                other.fetchNewPipeTrendingStatus ==
+                    fetchNewPipeTrendingStatus) &&
+            const DeepCollectionEquality()
+                .equals(other._newPipeTrendingResult, _newPipeTrendingResult));
   }
 
   @override
@@ -1017,7 +1066,9 @@ class _$InitialImpl implements _Initial {
       fetchTrendingStatus,
       fetchFeedStatus,
       fetchInvidiousTrendingStatus,
-      const DeepCollectionEquality().hash(_invidiousTrendingResult));
+      const DeepCollectionEquality().hash(_invidiousTrendingResult),
+      fetchNewPipeTrendingStatus,
+      const DeepCollectionEquality().hash(_newPipeTrendingResult));
 
   /// Create a copy of TrendingState
   /// with the given fields replaced by the non-null parameter values.
@@ -1036,7 +1087,9 @@ abstract class _Initial implements TrendingState {
           required final ApiStatus fetchTrendingStatus,
           required final ApiStatus fetchFeedStatus,
           required final ApiStatus fetchInvidiousTrendingStatus,
-          required final List<InvidiousTrendingResp> invidiousTrendingResult}) =
+          required final List<InvidiousTrendingResp> invidiousTrendingResult,
+          required final ApiStatus fetchNewPipeTrendingStatus,
+          required final List<NewPipeTrendingResp> newPipeTrendingResult}) =
       _$InitialImpl;
 
   @override
@@ -1048,11 +1101,15 @@ abstract class _Initial implements TrendingState {
   @override
   ApiStatus get fetchTrendingStatus;
   @override
-  ApiStatus get fetchFeedStatus; // EXPLODE
+  ApiStatus get fetchFeedStatus; // INVIDIOUS
   @override
   ApiStatus get fetchInvidiousTrendingStatus;
   @override
-  List<InvidiousTrendingResp> get invidiousTrendingResult;
+  List<InvidiousTrendingResp> get invidiousTrendingResult; // NEWPIPE
+  @override
+  ApiStatus get fetchNewPipeTrendingStatus;
+  @override
+  List<NewPipeTrendingResp> get newPipeTrendingResult;
 
   /// Create a copy of TrendingState
   /// with the given fields replaced by the non-null parameter values.

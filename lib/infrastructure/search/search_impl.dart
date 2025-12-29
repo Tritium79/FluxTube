@@ -4,8 +4,10 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:fluxtube/domain/core/failure/main_failure.dart';
 import 'package:fluxtube/domain/search/models/invidious/invidious_search_resp.dart';
+import 'package:fluxtube/domain/search/models/newpipe/newpipe_search_resp.dart';
 import 'package:fluxtube/domain/search/models/piped/search_resp.dart';
 import 'package:fluxtube/domain/search/search_service.dart';
+import 'package:fluxtube/infrastructure/newpipe/newpipe_channel.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../domain/core/api_end_points.dart';
@@ -203,6 +205,59 @@ class SearchImpl implements SearchService {
       return const Left(MainFailure.clientFailure());
     } finally {
       dioClient.close();
+    }
+  }
+
+  //NewPipe
+
+  ///[getNewPipeSearchResult] used to fetch search result from NewPipe Extractor.
+  @override
+  Future<Either<MainFailure, NewPipeSearchResp>> getNewPipeSearchResult(
+      {required String query, required String filter}) async {
+    try {
+      log('NewPipe: Searching for "$query" with filter $filter');
+      final result = await NewPipeChannel.search(
+        query: query,
+        filter: filter,
+      );
+      return Right(result);
+    } catch (e) {
+      log('Err on getNewPipeSearchResult: $e');
+      return Left(MainFailure.unknown(message: e.toString()));
+    }
+  }
+
+  ///[getMoreNewPipeSearchResult] used to fetch more search result from NewPipe Extractor.
+  @override
+  Future<Either<MainFailure, NewPipeSearchResp>> getMoreNewPipeSearchResult(
+      {required String query,
+      required String filter,
+      required String nextPage}) async {
+    try {
+      log('NewPipe: Getting more search results for "$query"');
+      final result = await NewPipeChannel.search(
+        query: query,
+        filter: filter,
+        nextPage: nextPage,
+      );
+      return Right(result);
+    } catch (e) {
+      log('Err on getMoreNewPipeSearchResult: $e');
+      return Left(MainFailure.unknown(message: e.toString()));
+    }
+  }
+
+  ///[getNewPipeSearchSuggestion] used to fetch search suggestions from NewPipe Extractor.
+  @override
+  Future<Either<MainFailure, List>> getNewPipeSearchSuggestion(
+      {required String query}) async {
+    try {
+      log('NewPipe: Getting search suggestions for "$query"');
+      final result = await NewPipeChannel.getSearchSuggestions(query);
+      return Right(result);
+    } catch (e) {
+      log('Err on getNewPipeSearchSuggestion: $e');
+      return Left(MainFailure.unknown(message: e.toString()));
     }
   }
 }

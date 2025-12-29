@@ -99,7 +99,7 @@ class SettingImpl implements SettingsService {
       {"name": commentsVisibility, "default": "false"},
       {"name": relatedVideoVisibility, "default": "false"},
       {"name": instanceApiUrl, "default": BaseUrl.kBaseUrl},
-      {"name": youtubeService, "default": YouTubeServices.iframe.name},
+      {"name": youtubeService, "default": Platform.isAndroid ? YouTubeServices.newpipe.name : YouTubeServices.piped.name},
       {"name": playerTypeKey, "default": PlayerType.betterPlayer.name},
       {"name": pipDisabled, "default": "false"},
       {"name": homeFeedModeKey, "default": HomeFeedMode.feedOrTrending.name},

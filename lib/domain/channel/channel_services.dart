@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:fluxtube/domain/channel/models/invidious/invidious_channel_resp.dart';
 import 'package:fluxtube/domain/channel/models/invidious/latest_video.dart';
+import 'package:fluxtube/domain/channel/models/newpipe/newpipe_channel_resp.dart';
 import 'package:fluxtube/domain/channel/models/piped/channel_resp.dart';
 import 'package:fluxtube/domain/channel/models/piped/tab_content.dart';
 import 'package:fluxtube/domain/core/failure/main_failure.dart';
@@ -29,4 +30,10 @@ abstract class ChannelServices {
   ///[getMoreInvidiousChannelVideos] fetches more channel videos from the Invidious API
   Future<Either<MainFailure, List<LatestVideo>>> getMoreInvidiousChannelVideos(
       {required String channelId, required int page});
+
+  //NewPipe
+
+  ///[getNewPipeChannelData] fetches channel data from NewPipe Extractor
+  Future<Either<MainFailure, NewPipeChannelResp>> getNewPipeChannelData(
+      {required String channelId});
 }

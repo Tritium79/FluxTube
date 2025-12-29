@@ -1,4 +1,5 @@
 enum YouTubeServices {
+  newpipe, // Primary service - direct extraction via NewPipe Extractor (Android only)
   piped,
   explode,
   iframe,

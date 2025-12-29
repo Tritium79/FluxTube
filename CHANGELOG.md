@@ -2,6 +2,8 @@
 
 ### v0.9.0
 
+- Added NewPipe Extractor as the recommended YouTube service (Android only).
+- NewPipe provides direct extraction without requiring third-party instances.
 - Added OmniPlayer (experimental cross-platform video player).
 - Added user profiles with separate subscriptions and history per profile.
 - Added auto-check instances feature for automatic failover.
@@ -10,6 +12,7 @@
 - Added video fit mode, skip interval, and audio focus settings.
 - Added open links in external browser option.
 - Improved error handling with inline player error widgets.
+- Fixed video player dispose error when navigating away.
 - Performance and stability improvements.
 
 ### v0.8.3

@@ -5,10 +5,13 @@ import 'package:dio/dio.dart';
 import 'package:fluxtube/domain/core/failure/main_failure.dart';
 import 'package:fluxtube/domain/watch/models/invidious/comments/invidious_comments_resp.dart';
 import 'package:fluxtube/domain/watch/models/invidious/video/invidious_watch_resp.dart';
+import 'package:fluxtube/domain/watch/models/newpipe/newpipe_watch_resp.dart';
+import 'package:fluxtube/domain/watch/models/newpipe/newpipe_comments_resp.dart';
 import 'package:fluxtube/domain/watch/models/piped/comments/comments_resp.dart';
 import 'package:fluxtube/domain/watch/models/explode/explode_watch.dart';
 import 'package:fluxtube/domain/watch/models/piped/video/watch_resp.dart';
 import 'package:fluxtube/domain/watch/watch_service.dart';
+import 'package:fluxtube/infrastructure/newpipe/newpipe_channel.dart';
 import 'package:injectable/injectable.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
@@ -422,6 +425,53 @@ class WatchImpl implements WatchService {
       return const Left(MainFailure.clientFailure());
     } finally {
       dioClient.close();
+    }
+  }
+
+  //NewPipe
+
+  ///[getNewPipeVideoData] used to fetch video data from NewPipe Extractor.
+  @override
+  Future<Either<MainFailure, NewPipeWatchResp>> getNewPipeVideoData(
+      {required String id}) async {
+    try {
+      log('NewPipe: Getting video data for $id');
+      final result = await NewPipeChannel.getStreamInfo(id);
+      return Right(result);
+    } catch (e) {
+      log('Err on getNewPipeVideoData: $e');
+      return Left(MainFailure.unknown(message: e.toString()));
+    }
+  }
+
+  ///[getNewPipeCommentsData] used to fetch comments data from NewPipe Extractor.
+  @override
+  Future<Either<MainFailure, NewPipeCommentsResp>> getNewPipeCommentsData(
+      {required String id}) async {
+    try {
+      log('NewPipe: Getting comments for $id');
+      final result = await NewPipeChannel.getComments(id);
+      return Right(result);
+    } catch (e) {
+      log('Err on getNewPipeCommentsData: $e');
+      return Left(MainFailure.unknown(message: e.toString()));
+    }
+  }
+
+  ///[getNewPipeMoreCommentsData] used to fetch more comments data from NewPipe Extractor.
+  @override
+  Future<Either<MainFailure, NewPipeCommentsResp>> getNewPipeMoreCommentsData(
+      {required String id, required String nextPage}) async {
+    try {
+      log('NewPipe: Getting more comments for $id');
+      final result = await NewPipeChannel.getMoreComments(
+        videoId: id,
+        nextPage: nextPage,
+      );
+      return Right(result);
+    } catch (e) {
+      log('Err on getNewPipeMoreCommentsData: $e');
+      return Left(MainFailure.unknown(message: e.toString()));
     }
   }
 }

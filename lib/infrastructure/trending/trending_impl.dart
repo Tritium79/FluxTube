@@ -5,8 +5,10 @@ import 'package:dio/dio.dart';
 import 'package:fluxtube/domain/core/api_end_points.dart';
 import 'package:fluxtube/domain/core/failure/main_failure.dart';
 import 'package:fluxtube/domain/trending/models/invidious/invidious_trending_resp.dart';
+import 'package:fluxtube/domain/trending/models/newpipe/newpipe_trending_resp.dart';
 import 'package:fluxtube/domain/trending/models/piped/trending_resp.dart';
 import 'package:fluxtube/domain/trending/trending_service.dart';
+import 'package:fluxtube/infrastructure/newpipe/newpipe_channel.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: TrendingService)
@@ -74,6 +76,20 @@ class TrendingImpl implements TrendingService {
       return const Left(MainFailure.clientFailure());
     } finally {
       dioClient.close();
+    }
+  }
+
+  ///[getNewPipeTrendingData] used to fetch Trending data from NewPipe Extractor.
+  @override
+  Future<Either<MainFailure, List<NewPipeTrendingResp>>>
+      getNewPipeTrendingData({required String region}) async {
+    try {
+      log('NewPipe: Getting trending for region $region');
+      final result = await NewPipeChannel.getTrending(region);
+      return Right(result);
+    } catch (e) {
+      log('Err on getNewPipeTrendingData: $e');
+      return Left(MainFailure.unknown(message: e.toString()));
     }
   }
 }

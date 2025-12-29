@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,13 +18,44 @@ List<DropdownMenuItem<String>> _getQualities(S locals) => [
   DropdownMenuItem(value: "1440p", child: Text(locals.quality1440p)),
 ];
 
-List<DropdownMenuItem<YouTubeServices>> _getServices(S locals) => [
-  DropdownMenuItem(value: YouTubeServices.piped, child: Text(locals.servicePiped)),
-  DropdownMenuItem(value: YouTubeServices.explode, child: Text(locals.serviceExplode)),
-  DropdownMenuItem(value: YouTubeServices.iframe, child: Text(locals.serviceIFrame)),
-  DropdownMenuItem(value: YouTubeServices.invidious, child: Text(locals.serviceInvidious)),
-  DropdownMenuItem(value: YouTubeServices.omniPlayer, child: Text(locals.serviceOmniPlayer)),
-];
+List<DropdownMenuItem<YouTubeServices>> _getServices(S locals) {
+  final services = <DropdownMenuItem<YouTubeServices>>[];
+
+  // NewPipe is only available on Android (recommended)
+  if (Platform.isAndroid) {
+    services.add(DropdownMenuItem(
+      value: YouTubeServices.newpipe,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(locals.serviceNewPipe),
+          const SizedBox(width: 4),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+            decoration: BoxDecoration(
+              color: Colors.green.withValues(alpha: 0.2),
+              borderRadius: BorderRadius.circular(4),
+            ),
+            child: const Text(
+              '★',
+              style: TextStyle(fontSize: 10, color: Colors.green),
+            ),
+          ),
+        ],
+      ),
+    ));
+  }
+
+  services.addAll([
+    DropdownMenuItem(value: YouTubeServices.piped, child: Text(locals.servicePiped)),
+    DropdownMenuItem(value: YouTubeServices.explode, child: Text(locals.serviceExplode)),
+    DropdownMenuItem(value: YouTubeServices.iframe, child: Text(locals.serviceIFrame)),
+    DropdownMenuItem(value: YouTubeServices.invidious, child: Text(locals.serviceInvidious)),
+    DropdownMenuItem(value: YouTubeServices.omniPlayer, child: Text(locals.serviceOmniPlayer)),
+  ]);
+
+  return services;
+}
 
 List<DropdownMenuItem<PlayerType>> _getPlayerTypes(S locals) => [
   DropdownMenuItem(value: PlayerType.betterPlayer, child: Text(locals.playerBetterPlayer)),
@@ -89,12 +122,15 @@ class VideoSettingsSection extends StatelessWidget {
                     BlocProvider.of<SettingsBloc>(context)
                         .add(SettingsEvent.setYTService(service: service));
 
-                    if (service == YouTubeServices.invidious) {
-                      BlocProvider.of<SettingsBloc>(context)
-                          .add(SettingsEvent.fetchInvidiousInstances());
-                    } else {
-                      BlocProvider.of<SettingsBloc>(context)
-                          .add(SettingsEvent.fetchPipedInstances());
+                    // Only fetch instances for services that need them (not NewPipe)
+                    if (service != YouTubeServices.newpipe) {
+                      if (service == YouTubeServices.invidious) {
+                        BlocProvider.of<SettingsBloc>(context)
+                            .add(SettingsEvent.fetchInvidiousInstances());
+                      } else {
+                        BlocProvider.of<SettingsBloc>(context)
+                            .add(SettingsEvent.fetchPipedInstances());
+                      }
                     }
 
                     if (oldService != service.name) {

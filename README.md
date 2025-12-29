@@ -46,12 +46,13 @@ You can download the latest version of the app from the [releases page](https://
 
 For the best experience, we recommend the following configurations:
 
-| Use Case | YouTube Service | Player Type |
-|----------|----------------|-------------|
-| **Best Compatibility** | Piped | Better Player |
-| **Best Compatibility with UI** | Piped | OmniPlayer |
+| Use Case | YouTube Service | Player Type | Notes |
+|----------|----------------|-------------|-------|
+| **Best for Android** | NewPipe | Better Player | Direct extraction, no instances needed |
+| **Best Compatibility** | Piped | Better Player | Works on all platforms |
+| **Best Compatibility with UI** | Piped | OmniPlayer | Experimental player |
 
-> **Note:** OmniPlayer is experimental and provides better UI support, while Better Player offers more mature playback features on mobile.
+> **Note:** NewPipe Extractor is recommended for Android users as it provides direct YouTube extraction without relying on third-party instances. OmniPlayer is experimental and provides better UI support, while Better Player offers more mature playback features on mobile.
 
 ## Todo
 

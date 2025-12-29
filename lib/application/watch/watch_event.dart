@@ -83,4 +83,18 @@ class WatchEvent with _$WatchEvent {
   factory WatchEvent.updatePlayBack({
     required int? playBack,
   }) = UpdatePlayBack;
+
+  // NEWPIPE
+  factory WatchEvent.getNewPipeWatchInfo({
+    required String id,
+  }) = GetNewPipeWatchInfo;
+
+  factory WatchEvent.getNewPipeComments({
+    required String id,
+  }) = GetNewPipeComments;
+
+  factory WatchEvent.getMoreNewPipeComments({
+    required String id,
+    required String? nextPage,
+  }) = GetMoreNewPipeComments;
 }

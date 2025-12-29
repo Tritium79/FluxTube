@@ -5,6 +5,7 @@ import 'package:fluxtube/core/enums.dart';
 import 'package:fluxtube/presentation/watch/explode_screen_watch.dart';
 import 'package:fluxtube/presentation/watch/iframe_screen_watch.dart';
 import 'package:fluxtube/presentation/watch/invidious_screen_watch.dart';
+import 'package:fluxtube/presentation/watch/newpipe_screen_watch.dart';
 import 'package:fluxtube/presentation/watch/omni_screen_watch.dart';
 import 'package:fluxtube/presentation/watch/piped_screen_watch.dart';
 
@@ -34,7 +35,13 @@ class ScreenWatch extends StatelessWidget {
 
       // For other services, use service-specific screens
       // They will use either BetterPlayer or OmniPlayer based on playerType
-      if (ytService == YouTubeServices.piped.name) {
+      if (ytService == YouTubeServices.newpipe.name) {
+        return NewPipeScreenWatch(
+          id: id,
+          channelId: channelId,
+          useOmniPlayer: useOmniPlayer,
+        );
+      } else if (ytService == YouTubeServices.piped.name) {
         return PipedScreenWatch(
           id: id,
           channelId: channelId,

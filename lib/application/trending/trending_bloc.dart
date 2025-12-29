@@ -11,6 +11,7 @@ import 'package:fluxtube/domain/core/failure/main_failure.dart';
 import 'package:fluxtube/domain/home/home_services.dart';
 import 'package:fluxtube/domain/subscribes/models/subscribe.dart';
 import 'package:fluxtube/domain/trending/models/invidious/invidious_trending_resp.dart';
+import 'package:fluxtube/domain/trending/models/newpipe/newpipe_trending_resp.dart';
 import 'package:fluxtube/domain/trending/trending_service.dart';
 
 import '../../domain/trending/models/piped/trending_resp.dart';
@@ -46,6 +47,10 @@ class TrendingBloc extends Bloc<TrendingEvent, TrendingState> {
         if (state.invidiousTrendingResult.isNotEmpty) {
           return emit(state);
         }
+      } else if (event.serviceType == YouTubeServices.newpipe.name) {
+        if (state.newPipeTrendingResult.isNotEmpty) {
+          return emit(state);
+        }
       } else {
         if (state.trendingResult.isNotEmpty) {
           return emit(state);
@@ -54,6 +59,8 @@ class TrendingBloc extends Bloc<TrendingEvent, TrendingState> {
 
       if (event.serviceType == YouTubeServices.invidious.name) {
         await _fetchInvidiousTrendingInfo(event, emit);
+      } else if (event.serviceType == YouTubeServices.newpipe.name) {
+        await _fetchNewPipeTrendingInfo(event, emit);
       } else {
         await _fetchPipedTrendingInfo(event, emit);
       }
@@ -63,6 +70,8 @@ class TrendingBloc extends Bloc<TrendingEvent, TrendingState> {
     on<GetForcedTrendingData>((event, emit) async {
       if (event.serviceType == YouTubeServices.invidious.name) {
         await _fetchInvidiousTrendingInfo(event, emit);
+      } else if (event.serviceType == YouTubeServices.newpipe.name) {
+        await _fetchNewPipeTrendingInfo(event, emit);
       } else {
         await _fetchPipedTrendingInfo(event, emit);
       }
@@ -138,6 +147,21 @@ class TrendingBloc extends Bloc<TrendingEvent, TrendingState> {
         (List<InvidiousTrendingResp> resp) => state.copyWith(
             invidiousTrendingResult: resp,
             fetchInvidiousTrendingStatus: ApiStatus.loaded));
+    emit(_state);
+  }
+
+  _fetchNewPipeTrendingInfo(event, emit) async {
+    emit(state.copyWith(fetchNewPipeTrendingStatus: ApiStatus.loading));
+
+    final result = await trendingService.getNewPipeTrendingData(
+        region: settingsBloc.state.defaultRegion);
+    final _state = result.fold(
+        (MainFailure failure) =>
+            state.copyWith(fetchNewPipeTrendingStatus: ApiStatus.error),
+        (List<NewPipeTrendingResp> resp) => state.copyWith(
+            newPipeTrendingResult: resp,
+            fetchNewPipeTrendingStatus: ApiStatus.loaded,
+            lastUsedRegion: settingsBloc.state.defaultRegion));
     emit(_state);
   }
 

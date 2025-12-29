@@ -14,7 +14,8 @@ class DistractionFreeSettingsSection extends StatelessWidget {
     return BlocBuilder<SettingsBloc, SettingsState>(
       buildWhen: (previous, current) =>
           previous.isHideComments != current.isHideComments ||
-          previous.isHideRelated != current.isHideRelated,
+          previous.isHideRelated != current.isHideRelated ||
+          previous.isHideFeed != current.isHideFeed,
       builder: (context, state) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,6 +51,19 @@ class DistractionFreeSettingsSection extends StatelessWidget {
                 onChanged: (_) {
                   BlocProvider.of<SettingsBloc>(context)
                       .add(SettingsEvent.toggleRelatedVideoVisibility());
+                },
+              ),
+            ),
+            ListTile(
+              title: Text(locals.hideFeed,
+                  style: Theme.of(context).textTheme.titleMedium),
+              subtitle: Text(locals.hideFeedDescription),
+              leading: const Icon(Icons.home_outlined),
+              trailing: Switch(
+                value: state.isHideFeed,
+                onChanged: (_) {
+                  BlocProvider.of<SettingsBloc>(context)
+                      .add(SettingsEvent.toggleHideFeed());
                 },
               ),
             ),

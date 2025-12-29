@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluxtube/application/application.dart';
 import 'package:fluxtube/core/colors.dart';
+import 'package:fluxtube/core/deep_link_handler.dart';
 import 'package:fluxtube/core/enums.dart';
 import 'package:fluxtube/generated/l10n.dart';
 import 'package:fluxtube/presentation/watch/widgets/explode/pip_video_player.dart';
@@ -34,6 +35,21 @@ class MainNavigationState extends State<MainNavigation> {
   ];
 
   bool _hasShownInstanceFailedSnackbar = false;
+  final DeepLinkHandler _deepLinkHandler = DeepLinkHandler();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _deepLinkHandler.init(context);
+    });
+  }
+
+  @override
+  void dispose() {
+    _deepLinkHandler.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

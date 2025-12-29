@@ -444,5 +444,137 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
           (bool r) => state.copyWith(isPipDisabled: r));
       emit(_state);
     });
+
+    // New event handlers for additional features
+
+    on<SetSearchFilter>((event, emit) async {
+      final _result = await settingsService.setSearchFilter(filter: event.filter);
+      final _state = _result.fold(
+          (MainFailure f) => state.copyWith(searchFilter: state.searchFilter),
+          (String filter) => state.copyWith(searchFilter: filter));
+      emit(_state);
+    });
+
+    on<SetVideoFitMode>((event, emit) async {
+      final _result = await settingsService.setVideoFitMode(fitMode: event.fitMode);
+      final _state = _result.fold(
+          (MainFailure f) => state.copyWith(videoFitMode: state.videoFitMode),
+          (String fitMode) => state.copyWith(videoFitMode: fitMode));
+      emit(_state);
+    });
+
+    on<SetSkipInterval>((event, emit) async {
+      final _result = await settingsService.setSkipInterval(seconds: event.seconds);
+      final _state = _result.fold(
+          (MainFailure f) => state.copyWith(skipInterval: state.skipInterval),
+          (int seconds) => state.copyWith(skipInterval: seconds));
+      emit(_state);
+    });
+
+    on<ToggleSponsorBlock>((event, emit) async {
+      final _result = await settingsService.toggleSponsorBlock(
+          isEnabled: !state.isSponsorBlockEnabled);
+      final _state = _result.fold(
+          (MainFailure f) => state.copyWith(isSponsorBlockEnabled: state.isSponsorBlockEnabled),
+          (bool isEnabled) => state.copyWith(isSponsorBlockEnabled: isEnabled));
+      emit(_state);
+    });
+
+    on<SetSponsorBlockCategories>((event, emit) async {
+      final _result = await settingsService.setSponsorBlockCategories(
+          categories: event.categories);
+      final _state = _result.fold(
+          (MainFailure f) => state.copyWith(sponsorBlockCategories: state.sponsorBlockCategories),
+          (List<String> categories) => state.copyWith(sponsorBlockCategories: categories));
+      emit(_state);
+    });
+
+    on<ToggleOpenLinksInBrowser>((event, emit) async {
+      final _result = await settingsService.toggleOpenLinksInBrowser(
+          openInBrowser: !state.openLinksInBrowser);
+      final _state = _result.fold(
+          (MainFailure f) => state.copyWith(openLinksInBrowser: state.openLinksInBrowser),
+          (bool openInBrowser) => state.copyWith(openLinksInBrowser: openInBrowser));
+      emit(_state);
+    });
+
+    on<ToggleHideFeed>((event, emit) async {
+      final _result = await settingsService.toggleHideFeed(
+          isHideFeed: !state.isHideFeed);
+      final _state = _result.fold(
+          (MainFailure f) => state.copyWith(isHideFeed: state.isHideFeed),
+          (bool isHideFeed) => state.copyWith(isHideFeed: isHideFeed));
+      emit(_state);
+    });
+
+    on<ToggleAudioFocus>((event, emit) async {
+      final _result = await settingsService.toggleAudioFocus(
+          isEnabled: !state.isAudioFocusEnabled);
+      final _state = _result.fold(
+          (MainFailure f) => state.copyWith(isAudioFocusEnabled: state.isAudioFocusEnabled),
+          (bool isEnabled) => state.copyWith(isAudioFocusEnabled: isEnabled));
+      emit(_state);
+    });
+
+    // Profile events
+    on<AddProfile>((event, emit) async {
+      final _result = await settingsService.addProfile(profileName: event.profileName);
+      final _state = _result.fold(
+          (MainFailure f) => state.copyWith(profiles: state.profiles),
+          (List<String> profiles) => state.copyWith(profiles: profiles));
+      emit(_state);
+    });
+
+    on<DeleteProfile>((event, emit) async {
+      final _result = await settingsService.deleteProfile(profileName: event.profileName);
+      final _state = _result.fold(
+          (MainFailure f) => state.copyWith(profiles: state.profiles),
+          (List<String> profiles) {
+        // If the deleted profile was the current one, switch to default
+        String currentProfile = state.currentProfile;
+        if (!profiles.contains(currentProfile)) {
+          currentProfile = 'default';
+        }
+        return state.copyWith(profiles: profiles, currentProfile: currentProfile);
+      });
+      emit(_state);
+    });
+
+    on<SwitchProfile>((event, emit) async {
+      final _result = await settingsService.switchProfile(profileName: event.profileName);
+      final _state = _result.fold(
+          (MainFailure f) => state.copyWith(currentProfile: state.currentProfile),
+          (String profileName) => state.copyWith(currentProfile: profileName));
+      emit(_state);
+    });
+
+    // Sync events
+    on<ToggleSync>((event, emit) async {
+      final _result = await settingsService.toggleSync(
+          isEnabled: !state.isSyncEnabled);
+      final _state = _result.fold(
+          (MainFailure f) => state.copyWith(isSyncEnabled: state.isSyncEnabled),
+          (bool isEnabled) => state.copyWith(isSyncEnabled: isEnabled));
+      emit(_state);
+    });
+
+    on<SyncNow>((event, emit) async {
+      final _result = await settingsService.syncNow();
+      final _state = _result.fold(
+          (MainFailure f) => state.copyWith(lastSynced: state.lastSynced),
+          (String timestamp) => state.copyWith(lastSynced: timestamp));
+      emit(_state);
+    });
+
+    // Import/Export events
+    on<ExportSubscriptions>((event, emit) async {
+      // Export happens but state doesn't change much - handled in UI
+      await settingsService.exportSubscriptions();
+    });
+
+    on<ImportSubscriptions>((event, emit) async {
+      // Import happens - handled in UI with file picker
+      await settingsService.importSubscriptions(filePath: event.filePath);
+    });
   }
 }

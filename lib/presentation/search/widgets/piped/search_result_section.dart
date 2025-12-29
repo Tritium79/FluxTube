@@ -54,17 +54,29 @@ class SearcheResultSection extends StatelessWidget {
                     .where((channel) => channel.id == _channelId)
                     .isNotEmpty;
                 // channel integration
-                return Padding(
-                  padding: const EdgeInsets.only(
-                      top: 5, left: 20, right: 20, bottom: 10),
-                  child: ChannelWidget(
-                      channelName: _result.name,
-                      isVerified: _result.verified,
-                      subscriberCount: _result.subscribers,
-                      thumbnail: _result.thumbnail,
-                      isSubscribed: _isSubscribed,
-                      channelId: _channelId,
-                      locals: locals),
+                return ChannelWidget(
+                    channelName: _result.name,
+                    isVerified: _result.verified,
+                    subscriberCount: _result.subscribers,
+                    thumbnail: _result.thumbnail,
+                    isSubscribed: _isSubscribed,
+                    channelId: _channelId,
+                    locals: locals);
+              } else if (_result.type == "playlist") {
+                // playlist integration
+                final String _playlistId = _result.url!.split('=').last;
+                return PlaylistWidget(
+                  playlistId: _playlistId,
+                  title: _result.name,
+                  thumbnail: _result.thumbnail,
+                  videoCount: _result.videos,
+                  uploaderName: _result.uploaderName,
+                  uploaderAvatar: _result.uploaderAvatar,
+                  onTap: () {
+                    context.goNamed('playlist', pathParameters: {
+                      'playlistId': _playlistId,
+                    });
+                  },
                 );
               } else if (_result.type == "stream") {
                 final String _videoId = _result.url!.split('=').last;

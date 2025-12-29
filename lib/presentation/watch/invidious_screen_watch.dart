@@ -97,10 +97,20 @@ class _InvidiousScreenWatchState extends State<InvidiousScreenWatch> {
 
                 // Only show full-screen error for API fetch failures
                 if (state.fetchInvidiousWatchInfoStatus == ApiStatus.error) {
-                  return ErrorRetryWidget(
-                    lottie: 'assets/cat-404.zip',
-                    onTap: () => BlocProvider.of<WatchBloc>(context)
-                        .add(WatchEvent.getInvidiousWatchInfo(id: widget.id)),
+                  return Scaffold(
+                    appBar: AppBar(
+                      title: Text(locals.retry),
+                    ),
+                    body: SafeArea(
+                      child: SingleChildScrollView(
+                        child: InstanceAutoCheckWidget(
+                          videoId: widget.id,
+                          lottie: 'assets/cat-404.zip',
+                          onRetry: () => BlocProvider.of<WatchBloc>(context)
+                              .add(WatchEvent.getInvidiousWatchInfo(id: widget.id)),
+                        ),
+                      ),
+                    ),
                   );
                 } else {
                   return DismissiblePage(

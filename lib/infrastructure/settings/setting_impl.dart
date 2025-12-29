@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
@@ -434,6 +436,277 @@ class SettingImpl implements SettingsService {
     } catch (_) {
       dio.close();
       return false;
+    }
+  }
+
+  // New methods for additional features
+
+  @override
+  Future<Either<MainFailure, String>> setSearchFilter({required String filter}) async {
+    return _setSetting(
+      settingName: searchFilterKey,
+      value: filter,
+      toStringValue: (v) => v,
+    );
+  }
+
+  @override
+  Future<Either<MainFailure, String>> setVideoFitMode({required String fitMode}) async {
+    return _setSetting(
+      settingName: videoFitModeKey,
+      value: fitMode,
+      toStringValue: (v) => v,
+    );
+  }
+
+  @override
+  Future<Either<MainFailure, int>> setSkipInterval({required int seconds}) async {
+    return _setSetting(
+      settingName: skipIntervalKey,
+      value: seconds,
+      toStringValue: (v) => v.toString(),
+    );
+  }
+
+  @override
+  Future<Either<MainFailure, bool>> toggleSponsorBlock({required bool isEnabled}) async {
+    return _setSetting(
+      settingName: sponsorBlockEnabledKey,
+      value: isEnabled,
+      toStringValue: (v) => v.toString(),
+    );
+  }
+
+  @override
+  Future<Either<MainFailure, List<String>>> setSponsorBlockCategories(
+      {required List<String> categories}) async {
+    return _setSetting(
+      settingName: sponsorBlockCategoriesKey,
+      value: categories,
+      toStringValue: (v) => v.join(','),
+    );
+  }
+
+  @override
+  Future<Either<MainFailure, bool>> toggleOpenLinksInBrowser(
+      {required bool openInBrowser}) async {
+    return _setSetting(
+      settingName: openLinksInBrowserKey,
+      value: openInBrowser,
+      toStringValue: (v) => v.toString(),
+    );
+  }
+
+  @override
+  Future<Either<MainFailure, bool>> toggleHideFeed({required bool isHideFeed}) async {
+    return _setSetting(
+      settingName: feedVisibilityKey,
+      value: isHideFeed,
+      toStringValue: (v) => v.toString(),
+    );
+  }
+
+  @override
+  Future<Either<MainFailure, bool>> toggleAudioFocus({required bool isEnabled}) async {
+    return _setSetting(
+      settingName: audioFocusEnabledKey,
+      value: isEnabled,
+      toStringValue: (v) => v.toString(),
+    );
+  }
+
+  // Profile methods
+  @override
+  Future<Either<MainFailure, List<String>>> getProfiles() async {
+    try {
+      final setting = await isar.settingsDBValues
+          .filter()
+          .nameEqualTo(profilesListKey)
+          .findFirst();
+
+      if (setting == null || setting.value == null || setting.value!.isEmpty) {
+        return const Right(['default']);
+      }
+      return Right(setting.value!.split(','));
+    } catch (e) {
+      return const Left(MainFailure.serverFailure());
+    }
+  }
+
+  @override
+  Future<Either<MainFailure, List<String>>> addProfile({required String profileName}) async {
+    try {
+      final currentProfiles = await getProfiles();
+      return currentProfiles.fold(
+        (failure) => Left(failure),
+        (profiles) async {
+          if (profiles.contains(profileName)) {
+            return Right(profiles); // Profile already exists
+          }
+          final newProfiles = [...profiles, profileName];
+          await _setSetting(
+            settingName: profilesListKey,
+            value: newProfiles,
+            toStringValue: (v) => v.join(','),
+          );
+          return Right(newProfiles);
+        },
+      );
+    } catch (e) {
+      return const Left(MainFailure.serverFailure());
+    }
+  }
+
+  @override
+  Future<Either<MainFailure, List<String>>> deleteProfile({required String profileName}) async {
+    try {
+      if (profileName == 'default') {
+        return const Left(MainFailure.serverFailure()); // Cannot delete default profile
+      }
+      final currentProfiles = await getProfiles();
+      return currentProfiles.fold(
+        (failure) => Left(failure),
+        (profiles) async {
+          final newProfiles = profiles.where((p) => p != profileName).toList();
+          if (newProfiles.isEmpty) {
+            newProfiles.add('default');
+          }
+          await _setSetting(
+            settingName: profilesListKey,
+            value: newProfiles,
+            toStringValue: (v) => v.join(','),
+          );
+          return Right(newProfiles);
+        },
+      );
+    } catch (e) {
+      return const Left(MainFailure.serverFailure());
+    }
+  }
+
+  @override
+  Future<Either<MainFailure, String>> switchProfile({required String profileName}) async {
+    return _setSetting(
+      settingName: currentProfileKey,
+      value: profileName,
+      toStringValue: (v) => v,
+    );
+  }
+
+  // Sync methods
+  @override
+  Future<Either<MainFailure, bool>> toggleSync({required bool isEnabled}) async {
+    return _setSetting(
+      settingName: syncEnabledKey,
+      value: isEnabled,
+      toStringValue: (v) => v.toString(),
+    );
+  }
+
+  @override
+  Future<Either<MainFailure, String>> syncNow() async {
+    try {
+      // For now, just update the last synced timestamp
+      // In a full implementation, this would sync with a cloud service
+      final timestamp = DateTime.now().toIso8601String();
+      await _setSetting(
+        settingName: lastSyncedKey,
+        value: timestamp,
+        toStringValue: (v) => v,
+      );
+      return Right(timestamp);
+    } catch (e) {
+      return const Left(MainFailure.serverFailure());
+    }
+  }
+
+  // Import/Export methods
+  @override
+  Future<Either<MainFailure, String>> exportSubscriptions() async {
+    try {
+      final subscriptions = await isar.subscribes.where().findAll();
+
+      // Create NewPipe compatible format
+      final subscriptionsList = subscriptions.map((sub) {
+        return {
+          'service_id': 0, // YouTube
+          'url': 'https://www.youtube.com/channel/${sub.id}',
+          'name': sub.channelName ?? '',
+        };
+      }).toList();
+
+      final exportData = {
+        'app_version': '0.9.0',
+        'app_version_int': 11,
+        'subscriptions': subscriptionsList,
+      };
+
+      final dir = await getApplicationDocumentsDirectory();
+      final timestamp = DateTime.now().millisecondsSinceEpoch;
+      final file = File('${dir.path}/fluxtube_subscriptions_$timestamp.json');
+      await file.writeAsString(jsonEncode(exportData));
+
+      return Right(file.path);
+    } catch (e) {
+      return const Left(MainFailure.serverFailure());
+    }
+  }
+
+  @override
+  Future<Either<MainFailure, int>> importSubscriptions({required String filePath}) async {
+    try {
+      final file = File(filePath);
+      if (!await file.exists()) {
+        return const Left(MainFailure.serverFailure());
+      }
+
+      final content = await file.readAsString();
+      final data = jsonDecode(content) as Map<String, dynamic>;
+
+      int importedCount = 0;
+
+      // Handle NewPipe format
+      if (data.containsKey('subscriptions')) {
+        final subscriptions = data['subscriptions'] as List<dynamic>;
+
+        await isar.writeTxn(() async {
+          for (final sub in subscriptions) {
+            final subMap = sub as Map<String, dynamic>;
+            final url = subMap['url'] as String? ?? '';
+            final name = subMap['name'] as String? ?? '';
+
+            // Extract channel ID from URL
+            String? channelId;
+            if (url.contains('/channel/')) {
+              channelId = url.split('/channel/').last.split('/').first;
+            } else if (url.contains('/c/') || url.contains('/@')) {
+              // Handle custom URLs - would need API lookup in production
+              continue;
+            }
+
+            if (channelId != null && channelId.isNotEmpty) {
+              // Check if already subscribed
+              final existing = await isar.subscribes
+                  .filter()
+                  .idEqualTo(channelId)
+                  .findFirst();
+
+              if (existing == null) {
+                final newSub = Subscribe(
+                  id: channelId,
+                  channelName: name,
+                );
+                await isar.subscribes.put(newSub);
+                importedCount++;
+              }
+            }
+          }
+        });
+      }
+
+      return Right(importedCount);
+    } catch (e) {
+      return const Left(MainFailure.serverFailure());
     }
   }
 }

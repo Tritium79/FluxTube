@@ -1,4 +1,5 @@
 export 'channel/channel_bloc.dart';
+export 'playlist/playlist_bloc.dart';
 export 'saved/saved_bloc.dart';
 export 'search/search_bloc.dart';
 export 'settings/settings_bloc.dart';

@@ -45,9 +45,8 @@ class ChannelWidget extends StatelessWidget {
             }, queryParameters: {
               'avatarUrl': _thumbnail,
             }),
-      child: SizedBox(
-        height: 150,
-        width: double.infinity,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
         child: SubscribeRowWidget(
           uploader: _channelName,
           isVerified: _isVerified,

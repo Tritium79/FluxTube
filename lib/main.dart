@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:fluxtube/application/channel/channel_bloc.dart';
+import 'package:fluxtube/application/playlist/playlist_bloc.dart';
 import 'package:fluxtube/generated/l10n.dart';
 import 'package:fluxtube/application/saved/saved_bloc.dart';
 import 'package:fluxtube/application/search/search_bloc.dart';
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => getIt<SavedBloc>()),
         BlocProvider(create: (context) => getIt<SubscribeBloc>()),
         BlocProvider(create: (context) => getIt<ChannelBloc>()),
+        BlocProvider(create: (context) => getIt<PlaylistBloc>()),
       ],
       child: BlocBuilder<SettingsBloc, SettingsState>(
         buildWhen: (previous, current) =>

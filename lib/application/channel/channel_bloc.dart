@@ -7,6 +7,7 @@ import 'package:fluxtube/domain/channel/channel_services.dart';
 import 'package:fluxtube/domain/channel/models/invidious/invidious_channel_resp.dart';
 import 'package:fluxtube/domain/channel/models/invidious/latest_video.dart';
 import 'package:fluxtube/domain/channel/models/piped/channel_resp.dart';
+import 'package:fluxtube/domain/channel/models/piped/tab_content.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
@@ -49,6 +50,23 @@ class ChannelBloc extends Bloc<ChannelEvent, ChannelState> {
       } else {
         await _fetchMorePipedVideos(event, emit);
       }
+    });
+
+    // Fetch channel tab content
+    on<GetChannelTabContent>((event, emit) async {
+      emit(state.copyWith(
+          tabContentFetchStatus: ApiStatus.loading,
+          selectedTabContent: null));
+
+      await _fetchChannelTabContent(event, emit);
+    });
+
+    // Select tab
+    on<SelectTab>((event, emit) {
+      emit(state.copyWith(
+          selectedTabIndex: event.index,
+          selectedTabContent: null,
+          tabContentFetchStatus: ApiStatus.initial));
     });
   }
 
@@ -157,6 +175,21 @@ class ChannelBloc extends Bloc<ChannelEvent, ChannelState> {
               invidiousPage: state.invidiousPage + 1);
         }
       },
+    );
+    emit(_state);
+  }
+
+  Future<void> _fetchChannelTabContent(
+      GetChannelTabContent event, Emitter<ChannelState> emit) async {
+    final result = await channelServices.getChannelTabContent(data: event.tabData);
+
+    final _state = result.fold(
+      (failure) => state.copyWith(
+          tabContentFetchStatus: ApiStatus.error,
+          selectedTabContent: null),
+      (response) => state.copyWith(
+          tabContentFetchStatus: ApiStatus.loaded,
+          selectedTabContent: response),
     );
     emit(_state);
   }

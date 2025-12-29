@@ -11,6 +11,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:fluxtube/application/application.dart' as _i1030;
 import 'package:fluxtube/application/channel/channel_bloc.dart' as _i20;
+import 'package:fluxtube/application/playlist/playlist_bloc.dart' as _i611;
 import 'package:fluxtube/application/saved/saved_bloc.dart' as _i7;
 import 'package:fluxtube/application/search/search_bloc.dart' as _i799;
 import 'package:fluxtube/application/settings/settings_bloc.dart' as _i112;
@@ -19,6 +20,7 @@ import 'package:fluxtube/application/trending/trending_bloc.dart' as _i11;
 import 'package:fluxtube/application/watch/watch_bloc.dart' as _i771;
 import 'package:fluxtube/domain/channel/channel_services.dart' as _i914;
 import 'package:fluxtube/domain/home/home_services.dart' as _i811;
+import 'package:fluxtube/domain/playlist/playlist_service.dart' as _i117;
 import 'package:fluxtube/domain/saved/saved_services.dart' as _i722;
 import 'package:fluxtube/domain/search/search_service.dart' as _i947;
 import 'package:fluxtube/domain/settings/settings_service.dart' as _i816;
@@ -27,6 +29,7 @@ import 'package:fluxtube/domain/trending/trending_service.dart' as _i60;
 import 'package:fluxtube/domain/watch/watch_service.dart' as _i719;
 import 'package:fluxtube/infrastructure/channel/channel_impl.dart' as _i112;
 import 'package:fluxtube/infrastructure/home/home_impl.dart' as _i764;
+import 'package:fluxtube/infrastructure/playlist/playlist_impl.dart' as _i166;
 import 'package:fluxtube/infrastructure/saved/saved_impl.dart' as _i979;
 import 'package:fluxtube/infrastructure/search/search_impl.dart' as _i568;
 import 'package:fluxtube/infrastructure/settings/setting_impl.dart' as _i290;
@@ -48,10 +51,13 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     gh.lazySingleton<_i479.SubscribeServices>(() => _i848.SubscribeImpl());
+    gh.lazySingleton<_i117.PlaylistService>(() => _i166.PlaylistImpl());
     gh.lazySingleton<_i914.ChannelServices>(() => _i112.ChannelImpl());
     gh.lazySingleton<_i719.WatchService>(() => _i796.WatchImpl());
     gh.lazySingleton<_i947.SearchService>(() => _i568.SearchImpl());
     gh.lazySingleton<_i60.TrendingService>(() => _i1069.TrendingImpl());
+    gh.factory<_i611.PlaylistBloc>(
+        () => _i611.PlaylistBloc(gh<_i117.PlaylistService>()));
     gh.factory<_i771.WatchBloc>(
         () => _i771.WatchBloc(gh<_i719.WatchService>()));
     gh.factory<_i187.SubscribeBloc>(

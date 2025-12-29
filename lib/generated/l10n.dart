@@ -18,8 +18,10 @@ class S {
   static S? _current;
 
   static S get current {
-    assert(_current != null,
-        'No instance of S was loaded. Try to initialize the S delegate before accessing S.current.');
+    assert(
+      _current != null,
+      'No instance of S was loaded. Try to initialize the S delegate before accessing S.current.',
+    );
     return _current!;
   }
 
@@ -41,8 +43,10 @@ class S {
 
   static S of(BuildContext context) {
     final instance = S.maybeOf(context);
-    assert(instance != null,
-        'No instance of S present in the widget tree. Did you add S.delegate in localizationsDelegates?');
+    assert(
+      instance != null,
+      'No instance of S present in the widget tree. Did you add S.delegate in localizationsDelegates?',
+    );
     return instance!;
   }
 
@@ -52,10 +56,555 @@ class S {
 
   /// `Home`
   String get home {
+    return Intl.message('Home', name: 'home', desc: 'Home label', args: []);
+  }
+
+  /// `System`
+  String get themeSystem {
+    return Intl.message('System', name: 'themeSystem', desc: '', args: []);
+  }
+
+  /// `Light`
+  String get themeLight {
+    return Intl.message('Light', name: 'themeLight', desc: '', args: []);
+  }
+
+  /// `Dark`
+  String get themeDark {
+    return Intl.message('Dark', name: 'themeDark', desc: '', args: []);
+  }
+
+  /// `YouTube Service`
+  String get youtubeService {
     return Intl.message(
-      'Home',
-      name: 'home',
-      desc: 'Home label',
+      'YouTube Service',
+      name: 'youtubeService',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Player Type`
+  String get playerType {
+    return Intl.message('Player Type', name: 'playerType', desc: '', args: []);
+  }
+
+  /// `Video player engine`
+  String get playerTypeDescription {
+    return Intl.message(
+      'Video player engine',
+      name: 'playerTypeDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Piped`
+  String get servicePiped {
+    return Intl.message('Piped', name: 'servicePiped', desc: '', args: []);
+  }
+
+  /// `Explode`
+  String get serviceExplode {
+    return Intl.message('Explode', name: 'serviceExplode', desc: '', args: []);
+  }
+
+  /// `IFrame`
+  String get serviceIFrame {
+    return Intl.message('IFrame', name: 'serviceIFrame', desc: '', args: []);
+  }
+
+  /// `Invidious`
+  String get serviceInvidious {
+    return Intl.message(
+      'Invidious',
+      name: 'serviceInvidious',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Omni Player`
+  String get serviceOmniPlayer {
+    return Intl.message(
+      'Omni Player',
+      name: 'serviceOmniPlayer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Better Player`
+  String get playerBetterPlayer {
+    return Intl.message(
+      'Better Player',
+      name: 'playerBetterPlayer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Omni Player`
+  String get playerOmniPlayer {
+    return Intl.message(
+      'Omni Player',
+      name: 'playerOmniPlayer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `144p`
+  String get quality144p {
+    return Intl.message('144p', name: 'quality144p', desc: '', args: []);
+  }
+
+  /// `240p`
+  String get quality240p {
+    return Intl.message('240p', name: 'quality240p', desc: '', args: []);
+  }
+
+  /// `360p`
+  String get quality360p {
+    return Intl.message('360p', name: 'quality360p', desc: '', args: []);
+  }
+
+  /// `480p`
+  String get quality480p {
+    return Intl.message('480p', name: 'quality480p', desc: '', args: []);
+  }
+
+  /// `720p`
+  String get quality720p {
+    return Intl.message('720p', name: 'quality720p', desc: '', args: []);
+  }
+
+  /// `1080p`
+  String get quality1080p {
+    return Intl.message('1080p', name: 'quality1080p', desc: '', args: []);
+  }
+
+  /// `1440p`
+  String get quality1440p {
+    return Intl.message('1440p', name: 'quality1440p', desc: '', args: []);
+  }
+
+  /// `Filters`
+  String get searchFilters {
+    return Intl.message('Filters', name: 'searchFilters', desc: '', args: []);
+  }
+
+  /// `All`
+  String get filterAll {
+    return Intl.message('All', name: 'filterAll', desc: '', args: []);
+  }
+
+  /// `Videos`
+  String get filterVideos {
+    return Intl.message('Videos', name: 'filterVideos', desc: '', args: []);
+  }
+
+  /// `Channels`
+  String get filterChannels {
+    return Intl.message('Channels', name: 'filterChannels', desc: '', args: []);
+  }
+
+  /// `Playlists`
+  String get filterPlaylists {
+    return Intl.message(
+      'Playlists',
+      name: 'filterPlaylists',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Playlist`
+  String get playlist {
+    return Intl.message('Playlist', name: 'playlist', desc: '', args: []);
+  }
+
+  /// `Music`
+  String get filterMusic {
+    return Intl.message('Music', name: 'filterMusic', desc: '', args: []);
+  }
+
+  /// `Video Fit`
+  String get videoFit {
+    return Intl.message('Video Fit', name: 'videoFit', desc: '', args: []);
+  }
+
+  /// `Contain`
+  String get videoFitContain {
+    return Intl.message('Contain', name: 'videoFitContain', desc: '', args: []);
+  }
+
+  /// `Cover`
+  String get videoFitCover {
+    return Intl.message('Cover', name: 'videoFitCover', desc: '', args: []);
+  }
+
+  /// `Fill`
+  String get videoFitFill {
+    return Intl.message('Fill', name: 'videoFitFill', desc: '', args: []);
+  }
+
+  /// `Fit Width`
+  String get videoFitFitWidth {
+    return Intl.message(
+      'Fit Width',
+      name: 'videoFitFitWidth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Fit Height`
+  String get videoFitFitHeight {
+    return Intl.message(
+      'Fit Height',
+      name: 'videoFitFitHeight',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Skip Interval`
+  String get skipInterval {
+    return Intl.message(
+      'Skip Interval',
+      name: 'skipInterval',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Double-tap skip duration in seconds`
+  String get skipIntervalDescription {
+    return Intl.message(
+      'Double-tap skip duration in seconds',
+      name: 'skipIntervalDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `seconds`
+  String get seconds {
+    return Intl.message('seconds', name: 'seconds', desc: '', args: []);
+  }
+
+  /// `SponsorBlock`
+  String get sponsorBlock {
+    return Intl.message(
+      'SponsorBlock',
+      name: 'sponsorBlock',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Skip sponsored segments automatically`
+  String get sponsorBlockDescription {
+    return Intl.message(
+      'Skip sponsored segments automatically',
+      name: 'sponsorBlockDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Skip Categories`
+  String get sponsorBlockCategories {
+    return Intl.message(
+      'Skip Categories',
+      name: 'sponsorBlockCategories',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sponsor`
+  String get sponsor {
+    return Intl.message('Sponsor', name: 'sponsor', desc: '', args: []);
+  }
+
+  /// `Intro`
+  String get intro {
+    return Intl.message('Intro', name: 'intro', desc: '', args: []);
+  }
+
+  /// `Outro`
+  String get outro {
+    return Intl.message('Outro', name: 'outro', desc: '', args: []);
+  }
+
+  /// `Self Promotion`
+  String get selfPromotion {
+    return Intl.message(
+      'Self Promotion',
+      name: 'selfPromotion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Interaction`
+  String get interaction {
+    return Intl.message('Interaction', name: 'interaction', desc: '', args: []);
+  }
+
+  /// `Music: Non-Music`
+  String get musicOfftopic {
+    return Intl.message(
+      'Music: Non-Music',
+      name: 'musicOfftopic',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Open in Browser`
+  String get openInBrowser {
+    return Intl.message(
+      'Open in Browser',
+      name: 'openInBrowser',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Open links in external browser`
+  String get openLinksExternally {
+    return Intl.message(
+      'Open links in external browser',
+      name: 'openLinksExternally',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Export Data`
+  String get exportData {
+    return Intl.message('Export Data', name: 'exportData', desc: '', args: []);
+  }
+
+  /// `Import Data`
+  String get importData {
+    return Intl.message('Import Data', name: 'importData', desc: '', args: []);
+  }
+
+  /// `Export Subscriptions`
+  String get exportSubscriptions {
+    return Intl.message(
+      'Export Subscriptions',
+      name: 'exportSubscriptions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Import Subscriptions`
+  String get importSubscriptions {
+    return Intl.message(
+      'Import Subscriptions',
+      name: 'importSubscriptions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Backup & Restore`
+  String get backupRestore {
+    return Intl.message(
+      'Backup & Restore',
+      name: 'backupRestore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Export or import your subscriptions`
+  String get backupRestoreDescription {
+    return Intl.message(
+      'Export or import your subscriptions',
+      name: 'backupRestoreDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Export successful`
+  String get exportSuccess {
+    return Intl.message(
+      'Export successful',
+      name: 'exportSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Import successful`
+  String get importSuccess {
+    return Intl.message(
+      'Import successful',
+      name: 'importSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Import failed`
+  String get importError {
+    return Intl.message(
+      'Import failed',
+      name: 'importError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select File`
+  String get selectFile {
+    return Intl.message('Select File', name: 'selectFile', desc: '', args: []);
+  }
+
+  /// `Hide Feed`
+  String get hideFeed {
+    return Intl.message('Hide Feed', name: 'hideFeed', desc: '', args: []);
+  }
+
+  /// `Hide the home feed`
+  String get hideFeedDescription {
+    return Intl.message(
+      'Hide the home feed',
+      name: 'hideFeedDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profiles`
+  String get profiles {
+    return Intl.message('Profiles', name: 'profiles', desc: '', args: []);
+  }
+
+  /// `Add Profile`
+  String get addProfile {
+    return Intl.message('Add Profile', name: 'addProfile', desc: '', args: []);
+  }
+
+  /// `Delete Profile`
+  String get deleteProfile {
+    return Intl.message(
+      'Delete Profile',
+      name: 'deleteProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Switch Profile`
+  String get switchProfile {
+    return Intl.message(
+      'Switch Profile',
+      name: 'switchProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profile Name`
+  String get profileName {
+    return Intl.message(
+      'Profile Name',
+      name: 'profileName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Default`
+  String get defaultProfile {
+    return Intl.message('Default', name: 'defaultProfile', desc: '', args: []);
+  }
+
+  /// `Sync Data`
+  String get syncData {
+    return Intl.message('Sync Data', name: 'syncData', desc: '', args: []);
+  }
+
+  /// `Sync your data across devices`
+  String get syncDataDescription {
+    return Intl.message(
+      'Sync your data across devices',
+      name: 'syncDataDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sync Now`
+  String get syncNow {
+    return Intl.message('Sync Now', name: 'syncNow', desc: '', args: []);
+  }
+
+  /// `Last synced`
+  String get lastSynced {
+    return Intl.message('Last synced', name: 'lastSynced', desc: '', args: []);
+  }
+
+  /// `Sync Enabled`
+  String get syncEnabled {
+    return Intl.message(
+      'Sync Enabled',
+      name: 'syncEnabled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cloud Backup`
+  String get cloudBackup {
+    return Intl.message(
+      'Cloud Backup',
+      name: 'cloudBackup',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Audio Focus`
+  String get audioFocus {
+    return Intl.message('Audio Focus', name: 'audioFocus', desc: '', args: []);
+  }
+
+  /// `Pause playback on interruptions`
+  String get audioFocusDescription {
+    return Intl.message(
+      'Pause playback on interruptions',
+      name: 'audioFocusDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pause on Phone Call`
+  String get pauseOnCall {
+    return Intl.message(
+      'Pause on Phone Call',
+      name: 'pauseOnCall',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pause on Headphone Disconnect`
+  String get pauseOnHeadphones {
+    return Intl.message(
+      'Pause on Headphone Disconnect',
+      name: 'pauseOnHeadphones',
+      desc: '',
       args: [],
     );
   }
@@ -72,12 +621,7 @@ class S {
 
   /// `Saved`
   String get saved {
-    return Intl.message(
-      'Saved',
-      name: 'saved',
-      desc: 'Saved label',
-      args: [],
-    );
+    return Intl.message('Saved', name: 'saved', desc: 'Saved label', args: []);
   }
 
   /// `Settings`
@@ -350,12 +894,7 @@ class S {
 
   /// `Theme`
   String get theme {
-    return Intl.message(
-      'Theme',
-      name: 'theme',
-      desc: 'Theme label',
-      args: [],
-    );
+    return Intl.message('Theme', name: 'theme', desc: 'Theme label', args: []);
   }
 
   /// `Developer`
@@ -390,22 +929,12 @@ class S {
 
   /// `About`
   String get about {
-    return Intl.message(
-      'About',
-      name: 'about',
-      desc: 'About label',
-      args: [],
-    );
+    return Intl.message('About', name: 'about', desc: 'About label', args: []);
   }
 
   /// `Video`
   String get video {
-    return Intl.message(
-      'Video',
-      name: 'video',
-      desc: 'Video label',
-      args: [],
-    );
+    return Intl.message('Video', name: 'video', desc: 'Video label', args: []);
   }
 
   /// `unknown`
@@ -430,12 +959,7 @@ class S {
 
   /// `Retry`
   String get retry {
-    return Intl.message(
-      'Retry',
-      name: 'retry',
-      desc: 'Retry label',
-      args: [],
-    );
+    return Intl.message('Retry', name: 'retry', desc: 'Retry label', args: []);
   }
 
   /// `{count, plural, =1{Reply} other{Replies}}`
@@ -452,42 +976,22 @@ class S {
 
   /// `Canada`
   String get canada {
-    return Intl.message(
-      'Canada',
-      name: 'canada',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Canada', name: 'canada', desc: '', args: []);
   }
 
   /// `France`
   String get france {
-    return Intl.message(
-      'France',
-      name: 'france',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('France', name: 'france', desc: '', args: []);
   }
 
   /// `India`
   String get india {
-    return Intl.message(
-      'India',
-      name: 'india',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('India', name: 'india', desc: '', args: []);
   }
 
   /// `Netherlands`
   String get netherlands {
-    return Intl.message(
-      'Netherlands',
-      name: 'netherlands',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Netherlands', name: 'netherlands', desc: '', args: []);
   }
 
   /// `United Kingdom`
@@ -562,12 +1066,7 @@ class S {
 
   /// `Share`
   String get share {
-    return Intl.message(
-      'Share',
-      name: 'share',
-      desc: 'Share label.',
-      args: [],
-    );
+    return Intl.message('Share', name: 'share', desc: 'Share label.', args: []);
   }
 
   /// `Include title`
@@ -582,12 +1081,7 @@ class S {
 
   /// `Instances`
   String get instances {
-    return Intl.message(
-      'Instances',
-      name: 'instances',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Instances', name: 'instances', desc: '', args: []);
   }
 
   /// `Please consider switching to a different region for better results.`

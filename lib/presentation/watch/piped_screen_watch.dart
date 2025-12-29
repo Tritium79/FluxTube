@@ -92,10 +92,20 @@ class _PipedScreenWatchState extends State<PipedScreenWatch> {
 
                 // Only show full-screen error for API fetch failures
                 if (state.fetchWatchInfoStatus == ApiStatus.error) {
-                  return ErrorRetryWidget(
-                    lottie: 'assets/cat-404.zip',
-                    onTap: () => BlocProvider.of<WatchBloc>(context)
-                        .add(WatchEvent.getWatchInfo(id: widget.id)),
+                  return Scaffold(
+                    appBar: AppBar(
+                      title: Text(locals.retry),
+                    ),
+                    body: SafeArea(
+                      child: SingleChildScrollView(
+                        child: InstanceAutoCheckWidget(
+                          videoId: widget.id,
+                          lottie: 'assets/cat-404.zip',
+                          onRetry: () => BlocProvider.of<WatchBloc>(context)
+                              .add(WatchEvent.getWatchInfo(id: widget.id)),
+                        ),
+                      ),
+                    ),
                   );
                 } else {
                   return DismissiblePage(

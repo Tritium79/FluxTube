@@ -25,4 +25,30 @@ class SettingsEvent with _$SettingsEvent {
   factory SettingsEvent.setPlayerType({required PlayerType playerType}) =
       SetPlayerType;
   factory SettingsEvent.togglePipPlayer() = TogglePipPlayer;
+  // New events for additional features
+  factory SettingsEvent.setSearchFilter({required String filter}) =
+      SetSearchFilter;
+  factory SettingsEvent.setVideoFitMode({required String fitMode}) =
+      SetVideoFitMode;
+  factory SettingsEvent.setSkipInterval({required int seconds}) =
+      SetSkipInterval;
+  factory SettingsEvent.toggleSponsorBlock() = ToggleSponsorBlock;
+  factory SettingsEvent.setSponsorBlockCategories(
+      {required List<String> categories}) = SetSponsorBlockCategories;
+  factory SettingsEvent.toggleOpenLinksInBrowser() = ToggleOpenLinksInBrowser;
+  factory SettingsEvent.toggleHideFeed() = ToggleHideFeed;
+  factory SettingsEvent.toggleAudioFocus() = ToggleAudioFocus;
+  // Profile events
+  factory SettingsEvent.addProfile({required String profileName}) = AddProfile;
+  factory SettingsEvent.deleteProfile({required String profileName}) =
+      DeleteProfile;
+  factory SettingsEvent.switchProfile({required String profileName}) =
+      SwitchProfile;
+  // Sync events
+  factory SettingsEvent.toggleSync() = ToggleSync;
+  factory SettingsEvent.syncNow() = SyncNow;
+  // Import/Export events
+  factory SettingsEvent.exportSubscriptions() = ExportSubscriptions;
+  factory SettingsEvent.importSubscriptions({required String filePath}) =
+      ImportSubscriptions;
 }

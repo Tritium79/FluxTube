@@ -3,6 +3,7 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  app_links
   flutter_inappwebview_windows
   isar_community_flutter_libs
   share_plus

@@ -55,17 +55,32 @@ class InvidiousSearcheResultSection extends StatelessWidget {
                     .where((channel) => channel.id == _channelId)
                     .isNotEmpty;
                 // channel integration
-                return Padding(
-                  padding: const EdgeInsets.only(
-                      top: 5, left: 20, right: 20, bottom: 10),
-                  child: ChannelWidget(
-                      channelName: _result.author,
-                      isVerified: _result.authorVerified,
-                      subscriberCount: _result.subCount,
-                      thumbnail: 'https:${_result.authorThumbnails?.last.url}',
-                      isSubscribed: _isSubscribed,
-                      channelId: _channelId,
-                      locals: locals),
+                return ChannelWidget(
+                    channelName: _result.author,
+                    isVerified: _result.authorVerified,
+                    subscriberCount: _result.subCount,
+                    thumbnail: 'https:${_result.authorThumbnails?.last.url}',
+                    isSubscribed: _isSubscribed,
+                    channelId: _channelId,
+                    locals: locals);
+              } else if (_result.type == "playlist") {
+                // playlist integration
+                final String _playlistId = _result.playlistId!;
+                String? thumbnail = _result.playlistThumbnail;
+                if (thumbnail != null && !thumbnail.startsWith('http')) {
+                  thumbnail = 'https:$thumbnail';
+                }
+                return PlaylistWidget(
+                  playlistId: _playlistId,
+                  title: _result.title,
+                  thumbnail: thumbnail,
+                  videoCount: _result.videoCount,
+                  uploaderName: _result.author,
+                  onTap: () {
+                    context.goNamed('playlist', pathParameters: {
+                      'playlistId': _playlistId,
+                    });
+                  },
                 );
               } else if (_result.type == "video") {
                 final String _videoId = _result.videoId!;

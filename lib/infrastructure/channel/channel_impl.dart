@@ -6,6 +6,7 @@ import 'package:fluxtube/domain/channel/channel_services.dart';
 import 'package:fluxtube/domain/channel/models/invidious/invidious_channel_resp.dart';
 import 'package:fluxtube/domain/channel/models/invidious/latest_video.dart';
 import 'package:fluxtube/domain/channel/models/piped/channel_resp.dart';
+import 'package:fluxtube/domain/channel/models/piped/tab_content.dart';
 import 'package:fluxtube/domain/core/api_end_points.dart';
 import 'package:fluxtube/domain/core/failure/main_failure.dart';
 import 'package:injectable/injectable.dart';
@@ -68,6 +69,34 @@ class ChannelImpl extends ChannelServices {
       }
     } catch (e) {
       log('Err on getMoreChannelVideos: $e');
+      return const Left(MainFailure.clientFailure());
+    } finally {
+      dioClient.close();
+    }
+  }
+
+  ///[getChannelTabContent] fetches channel tab content from the Piped API
+  @override
+  Future<Either<MainFailure, TabContent>> getChannelTabContent(
+      {required String data}) async {
+    final dioClient = Dio();
+    try {
+      final Response response = await dioClient.get(
+        "${ApiEndPoints.channelTabs}${Uri.encodeComponent(data)}",
+        options: Options(
+          followRedirects: false,
+          validateStatus: (status) => true,
+        ),
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final TabContent result = TabContent.fromJson(response.data);
+        return Right(result);
+      } else {
+        log('Err on getChannelTabContent: ${response.statusCode}');
+        return const Left(MainFailure.serverFailure());
+      }
+    } catch (e) {
+      log('Err on getChannelTabContent: $e');
       return const Left(MainFailure.clientFailure());
     } finally {
       dioClient.close();

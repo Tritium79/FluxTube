@@ -11,3 +11,33 @@ const instanceApiUrl = 'instance-api';
 const youtubeService = 'yt-service';
 const playerTypeKey = 'player-type';
 const pipDisabled = 'pip-disabled';
+
+// Search filters
+const searchFilterKey = 'search-filter';
+
+// Video fit mode
+const videoFitModeKey = 'video-fit-mode';
+
+// Skip interval (in seconds)
+const skipIntervalKey = 'skip-interval';
+
+// SponsorBlock settings
+const sponsorBlockEnabledKey = 'sponsorblock-enabled';
+const sponsorBlockCategoriesKey = 'sponsorblock-categories';
+
+// Open links in browser
+const openLinksInBrowserKey = 'open-links-browser';
+
+// Hide feed
+const feedVisibilityKey = 'feed-visibility';
+
+// Audio focus / pause on interruption
+const audioFocusEnabledKey = 'audio-focus-enabled';
+
+// Profiles
+const currentProfileKey = 'current-profile';
+const profilesListKey = 'profiles-list';
+
+// Sync
+const syncEnabledKey = 'sync-enabled';
+const lastSyncedKey = 'last-synced';

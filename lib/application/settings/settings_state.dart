@@ -29,6 +29,27 @@ class SettingsState with _$SettingsState {
     // Track if user's preferred instance failed (for showing snackbar)
     required bool userInstanceFailed,
     required String? failedInstanceName,
+    // Search filter
+    required String searchFilter,
+    // Video fit mode (contain, cover, fill, fitWidth, fitHeight)
+    required String videoFitMode,
+    // Skip interval in seconds (for double-tap skip)
+    required int skipInterval,
+    // SponsorBlock settings
+    required bool isSponsorBlockEnabled,
+    required List<String> sponsorBlockCategories,
+    // Open links in external browser
+    required bool openLinksInBrowser,
+    // Hide feed
+    required bool isHideFeed,
+    // Audio focus / pause on interruption
+    required bool isAudioFocusEnabled,
+    // Profiles
+    required String currentProfile,
+    required List<String> profiles,
+    // Sync
+    required bool isSyncEnabled,
+    required String? lastSynced,
   }) = _Initial;
 
   factory SettingsState.initialize() => SettingsState(
@@ -57,5 +78,18 @@ class SettingsState with _$SettingsState {
         isTestingConnection: false,
         userInstanceFailed: false,
         failedInstanceName: null,
+        // New settings
+        searchFilter: 'all',
+        videoFitMode: 'contain',
+        skipInterval: 10,
+        isSponsorBlockEnabled: false,
+        sponsorBlockCategories: ['sponsor', 'intro', 'outro', 'selfpromo'],
+        openLinksInBrowser: false,
+        isHideFeed: false,
+        isAudioFocusEnabled: true,
+        currentProfile: 'default',
+        profiles: ['default'],
+        isSyncEnabled: false,
+        lastSynced: null,
       );
 }

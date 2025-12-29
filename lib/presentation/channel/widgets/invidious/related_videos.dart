@@ -29,16 +29,18 @@ class InvidiousChannelRelatedVideoSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // _scrollController.addListener(() {
-    //   if (_scrollController.position.pixels ==
-    //           _scrollController.position.maxScrollExtent &&
-    //       !(state.moreChannelDetailsFetchStatus == ApiStatus.loading) &&
-    //       !state.isMoreFetchCompleted) {
-    //     BlocProvider.of<ChannelBloc>(context).add(
-    //         ChannelEvent.getMoreChannelVideos(
-    //             channelId: channelId, nextPage: state.pipedChannelResp?.nextpage));
-    //   }
-    // });
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+              _scrollController.position.maxScrollExtent &&
+          !(state.moreChannelDetailsFetchStatus == ApiStatus.loading) &&
+          !state.isMoreFetchCompleted) {
+        BlocProvider.of<ChannelBloc>(context).add(
+            ChannelEvent.getMoreChannelVideos(
+                channelId: channelId,
+                nextPage: null,
+                serviceType: YouTubeServices.invidious.name));
+      }
+    });
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

@@ -9,18 +9,18 @@ import 'package:fluxtube/core/regions.dart';
 import 'package:fluxtube/generated/l10n.dart';
 import 'package:go_router/go_router.dart';
 
-final _themeModes = [
-  const DropdownMenuItem(
+List<DropdownMenuItem<String>> _getThemeModes(S locals) => [
+  DropdownMenuItem(
     value: "system",
-    child: Text("System"),
+    child: Text(locals.themeSystem),
   ),
-  const DropdownMenuItem(
+  DropdownMenuItem(
     value: "light",
-    child: Text("Light"),
+    child: Text(locals.themeLight),
   ),
-  const DropdownMenuItem(
+  DropdownMenuItem(
     value: "dark",
-    child: Text("Dark"),
+    child: Text(locals.themeDark),
   ),
 ];
 
@@ -84,7 +84,7 @@ class CommonSettingsSection extends StatelessWidget {
               leading: const Icon(Icons.dark_mode_rounded),
               trailing: DropdownButton(
                   value: state.themeMode,
-                  items: _themeModes,
+                  items: _getThemeModes(locals),
                   onChanged: (themeMode) =>
                       BlocProvider.of<SettingsBloc>(context).add(
                           SettingsEvent.changeTheme(

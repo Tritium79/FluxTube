@@ -11,6 +11,9 @@ class ApiEndPoints {
   static String get commentReplies => "${BaseUrl.kBaseUrl}nextpage/comments/";
   static String get channel => "${BaseUrl.kBaseUrl}channel/";
   static String get moreChannelVideos => "${BaseUrl.kBaseUrl}nextpage/channel/";
+  static String get channelTabs => "${BaseUrl.kBaseUrl}channels/tabs?data=";
+  static String get playlist => "${BaseUrl.kBaseUrl}playlists/";
+  static String get morePlaylistVideos => "${BaseUrl.kBaseUrl}nextpage/playlists/";
 }
 
 class InvidiousApiEndpoints {
@@ -23,4 +26,5 @@ class InvidiousApiEndpoints {
   static String get comments => "${BaseUrl.kInvidiousBaseUrl}/api/v1/comments/";
   static String get channel => "${BaseUrl.kInvidiousBaseUrl}/api/v1/channels/";
   static String get channelVideos => "${BaseUrl.kInvidiousBaseUrl}/api/v1/channels/";
+  static String get playlist => "${BaseUrl.kInvidiousBaseUrl}/api/v1/playlists/";
 }

@@ -12,6 +12,11 @@ class ChannelState with _$ChannelState {
     required ChannelResp? pipedChannelResp,
     required ApiStatus moreChannelDetailsFetchStatus,
 
+    // PIPED TABS
+    required int selectedTabIndex,
+    required ApiStatus tabContentFetchStatus,
+    required TabContent? selectedTabContent,
+
     // INVIDIOUS
 
     required InvidiousChannelResp? invidiousChannelResp,
@@ -26,6 +31,11 @@ class ChannelState with _$ChannelState {
 
         pipedChannelResp: null,
         channelDetailsFetchStatus: ApiStatus.initial,
+
+        // PIPED TABS
+        selectedTabIndex: 0,
+        tabContentFetchStatus: ApiStatus.initial,
+        selectedTabContent: null,
 
         // INVIDIOUS
 

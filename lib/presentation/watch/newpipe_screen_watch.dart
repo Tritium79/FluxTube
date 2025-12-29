@@ -71,7 +71,10 @@ class _NewPipeScreenWatchState extends State<NewPipeScreenWatch> {
                   current.fetchNewPipeWatchInfoStatus ||
               previous.newPipeWatchResp != current.newPipeWatchResp ||
               previous.isDescriptionTapped != current.isDescriptionTapped ||
-              previous.isTapComments != current.isTapComments,
+              previous.isTapComments != current.isTapComments ||
+              previous.fetchNewPipeCommentsStatus !=
+                  current.fetchNewPipeCommentsStatus ||
+              previous.newPipeComments != current.newPipeComments,
           builder: (context, state) {
             return BlocBuilder<SavedBloc, SavedState>(
               buildWhen: (previous, current) =>

@@ -59,9 +59,9 @@ class NewPipeCommentSection extends StatelessWidget {
                         child: Text(locals.retry)),
                   )
                 : state.newPipeComments.isDisabled == true
-                    ? const Center(child: Text("Comments are disabled"))
+                    ? Center(child: Text(locals.commentsDisabled))
                     : state.newPipeComments.comments?.isEmpty == true
-                        ? const Center(child: Text("No Comments Found"))
+                        ? Center(child: Text(locals.noCommentsFound))
                         : ListView.separated(
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
@@ -71,7 +71,7 @@ class NewPipeCommentSection extends StatelessWidget {
                               if (index < comments.length) {
                                 final comment = comments[index];
                                 return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     NewPipeCommentWidget(
                                       author: comment.authorName ?? locals.commentAuthorNotFound,
@@ -83,7 +83,7 @@ class NewPipeCommentSection extends StatelessWidget {
                                       onProfileTap: () {
                                         final channelId = _extractChannelId(comment.authorUrl);
                                         if (channelId != null) {
-                                          context.goNamed('channel', pathParameters: {
+                                          context.pushNamed('channel', pathParameters: {
                                             'channelId': channelId,
                                           }, queryParameters: {
                                             'avatarUrl': comment.authorAvatarUrl,
@@ -93,12 +93,25 @@ class NewPipeCommentSection extends StatelessWidget {
                                     ),
                                     if (comment.replyCount != null && comment.replyCount! > 0)
                                       Padding(
-                                        padding: const EdgeInsets.only(left: 50),
-                                        child: Text(
-                                          "${formatCount(comment.replyCount.toString())} ${locals.repliesPlural(comment.replyCount ?? 0)}",
-                                          style: TextStyle(
-                                            color: Theme.of(context).colorScheme.primary,
-                                            fontWeight: FontWeight.w500,
+                                        padding: const EdgeInsets.only(right: 70, top: 4),
+                                        child: TextButton(
+                                          onPressed: () {
+                                            // TODO: Implement replies when NewPipe supports it
+                                            // For now show a message
+                                            ScaffoldMessenger.of(context).showSnackBar(
+                                              SnackBar(
+                                                content: Text(locals.repliesNotSupported),
+                                                duration: const Duration(seconds: 2),
+                                              ),
+                                            );
+                                          },
+                                          child: Text(
+                                            "${formatCount(comment.replyCount.toString())} ${locals.repliesPlural(comment.replyCount ?? 0)}",
+                                            style: TextStyle(
+                                              color: Theme.of(context).colorScheme.primary,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 13,
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -155,41 +168,47 @@ class NewPipeCommentWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final S locals = S.of(context);
-    final Size size = MediaQuery.of(context).size;
     var formattedLikes = formatCount(likes.toString());
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // Pinned indicator
         if (isPinned)
           Padding(
-            padding: const EdgeInsets.only(bottom: 4),
+            padding: const EdgeInsets.only(left: 60, bottom: 6),
             child: Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(Icons.push_pin, size: 14, color: kGreyColor),
                 const SizedBox(width: 4),
                 Text(
-                  'Pinned',
+                  locals.pinned,
                   style: TextStyle(color: kGreyColor, fontSize: 12),
                 ),
               ],
             ),
           ),
+        // Main comment row
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Avatar
             GestureDetector(
               onTap: onProfileTap,
               child: CircleAvatar(
-                radius: 20,
+                radius: 18,
                 backgroundImage: authorImageUrl.isNotEmpty
                     ? NetworkImage(authorImageUrl)
                     : null,
+                child: authorImageUrl.isEmpty
+                    ? const Icon(Icons.person, size: 18)
+                    : null,
               ),
             ),
-            kWidthBox20,
-            SizedBox(
-              width: size.width * 0.6,
+            kWidthBox15,
+            // Author name and comment text
+            Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -198,33 +217,67 @@ class NewPipeCommentWidget extends StatelessWidget {
                     author,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                        color: kGreyColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14),
+                      color: kGreyColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 13,
+                    ),
                   ),
+                  const SizedBox(height: 4),
                   RichReadMoreText(
-                    HTML.toTextSpan(context, text,
-                        defaultTextStyle: Theme.of(context).textTheme.bodyMedium),
+                    HTML.toTextSpan(
+                      context,
+                      text,
+                      defaultTextStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontSize: 14,
+                        height: 1.3,
+                      ),
+                    ),
                     settings: LineModeSettings(
                       trimLines: 3,
                       trimCollapsedText: ' ${locals.readMoreText}',
                       trimExpandedText: ' ${locals.showLessText}',
-                      moreStyle: const TextStyle(
-                          fontSize: 14, fontWeight: FontWeight.bold),
-                      lessStyle: const TextStyle(
-                          fontSize: 14, fontWeight: FontWeight.bold),
+                      moreStyle: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      lessStyle: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
-            const Spacer(),
+            const SizedBox(width: 12),
+            // Likes and heart column
             Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 if (isHearted)
-                  const Icon(Icons.favorite, color: Colors.red, size: 16),
-                const Icon(CupertinoIcons.hand_thumbsup_fill),
-                Text(formattedLikes),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 4),
+                    child: Icon(
+                      Icons.favorite,
+                      color: Colors.red,
+                      size: 16,
+                    ),
+                  ),
+                Icon(
+                  CupertinoIcons.hand_thumbsup,
+                  size: 16,
+                  color: kGreyColor,
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  formattedLikes,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: kGreyColor,
+                  ),
+                ),
               ],
             ),
           ],

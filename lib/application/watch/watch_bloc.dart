@@ -48,26 +48,30 @@ class WatchBloc extends Bloc<WatchEvent, WatchState> {
     );
     //toggle comments
     on<GetCommentData>((event, emit) async {
+      // Toggle comments - store the new value before emit
+      final newTapCommentsValue = !state.isTapComments;
+
       //initialte loading, and toggle comments
-      emit(state.copyWith(
+      final loadingState = state.copyWith(
           fetchCommentsStatus: ApiStatus.loading,
-          isTapComments: !state.isTapComments));
+          isTapComments: newTapCommentsValue);
+      emit(loadingState);
 
       //get comments list
 
-      if (state.isTapComments == true) {
+      if (newTapCommentsValue == true) {
         final _result = await watchService.getCommentsData(id: event.id);
 
         final _state = _result.fold(
             (MainFailure failure) =>
-                state.copyWith(fetchCommentsStatus: ApiStatus.error),
-            (CommentsResp resp) => state.copyWith(
+                loadingState.copyWith(fetchCommentsStatus: ApiStatus.error),
+            (CommentsResp resp) => loadingState.copyWith(
                 fetchCommentsStatus: ApiStatus.loaded, comments: resp));
 
         //update to ui
         emit(_state);
       } else {
-        emit(state.copyWith(fetchCommentsStatus: ApiStatus.initial));
+        emit(loadingState.copyWith(fetchCommentsStatus: ApiStatus.initial));
       }
     });
 
@@ -486,20 +490,25 @@ class WatchBloc extends Bloc<WatchEvent, WatchState> {
     });
 
     on<GetNewPipeComments>((event, emit) async {
-      emit(state.copyWith(
+      // Toggle comments - store the new value before emit
+      final newTapCommentsValue = !state.isTapComments;
+
+      // Create the new state with loading status
+      final loadingState = state.copyWith(
         newPipeComments: NewPipeCommentsResp(),
         fetchNewPipeCommentsStatus: ApiStatus.loading,
-        isTapComments: !state.isTapComments,
-      ));
+        isTapComments: newTapCommentsValue,
+      );
+      emit(loadingState);
 
-      if (state.isTapComments == true) {
+      if (newTapCommentsValue == true) {
         final result = await watchService.getNewPipeCommentsData(id: event.id);
 
         final _state = result.fold(
-          (MainFailure failure) => state.copyWith(
+          (MainFailure failure) => loadingState.copyWith(
             fetchNewPipeCommentsStatus: ApiStatus.error,
           ),
-          (NewPipeCommentsResp resp) => state.copyWith(
+          (NewPipeCommentsResp resp) => loadingState.copyWith(
             newPipeComments: resp,
             fetchNewPipeCommentsStatus: ApiStatus.loaded,
           ),
@@ -507,7 +516,7 @@ class WatchBloc extends Bloc<WatchEvent, WatchState> {
 
         emit(_state);
       } else {
-        emit(state.copyWith(fetchNewPipeCommentsStatus: ApiStatus.initial));
+        emit(loadingState.copyWith(fetchNewPipeCommentsStatus: ApiStatus.initial));
       }
     });
 

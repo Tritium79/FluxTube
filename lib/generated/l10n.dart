@@ -1204,6 +1204,31 @@ class S {
     );
   }
 
+  /// `Comments are disabled`
+  String get commentsDisabled {
+    return Intl.message(
+      'Comments are disabled',
+      name: 'commentsDisabled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Replies are not available yet`
+  String get repliesNotSupported {
+    return Intl.message(
+      'Replies are not available yet',
+      name: 'repliesNotSupported',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pinned`
+  String get pinned {
+    return Intl.message('Pinned', name: 'pinned', desc: '', args: []);
+  }
+
   /// `Disable PIP player`
   String get disablePipPlayer {
     return Intl.message(

@@ -50,6 +50,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "channelSubscribers": m0,
     "commentAuthorNotFound": MessageLookupByLibrary.simpleMessage("Not found"),
+    "commentsDisabled": MessageLookupByLibrary.simpleMessage(
+      "Comments are disabled",
+    ),
     "commonSettingsTitle": MessageLookupByLibrary.simpleMessage("Common"),
     "defaultProfile": MessageLookupByLibrary.simpleMessage("Default"),
     "defaultQuality": MessageLookupByLibrary.simpleMessage("Default Quality"),
@@ -148,6 +151,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "pauseOnHeadphones": MessageLookupByLibrary.simpleMessage(
       "Pause on Headphone Disconnect",
     ),
+    "pinned": MessageLookupByLibrary.simpleMessage("Pinned"),
     "playerBetterPlayer": MessageLookupByLibrary.simpleMessage("Better Player"),
     "playerOmniPlayer": MessageLookupByLibrary.simpleMessage("Omni Player"),
     "playerType": MessageLookupByLibrary.simpleMessage("Player Type"),
@@ -173,6 +177,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "region": MessageLookupByLibrary.simpleMessage("Region"),
     "relatedTitle": MessageLookupByLibrary.simpleMessage("Related"),
     "renameProfile": MessageLookupByLibrary.simpleMessage("Rename Profile"),
+    "repliesNotSupported": MessageLookupByLibrary.simpleMessage(
+      "Replies are not available yet",
+    ),
     "repliesPlural": m1,
     "retrieveDislikeCounts": MessageLookupByLibrary.simpleMessage(
       "Retrieve dislike counts",

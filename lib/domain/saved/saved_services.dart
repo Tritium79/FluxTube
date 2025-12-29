@@ -5,10 +5,11 @@ import 'package:isar_community/isar.dart';
 
 abstract class SavedServices {
   Future<Either<MainFailure, List<LocalStoreVideoInfo>>> addVideoInfo(
-      {required LocalStoreVideoInfo videoInfo});
-  Future<Either<MainFailure, List<LocalStoreVideoInfo>>> getVideoInfoList();
+      {required LocalStoreVideoInfo videoInfo, String profileName = 'default'});
+  Future<Either<MainFailure, List<LocalStoreVideoInfo>>> getVideoInfoList(
+      {String profileName = 'default'});
   Future<Either<MainFailure, List<LocalStoreVideoInfo>>> deleteVideoInfo(
-      {required Id id});
+      {required String id, String profileName = 'default'});
   Future<Either<MainFailure, LocalStoreVideoInfo>> checkVideoInfo(
-      {required String id});
+      {required String id, String profileName = 'default'});
 }

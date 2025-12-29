@@ -46,8 +46,7 @@ mixin _$SettingsEvent {
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
     required TResult Function(String profileName) switchProfile,
-    required TResult Function() toggleSync,
-    required TResult Function() syncNow,
+    required TResult Function(String oldName, String newName) renameProfile,
     required TResult Function() exportSubscriptions,
     required TResult Function(String filePath) importSubscriptions,
   }) =>
@@ -81,8 +80,7 @@ mixin _$SettingsEvent {
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
     TResult? Function(String profileName)? switchProfile,
-    TResult? Function()? toggleSync,
-    TResult? Function()? syncNow,
+    TResult? Function(String oldName, String newName)? renameProfile,
     TResult? Function()? exportSubscriptions,
     TResult? Function(String filePath)? importSubscriptions,
   }) =>
@@ -116,8 +114,7 @@ mixin _$SettingsEvent {
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
     TResult Function(String profileName)? switchProfile,
-    TResult Function()? toggleSync,
-    TResult Function()? syncNow,
+    TResult Function(String oldName, String newName)? renameProfile,
     TResult Function()? exportSubscriptions,
     TResult Function(String filePath)? importSubscriptions,
     required TResult orElse(),
@@ -159,8 +156,7 @@ mixin _$SettingsEvent {
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
     required TResult Function(SwitchProfile value) switchProfile,
-    required TResult Function(ToggleSync value) toggleSync,
-    required TResult Function(SyncNow value) syncNow,
+    required TResult Function(RenameProfile value) renameProfile,
     required TResult Function(ExportSubscriptions value) exportSubscriptions,
     required TResult Function(ImportSubscriptions value) importSubscriptions,
   }) =>
@@ -196,8 +192,7 @@ mixin _$SettingsEvent {
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
     TResult? Function(SwitchProfile value)? switchProfile,
-    TResult? Function(ToggleSync value)? toggleSync,
-    TResult? Function(SyncNow value)? syncNow,
+    TResult? Function(RenameProfile value)? renameProfile,
     TResult? Function(ExportSubscriptions value)? exportSubscriptions,
     TResult? Function(ImportSubscriptions value)? importSubscriptions,
   }) =>
@@ -233,8 +228,7 @@ mixin _$SettingsEvent {
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
     TResult Function(SwitchProfile value)? switchProfile,
-    TResult Function(ToggleSync value)? toggleSync,
-    TResult Function(SyncNow value)? syncNow,
+    TResult Function(RenameProfile value)? renameProfile,
     TResult Function(ExportSubscriptions value)? exportSubscriptions,
     TResult Function(ImportSubscriptions value)? importSubscriptions,
     required TResult orElse(),
@@ -332,8 +326,7 @@ class _$InitializeSettingsImpl implements InitializeSettings {
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
     required TResult Function(String profileName) switchProfile,
-    required TResult Function() toggleSync,
-    required TResult Function() syncNow,
+    required TResult Function(String oldName, String newName) renameProfile,
     required TResult Function() exportSubscriptions,
     required TResult Function(String filePath) importSubscriptions,
   }) {
@@ -370,8 +363,7 @@ class _$InitializeSettingsImpl implements InitializeSettings {
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
     TResult? Function(String profileName)? switchProfile,
-    TResult? Function()? toggleSync,
-    TResult? Function()? syncNow,
+    TResult? Function(String oldName, String newName)? renameProfile,
     TResult? Function()? exportSubscriptions,
     TResult? Function(String filePath)? importSubscriptions,
   }) {
@@ -408,8 +400,7 @@ class _$InitializeSettingsImpl implements InitializeSettings {
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
     TResult Function(String profileName)? switchProfile,
-    TResult Function()? toggleSync,
-    TResult Function()? syncNow,
+    TResult Function(String oldName, String newName)? renameProfile,
     TResult Function()? exportSubscriptions,
     TResult Function(String filePath)? importSubscriptions,
     required TResult orElse(),
@@ -457,8 +448,7 @@ class _$InitializeSettingsImpl implements InitializeSettings {
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
     required TResult Function(SwitchProfile value) switchProfile,
-    required TResult Function(ToggleSync value) toggleSync,
-    required TResult Function(SyncNow value) syncNow,
+    required TResult Function(RenameProfile value) renameProfile,
     required TResult Function(ExportSubscriptions value) exportSubscriptions,
     required TResult Function(ImportSubscriptions value) importSubscriptions,
   }) {
@@ -497,8 +487,7 @@ class _$InitializeSettingsImpl implements InitializeSettings {
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
     TResult? Function(SwitchProfile value)? switchProfile,
-    TResult? Function(ToggleSync value)? toggleSync,
-    TResult? Function(SyncNow value)? syncNow,
+    TResult? Function(RenameProfile value)? renameProfile,
     TResult? Function(ExportSubscriptions value)? exportSubscriptions,
     TResult? Function(ImportSubscriptions value)? importSubscriptions,
   }) {
@@ -537,8 +526,7 @@ class _$InitializeSettingsImpl implements InitializeSettings {
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
     TResult Function(SwitchProfile value)? switchProfile,
-    TResult Function(ToggleSync value)? toggleSync,
-    TResult Function(SyncNow value)? syncNow,
+    TResult Function(RenameProfile value)? renameProfile,
     TResult Function(ExportSubscriptions value)? exportSubscriptions,
     TResult Function(ImportSubscriptions value)? importSubscriptions,
     required TResult orElse(),
@@ -652,8 +640,7 @@ class _$GetDefaultLanguageImpl implements GetDefaultLanguage {
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
     required TResult Function(String profileName) switchProfile,
-    required TResult Function() toggleSync,
-    required TResult Function() syncNow,
+    required TResult Function(String oldName, String newName) renameProfile,
     required TResult Function() exportSubscriptions,
     required TResult Function(String filePath) importSubscriptions,
   }) {
@@ -690,8 +677,7 @@ class _$GetDefaultLanguageImpl implements GetDefaultLanguage {
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
     TResult? Function(String profileName)? switchProfile,
-    TResult? Function()? toggleSync,
-    TResult? Function()? syncNow,
+    TResult? Function(String oldName, String newName)? renameProfile,
     TResult? Function()? exportSubscriptions,
     TResult? Function(String filePath)? importSubscriptions,
   }) {
@@ -728,8 +714,7 @@ class _$GetDefaultLanguageImpl implements GetDefaultLanguage {
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
     TResult Function(String profileName)? switchProfile,
-    TResult Function()? toggleSync,
-    TResult Function()? syncNow,
+    TResult Function(String oldName, String newName)? renameProfile,
     TResult Function()? exportSubscriptions,
     TResult Function(String filePath)? importSubscriptions,
     required TResult orElse(),
@@ -777,8 +762,7 @@ class _$GetDefaultLanguageImpl implements GetDefaultLanguage {
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
     required TResult Function(SwitchProfile value) switchProfile,
-    required TResult Function(ToggleSync value) toggleSync,
-    required TResult Function(SyncNow value) syncNow,
+    required TResult Function(RenameProfile value) renameProfile,
     required TResult Function(ExportSubscriptions value) exportSubscriptions,
     required TResult Function(ImportSubscriptions value) importSubscriptions,
   }) {
@@ -817,8 +801,7 @@ class _$GetDefaultLanguageImpl implements GetDefaultLanguage {
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
     TResult? Function(SwitchProfile value)? switchProfile,
-    TResult? Function(ToggleSync value)? toggleSync,
-    TResult? Function(SyncNow value)? syncNow,
+    TResult? Function(RenameProfile value)? renameProfile,
     TResult? Function(ExportSubscriptions value)? exportSubscriptions,
     TResult? Function(ImportSubscriptions value)? importSubscriptions,
   }) {
@@ -857,8 +840,7 @@ class _$GetDefaultLanguageImpl implements GetDefaultLanguage {
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
     TResult Function(SwitchProfile value)? switchProfile,
-    TResult Function(ToggleSync value)? toggleSync,
-    TResult Function(SyncNow value)? syncNow,
+    TResult Function(RenameProfile value)? renameProfile,
     TResult Function(ExportSubscriptions value)? exportSubscriptions,
     TResult Function(ImportSubscriptions value)? importSubscriptions,
     required TResult orElse(),
@@ -980,8 +962,7 @@ class _$GetDefaultQualityImpl implements GetDefaultQuality {
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
     required TResult Function(String profileName) switchProfile,
-    required TResult Function() toggleSync,
-    required TResult Function() syncNow,
+    required TResult Function(String oldName, String newName) renameProfile,
     required TResult Function() exportSubscriptions,
     required TResult Function(String filePath) importSubscriptions,
   }) {
@@ -1018,8 +999,7 @@ class _$GetDefaultQualityImpl implements GetDefaultQuality {
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
     TResult? Function(String profileName)? switchProfile,
-    TResult? Function()? toggleSync,
-    TResult? Function()? syncNow,
+    TResult? Function(String oldName, String newName)? renameProfile,
     TResult? Function()? exportSubscriptions,
     TResult? Function(String filePath)? importSubscriptions,
   }) {
@@ -1056,8 +1036,7 @@ class _$GetDefaultQualityImpl implements GetDefaultQuality {
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
     TResult Function(String profileName)? switchProfile,
-    TResult Function()? toggleSync,
-    TResult Function()? syncNow,
+    TResult Function(String oldName, String newName)? renameProfile,
     TResult Function()? exportSubscriptions,
     TResult Function(String filePath)? importSubscriptions,
     required TResult orElse(),
@@ -1105,8 +1084,7 @@ class _$GetDefaultQualityImpl implements GetDefaultQuality {
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
     required TResult Function(SwitchProfile value) switchProfile,
-    required TResult Function(ToggleSync value) toggleSync,
-    required TResult Function(SyncNow value) syncNow,
+    required TResult Function(RenameProfile value) renameProfile,
     required TResult Function(ExportSubscriptions value) exportSubscriptions,
     required TResult Function(ImportSubscriptions value) importSubscriptions,
   }) {
@@ -1145,8 +1123,7 @@ class _$GetDefaultQualityImpl implements GetDefaultQuality {
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
     TResult? Function(SwitchProfile value)? switchProfile,
-    TResult? Function(ToggleSync value)? toggleSync,
-    TResult? Function(SyncNow value)? syncNow,
+    TResult? Function(RenameProfile value)? renameProfile,
     TResult? Function(ExportSubscriptions value)? exportSubscriptions,
     TResult? Function(ImportSubscriptions value)? importSubscriptions,
   }) {
@@ -1185,8 +1162,7 @@ class _$GetDefaultQualityImpl implements GetDefaultQuality {
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
     TResult Function(SwitchProfile value)? switchProfile,
-    TResult Function(ToggleSync value)? toggleSync,
-    TResult Function(SyncNow value)? syncNow,
+    TResult Function(RenameProfile value)? renameProfile,
     TResult Function(ExportSubscriptions value)? exportSubscriptions,
     TResult Function(ImportSubscriptions value)? importSubscriptions,
     required TResult orElse(),
@@ -1308,8 +1284,7 @@ class _$GetDefaultRegionImpl implements GetDefaultRegion {
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
     required TResult Function(String profileName) switchProfile,
-    required TResult Function() toggleSync,
-    required TResult Function() syncNow,
+    required TResult Function(String oldName, String newName) renameProfile,
     required TResult Function() exportSubscriptions,
     required TResult Function(String filePath) importSubscriptions,
   }) {
@@ -1346,8 +1321,7 @@ class _$GetDefaultRegionImpl implements GetDefaultRegion {
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
     TResult? Function(String profileName)? switchProfile,
-    TResult? Function()? toggleSync,
-    TResult? Function()? syncNow,
+    TResult? Function(String oldName, String newName)? renameProfile,
     TResult? Function()? exportSubscriptions,
     TResult? Function(String filePath)? importSubscriptions,
   }) {
@@ -1384,8 +1358,7 @@ class _$GetDefaultRegionImpl implements GetDefaultRegion {
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
     TResult Function(String profileName)? switchProfile,
-    TResult Function()? toggleSync,
-    TResult Function()? syncNow,
+    TResult Function(String oldName, String newName)? renameProfile,
     TResult Function()? exportSubscriptions,
     TResult Function(String filePath)? importSubscriptions,
     required TResult orElse(),
@@ -1433,8 +1406,7 @@ class _$GetDefaultRegionImpl implements GetDefaultRegion {
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
     required TResult Function(SwitchProfile value) switchProfile,
-    required TResult Function(ToggleSync value) toggleSync,
-    required TResult Function(SyncNow value) syncNow,
+    required TResult Function(RenameProfile value) renameProfile,
     required TResult Function(ExportSubscriptions value) exportSubscriptions,
     required TResult Function(ImportSubscriptions value) importSubscriptions,
   }) {
@@ -1473,8 +1445,7 @@ class _$GetDefaultRegionImpl implements GetDefaultRegion {
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
     TResult? Function(SwitchProfile value)? switchProfile,
-    TResult? Function(ToggleSync value)? toggleSync,
-    TResult? Function(SyncNow value)? syncNow,
+    TResult? Function(RenameProfile value)? renameProfile,
     TResult? Function(ExportSubscriptions value)? exportSubscriptions,
     TResult? Function(ImportSubscriptions value)? importSubscriptions,
   }) {
@@ -1513,8 +1484,7 @@ class _$GetDefaultRegionImpl implements GetDefaultRegion {
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
     TResult Function(SwitchProfile value)? switchProfile,
-    TResult Function(ToggleSync value)? toggleSync,
-    TResult Function(SyncNow value)? syncNow,
+    TResult Function(RenameProfile value)? renameProfile,
     TResult Function(ExportSubscriptions value)? exportSubscriptions,
     TResult Function(ImportSubscriptions value)? importSubscriptions,
     required TResult orElse(),
@@ -1636,8 +1606,7 @@ class _$ChangeThemeImpl implements ChangeTheme {
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
     required TResult Function(String profileName) switchProfile,
-    required TResult Function() toggleSync,
-    required TResult Function() syncNow,
+    required TResult Function(String oldName, String newName) renameProfile,
     required TResult Function() exportSubscriptions,
     required TResult Function(String filePath) importSubscriptions,
   }) {
@@ -1674,8 +1643,7 @@ class _$ChangeThemeImpl implements ChangeTheme {
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
     TResult? Function(String profileName)? switchProfile,
-    TResult? Function()? toggleSync,
-    TResult? Function()? syncNow,
+    TResult? Function(String oldName, String newName)? renameProfile,
     TResult? Function()? exportSubscriptions,
     TResult? Function(String filePath)? importSubscriptions,
   }) {
@@ -1712,8 +1680,7 @@ class _$ChangeThemeImpl implements ChangeTheme {
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
     TResult Function(String profileName)? switchProfile,
-    TResult Function()? toggleSync,
-    TResult Function()? syncNow,
+    TResult Function(String oldName, String newName)? renameProfile,
     TResult Function()? exportSubscriptions,
     TResult Function(String filePath)? importSubscriptions,
     required TResult orElse(),
@@ -1761,8 +1728,7 @@ class _$ChangeThemeImpl implements ChangeTheme {
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
     required TResult Function(SwitchProfile value) switchProfile,
-    required TResult Function(ToggleSync value) toggleSync,
-    required TResult Function(SyncNow value) syncNow,
+    required TResult Function(RenameProfile value) renameProfile,
     required TResult Function(ExportSubscriptions value) exportSubscriptions,
     required TResult Function(ImportSubscriptions value) importSubscriptions,
   }) {
@@ -1801,8 +1767,7 @@ class _$ChangeThemeImpl implements ChangeTheme {
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
     TResult? Function(SwitchProfile value)? switchProfile,
-    TResult? Function(ToggleSync value)? toggleSync,
-    TResult? Function(SyncNow value)? syncNow,
+    TResult? Function(RenameProfile value)? renameProfile,
     TResult? Function(ExportSubscriptions value)? exportSubscriptions,
     TResult? Function(ImportSubscriptions value)? importSubscriptions,
   }) {
@@ -1841,8 +1806,7 @@ class _$ChangeThemeImpl implements ChangeTheme {
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
     TResult Function(SwitchProfile value)? switchProfile,
-    TResult Function(ToggleSync value)? toggleSync,
-    TResult Function(SyncNow value)? syncNow,
+    TResult Function(RenameProfile value)? renameProfile,
     TResult Function(ExportSubscriptions value)? exportSubscriptions,
     TResult Function(ImportSubscriptions value)? importSubscriptions,
     required TResult orElse(),
@@ -1938,8 +1902,7 @@ class _$ToggleHistoryVisibilityImpl implements ToggleHistoryVisibility {
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
     required TResult Function(String profileName) switchProfile,
-    required TResult Function() toggleSync,
-    required TResult Function() syncNow,
+    required TResult Function(String oldName, String newName) renameProfile,
     required TResult Function() exportSubscriptions,
     required TResult Function(String filePath) importSubscriptions,
   }) {
@@ -1976,8 +1939,7 @@ class _$ToggleHistoryVisibilityImpl implements ToggleHistoryVisibility {
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
     TResult? Function(String profileName)? switchProfile,
-    TResult? Function()? toggleSync,
-    TResult? Function()? syncNow,
+    TResult? Function(String oldName, String newName)? renameProfile,
     TResult? Function()? exportSubscriptions,
     TResult? Function(String filePath)? importSubscriptions,
   }) {
@@ -2014,8 +1976,7 @@ class _$ToggleHistoryVisibilityImpl implements ToggleHistoryVisibility {
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
     TResult Function(String profileName)? switchProfile,
-    TResult Function()? toggleSync,
-    TResult Function()? syncNow,
+    TResult Function(String oldName, String newName)? renameProfile,
     TResult Function()? exportSubscriptions,
     TResult Function(String filePath)? importSubscriptions,
     required TResult orElse(),
@@ -2063,8 +2024,7 @@ class _$ToggleHistoryVisibilityImpl implements ToggleHistoryVisibility {
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
     required TResult Function(SwitchProfile value) switchProfile,
-    required TResult Function(ToggleSync value) toggleSync,
-    required TResult Function(SyncNow value) syncNow,
+    required TResult Function(RenameProfile value) renameProfile,
     required TResult Function(ExportSubscriptions value) exportSubscriptions,
     required TResult Function(ImportSubscriptions value) importSubscriptions,
   }) {
@@ -2103,8 +2063,7 @@ class _$ToggleHistoryVisibilityImpl implements ToggleHistoryVisibility {
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
     TResult? Function(SwitchProfile value)? switchProfile,
-    TResult? Function(ToggleSync value)? toggleSync,
-    TResult? Function(SyncNow value)? syncNow,
+    TResult? Function(RenameProfile value)? renameProfile,
     TResult? Function(ExportSubscriptions value)? exportSubscriptions,
     TResult? Function(ImportSubscriptions value)? importSubscriptions,
   }) {
@@ -2143,8 +2102,7 @@ class _$ToggleHistoryVisibilityImpl implements ToggleHistoryVisibility {
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
     TResult Function(SwitchProfile value)? switchProfile,
-    TResult Function(ToggleSync value)? toggleSync,
-    TResult Function(SyncNow value)? syncNow,
+    TResult Function(RenameProfile value)? renameProfile,
     TResult Function(ExportSubscriptions value)? exportSubscriptions,
     TResult Function(ImportSubscriptions value)? importSubscriptions,
     required TResult orElse(),
@@ -2232,8 +2190,7 @@ class _$ToggleDislikeVisibilityImpl implements ToggleDislikeVisibility {
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
     required TResult Function(String profileName) switchProfile,
-    required TResult Function() toggleSync,
-    required TResult Function() syncNow,
+    required TResult Function(String oldName, String newName) renameProfile,
     required TResult Function() exportSubscriptions,
     required TResult Function(String filePath) importSubscriptions,
   }) {
@@ -2270,8 +2227,7 @@ class _$ToggleDislikeVisibilityImpl implements ToggleDislikeVisibility {
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
     TResult? Function(String profileName)? switchProfile,
-    TResult? Function()? toggleSync,
-    TResult? Function()? syncNow,
+    TResult? Function(String oldName, String newName)? renameProfile,
     TResult? Function()? exportSubscriptions,
     TResult? Function(String filePath)? importSubscriptions,
   }) {
@@ -2308,8 +2264,7 @@ class _$ToggleDislikeVisibilityImpl implements ToggleDislikeVisibility {
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
     TResult Function(String profileName)? switchProfile,
-    TResult Function()? toggleSync,
-    TResult Function()? syncNow,
+    TResult Function(String oldName, String newName)? renameProfile,
     TResult Function()? exportSubscriptions,
     TResult Function(String filePath)? importSubscriptions,
     required TResult orElse(),
@@ -2357,8 +2312,7 @@ class _$ToggleDislikeVisibilityImpl implements ToggleDislikeVisibility {
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
     required TResult Function(SwitchProfile value) switchProfile,
-    required TResult Function(ToggleSync value) toggleSync,
-    required TResult Function(SyncNow value) syncNow,
+    required TResult Function(RenameProfile value) renameProfile,
     required TResult Function(ExportSubscriptions value) exportSubscriptions,
     required TResult Function(ImportSubscriptions value) importSubscriptions,
   }) {
@@ -2397,8 +2351,7 @@ class _$ToggleDislikeVisibilityImpl implements ToggleDislikeVisibility {
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
     TResult? Function(SwitchProfile value)? switchProfile,
-    TResult? Function(ToggleSync value)? toggleSync,
-    TResult? Function(SyncNow value)? syncNow,
+    TResult? Function(RenameProfile value)? renameProfile,
     TResult? Function(ExportSubscriptions value)? exportSubscriptions,
     TResult? Function(ImportSubscriptions value)? importSubscriptions,
   }) {
@@ -2437,8 +2390,7 @@ class _$ToggleDislikeVisibilityImpl implements ToggleDislikeVisibility {
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
     TResult Function(SwitchProfile value)? switchProfile,
-    TResult Function(ToggleSync value)? toggleSync,
-    TResult Function(SyncNow value)? syncNow,
+    TResult Function(RenameProfile value)? renameProfile,
     TResult Function(ExportSubscriptions value)? exportSubscriptions,
     TResult Function(ImportSubscriptions value)? importSubscriptions,
     required TResult orElse(),
@@ -2523,8 +2475,7 @@ class _$ToggleHlsPlayerImpl implements ToggleHlsPlayer {
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
     required TResult Function(String profileName) switchProfile,
-    required TResult Function() toggleSync,
-    required TResult Function() syncNow,
+    required TResult Function(String oldName, String newName) renameProfile,
     required TResult Function() exportSubscriptions,
     required TResult Function(String filePath) importSubscriptions,
   }) {
@@ -2561,8 +2512,7 @@ class _$ToggleHlsPlayerImpl implements ToggleHlsPlayer {
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
     TResult? Function(String profileName)? switchProfile,
-    TResult? Function()? toggleSync,
-    TResult? Function()? syncNow,
+    TResult? Function(String oldName, String newName)? renameProfile,
     TResult? Function()? exportSubscriptions,
     TResult? Function(String filePath)? importSubscriptions,
   }) {
@@ -2599,8 +2549,7 @@ class _$ToggleHlsPlayerImpl implements ToggleHlsPlayer {
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
     TResult Function(String profileName)? switchProfile,
-    TResult Function()? toggleSync,
-    TResult Function()? syncNow,
+    TResult Function(String oldName, String newName)? renameProfile,
     TResult Function()? exportSubscriptions,
     TResult Function(String filePath)? importSubscriptions,
     required TResult orElse(),
@@ -2648,8 +2597,7 @@ class _$ToggleHlsPlayerImpl implements ToggleHlsPlayer {
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
     required TResult Function(SwitchProfile value) switchProfile,
-    required TResult Function(ToggleSync value) toggleSync,
-    required TResult Function(SyncNow value) syncNow,
+    required TResult Function(RenameProfile value) renameProfile,
     required TResult Function(ExportSubscriptions value) exportSubscriptions,
     required TResult Function(ImportSubscriptions value) importSubscriptions,
   }) {
@@ -2688,8 +2636,7 @@ class _$ToggleHlsPlayerImpl implements ToggleHlsPlayer {
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
     TResult? Function(SwitchProfile value)? switchProfile,
-    TResult? Function(ToggleSync value)? toggleSync,
-    TResult? Function(SyncNow value)? syncNow,
+    TResult? Function(RenameProfile value)? renameProfile,
     TResult? Function(ExportSubscriptions value)? exportSubscriptions,
     TResult? Function(ImportSubscriptions value)? importSubscriptions,
   }) {
@@ -2728,8 +2675,7 @@ class _$ToggleHlsPlayerImpl implements ToggleHlsPlayer {
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
     TResult Function(SwitchProfile value)? switchProfile,
-    TResult Function(ToggleSync value)? toggleSync,
-    TResult Function(SyncNow value)? syncNow,
+    TResult Function(RenameProfile value)? renameProfile,
     TResult Function(ExportSubscriptions value)? exportSubscriptions,
     TResult Function(ImportSubscriptions value)? importSubscriptions,
     required TResult orElse(),
@@ -2817,8 +2763,7 @@ class _$ToggleCommentVisibilityImpl implements ToggleCommentVisibility {
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
     required TResult Function(String profileName) switchProfile,
-    required TResult Function() toggleSync,
-    required TResult Function() syncNow,
+    required TResult Function(String oldName, String newName) renameProfile,
     required TResult Function() exportSubscriptions,
     required TResult Function(String filePath) importSubscriptions,
   }) {
@@ -2855,8 +2800,7 @@ class _$ToggleCommentVisibilityImpl implements ToggleCommentVisibility {
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
     TResult? Function(String profileName)? switchProfile,
-    TResult? Function()? toggleSync,
-    TResult? Function()? syncNow,
+    TResult? Function(String oldName, String newName)? renameProfile,
     TResult? Function()? exportSubscriptions,
     TResult? Function(String filePath)? importSubscriptions,
   }) {
@@ -2893,8 +2837,7 @@ class _$ToggleCommentVisibilityImpl implements ToggleCommentVisibility {
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
     TResult Function(String profileName)? switchProfile,
-    TResult Function()? toggleSync,
-    TResult Function()? syncNow,
+    TResult Function(String oldName, String newName)? renameProfile,
     TResult Function()? exportSubscriptions,
     TResult Function(String filePath)? importSubscriptions,
     required TResult orElse(),
@@ -2942,8 +2885,7 @@ class _$ToggleCommentVisibilityImpl implements ToggleCommentVisibility {
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
     required TResult Function(SwitchProfile value) switchProfile,
-    required TResult Function(ToggleSync value) toggleSync,
-    required TResult Function(SyncNow value) syncNow,
+    required TResult Function(RenameProfile value) renameProfile,
     required TResult Function(ExportSubscriptions value) exportSubscriptions,
     required TResult Function(ImportSubscriptions value) importSubscriptions,
   }) {
@@ -2982,8 +2924,7 @@ class _$ToggleCommentVisibilityImpl implements ToggleCommentVisibility {
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
     TResult? Function(SwitchProfile value)? switchProfile,
-    TResult? Function(ToggleSync value)? toggleSync,
-    TResult? Function(SyncNow value)? syncNow,
+    TResult? Function(RenameProfile value)? renameProfile,
     TResult? Function(ExportSubscriptions value)? exportSubscriptions,
     TResult? Function(ImportSubscriptions value)? importSubscriptions,
   }) {
@@ -3022,8 +2963,7 @@ class _$ToggleCommentVisibilityImpl implements ToggleCommentVisibility {
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
     TResult Function(SwitchProfile value)? switchProfile,
-    TResult Function(ToggleSync value)? toggleSync,
-    TResult Function(SyncNow value)? syncNow,
+    TResult Function(RenameProfile value)? renameProfile,
     TResult Function(ExportSubscriptions value)? exportSubscriptions,
     TResult Function(ImportSubscriptions value)? importSubscriptions,
     required TResult orElse(),
@@ -3113,8 +3053,7 @@ class _$ToggleRelatedVideoVisibilityImpl
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
     required TResult Function(String profileName) switchProfile,
-    required TResult Function() toggleSync,
-    required TResult Function() syncNow,
+    required TResult Function(String oldName, String newName) renameProfile,
     required TResult Function() exportSubscriptions,
     required TResult Function(String filePath) importSubscriptions,
   }) {
@@ -3151,8 +3090,7 @@ class _$ToggleRelatedVideoVisibilityImpl
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
     TResult? Function(String profileName)? switchProfile,
-    TResult? Function()? toggleSync,
-    TResult? Function()? syncNow,
+    TResult? Function(String oldName, String newName)? renameProfile,
     TResult? Function()? exportSubscriptions,
     TResult? Function(String filePath)? importSubscriptions,
   }) {
@@ -3189,8 +3127,7 @@ class _$ToggleRelatedVideoVisibilityImpl
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
     TResult Function(String profileName)? switchProfile,
-    TResult Function()? toggleSync,
-    TResult Function()? syncNow,
+    TResult Function(String oldName, String newName)? renameProfile,
     TResult Function()? exportSubscriptions,
     TResult Function(String filePath)? importSubscriptions,
     required TResult orElse(),
@@ -3238,8 +3175,7 @@ class _$ToggleRelatedVideoVisibilityImpl
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
     required TResult Function(SwitchProfile value) switchProfile,
-    required TResult Function(ToggleSync value) toggleSync,
-    required TResult Function(SyncNow value) syncNow,
+    required TResult Function(RenameProfile value) renameProfile,
     required TResult Function(ExportSubscriptions value) exportSubscriptions,
     required TResult Function(ImportSubscriptions value) importSubscriptions,
   }) {
@@ -3278,8 +3214,7 @@ class _$ToggleRelatedVideoVisibilityImpl
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
     TResult? Function(SwitchProfile value)? switchProfile,
-    TResult? Function(ToggleSync value)? toggleSync,
-    TResult? Function(SyncNow value)? syncNow,
+    TResult? Function(RenameProfile value)? renameProfile,
     TResult? Function(ExportSubscriptions value)? exportSubscriptions,
     TResult? Function(ImportSubscriptions value)? importSubscriptions,
   }) {
@@ -3318,8 +3253,7 @@ class _$ToggleRelatedVideoVisibilityImpl
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
     TResult Function(SwitchProfile value)? switchProfile,
-    TResult Function(ToggleSync value)? toggleSync,
-    TResult Function(SyncNow value)? syncNow,
+    TResult Function(RenameProfile value)? renameProfile,
     TResult Function(ExportSubscriptions value)? exportSubscriptions,
     TResult Function(ImportSubscriptions value)? importSubscriptions,
     required TResult orElse(),
@@ -3405,8 +3339,7 @@ class _$FetchPipedInstancesImpl implements FetchPipedInstances {
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
     required TResult Function(String profileName) switchProfile,
-    required TResult Function() toggleSync,
-    required TResult Function() syncNow,
+    required TResult Function(String oldName, String newName) renameProfile,
     required TResult Function() exportSubscriptions,
     required TResult Function(String filePath) importSubscriptions,
   }) {
@@ -3443,8 +3376,7 @@ class _$FetchPipedInstancesImpl implements FetchPipedInstances {
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
     TResult? Function(String profileName)? switchProfile,
-    TResult? Function()? toggleSync,
-    TResult? Function()? syncNow,
+    TResult? Function(String oldName, String newName)? renameProfile,
     TResult? Function()? exportSubscriptions,
     TResult? Function(String filePath)? importSubscriptions,
   }) {
@@ -3481,8 +3413,7 @@ class _$FetchPipedInstancesImpl implements FetchPipedInstances {
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
     TResult Function(String profileName)? switchProfile,
-    TResult Function()? toggleSync,
-    TResult Function()? syncNow,
+    TResult Function(String oldName, String newName)? renameProfile,
     TResult Function()? exportSubscriptions,
     TResult Function(String filePath)? importSubscriptions,
     required TResult orElse(),
@@ -3530,8 +3461,7 @@ class _$FetchPipedInstancesImpl implements FetchPipedInstances {
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
     required TResult Function(SwitchProfile value) switchProfile,
-    required TResult Function(ToggleSync value) toggleSync,
-    required TResult Function(SyncNow value) syncNow,
+    required TResult Function(RenameProfile value) renameProfile,
     required TResult Function(ExportSubscriptions value) exportSubscriptions,
     required TResult Function(ImportSubscriptions value) importSubscriptions,
   }) {
@@ -3570,8 +3500,7 @@ class _$FetchPipedInstancesImpl implements FetchPipedInstances {
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
     TResult? Function(SwitchProfile value)? switchProfile,
-    TResult? Function(ToggleSync value)? toggleSync,
-    TResult? Function(SyncNow value)? syncNow,
+    TResult? Function(RenameProfile value)? renameProfile,
     TResult? Function(ExportSubscriptions value)? exportSubscriptions,
     TResult? Function(ImportSubscriptions value)? importSubscriptions,
   }) {
@@ -3610,8 +3539,7 @@ class _$FetchPipedInstancesImpl implements FetchPipedInstances {
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
     TResult Function(SwitchProfile value)? switchProfile,
-    TResult Function(ToggleSync value)? toggleSync,
-    TResult Function(SyncNow value)? syncNow,
+    TResult Function(RenameProfile value)? renameProfile,
     TResult Function(ExportSubscriptions value)? exportSubscriptions,
     TResult Function(ImportSubscriptions value)? importSubscriptions,
     required TResult orElse(),
@@ -3699,8 +3627,7 @@ class _$FetchInvidiousInstancesImpl implements FetchInvidiousInstances {
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
     required TResult Function(String profileName) switchProfile,
-    required TResult Function() toggleSync,
-    required TResult Function() syncNow,
+    required TResult Function(String oldName, String newName) renameProfile,
     required TResult Function() exportSubscriptions,
     required TResult Function(String filePath) importSubscriptions,
   }) {
@@ -3737,8 +3664,7 @@ class _$FetchInvidiousInstancesImpl implements FetchInvidiousInstances {
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
     TResult? Function(String profileName)? switchProfile,
-    TResult? Function()? toggleSync,
-    TResult? Function()? syncNow,
+    TResult? Function(String oldName, String newName)? renameProfile,
     TResult? Function()? exportSubscriptions,
     TResult? Function(String filePath)? importSubscriptions,
   }) {
@@ -3775,8 +3701,7 @@ class _$FetchInvidiousInstancesImpl implements FetchInvidiousInstances {
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
     TResult Function(String profileName)? switchProfile,
-    TResult Function()? toggleSync,
-    TResult Function()? syncNow,
+    TResult Function(String oldName, String newName)? renameProfile,
     TResult Function()? exportSubscriptions,
     TResult Function(String filePath)? importSubscriptions,
     required TResult orElse(),
@@ -3824,8 +3749,7 @@ class _$FetchInvidiousInstancesImpl implements FetchInvidiousInstances {
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
     required TResult Function(SwitchProfile value) switchProfile,
-    required TResult Function(ToggleSync value) toggleSync,
-    required TResult Function(SyncNow value) syncNow,
+    required TResult Function(RenameProfile value) renameProfile,
     required TResult Function(ExportSubscriptions value) exportSubscriptions,
     required TResult Function(ImportSubscriptions value) importSubscriptions,
   }) {
@@ -3864,8 +3788,7 @@ class _$FetchInvidiousInstancesImpl implements FetchInvidiousInstances {
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
     TResult? Function(SwitchProfile value)? switchProfile,
-    TResult? Function(ToggleSync value)? toggleSync,
-    TResult? Function(SyncNow value)? syncNow,
+    TResult? Function(RenameProfile value)? renameProfile,
     TResult? Function(ExportSubscriptions value)? exportSubscriptions,
     TResult? Function(ImportSubscriptions value)? importSubscriptions,
   }) {
@@ -3904,8 +3827,7 @@ class _$FetchInvidiousInstancesImpl implements FetchInvidiousInstances {
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
     TResult Function(SwitchProfile value)? switchProfile,
-    TResult Function(ToggleSync value)? toggleSync,
-    TResult Function(SyncNow value)? syncNow,
+    TResult Function(RenameProfile value)? renameProfile,
     TResult Function(ExportSubscriptions value)? exportSubscriptions,
     TResult Function(ImportSubscriptions value)? importSubscriptions,
     required TResult orElse(),
@@ -4018,8 +3940,7 @@ class _$SetInstanceImpl implements SetInstance {
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
     required TResult Function(String profileName) switchProfile,
-    required TResult Function() toggleSync,
-    required TResult Function() syncNow,
+    required TResult Function(String oldName, String newName) renameProfile,
     required TResult Function() exportSubscriptions,
     required TResult Function(String filePath) importSubscriptions,
   }) {
@@ -4056,8 +3977,7 @@ class _$SetInstanceImpl implements SetInstance {
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
     TResult? Function(String profileName)? switchProfile,
-    TResult? Function()? toggleSync,
-    TResult? Function()? syncNow,
+    TResult? Function(String oldName, String newName)? renameProfile,
     TResult? Function()? exportSubscriptions,
     TResult? Function(String filePath)? importSubscriptions,
   }) {
@@ -4094,8 +4014,7 @@ class _$SetInstanceImpl implements SetInstance {
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
     TResult Function(String profileName)? switchProfile,
-    TResult Function()? toggleSync,
-    TResult Function()? syncNow,
+    TResult Function(String oldName, String newName)? renameProfile,
     TResult Function()? exportSubscriptions,
     TResult Function(String filePath)? importSubscriptions,
     required TResult orElse(),
@@ -4143,8 +4062,7 @@ class _$SetInstanceImpl implements SetInstance {
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
     required TResult Function(SwitchProfile value) switchProfile,
-    required TResult Function(ToggleSync value) toggleSync,
-    required TResult Function(SyncNow value) syncNow,
+    required TResult Function(RenameProfile value) renameProfile,
     required TResult Function(ExportSubscriptions value) exportSubscriptions,
     required TResult Function(ImportSubscriptions value) importSubscriptions,
   }) {
@@ -4183,8 +4101,7 @@ class _$SetInstanceImpl implements SetInstance {
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
     TResult? Function(SwitchProfile value)? switchProfile,
-    TResult? Function(ToggleSync value)? toggleSync,
-    TResult? Function(SyncNow value)? syncNow,
+    TResult? Function(RenameProfile value)? renameProfile,
     TResult? Function(ExportSubscriptions value)? exportSubscriptions,
     TResult? Function(ImportSubscriptions value)? importSubscriptions,
   }) {
@@ -4223,8 +4140,7 @@ class _$SetInstanceImpl implements SetInstance {
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
     TResult Function(SwitchProfile value)? switchProfile,
-    TResult Function(ToggleSync value)? toggleSync,
-    TResult Function(SyncNow value)? syncNow,
+    TResult Function(RenameProfile value)? renameProfile,
     TResult Function(ExportSubscriptions value)? exportSubscriptions,
     TResult Function(ImportSubscriptions value)? importSubscriptions,
     required TResult orElse(),
@@ -4344,8 +4260,7 @@ class _$SetYTServiceImpl implements SetYTService {
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
     required TResult Function(String profileName) switchProfile,
-    required TResult Function() toggleSync,
-    required TResult Function() syncNow,
+    required TResult Function(String oldName, String newName) renameProfile,
     required TResult Function() exportSubscriptions,
     required TResult Function(String filePath) importSubscriptions,
   }) {
@@ -4382,8 +4297,7 @@ class _$SetYTServiceImpl implements SetYTService {
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
     TResult? Function(String profileName)? switchProfile,
-    TResult? Function()? toggleSync,
-    TResult? Function()? syncNow,
+    TResult? Function(String oldName, String newName)? renameProfile,
     TResult? Function()? exportSubscriptions,
     TResult? Function(String filePath)? importSubscriptions,
   }) {
@@ -4420,8 +4334,7 @@ class _$SetYTServiceImpl implements SetYTService {
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
     TResult Function(String profileName)? switchProfile,
-    TResult Function()? toggleSync,
-    TResult Function()? syncNow,
+    TResult Function(String oldName, String newName)? renameProfile,
     TResult Function()? exportSubscriptions,
     TResult Function(String filePath)? importSubscriptions,
     required TResult orElse(),
@@ -4469,8 +4382,7 @@ class _$SetYTServiceImpl implements SetYTService {
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
     required TResult Function(SwitchProfile value) switchProfile,
-    required TResult Function(ToggleSync value) toggleSync,
-    required TResult Function(SyncNow value) syncNow,
+    required TResult Function(RenameProfile value) renameProfile,
     required TResult Function(ExportSubscriptions value) exportSubscriptions,
     required TResult Function(ImportSubscriptions value) importSubscriptions,
   }) {
@@ -4509,8 +4421,7 @@ class _$SetYTServiceImpl implements SetYTService {
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
     TResult? Function(SwitchProfile value)? switchProfile,
-    TResult? Function(ToggleSync value)? toggleSync,
-    TResult? Function(SyncNow value)? syncNow,
+    TResult? Function(RenameProfile value)? renameProfile,
     TResult? Function(ExportSubscriptions value)? exportSubscriptions,
     TResult? Function(ImportSubscriptions value)? importSubscriptions,
   }) {
@@ -4549,8 +4460,7 @@ class _$SetYTServiceImpl implements SetYTService {
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
     TResult Function(SwitchProfile value)? switchProfile,
-    TResult Function(ToggleSync value)? toggleSync,
-    TResult Function(SyncNow value)? syncNow,
+    TResult Function(RenameProfile value)? renameProfile,
     TResult Function(ExportSubscriptions value)? exportSubscriptions,
     TResult Function(ImportSubscriptions value)? importSubscriptions,
     required TResult orElse(),
@@ -4672,8 +4582,7 @@ class _$SetPlayerTypeImpl implements SetPlayerType {
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
     required TResult Function(String profileName) switchProfile,
-    required TResult Function() toggleSync,
-    required TResult Function() syncNow,
+    required TResult Function(String oldName, String newName) renameProfile,
     required TResult Function() exportSubscriptions,
     required TResult Function(String filePath) importSubscriptions,
   }) {
@@ -4710,8 +4619,7 @@ class _$SetPlayerTypeImpl implements SetPlayerType {
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
     TResult? Function(String profileName)? switchProfile,
-    TResult? Function()? toggleSync,
-    TResult? Function()? syncNow,
+    TResult? Function(String oldName, String newName)? renameProfile,
     TResult? Function()? exportSubscriptions,
     TResult? Function(String filePath)? importSubscriptions,
   }) {
@@ -4748,8 +4656,7 @@ class _$SetPlayerTypeImpl implements SetPlayerType {
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
     TResult Function(String profileName)? switchProfile,
-    TResult Function()? toggleSync,
-    TResult Function()? syncNow,
+    TResult Function(String oldName, String newName)? renameProfile,
     TResult Function()? exportSubscriptions,
     TResult Function(String filePath)? importSubscriptions,
     required TResult orElse(),
@@ -4797,8 +4704,7 @@ class _$SetPlayerTypeImpl implements SetPlayerType {
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
     required TResult Function(SwitchProfile value) switchProfile,
-    required TResult Function(ToggleSync value) toggleSync,
-    required TResult Function(SyncNow value) syncNow,
+    required TResult Function(RenameProfile value) renameProfile,
     required TResult Function(ExportSubscriptions value) exportSubscriptions,
     required TResult Function(ImportSubscriptions value) importSubscriptions,
   }) {
@@ -4837,8 +4743,7 @@ class _$SetPlayerTypeImpl implements SetPlayerType {
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
     TResult? Function(SwitchProfile value)? switchProfile,
-    TResult? Function(ToggleSync value)? toggleSync,
-    TResult? Function(SyncNow value)? syncNow,
+    TResult? Function(RenameProfile value)? renameProfile,
     TResult? Function(ExportSubscriptions value)? exportSubscriptions,
     TResult? Function(ImportSubscriptions value)? importSubscriptions,
   }) {
@@ -4877,8 +4782,7 @@ class _$SetPlayerTypeImpl implements SetPlayerType {
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
     TResult Function(SwitchProfile value)? switchProfile,
-    TResult Function(ToggleSync value)? toggleSync,
-    TResult Function(SyncNow value)? syncNow,
+    TResult Function(RenameProfile value)? renameProfile,
     TResult Function(ExportSubscriptions value)? exportSubscriptions,
     TResult Function(ImportSubscriptions value)? importSubscriptions,
     required TResult orElse(),
@@ -4972,8 +4876,7 @@ class _$TogglePipPlayerImpl implements TogglePipPlayer {
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
     required TResult Function(String profileName) switchProfile,
-    required TResult Function() toggleSync,
-    required TResult Function() syncNow,
+    required TResult Function(String oldName, String newName) renameProfile,
     required TResult Function() exportSubscriptions,
     required TResult Function(String filePath) importSubscriptions,
   }) {
@@ -5010,8 +4913,7 @@ class _$TogglePipPlayerImpl implements TogglePipPlayer {
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
     TResult? Function(String profileName)? switchProfile,
-    TResult? Function()? toggleSync,
-    TResult? Function()? syncNow,
+    TResult? Function(String oldName, String newName)? renameProfile,
     TResult? Function()? exportSubscriptions,
     TResult? Function(String filePath)? importSubscriptions,
   }) {
@@ -5048,8 +4950,7 @@ class _$TogglePipPlayerImpl implements TogglePipPlayer {
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
     TResult Function(String profileName)? switchProfile,
-    TResult Function()? toggleSync,
-    TResult Function()? syncNow,
+    TResult Function(String oldName, String newName)? renameProfile,
     TResult Function()? exportSubscriptions,
     TResult Function(String filePath)? importSubscriptions,
     required TResult orElse(),
@@ -5097,8 +4998,7 @@ class _$TogglePipPlayerImpl implements TogglePipPlayer {
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
     required TResult Function(SwitchProfile value) switchProfile,
-    required TResult Function(ToggleSync value) toggleSync,
-    required TResult Function(SyncNow value) syncNow,
+    required TResult Function(RenameProfile value) renameProfile,
     required TResult Function(ExportSubscriptions value) exportSubscriptions,
     required TResult Function(ImportSubscriptions value) importSubscriptions,
   }) {
@@ -5137,8 +5037,7 @@ class _$TogglePipPlayerImpl implements TogglePipPlayer {
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
     TResult? Function(SwitchProfile value)? switchProfile,
-    TResult? Function(ToggleSync value)? toggleSync,
-    TResult? Function(SyncNow value)? syncNow,
+    TResult? Function(RenameProfile value)? renameProfile,
     TResult? Function(ExportSubscriptions value)? exportSubscriptions,
     TResult? Function(ImportSubscriptions value)? importSubscriptions,
   }) {
@@ -5177,8 +5076,7 @@ class _$TogglePipPlayerImpl implements TogglePipPlayer {
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
     TResult Function(SwitchProfile value)? switchProfile,
-    TResult Function(ToggleSync value)? toggleSync,
-    TResult Function(SyncNow value)? syncNow,
+    TResult Function(RenameProfile value)? renameProfile,
     TResult Function(ExportSubscriptions value)? exportSubscriptions,
     TResult Function(ImportSubscriptions value)? importSubscriptions,
     required TResult orElse(),
@@ -5291,8 +5189,7 @@ class _$SetSearchFilterImpl implements SetSearchFilter {
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
     required TResult Function(String profileName) switchProfile,
-    required TResult Function() toggleSync,
-    required TResult Function() syncNow,
+    required TResult Function(String oldName, String newName) renameProfile,
     required TResult Function() exportSubscriptions,
     required TResult Function(String filePath) importSubscriptions,
   }) {
@@ -5329,8 +5226,7 @@ class _$SetSearchFilterImpl implements SetSearchFilter {
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
     TResult? Function(String profileName)? switchProfile,
-    TResult? Function()? toggleSync,
-    TResult? Function()? syncNow,
+    TResult? Function(String oldName, String newName)? renameProfile,
     TResult? Function()? exportSubscriptions,
     TResult? Function(String filePath)? importSubscriptions,
   }) {
@@ -5367,8 +5263,7 @@ class _$SetSearchFilterImpl implements SetSearchFilter {
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
     TResult Function(String profileName)? switchProfile,
-    TResult Function()? toggleSync,
-    TResult Function()? syncNow,
+    TResult Function(String oldName, String newName)? renameProfile,
     TResult Function()? exportSubscriptions,
     TResult Function(String filePath)? importSubscriptions,
     required TResult orElse(),
@@ -5416,8 +5311,7 @@ class _$SetSearchFilterImpl implements SetSearchFilter {
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
     required TResult Function(SwitchProfile value) switchProfile,
-    required TResult Function(ToggleSync value) toggleSync,
-    required TResult Function(SyncNow value) syncNow,
+    required TResult Function(RenameProfile value) renameProfile,
     required TResult Function(ExportSubscriptions value) exportSubscriptions,
     required TResult Function(ImportSubscriptions value) importSubscriptions,
   }) {
@@ -5456,8 +5350,7 @@ class _$SetSearchFilterImpl implements SetSearchFilter {
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
     TResult? Function(SwitchProfile value)? switchProfile,
-    TResult? Function(ToggleSync value)? toggleSync,
-    TResult? Function(SyncNow value)? syncNow,
+    TResult? Function(RenameProfile value)? renameProfile,
     TResult? Function(ExportSubscriptions value)? exportSubscriptions,
     TResult? Function(ImportSubscriptions value)? importSubscriptions,
   }) {
@@ -5496,8 +5389,7 @@ class _$SetSearchFilterImpl implements SetSearchFilter {
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
     TResult Function(SwitchProfile value)? switchProfile,
-    TResult Function(ToggleSync value)? toggleSync,
-    TResult Function(SyncNow value)? syncNow,
+    TResult Function(RenameProfile value)? renameProfile,
     TResult Function(ExportSubscriptions value)? exportSubscriptions,
     TResult Function(ImportSubscriptions value)? importSubscriptions,
     required TResult orElse(),
@@ -5619,8 +5511,7 @@ class _$SetVideoFitModeImpl implements SetVideoFitMode {
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
     required TResult Function(String profileName) switchProfile,
-    required TResult Function() toggleSync,
-    required TResult Function() syncNow,
+    required TResult Function(String oldName, String newName) renameProfile,
     required TResult Function() exportSubscriptions,
     required TResult Function(String filePath) importSubscriptions,
   }) {
@@ -5657,8 +5548,7 @@ class _$SetVideoFitModeImpl implements SetVideoFitMode {
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
     TResult? Function(String profileName)? switchProfile,
-    TResult? Function()? toggleSync,
-    TResult? Function()? syncNow,
+    TResult? Function(String oldName, String newName)? renameProfile,
     TResult? Function()? exportSubscriptions,
     TResult? Function(String filePath)? importSubscriptions,
   }) {
@@ -5695,8 +5585,7 @@ class _$SetVideoFitModeImpl implements SetVideoFitMode {
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
     TResult Function(String profileName)? switchProfile,
-    TResult Function()? toggleSync,
-    TResult Function()? syncNow,
+    TResult Function(String oldName, String newName)? renameProfile,
     TResult Function()? exportSubscriptions,
     TResult Function(String filePath)? importSubscriptions,
     required TResult orElse(),
@@ -5744,8 +5633,7 @@ class _$SetVideoFitModeImpl implements SetVideoFitMode {
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
     required TResult Function(SwitchProfile value) switchProfile,
-    required TResult Function(ToggleSync value) toggleSync,
-    required TResult Function(SyncNow value) syncNow,
+    required TResult Function(RenameProfile value) renameProfile,
     required TResult Function(ExportSubscriptions value) exportSubscriptions,
     required TResult Function(ImportSubscriptions value) importSubscriptions,
   }) {
@@ -5784,8 +5672,7 @@ class _$SetVideoFitModeImpl implements SetVideoFitMode {
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
     TResult? Function(SwitchProfile value)? switchProfile,
-    TResult? Function(ToggleSync value)? toggleSync,
-    TResult? Function(SyncNow value)? syncNow,
+    TResult? Function(RenameProfile value)? renameProfile,
     TResult? Function(ExportSubscriptions value)? exportSubscriptions,
     TResult? Function(ImportSubscriptions value)? importSubscriptions,
   }) {
@@ -5824,8 +5711,7 @@ class _$SetVideoFitModeImpl implements SetVideoFitMode {
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
     TResult Function(SwitchProfile value)? switchProfile,
-    TResult Function(ToggleSync value)? toggleSync,
-    TResult Function(SyncNow value)? syncNow,
+    TResult Function(RenameProfile value)? renameProfile,
     TResult Function(ExportSubscriptions value)? exportSubscriptions,
     TResult Function(ImportSubscriptions value)? importSubscriptions,
     required TResult orElse(),
@@ -5947,8 +5833,7 @@ class _$SetSkipIntervalImpl implements SetSkipInterval {
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
     required TResult Function(String profileName) switchProfile,
-    required TResult Function() toggleSync,
-    required TResult Function() syncNow,
+    required TResult Function(String oldName, String newName) renameProfile,
     required TResult Function() exportSubscriptions,
     required TResult Function(String filePath) importSubscriptions,
   }) {
@@ -5985,8 +5870,7 @@ class _$SetSkipIntervalImpl implements SetSkipInterval {
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
     TResult? Function(String profileName)? switchProfile,
-    TResult? Function()? toggleSync,
-    TResult? Function()? syncNow,
+    TResult? Function(String oldName, String newName)? renameProfile,
     TResult? Function()? exportSubscriptions,
     TResult? Function(String filePath)? importSubscriptions,
   }) {
@@ -6023,8 +5907,7 @@ class _$SetSkipIntervalImpl implements SetSkipInterval {
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
     TResult Function(String profileName)? switchProfile,
-    TResult Function()? toggleSync,
-    TResult Function()? syncNow,
+    TResult Function(String oldName, String newName)? renameProfile,
     TResult Function()? exportSubscriptions,
     TResult Function(String filePath)? importSubscriptions,
     required TResult orElse(),
@@ -6072,8 +5955,7 @@ class _$SetSkipIntervalImpl implements SetSkipInterval {
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
     required TResult Function(SwitchProfile value) switchProfile,
-    required TResult Function(ToggleSync value) toggleSync,
-    required TResult Function(SyncNow value) syncNow,
+    required TResult Function(RenameProfile value) renameProfile,
     required TResult Function(ExportSubscriptions value) exportSubscriptions,
     required TResult Function(ImportSubscriptions value) importSubscriptions,
   }) {
@@ -6112,8 +5994,7 @@ class _$SetSkipIntervalImpl implements SetSkipInterval {
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
     TResult? Function(SwitchProfile value)? switchProfile,
-    TResult? Function(ToggleSync value)? toggleSync,
-    TResult? Function(SyncNow value)? syncNow,
+    TResult? Function(RenameProfile value)? renameProfile,
     TResult? Function(ExportSubscriptions value)? exportSubscriptions,
     TResult? Function(ImportSubscriptions value)? importSubscriptions,
   }) {
@@ -6152,8 +6033,7 @@ class _$SetSkipIntervalImpl implements SetSkipInterval {
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
     TResult Function(SwitchProfile value)? switchProfile,
-    TResult Function(ToggleSync value)? toggleSync,
-    TResult Function(SyncNow value)? syncNow,
+    TResult Function(RenameProfile value)? renameProfile,
     TResult Function(ExportSubscriptions value)? exportSubscriptions,
     TResult Function(ImportSubscriptions value)? importSubscriptions,
     required TResult orElse(),
@@ -6246,8 +6126,7 @@ class _$ToggleSponsorBlockImpl implements ToggleSponsorBlock {
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
     required TResult Function(String profileName) switchProfile,
-    required TResult Function() toggleSync,
-    required TResult Function() syncNow,
+    required TResult Function(String oldName, String newName) renameProfile,
     required TResult Function() exportSubscriptions,
     required TResult Function(String filePath) importSubscriptions,
   }) {
@@ -6284,8 +6163,7 @@ class _$ToggleSponsorBlockImpl implements ToggleSponsorBlock {
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
     TResult? Function(String profileName)? switchProfile,
-    TResult? Function()? toggleSync,
-    TResult? Function()? syncNow,
+    TResult? Function(String oldName, String newName)? renameProfile,
     TResult? Function()? exportSubscriptions,
     TResult? Function(String filePath)? importSubscriptions,
   }) {
@@ -6322,8 +6200,7 @@ class _$ToggleSponsorBlockImpl implements ToggleSponsorBlock {
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
     TResult Function(String profileName)? switchProfile,
-    TResult Function()? toggleSync,
-    TResult Function()? syncNow,
+    TResult Function(String oldName, String newName)? renameProfile,
     TResult Function()? exportSubscriptions,
     TResult Function(String filePath)? importSubscriptions,
     required TResult orElse(),
@@ -6371,8 +6248,7 @@ class _$ToggleSponsorBlockImpl implements ToggleSponsorBlock {
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
     required TResult Function(SwitchProfile value) switchProfile,
-    required TResult Function(ToggleSync value) toggleSync,
-    required TResult Function(SyncNow value) syncNow,
+    required TResult Function(RenameProfile value) renameProfile,
     required TResult Function(ExportSubscriptions value) exportSubscriptions,
     required TResult Function(ImportSubscriptions value) importSubscriptions,
   }) {
@@ -6411,8 +6287,7 @@ class _$ToggleSponsorBlockImpl implements ToggleSponsorBlock {
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
     TResult? Function(SwitchProfile value)? switchProfile,
-    TResult? Function(ToggleSync value)? toggleSync,
-    TResult? Function(SyncNow value)? syncNow,
+    TResult? Function(RenameProfile value)? renameProfile,
     TResult? Function(ExportSubscriptions value)? exportSubscriptions,
     TResult? Function(ImportSubscriptions value)? importSubscriptions,
   }) {
@@ -6451,8 +6326,7 @@ class _$ToggleSponsorBlockImpl implements ToggleSponsorBlock {
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
     TResult Function(SwitchProfile value)? switchProfile,
-    TResult Function(ToggleSync value)? toggleSync,
-    TResult Function(SyncNow value)? syncNow,
+    TResult Function(RenameProfile value)? renameProfile,
     TResult Function(ExportSubscriptions value)? exportSubscriptions,
     TResult Function(ImportSubscriptions value)? importSubscriptions,
     required TResult orElse(),
@@ -6575,8 +6449,7 @@ class _$SetSponsorBlockCategoriesImpl implements SetSponsorBlockCategories {
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
     required TResult Function(String profileName) switchProfile,
-    required TResult Function() toggleSync,
-    required TResult Function() syncNow,
+    required TResult Function(String oldName, String newName) renameProfile,
     required TResult Function() exportSubscriptions,
     required TResult Function(String filePath) importSubscriptions,
   }) {
@@ -6613,8 +6486,7 @@ class _$SetSponsorBlockCategoriesImpl implements SetSponsorBlockCategories {
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
     TResult? Function(String profileName)? switchProfile,
-    TResult? Function()? toggleSync,
-    TResult? Function()? syncNow,
+    TResult? Function(String oldName, String newName)? renameProfile,
     TResult? Function()? exportSubscriptions,
     TResult? Function(String filePath)? importSubscriptions,
   }) {
@@ -6651,8 +6523,7 @@ class _$SetSponsorBlockCategoriesImpl implements SetSponsorBlockCategories {
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
     TResult Function(String profileName)? switchProfile,
-    TResult Function()? toggleSync,
-    TResult Function()? syncNow,
+    TResult Function(String oldName, String newName)? renameProfile,
     TResult Function()? exportSubscriptions,
     TResult Function(String filePath)? importSubscriptions,
     required TResult orElse(),
@@ -6700,8 +6571,7 @@ class _$SetSponsorBlockCategoriesImpl implements SetSponsorBlockCategories {
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
     required TResult Function(SwitchProfile value) switchProfile,
-    required TResult Function(ToggleSync value) toggleSync,
-    required TResult Function(SyncNow value) syncNow,
+    required TResult Function(RenameProfile value) renameProfile,
     required TResult Function(ExportSubscriptions value) exportSubscriptions,
     required TResult Function(ImportSubscriptions value) importSubscriptions,
   }) {
@@ -6740,8 +6610,7 @@ class _$SetSponsorBlockCategoriesImpl implements SetSponsorBlockCategories {
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
     TResult? Function(SwitchProfile value)? switchProfile,
-    TResult? Function(ToggleSync value)? toggleSync,
-    TResult? Function(SyncNow value)? syncNow,
+    TResult? Function(RenameProfile value)? renameProfile,
     TResult? Function(ExportSubscriptions value)? exportSubscriptions,
     TResult? Function(ImportSubscriptions value)? importSubscriptions,
   }) {
@@ -6780,8 +6649,7 @@ class _$SetSponsorBlockCategoriesImpl implements SetSponsorBlockCategories {
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
     TResult Function(SwitchProfile value)? switchProfile,
-    TResult Function(ToggleSync value)? toggleSync,
-    TResult Function(SyncNow value)? syncNow,
+    TResult Function(RenameProfile value)? renameProfile,
     TResult Function(ExportSubscriptions value)? exportSubscriptions,
     TResult Function(ImportSubscriptions value)? importSubscriptions,
     required TResult orElse(),
@@ -6878,8 +6746,7 @@ class _$ToggleOpenLinksInBrowserImpl implements ToggleOpenLinksInBrowser {
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
     required TResult Function(String profileName) switchProfile,
-    required TResult Function() toggleSync,
-    required TResult Function() syncNow,
+    required TResult Function(String oldName, String newName) renameProfile,
     required TResult Function() exportSubscriptions,
     required TResult Function(String filePath) importSubscriptions,
   }) {
@@ -6916,8 +6783,7 @@ class _$ToggleOpenLinksInBrowserImpl implements ToggleOpenLinksInBrowser {
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
     TResult? Function(String profileName)? switchProfile,
-    TResult? Function()? toggleSync,
-    TResult? Function()? syncNow,
+    TResult? Function(String oldName, String newName)? renameProfile,
     TResult? Function()? exportSubscriptions,
     TResult? Function(String filePath)? importSubscriptions,
   }) {
@@ -6954,8 +6820,7 @@ class _$ToggleOpenLinksInBrowserImpl implements ToggleOpenLinksInBrowser {
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
     TResult Function(String profileName)? switchProfile,
-    TResult Function()? toggleSync,
-    TResult Function()? syncNow,
+    TResult Function(String oldName, String newName)? renameProfile,
     TResult Function()? exportSubscriptions,
     TResult Function(String filePath)? importSubscriptions,
     required TResult orElse(),
@@ -7003,8 +6868,7 @@ class _$ToggleOpenLinksInBrowserImpl implements ToggleOpenLinksInBrowser {
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
     required TResult Function(SwitchProfile value) switchProfile,
-    required TResult Function(ToggleSync value) toggleSync,
-    required TResult Function(SyncNow value) syncNow,
+    required TResult Function(RenameProfile value) renameProfile,
     required TResult Function(ExportSubscriptions value) exportSubscriptions,
     required TResult Function(ImportSubscriptions value) importSubscriptions,
   }) {
@@ -7043,8 +6907,7 @@ class _$ToggleOpenLinksInBrowserImpl implements ToggleOpenLinksInBrowser {
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
     TResult? Function(SwitchProfile value)? switchProfile,
-    TResult? Function(ToggleSync value)? toggleSync,
-    TResult? Function(SyncNow value)? syncNow,
+    TResult? Function(RenameProfile value)? renameProfile,
     TResult? Function(ExportSubscriptions value)? exportSubscriptions,
     TResult? Function(ImportSubscriptions value)? importSubscriptions,
   }) {
@@ -7083,8 +6946,7 @@ class _$ToggleOpenLinksInBrowserImpl implements ToggleOpenLinksInBrowser {
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
     TResult Function(SwitchProfile value)? switchProfile,
-    TResult Function(ToggleSync value)? toggleSync,
-    TResult Function(SyncNow value)? syncNow,
+    TResult Function(RenameProfile value)? renameProfile,
     TResult Function(ExportSubscriptions value)? exportSubscriptions,
     TResult Function(ImportSubscriptions value)? importSubscriptions,
     required TResult orElse(),
@@ -7197,8 +7059,7 @@ class _$SetHomeFeedModeImpl implements SetHomeFeedMode {
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
     required TResult Function(String profileName) switchProfile,
-    required TResult Function() toggleSync,
-    required TResult Function() syncNow,
+    required TResult Function(String oldName, String newName) renameProfile,
     required TResult Function() exportSubscriptions,
     required TResult Function(String filePath) importSubscriptions,
   }) {
@@ -7235,8 +7096,7 @@ class _$SetHomeFeedModeImpl implements SetHomeFeedMode {
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
     TResult? Function(String profileName)? switchProfile,
-    TResult? Function()? toggleSync,
-    TResult? Function()? syncNow,
+    TResult? Function(String oldName, String newName)? renameProfile,
     TResult? Function()? exportSubscriptions,
     TResult? Function(String filePath)? importSubscriptions,
   }) {
@@ -7273,8 +7133,7 @@ class _$SetHomeFeedModeImpl implements SetHomeFeedMode {
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
     TResult Function(String profileName)? switchProfile,
-    TResult Function()? toggleSync,
-    TResult Function()? syncNow,
+    TResult Function(String oldName, String newName)? renameProfile,
     TResult Function()? exportSubscriptions,
     TResult Function(String filePath)? importSubscriptions,
     required TResult orElse(),
@@ -7322,8 +7181,7 @@ class _$SetHomeFeedModeImpl implements SetHomeFeedMode {
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
     required TResult Function(SwitchProfile value) switchProfile,
-    required TResult Function(ToggleSync value) toggleSync,
-    required TResult Function(SyncNow value) syncNow,
+    required TResult Function(RenameProfile value) renameProfile,
     required TResult Function(ExportSubscriptions value) exportSubscriptions,
     required TResult Function(ImportSubscriptions value) importSubscriptions,
   }) {
@@ -7362,8 +7220,7 @@ class _$SetHomeFeedModeImpl implements SetHomeFeedMode {
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
     TResult? Function(SwitchProfile value)? switchProfile,
-    TResult? Function(ToggleSync value)? toggleSync,
-    TResult? Function(SyncNow value)? syncNow,
+    TResult? Function(RenameProfile value)? renameProfile,
     TResult? Function(ExportSubscriptions value)? exportSubscriptions,
     TResult? Function(ImportSubscriptions value)? importSubscriptions,
   }) {
@@ -7402,8 +7259,7 @@ class _$SetHomeFeedModeImpl implements SetHomeFeedMode {
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
     TResult Function(SwitchProfile value)? switchProfile,
-    TResult Function(ToggleSync value)? toggleSync,
-    TResult Function(SyncNow value)? syncNow,
+    TResult Function(RenameProfile value)? renameProfile,
     TResult Function(ExportSubscriptions value)? exportSubscriptions,
     TResult Function(ImportSubscriptions value)? importSubscriptions,
     required TResult orElse(),
@@ -7496,8 +7352,7 @@ class _$ToggleAudioFocusImpl implements ToggleAudioFocus {
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
     required TResult Function(String profileName) switchProfile,
-    required TResult Function() toggleSync,
-    required TResult Function() syncNow,
+    required TResult Function(String oldName, String newName) renameProfile,
     required TResult Function() exportSubscriptions,
     required TResult Function(String filePath) importSubscriptions,
   }) {
@@ -7534,8 +7389,7 @@ class _$ToggleAudioFocusImpl implements ToggleAudioFocus {
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
     TResult? Function(String profileName)? switchProfile,
-    TResult? Function()? toggleSync,
-    TResult? Function()? syncNow,
+    TResult? Function(String oldName, String newName)? renameProfile,
     TResult? Function()? exportSubscriptions,
     TResult? Function(String filePath)? importSubscriptions,
   }) {
@@ -7572,8 +7426,7 @@ class _$ToggleAudioFocusImpl implements ToggleAudioFocus {
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
     TResult Function(String profileName)? switchProfile,
-    TResult Function()? toggleSync,
-    TResult Function()? syncNow,
+    TResult Function(String oldName, String newName)? renameProfile,
     TResult Function()? exportSubscriptions,
     TResult Function(String filePath)? importSubscriptions,
     required TResult orElse(),
@@ -7621,8 +7474,7 @@ class _$ToggleAudioFocusImpl implements ToggleAudioFocus {
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
     required TResult Function(SwitchProfile value) switchProfile,
-    required TResult Function(ToggleSync value) toggleSync,
-    required TResult Function(SyncNow value) syncNow,
+    required TResult Function(RenameProfile value) renameProfile,
     required TResult Function(ExportSubscriptions value) exportSubscriptions,
     required TResult Function(ImportSubscriptions value) importSubscriptions,
   }) {
@@ -7661,8 +7513,7 @@ class _$ToggleAudioFocusImpl implements ToggleAudioFocus {
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
     TResult? Function(SwitchProfile value)? switchProfile,
-    TResult? Function(ToggleSync value)? toggleSync,
-    TResult? Function(SyncNow value)? syncNow,
+    TResult? Function(RenameProfile value)? renameProfile,
     TResult? Function(ExportSubscriptions value)? exportSubscriptions,
     TResult? Function(ImportSubscriptions value)? importSubscriptions,
   }) {
@@ -7701,8 +7552,7 @@ class _$ToggleAudioFocusImpl implements ToggleAudioFocus {
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
     TResult Function(SwitchProfile value)? switchProfile,
-    TResult Function(ToggleSync value)? toggleSync,
-    TResult Function(SyncNow value)? syncNow,
+    TResult Function(RenameProfile value)? renameProfile,
     TResult Function(ExportSubscriptions value)? exportSubscriptions,
     TResult Function(ImportSubscriptions value)? importSubscriptions,
     required TResult orElse(),
@@ -7815,8 +7665,7 @@ class _$AddProfileImpl implements AddProfile {
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
     required TResult Function(String profileName) switchProfile,
-    required TResult Function() toggleSync,
-    required TResult Function() syncNow,
+    required TResult Function(String oldName, String newName) renameProfile,
     required TResult Function() exportSubscriptions,
     required TResult Function(String filePath) importSubscriptions,
   }) {
@@ -7853,8 +7702,7 @@ class _$AddProfileImpl implements AddProfile {
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
     TResult? Function(String profileName)? switchProfile,
-    TResult? Function()? toggleSync,
-    TResult? Function()? syncNow,
+    TResult? Function(String oldName, String newName)? renameProfile,
     TResult? Function()? exportSubscriptions,
     TResult? Function(String filePath)? importSubscriptions,
   }) {
@@ -7891,8 +7739,7 @@ class _$AddProfileImpl implements AddProfile {
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
     TResult Function(String profileName)? switchProfile,
-    TResult Function()? toggleSync,
-    TResult Function()? syncNow,
+    TResult Function(String oldName, String newName)? renameProfile,
     TResult Function()? exportSubscriptions,
     TResult Function(String filePath)? importSubscriptions,
     required TResult orElse(),
@@ -7940,8 +7787,7 @@ class _$AddProfileImpl implements AddProfile {
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
     required TResult Function(SwitchProfile value) switchProfile,
-    required TResult Function(ToggleSync value) toggleSync,
-    required TResult Function(SyncNow value) syncNow,
+    required TResult Function(RenameProfile value) renameProfile,
     required TResult Function(ExportSubscriptions value) exportSubscriptions,
     required TResult Function(ImportSubscriptions value) importSubscriptions,
   }) {
@@ -7980,8 +7826,7 @@ class _$AddProfileImpl implements AddProfile {
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
     TResult? Function(SwitchProfile value)? switchProfile,
-    TResult? Function(ToggleSync value)? toggleSync,
-    TResult? Function(SyncNow value)? syncNow,
+    TResult? Function(RenameProfile value)? renameProfile,
     TResult? Function(ExportSubscriptions value)? exportSubscriptions,
     TResult? Function(ImportSubscriptions value)? importSubscriptions,
   }) {
@@ -8020,8 +7865,7 @@ class _$AddProfileImpl implements AddProfile {
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
     TResult Function(SwitchProfile value)? switchProfile,
-    TResult Function(ToggleSync value)? toggleSync,
-    TResult Function(SyncNow value)? syncNow,
+    TResult Function(RenameProfile value)? renameProfile,
     TResult Function(ExportSubscriptions value)? exportSubscriptions,
     TResult Function(ImportSubscriptions value)? importSubscriptions,
     required TResult orElse(),
@@ -8142,8 +7986,7 @@ class _$DeleteProfileImpl implements DeleteProfile {
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
     required TResult Function(String profileName) switchProfile,
-    required TResult Function() toggleSync,
-    required TResult Function() syncNow,
+    required TResult Function(String oldName, String newName) renameProfile,
     required TResult Function() exportSubscriptions,
     required TResult Function(String filePath) importSubscriptions,
   }) {
@@ -8180,8 +8023,7 @@ class _$DeleteProfileImpl implements DeleteProfile {
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
     TResult? Function(String profileName)? switchProfile,
-    TResult? Function()? toggleSync,
-    TResult? Function()? syncNow,
+    TResult? Function(String oldName, String newName)? renameProfile,
     TResult? Function()? exportSubscriptions,
     TResult? Function(String filePath)? importSubscriptions,
   }) {
@@ -8218,8 +8060,7 @@ class _$DeleteProfileImpl implements DeleteProfile {
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
     TResult Function(String profileName)? switchProfile,
-    TResult Function()? toggleSync,
-    TResult Function()? syncNow,
+    TResult Function(String oldName, String newName)? renameProfile,
     TResult Function()? exportSubscriptions,
     TResult Function(String filePath)? importSubscriptions,
     required TResult orElse(),
@@ -8267,8 +8108,7 @@ class _$DeleteProfileImpl implements DeleteProfile {
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
     required TResult Function(SwitchProfile value) switchProfile,
-    required TResult Function(ToggleSync value) toggleSync,
-    required TResult Function(SyncNow value) syncNow,
+    required TResult Function(RenameProfile value) renameProfile,
     required TResult Function(ExportSubscriptions value) exportSubscriptions,
     required TResult Function(ImportSubscriptions value) importSubscriptions,
   }) {
@@ -8307,8 +8147,7 @@ class _$DeleteProfileImpl implements DeleteProfile {
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
     TResult? Function(SwitchProfile value)? switchProfile,
-    TResult? Function(ToggleSync value)? toggleSync,
-    TResult? Function(SyncNow value)? syncNow,
+    TResult? Function(RenameProfile value)? renameProfile,
     TResult? Function(ExportSubscriptions value)? exportSubscriptions,
     TResult? Function(ImportSubscriptions value)? importSubscriptions,
   }) {
@@ -8347,8 +8186,7 @@ class _$DeleteProfileImpl implements DeleteProfile {
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
     TResult Function(SwitchProfile value)? switchProfile,
-    TResult Function(ToggleSync value)? toggleSync,
-    TResult Function(SyncNow value)? syncNow,
+    TResult Function(RenameProfile value)? renameProfile,
     TResult Function(ExportSubscriptions value)? exportSubscriptions,
     TResult Function(ImportSubscriptions value)? importSubscriptions,
     required TResult orElse(),
@@ -8470,8 +8308,7 @@ class _$SwitchProfileImpl implements SwitchProfile {
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
     required TResult Function(String profileName) switchProfile,
-    required TResult Function() toggleSync,
-    required TResult Function() syncNow,
+    required TResult Function(String oldName, String newName) renameProfile,
     required TResult Function() exportSubscriptions,
     required TResult Function(String filePath) importSubscriptions,
   }) {
@@ -8508,8 +8345,7 @@ class _$SwitchProfileImpl implements SwitchProfile {
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
     TResult? Function(String profileName)? switchProfile,
-    TResult? Function()? toggleSync,
-    TResult? Function()? syncNow,
+    TResult? Function(String oldName, String newName)? renameProfile,
     TResult? Function()? exportSubscriptions,
     TResult? Function(String filePath)? importSubscriptions,
   }) {
@@ -8546,8 +8382,7 @@ class _$SwitchProfileImpl implements SwitchProfile {
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
     TResult Function(String profileName)? switchProfile,
-    TResult Function()? toggleSync,
-    TResult Function()? syncNow,
+    TResult Function(String oldName, String newName)? renameProfile,
     TResult Function()? exportSubscriptions,
     TResult Function(String filePath)? importSubscriptions,
     required TResult orElse(),
@@ -8595,8 +8430,7 @@ class _$SwitchProfileImpl implements SwitchProfile {
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
     required TResult Function(SwitchProfile value) switchProfile,
-    required TResult Function(ToggleSync value) toggleSync,
-    required TResult Function(SyncNow value) syncNow,
+    required TResult Function(RenameProfile value) renameProfile,
     required TResult Function(ExportSubscriptions value) exportSubscriptions,
     required TResult Function(ImportSubscriptions value) importSubscriptions,
   }) {
@@ -8635,8 +8469,7 @@ class _$SwitchProfileImpl implements SwitchProfile {
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
     TResult? Function(SwitchProfile value)? switchProfile,
-    TResult? Function(ToggleSync value)? toggleSync,
-    TResult? Function(SyncNow value)? syncNow,
+    TResult? Function(RenameProfile value)? renameProfile,
     TResult? Function(ExportSubscriptions value)? exportSubscriptions,
     TResult? Function(ImportSubscriptions value)? importSubscriptions,
   }) {
@@ -8675,8 +8508,7 @@ class _$SwitchProfileImpl implements SwitchProfile {
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
     TResult Function(SwitchProfile value)? switchProfile,
-    TResult Function(ToggleSync value)? toggleSync,
-    TResult Function(SyncNow value)? syncNow,
+    TResult Function(RenameProfile value)? renameProfile,
     TResult Function(ExportSubscriptions value)? exportSubscriptions,
     TResult Function(ImportSubscriptions value)? importSubscriptions,
     required TResult orElse(),
@@ -8702,42 +8534,77 @@ abstract class SwitchProfile implements SettingsEvent {
 }
 
 /// @nodoc
-abstract class _$$ToggleSyncImplCopyWith<$Res> {
-  factory _$$ToggleSyncImplCopyWith(
-          _$ToggleSyncImpl value, $Res Function(_$ToggleSyncImpl) then) =
-      __$$ToggleSyncImplCopyWithImpl<$Res>;
+abstract class _$$RenameProfileImplCopyWith<$Res> {
+  factory _$$RenameProfileImplCopyWith(
+          _$RenameProfileImpl value, $Res Function(_$RenameProfileImpl) then) =
+      __$$RenameProfileImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String oldName, String newName});
 }
 
 /// @nodoc
-class __$$ToggleSyncImplCopyWithImpl<$Res>
-    extends _$SettingsEventCopyWithImpl<$Res, _$ToggleSyncImpl>
-    implements _$$ToggleSyncImplCopyWith<$Res> {
-  __$$ToggleSyncImplCopyWithImpl(
-      _$ToggleSyncImpl _value, $Res Function(_$ToggleSyncImpl) _then)
+class __$$RenameProfileImplCopyWithImpl<$Res>
+    extends _$SettingsEventCopyWithImpl<$Res, _$RenameProfileImpl>
+    implements _$$RenameProfileImplCopyWith<$Res> {
+  __$$RenameProfileImplCopyWithImpl(
+      _$RenameProfileImpl _value, $Res Function(_$RenameProfileImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of SettingsEvent
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? oldName = null,
+    Object? newName = null,
+  }) {
+    return _then(_$RenameProfileImpl(
+      oldName: null == oldName
+          ? _value.oldName
+          : oldName // ignore: cast_nullable_to_non_nullable
+              as String,
+      newName: null == newName
+          ? _value.newName
+          : newName // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
-class _$ToggleSyncImpl implements ToggleSync {
-  _$ToggleSyncImpl();
+class _$RenameProfileImpl implements RenameProfile {
+  _$RenameProfileImpl({required this.oldName, required this.newName});
+
+  @override
+  final String oldName;
+  @override
+  final String newName;
 
   @override
   String toString() {
-    return 'SettingsEvent.toggleSync()';
+    return 'SettingsEvent.renameProfile(oldName: $oldName, newName: $newName)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$ToggleSyncImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$RenameProfileImpl &&
+            (identical(other.oldName, oldName) || other.oldName == oldName) &&
+            (identical(other.newName, newName) || other.newName == newName));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, oldName, newName);
+
+  /// Create a copy of SettingsEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RenameProfileImplCopyWith<_$RenameProfileImpl> get copyWith =>
+      __$$RenameProfileImplCopyWithImpl<_$RenameProfileImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -8770,12 +8637,11 @@ class _$ToggleSyncImpl implements ToggleSync {
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
     required TResult Function(String profileName) switchProfile,
-    required TResult Function() toggleSync,
-    required TResult Function() syncNow,
+    required TResult Function(String oldName, String newName) renameProfile,
     required TResult Function() exportSubscriptions,
     required TResult Function(String filePath) importSubscriptions,
   }) {
-    return toggleSync();
+    return renameProfile(oldName, newName);
   }
 
   @override
@@ -8808,12 +8674,11 @@ class _$ToggleSyncImpl implements ToggleSync {
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
     TResult? Function(String profileName)? switchProfile,
-    TResult? Function()? toggleSync,
-    TResult? Function()? syncNow,
+    TResult? Function(String oldName, String newName)? renameProfile,
     TResult? Function()? exportSubscriptions,
     TResult? Function(String filePath)? importSubscriptions,
   }) {
-    return toggleSync?.call();
+    return renameProfile?.call(oldName, newName);
   }
 
   @override
@@ -8846,14 +8711,13 @@ class _$ToggleSyncImpl implements ToggleSync {
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
     TResult Function(String profileName)? switchProfile,
-    TResult Function()? toggleSync,
-    TResult Function()? syncNow,
+    TResult Function(String oldName, String newName)? renameProfile,
     TResult Function()? exportSubscriptions,
     TResult Function(String filePath)? importSubscriptions,
     required TResult orElse(),
   }) {
-    if (toggleSync != null) {
-      return toggleSync();
+    if (renameProfile != null) {
+      return renameProfile(oldName, newName);
     }
     return orElse();
   }
@@ -8895,12 +8759,11 @@ class _$ToggleSyncImpl implements ToggleSync {
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
     required TResult Function(SwitchProfile value) switchProfile,
-    required TResult Function(ToggleSync value) toggleSync,
-    required TResult Function(SyncNow value) syncNow,
+    required TResult Function(RenameProfile value) renameProfile,
     required TResult Function(ExportSubscriptions value) exportSubscriptions,
     required TResult Function(ImportSubscriptions value) importSubscriptions,
   }) {
-    return toggleSync(this);
+    return renameProfile(this);
   }
 
   @override
@@ -8935,12 +8798,11 @@ class _$ToggleSyncImpl implements ToggleSync {
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
     TResult? Function(SwitchProfile value)? switchProfile,
-    TResult? Function(ToggleSync value)? toggleSync,
-    TResult? Function(SyncNow value)? syncNow,
+    TResult? Function(RenameProfile value)? renameProfile,
     TResult? Function(ExportSubscriptions value)? exportSubscriptions,
     TResult? Function(ImportSubscriptions value)? importSubscriptions,
   }) {
-    return toggleSync?.call(this);
+    return renameProfile?.call(this);
   }
 
   @override
@@ -8975,312 +8837,31 @@ class _$ToggleSyncImpl implements ToggleSync {
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
     TResult Function(SwitchProfile value)? switchProfile,
-    TResult Function(ToggleSync value)? toggleSync,
-    TResult Function(SyncNow value)? syncNow,
+    TResult Function(RenameProfile value)? renameProfile,
     TResult Function(ExportSubscriptions value)? exportSubscriptions,
     TResult Function(ImportSubscriptions value)? importSubscriptions,
     required TResult orElse(),
   }) {
-    if (toggleSync != null) {
-      return toggleSync(this);
+    if (renameProfile != null) {
+      return renameProfile(this);
     }
     return orElse();
   }
 }
 
-abstract class ToggleSync implements SettingsEvent {
-  factory ToggleSync() = _$ToggleSyncImpl;
-}
+abstract class RenameProfile implements SettingsEvent {
+  factory RenameProfile(
+      {required final String oldName,
+      required final String newName}) = _$RenameProfileImpl;
 
-/// @nodoc
-abstract class _$$SyncNowImplCopyWith<$Res> {
-  factory _$$SyncNowImplCopyWith(
-          _$SyncNowImpl value, $Res Function(_$SyncNowImpl) then) =
-      __$$SyncNowImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$SyncNowImplCopyWithImpl<$Res>
-    extends _$SettingsEventCopyWithImpl<$Res, _$SyncNowImpl>
-    implements _$$SyncNowImplCopyWith<$Res> {
-  __$$SyncNowImplCopyWithImpl(
-      _$SyncNowImpl _value, $Res Function(_$SyncNowImpl) _then)
-      : super(_value, _then);
+  String get oldName;
+  String get newName;
 
   /// Create a copy of SettingsEvent
   /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$SyncNowImpl implements SyncNow {
-  _$SyncNowImpl();
-
-  @override
-  String toString() {
-    return 'SettingsEvent.syncNow()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$SyncNowImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initializeSettings,
-    required TResult Function(String? language) getDefaultLanguage,
-    required TResult Function(String? quality) getDefaultQuality,
-    required TResult Function(String? region) getDefaultRegion,
-    required TResult Function(String themeMode) changeTheme,
-    required TResult Function() toggleHistoryVisibility,
-    required TResult Function() toggleDislikeVisibility,
-    required TResult Function() toggleHlsPlayer,
-    required TResult Function() toggleCommentVisibility,
-    required TResult Function() toggleRelatedVideoVisibility,
-    required TResult Function() fetchPipedInstances,
-    required TResult Function() fetchInvidiousInstances,
-    required TResult Function(String instanceApi) setInstance,
-    required TResult Function(YouTubeServices service) setYTService,
-    required TResult Function(PlayerType playerType) setPlayerType,
-    required TResult Function() togglePipPlayer,
-    required TResult Function(String filter) setSearchFilter,
-    required TResult Function(String fitMode) setVideoFitMode,
-    required TResult Function(int seconds) setSkipInterval,
-    required TResult Function() toggleSponsorBlock,
-    required TResult Function(List<String> categories)
-        setSponsorBlockCategories,
-    required TResult Function() toggleOpenLinksInBrowser,
-    required TResult Function(String mode) setHomeFeedMode,
-    required TResult Function() toggleAudioFocus,
-    required TResult Function(String profileName) addProfile,
-    required TResult Function(String profileName) deleteProfile,
-    required TResult Function(String profileName) switchProfile,
-    required TResult Function() toggleSync,
-    required TResult Function() syncNow,
-    required TResult Function() exportSubscriptions,
-    required TResult Function(String filePath) importSubscriptions,
-  }) {
-    return syncNow();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initializeSettings,
-    TResult? Function(String? language)? getDefaultLanguage,
-    TResult? Function(String? quality)? getDefaultQuality,
-    TResult? Function(String? region)? getDefaultRegion,
-    TResult? Function(String themeMode)? changeTheme,
-    TResult? Function()? toggleHistoryVisibility,
-    TResult? Function()? toggleDislikeVisibility,
-    TResult? Function()? toggleHlsPlayer,
-    TResult? Function()? toggleCommentVisibility,
-    TResult? Function()? toggleRelatedVideoVisibility,
-    TResult? Function()? fetchPipedInstances,
-    TResult? Function()? fetchInvidiousInstances,
-    TResult? Function(String instanceApi)? setInstance,
-    TResult? Function(YouTubeServices service)? setYTService,
-    TResult? Function(PlayerType playerType)? setPlayerType,
-    TResult? Function()? togglePipPlayer,
-    TResult? Function(String filter)? setSearchFilter,
-    TResult? Function(String fitMode)? setVideoFitMode,
-    TResult? Function(int seconds)? setSkipInterval,
-    TResult? Function()? toggleSponsorBlock,
-    TResult? Function(List<String> categories)? setSponsorBlockCategories,
-    TResult? Function()? toggleOpenLinksInBrowser,
-    TResult? Function(String mode)? setHomeFeedMode,
-    TResult? Function()? toggleAudioFocus,
-    TResult? Function(String profileName)? addProfile,
-    TResult? Function(String profileName)? deleteProfile,
-    TResult? Function(String profileName)? switchProfile,
-    TResult? Function()? toggleSync,
-    TResult? Function()? syncNow,
-    TResult? Function()? exportSubscriptions,
-    TResult? Function(String filePath)? importSubscriptions,
-  }) {
-    return syncNow?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initializeSettings,
-    TResult Function(String? language)? getDefaultLanguage,
-    TResult Function(String? quality)? getDefaultQuality,
-    TResult Function(String? region)? getDefaultRegion,
-    TResult Function(String themeMode)? changeTheme,
-    TResult Function()? toggleHistoryVisibility,
-    TResult Function()? toggleDislikeVisibility,
-    TResult Function()? toggleHlsPlayer,
-    TResult Function()? toggleCommentVisibility,
-    TResult Function()? toggleRelatedVideoVisibility,
-    TResult Function()? fetchPipedInstances,
-    TResult Function()? fetchInvidiousInstances,
-    TResult Function(String instanceApi)? setInstance,
-    TResult Function(YouTubeServices service)? setYTService,
-    TResult Function(PlayerType playerType)? setPlayerType,
-    TResult Function()? togglePipPlayer,
-    TResult Function(String filter)? setSearchFilter,
-    TResult Function(String fitMode)? setVideoFitMode,
-    TResult Function(int seconds)? setSkipInterval,
-    TResult Function()? toggleSponsorBlock,
-    TResult Function(List<String> categories)? setSponsorBlockCategories,
-    TResult Function()? toggleOpenLinksInBrowser,
-    TResult Function(String mode)? setHomeFeedMode,
-    TResult Function()? toggleAudioFocus,
-    TResult Function(String profileName)? addProfile,
-    TResult Function(String profileName)? deleteProfile,
-    TResult Function(String profileName)? switchProfile,
-    TResult Function()? toggleSync,
-    TResult Function()? syncNow,
-    TResult Function()? exportSubscriptions,
-    TResult Function(String filePath)? importSubscriptions,
-    required TResult orElse(),
-  }) {
-    if (syncNow != null) {
-      return syncNow();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(InitializeSettings value) initializeSettings,
-    required TResult Function(GetDefaultLanguage value) getDefaultLanguage,
-    required TResult Function(GetDefaultQuality value) getDefaultQuality,
-    required TResult Function(GetDefaultRegion value) getDefaultRegion,
-    required TResult Function(ChangeTheme value) changeTheme,
-    required TResult Function(ToggleHistoryVisibility value)
-        toggleHistoryVisibility,
-    required TResult Function(ToggleDislikeVisibility value)
-        toggleDislikeVisibility,
-    required TResult Function(ToggleHlsPlayer value) toggleHlsPlayer,
-    required TResult Function(ToggleCommentVisibility value)
-        toggleCommentVisibility,
-    required TResult Function(ToggleRelatedVideoVisibility value)
-        toggleRelatedVideoVisibility,
-    required TResult Function(FetchPipedInstances value) fetchPipedInstances,
-    required TResult Function(FetchInvidiousInstances value)
-        fetchInvidiousInstances,
-    required TResult Function(SetInstance value) setInstance,
-    required TResult Function(SetYTService value) setYTService,
-    required TResult Function(SetPlayerType value) setPlayerType,
-    required TResult Function(TogglePipPlayer value) togglePipPlayer,
-    required TResult Function(SetSearchFilter value) setSearchFilter,
-    required TResult Function(SetVideoFitMode value) setVideoFitMode,
-    required TResult Function(SetSkipInterval value) setSkipInterval,
-    required TResult Function(ToggleSponsorBlock value) toggleSponsorBlock,
-    required TResult Function(SetSponsorBlockCategories value)
-        setSponsorBlockCategories,
-    required TResult Function(ToggleOpenLinksInBrowser value)
-        toggleOpenLinksInBrowser,
-    required TResult Function(SetHomeFeedMode value) setHomeFeedMode,
-    required TResult Function(ToggleAudioFocus value) toggleAudioFocus,
-    required TResult Function(AddProfile value) addProfile,
-    required TResult Function(DeleteProfile value) deleteProfile,
-    required TResult Function(SwitchProfile value) switchProfile,
-    required TResult Function(ToggleSync value) toggleSync,
-    required TResult Function(SyncNow value) syncNow,
-    required TResult Function(ExportSubscriptions value) exportSubscriptions,
-    required TResult Function(ImportSubscriptions value) importSubscriptions,
-  }) {
-    return syncNow(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(InitializeSettings value)? initializeSettings,
-    TResult? Function(GetDefaultLanguage value)? getDefaultLanguage,
-    TResult? Function(GetDefaultQuality value)? getDefaultQuality,
-    TResult? Function(GetDefaultRegion value)? getDefaultRegion,
-    TResult? Function(ChangeTheme value)? changeTheme,
-    TResult? Function(ToggleHistoryVisibility value)? toggleHistoryVisibility,
-    TResult? Function(ToggleDislikeVisibility value)? toggleDislikeVisibility,
-    TResult? Function(ToggleHlsPlayer value)? toggleHlsPlayer,
-    TResult? Function(ToggleCommentVisibility value)? toggleCommentVisibility,
-    TResult? Function(ToggleRelatedVideoVisibility value)?
-        toggleRelatedVideoVisibility,
-    TResult? Function(FetchPipedInstances value)? fetchPipedInstances,
-    TResult? Function(FetchInvidiousInstances value)? fetchInvidiousInstances,
-    TResult? Function(SetInstance value)? setInstance,
-    TResult? Function(SetYTService value)? setYTService,
-    TResult? Function(SetPlayerType value)? setPlayerType,
-    TResult? Function(TogglePipPlayer value)? togglePipPlayer,
-    TResult? Function(SetSearchFilter value)? setSearchFilter,
-    TResult? Function(SetVideoFitMode value)? setVideoFitMode,
-    TResult? Function(SetSkipInterval value)? setSkipInterval,
-    TResult? Function(ToggleSponsorBlock value)? toggleSponsorBlock,
-    TResult? Function(SetSponsorBlockCategories value)?
-        setSponsorBlockCategories,
-    TResult? Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult? Function(SetHomeFeedMode value)? setHomeFeedMode,
-    TResult? Function(ToggleAudioFocus value)? toggleAudioFocus,
-    TResult? Function(AddProfile value)? addProfile,
-    TResult? Function(DeleteProfile value)? deleteProfile,
-    TResult? Function(SwitchProfile value)? switchProfile,
-    TResult? Function(ToggleSync value)? toggleSync,
-    TResult? Function(SyncNow value)? syncNow,
-    TResult? Function(ExportSubscriptions value)? exportSubscriptions,
-    TResult? Function(ImportSubscriptions value)? importSubscriptions,
-  }) {
-    return syncNow?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(InitializeSettings value)? initializeSettings,
-    TResult Function(GetDefaultLanguage value)? getDefaultLanguage,
-    TResult Function(GetDefaultQuality value)? getDefaultQuality,
-    TResult Function(GetDefaultRegion value)? getDefaultRegion,
-    TResult Function(ChangeTheme value)? changeTheme,
-    TResult Function(ToggleHistoryVisibility value)? toggleHistoryVisibility,
-    TResult Function(ToggleDislikeVisibility value)? toggleDislikeVisibility,
-    TResult Function(ToggleHlsPlayer value)? toggleHlsPlayer,
-    TResult Function(ToggleCommentVisibility value)? toggleCommentVisibility,
-    TResult Function(ToggleRelatedVideoVisibility value)?
-        toggleRelatedVideoVisibility,
-    TResult Function(FetchPipedInstances value)? fetchPipedInstances,
-    TResult Function(FetchInvidiousInstances value)? fetchInvidiousInstances,
-    TResult Function(SetInstance value)? setInstance,
-    TResult Function(SetYTService value)? setYTService,
-    TResult Function(SetPlayerType value)? setPlayerType,
-    TResult Function(TogglePipPlayer value)? togglePipPlayer,
-    TResult Function(SetSearchFilter value)? setSearchFilter,
-    TResult Function(SetVideoFitMode value)? setVideoFitMode,
-    TResult Function(SetSkipInterval value)? setSkipInterval,
-    TResult Function(ToggleSponsorBlock value)? toggleSponsorBlock,
-    TResult Function(SetSponsorBlockCategories value)?
-        setSponsorBlockCategories,
-    TResult Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult Function(SetHomeFeedMode value)? setHomeFeedMode,
-    TResult Function(ToggleAudioFocus value)? toggleAudioFocus,
-    TResult Function(AddProfile value)? addProfile,
-    TResult Function(DeleteProfile value)? deleteProfile,
-    TResult Function(SwitchProfile value)? switchProfile,
-    TResult Function(ToggleSync value)? toggleSync,
-    TResult Function(SyncNow value)? syncNow,
-    TResult Function(ExportSubscriptions value)? exportSubscriptions,
-    TResult Function(ImportSubscriptions value)? importSubscriptions,
-    required TResult orElse(),
-  }) {
-    if (syncNow != null) {
-      return syncNow(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class SyncNow implements SettingsEvent {
-  factory SyncNow() = _$SyncNowImpl;
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$RenameProfileImplCopyWith<_$RenameProfileImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -9353,8 +8934,7 @@ class _$ExportSubscriptionsImpl implements ExportSubscriptions {
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
     required TResult Function(String profileName) switchProfile,
-    required TResult Function() toggleSync,
-    required TResult Function() syncNow,
+    required TResult Function(String oldName, String newName) renameProfile,
     required TResult Function() exportSubscriptions,
     required TResult Function(String filePath) importSubscriptions,
   }) {
@@ -9391,8 +8971,7 @@ class _$ExportSubscriptionsImpl implements ExportSubscriptions {
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
     TResult? Function(String profileName)? switchProfile,
-    TResult? Function()? toggleSync,
-    TResult? Function()? syncNow,
+    TResult? Function(String oldName, String newName)? renameProfile,
     TResult? Function()? exportSubscriptions,
     TResult? Function(String filePath)? importSubscriptions,
   }) {
@@ -9429,8 +9008,7 @@ class _$ExportSubscriptionsImpl implements ExportSubscriptions {
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
     TResult Function(String profileName)? switchProfile,
-    TResult Function()? toggleSync,
-    TResult Function()? syncNow,
+    TResult Function(String oldName, String newName)? renameProfile,
     TResult Function()? exportSubscriptions,
     TResult Function(String filePath)? importSubscriptions,
     required TResult orElse(),
@@ -9478,8 +9056,7 @@ class _$ExportSubscriptionsImpl implements ExportSubscriptions {
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
     required TResult Function(SwitchProfile value) switchProfile,
-    required TResult Function(ToggleSync value) toggleSync,
-    required TResult Function(SyncNow value) syncNow,
+    required TResult Function(RenameProfile value) renameProfile,
     required TResult Function(ExportSubscriptions value) exportSubscriptions,
     required TResult Function(ImportSubscriptions value) importSubscriptions,
   }) {
@@ -9518,8 +9095,7 @@ class _$ExportSubscriptionsImpl implements ExportSubscriptions {
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
     TResult? Function(SwitchProfile value)? switchProfile,
-    TResult? Function(ToggleSync value)? toggleSync,
-    TResult? Function(SyncNow value)? syncNow,
+    TResult? Function(RenameProfile value)? renameProfile,
     TResult? Function(ExportSubscriptions value)? exportSubscriptions,
     TResult? Function(ImportSubscriptions value)? importSubscriptions,
   }) {
@@ -9558,8 +9134,7 @@ class _$ExportSubscriptionsImpl implements ExportSubscriptions {
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
     TResult Function(SwitchProfile value)? switchProfile,
-    TResult Function(ToggleSync value)? toggleSync,
-    TResult Function(SyncNow value)? syncNow,
+    TResult Function(RenameProfile value)? renameProfile,
     TResult Function(ExportSubscriptions value)? exportSubscriptions,
     TResult Function(ImportSubscriptions value)? importSubscriptions,
     required TResult orElse(),
@@ -9673,8 +9248,7 @@ class _$ImportSubscriptionsImpl implements ImportSubscriptions {
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
     required TResult Function(String profileName) switchProfile,
-    required TResult Function() toggleSync,
-    required TResult Function() syncNow,
+    required TResult Function(String oldName, String newName) renameProfile,
     required TResult Function() exportSubscriptions,
     required TResult Function(String filePath) importSubscriptions,
   }) {
@@ -9711,8 +9285,7 @@ class _$ImportSubscriptionsImpl implements ImportSubscriptions {
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
     TResult? Function(String profileName)? switchProfile,
-    TResult? Function()? toggleSync,
-    TResult? Function()? syncNow,
+    TResult? Function(String oldName, String newName)? renameProfile,
     TResult? Function()? exportSubscriptions,
     TResult? Function(String filePath)? importSubscriptions,
   }) {
@@ -9749,8 +9322,7 @@ class _$ImportSubscriptionsImpl implements ImportSubscriptions {
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
     TResult Function(String profileName)? switchProfile,
-    TResult Function()? toggleSync,
-    TResult Function()? syncNow,
+    TResult Function(String oldName, String newName)? renameProfile,
     TResult Function()? exportSubscriptions,
     TResult Function(String filePath)? importSubscriptions,
     required TResult orElse(),
@@ -9798,8 +9370,7 @@ class _$ImportSubscriptionsImpl implements ImportSubscriptions {
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
     required TResult Function(SwitchProfile value) switchProfile,
-    required TResult Function(ToggleSync value) toggleSync,
-    required TResult Function(SyncNow value) syncNow,
+    required TResult Function(RenameProfile value) renameProfile,
     required TResult Function(ExportSubscriptions value) exportSubscriptions,
     required TResult Function(ImportSubscriptions value) importSubscriptions,
   }) {
@@ -9838,8 +9409,7 @@ class _$ImportSubscriptionsImpl implements ImportSubscriptions {
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
     TResult? Function(SwitchProfile value)? switchProfile,
-    TResult? Function(ToggleSync value)? toggleSync,
-    TResult? Function(SyncNow value)? syncNow,
+    TResult? Function(RenameProfile value)? renameProfile,
     TResult? Function(ExportSubscriptions value)? exportSubscriptions,
     TResult? Function(ImportSubscriptions value)? importSubscriptions,
   }) {
@@ -9878,8 +9448,7 @@ class _$ImportSubscriptionsImpl implements ImportSubscriptions {
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
     TResult Function(SwitchProfile value)? switchProfile,
-    TResult Function(ToggleSync value)? toggleSync,
-    TResult Function(SyncNow value)? syncNow,
+    TResult Function(RenameProfile value)? renameProfile,
     TResult Function(ExportSubscriptions value)? exportSubscriptions,
     TResult Function(ImportSubscriptions value)? importSubscriptions,
     required TResult orElse(),
@@ -9949,9 +9518,7 @@ mixin _$SettingsState {
   bool get isAudioFocusEnabled =>
       throw _privateConstructorUsedError; // Profiles
   String get currentProfile => throw _privateConstructorUsedError;
-  List<String> get profiles => throw _privateConstructorUsedError; // Sync
-  bool get isSyncEnabled => throw _privateConstructorUsedError;
-  String? get lastSynced => throw _privateConstructorUsedError;
+  List<String> get profiles => throw _privateConstructorUsedError;
 
   /// Create a copy of SettingsState
   /// with the given fields replaced by the non-null parameter values.
@@ -10000,9 +9567,7 @@ abstract class $SettingsStateCopyWith<$Res> {
       String homeFeedMode,
       bool isAudioFocusEnabled,
       String currentProfile,
-      List<String> profiles,
-      bool isSyncEnabled,
-      String? lastSynced});
+      List<String> profiles});
 }
 
 /// @nodoc
@@ -10054,8 +9619,6 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
     Object? isAudioFocusEnabled = null,
     Object? currentProfile = null,
     Object? profiles = null,
-    Object? isSyncEnabled = null,
-    Object? lastSynced = freezed,
   }) {
     return _then(_value.copyWith(
       defaultLanguage: null == defaultLanguage
@@ -10194,14 +9757,6 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
           ? _value.profiles
           : profiles // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      isSyncEnabled: null == isSyncEnabled
-          ? _value.isSyncEnabled
-          : isSyncEnabled // ignore: cast_nullable_to_non_nullable
-              as bool,
-      lastSynced: freezed == lastSynced
-          ? _value.lastSynced
-          : lastSynced // ignore: cast_nullable_to_non_nullable
-              as String?,
     ) as $Val);
   }
 }
@@ -10248,9 +9803,7 @@ abstract class _$$InitialImplCopyWith<$Res>
       String homeFeedMode,
       bool isAudioFocusEnabled,
       String currentProfile,
-      List<String> profiles,
-      bool isSyncEnabled,
-      String? lastSynced});
+      List<String> profiles});
 }
 
 /// @nodoc
@@ -10300,8 +9853,6 @@ class __$$InitialImplCopyWithImpl<$Res>
     Object? isAudioFocusEnabled = null,
     Object? currentProfile = null,
     Object? profiles = null,
-    Object? isSyncEnabled = null,
-    Object? lastSynced = freezed,
   }) {
     return _then(_$InitialImpl(
       defaultLanguage: null == defaultLanguage
@@ -10440,14 +9991,6 @@ class __$$InitialImplCopyWithImpl<$Res>
           ? _value._profiles
           : profiles // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      isSyncEnabled: null == isSyncEnabled
-          ? _value.isSyncEnabled
-          : isSyncEnabled // ignore: cast_nullable_to_non_nullable
-              as bool,
-      lastSynced: freezed == lastSynced
-          ? _value.lastSynced
-          : lastSynced // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -10489,9 +10032,7 @@ class _$InitialImpl implements _Initial {
       required this.homeFeedMode,
       required this.isAudioFocusEnabled,
       required this.currentProfile,
-      required final List<String> profiles,
-      required this.isSyncEnabled,
-      required this.lastSynced})
+      required final List<String> profiles})
       : _pipedInstances = pipedInstances,
         _invidiousInstances = invidiousInstances,
         _sponsorBlockCategories = sponsorBlockCategories,
@@ -10601,15 +10142,9 @@ class _$InitialImpl implements _Initial {
     return EqualUnmodifiableListView(_profiles);
   }
 
-// Sync
-  @override
-  final bool isSyncEnabled;
-  @override
-  final String? lastSynced;
-
   @override
   String toString() {
-    return 'SettingsState(defaultLanguage: $defaultLanguage, defaultQuality: $defaultQuality, defaultRegion: $defaultRegion, themeMode: $themeMode, version: $version, isHistoryVisible: $isHistoryVisible, isDislikeVisible: $isDislikeVisible, isHlsPlayer: $isHlsPlayer, isHideComments: $isHideComments, isHideRelated: $isHideRelated, pipedInstances: $pipedInstances, pipedInstanceStatus: $pipedInstanceStatus, instance: $instance, invidiousInstances: $invidiousInstances, invidiousInstanceStatus: $invidiousInstanceStatus, ytService: $ytService, playerType: $playerType, initialized: $initialized, settingsStatus: $settingsStatus, isPipDisabled: $isPipDisabled, connectingToInstance: $connectingToInstance, isTestingConnection: $isTestingConnection, userInstanceFailed: $userInstanceFailed, failedInstanceName: $failedInstanceName, searchFilter: $searchFilter, videoFitMode: $videoFitMode, skipInterval: $skipInterval, isSponsorBlockEnabled: $isSponsorBlockEnabled, sponsorBlockCategories: $sponsorBlockCategories, openLinksInBrowser: $openLinksInBrowser, homeFeedMode: $homeFeedMode, isAudioFocusEnabled: $isAudioFocusEnabled, currentProfile: $currentProfile, profiles: $profiles, isSyncEnabled: $isSyncEnabled, lastSynced: $lastSynced)';
+    return 'SettingsState(defaultLanguage: $defaultLanguage, defaultQuality: $defaultQuality, defaultRegion: $defaultRegion, themeMode: $themeMode, version: $version, isHistoryVisible: $isHistoryVisible, isDislikeVisible: $isDislikeVisible, isHlsPlayer: $isHlsPlayer, isHideComments: $isHideComments, isHideRelated: $isHideRelated, pipedInstances: $pipedInstances, pipedInstanceStatus: $pipedInstanceStatus, instance: $instance, invidiousInstances: $invidiousInstances, invidiousInstanceStatus: $invidiousInstanceStatus, ytService: $ytService, playerType: $playerType, initialized: $initialized, settingsStatus: $settingsStatus, isPipDisabled: $isPipDisabled, connectingToInstance: $connectingToInstance, isTestingConnection: $isTestingConnection, userInstanceFailed: $userInstanceFailed, failedInstanceName: $failedInstanceName, searchFilter: $searchFilter, videoFitMode: $videoFitMode, skipInterval: $skipInterval, isSponsorBlockEnabled: $isSponsorBlockEnabled, sponsorBlockCategories: $sponsorBlockCategories, openLinksInBrowser: $openLinksInBrowser, homeFeedMode: $homeFeedMode, isAudioFocusEnabled: $isAudioFocusEnabled, currentProfile: $currentProfile, profiles: $profiles)';
   }
 
   @override
@@ -10683,11 +10218,7 @@ class _$InitialImpl implements _Initial {
                 other.isAudioFocusEnabled == isAudioFocusEnabled) &&
             (identical(other.currentProfile, currentProfile) ||
                 other.currentProfile == currentProfile) &&
-            const DeepCollectionEquality().equals(other._profiles, _profiles) &&
-            (identical(other.isSyncEnabled, isSyncEnabled) ||
-                other.isSyncEnabled == isSyncEnabled) &&
-            (identical(other.lastSynced, lastSynced) ||
-                other.lastSynced == lastSynced));
+            const DeepCollectionEquality().equals(other._profiles, _profiles));
   }
 
   @override
@@ -10726,9 +10257,7 @@ class _$InitialImpl implements _Initial {
         homeFeedMode,
         isAudioFocusEnabled,
         currentProfile,
-        const DeepCollectionEquality().hash(_profiles),
-        isSyncEnabled,
-        lastSynced
+        const DeepCollectionEquality().hash(_profiles)
       ]);
 
   /// Create a copy of SettingsState
@@ -10775,9 +10304,7 @@ abstract class _Initial implements SettingsState {
       required final String homeFeedMode,
       required final bool isAudioFocusEnabled,
       required final String currentProfile,
-      required final List<String> profiles,
-      required final bool isSyncEnabled,
-      required final String? lastSynced}) = _$InitialImpl;
+      required final List<String> profiles}) = _$InitialImpl;
 
   @override
   String get defaultLanguage;
@@ -10848,11 +10375,7 @@ abstract class _Initial implements SettingsState {
   @override
   String get currentProfile;
   @override
-  List<String> get profiles; // Sync
-  @override
-  bool get isSyncEnabled;
-  @override
-  String? get lastSynced;
+  List<String> get profiles;
 
   /// Create a copy of SettingsState
   /// with the given fields replaced by the non-null parameter values.

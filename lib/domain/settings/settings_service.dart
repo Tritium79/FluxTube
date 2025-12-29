@@ -58,10 +58,8 @@ abstract class SettingsService {
   Future<Either<MainFailure, List<String>>> addProfile({required String profileName});
   Future<Either<MainFailure, List<String>>> deleteProfile({required String profileName});
   Future<Either<MainFailure, String>> switchProfile({required String profileName});
+  Future<Either<MainFailure, List<String>>> renameProfile({required String oldName, required String newName});
   Future<Either<MainFailure, List<String>>> getProfiles();
-  // Sync methods
-  Future<Either<MainFailure, bool>> toggleSync({required bool isEnabled});
-  Future<Either<MainFailure, String>> syncNow();
   // Import/Export methods
   Future<Either<MainFailure, String>> exportSubscriptions();
   Future<Either<MainFailure, int>> importSubscriptions({required String filePath});

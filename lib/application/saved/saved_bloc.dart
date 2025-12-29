@@ -5,7 +5,6 @@ import 'package:fluxtube/domain/saved/saved_services.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../core/operations/math_operations.dart';
 import '../../domain/saved/models/local_store.dart';
 
 part 'saved_event.dart';
@@ -23,7 +22,8 @@ class SavedBloc extends Bloc<SavedEvent, SavedState> {
       emit(state.copyWith(savedVideosFetchStatus: ApiStatus.loading));
 
       //get video list
-      final _result = await _savedServices.getVideoInfoList();
+      final _result = await _savedServices.getVideoInfoList(
+          profileName: event.profileName);
       final _state = _result.fold(
           (MainFailure f) =>
               state.copyWith(savedVideosFetchStatus: ApiStatus.error),
@@ -51,8 +51,8 @@ class SavedBloc extends Bloc<SavedEvent, SavedState> {
       ));
 
       //add video info
-      final _result =
-          await _savedServices.addVideoInfo(videoInfo: event.videoInfo);
+      final _result = await _savedServices.addVideoInfo(
+          videoInfo: event.videoInfo, profileName: event.profileName);
       final _state = _result.fold(
           (MainFailure f) =>
               state.copyWith(savedVideosFetchStatus: ApiStatus.error),
@@ -71,7 +71,7 @@ class SavedBloc extends Bloc<SavedEvent, SavedState> {
       // update to ui
       emit(_state);
       // Add CheckVideoInfo event to verify and update the state
-      add(CheckVideoInfo(id: event.videoInfo.id));
+      add(CheckVideoInfo(id: event.videoInfo.id, profileName: event.profileName));
     });
 
     // delete video data from local storage
@@ -81,9 +81,9 @@ class SavedBloc extends Bloc<SavedEvent, SavedState> {
         savedVideosFetchStatus: ApiStatus.loading,
       ));
 
-      //delete video info , fast hash for covert string id to int hash
-      final _result =
-          await _savedServices.deleteVideoInfo(id: fastHash(event.id));
+      //delete video info
+      final _result = await _savedServices.deleteVideoInfo(
+          id: event.id, profileName: event.profileName);
       final _state = _result.fold(
           (MainFailure f) =>
               state.copyWith(savedVideosFetchStatus: ApiStatus.error),
@@ -101,16 +101,16 @@ class SavedBloc extends Bloc<SavedEvent, SavedState> {
 
       // update to ui
       emit(_state);
-      add(CheckVideoInfo(id: event.id));
+      add(CheckVideoInfo(id: event.id, profileName: event.profileName));
     });
 
     // check the playing video present in the saved video
-    // delete video data from local storage
     on<CheckVideoInfo>((event, emit) async {
       //initialize with empty
       emit(state.copyWith(videoInfo: null));
 
-      final _result = await _savedServices.checkVideoInfo(id: event.id);
+      final _result = await _savedServices.checkVideoInfo(
+          id: event.id, profileName: event.profileName);
       final _state = _result.fold(
           (MainFailure f) => state.copyWith(videoInfo: null),
           (LocalStoreVideoInfo resp) => state.copyWith(videoInfo: resp));

@@ -176,6 +176,9 @@ class _ExplodeScreenWatchState extends State<ExplodeScreenWatch> {
                                                 : state.subtitles,
                                             selectedVideoBasicDetails:
                                                 state.selectedVideoBasicDetails,
+                                            videoFitMode: settingsState.videoFitMode,
+                                            skipInterval: settingsState.skipInterval,
+                                            isAudioFocusEnabled: settingsState.isAudioFocusEnabled,
                                           ),
                             BlocBuilder<WatchBloc, WatchState>(
                               builder: (context, state) {

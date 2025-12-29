@@ -78,7 +78,7 @@ class LikeSection extends StatelessWidget {
                     ),
                   );
                 },
-                onTapYoutube: () async => await urlLaunch('$kYTBaseUrl$id'),
+                onTapYoutube: () async => await urlLaunchWithSettings(context, '$kYTBaseUrl$id'),
                 pipClicked: pipClicked);
           },
         );

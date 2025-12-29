@@ -547,21 +547,19 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       emit(_state);
     });
 
-    // Sync events
-    on<ToggleSync>((event, emit) async {
-      final _result = await settingsService.toggleSync(
-          isEnabled: !state.isSyncEnabled);
+    on<RenameProfile>((event, emit) async {
+      final _result = await settingsService.renameProfile(
+          oldName: event.oldName, newName: event.newName);
       final _state = _result.fold(
-          (MainFailure f) => state.copyWith(isSyncEnabled: state.isSyncEnabled),
-          (bool isEnabled) => state.copyWith(isSyncEnabled: isEnabled));
-      emit(_state);
-    });
-
-    on<SyncNow>((event, emit) async {
-      final _result = await settingsService.syncNow();
-      final _state = _result.fold(
-          (MainFailure f) => state.copyWith(lastSynced: state.lastSynced),
-          (String timestamp) => state.copyWith(lastSynced: timestamp));
+          (MainFailure f) => state.copyWith(profiles: state.profiles),
+          (List<String> profiles) {
+        // If the renamed profile was the current one, update current profile name
+        String currentProfile = state.currentProfile;
+        if (currentProfile == event.oldName) {
+          currentProfile = event.newName;
+        }
+        return state.copyWith(profiles: profiles, currentProfile: currentProfile);
+      });
       emit(_state);
     });
 

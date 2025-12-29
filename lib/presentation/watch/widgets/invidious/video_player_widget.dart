@@ -18,6 +18,9 @@ class InvidiousVideoPlayerWidget extends StatefulWidget {
     this.isSaved = false,
     this.isHlsPlayer = false,
     required this.subtitles,
+    this.videoFitMode = "contain",
+    this.skipInterval = 10,
+    this.isAudioFocusEnabled = true,
   });
 
   final InvidiousWatchResp watchInfo;
@@ -27,6 +30,9 @@ class InvidiousVideoPlayerWidget extends StatefulWidget {
   final bool isSaved;
   final bool isHlsPlayer;
   final List<Map<String, String>> subtitles;
+  final String videoFitMode;
+  final int skipInterval;
+  final bool isAudioFocusEnabled;
 
   @override
   State<InvidiousVideoPlayerWidget> createState() =>
@@ -156,7 +162,7 @@ class _InvidiousVideoPlayerWidgetState
 
     _betterPlayerController = BetterPlayerController(
       BetterPlayerConfiguration(
-        controlsConfiguration: const BetterPlayerControlsConfiguration(
+        controlsConfiguration: BetterPlayerControlsConfiguration(
           controlBarColor: Colors.black26,
           iconsColor: Colors.white,
           playIcon: Icons.play_arrow_outlined,
@@ -167,6 +173,10 @@ class _InvidiousVideoPlayerWidgetState
           overflowModalColor: Colors.black54,
           overflowModalTextColor: Colors.white,
           overflowMenuIconsColor: Colors.white,
+          skipForwardIcon: Icons.forward_10,
+          skipBackIcon: Icons.replay_10,
+          forwardSkipTimeInMilliseconds: widget.skipInterval * 1000,
+          backwardSkipTimeInMilliseconds: widget.skipInterval * 1000,
         ),
         autoPlay: true,
         startAt: Duration(seconds: startPosition),
@@ -174,7 +184,8 @@ class _InvidiousVideoPlayerWidgetState
         allowedScreenSleep: false,
         expandToFill: false,
         autoDispose: true,
-        fit: BoxFit.contain,
+        fit: _getBoxFit(widget.videoFitMode),
+        handleLifecycle: widget.isAudioFocusEnabled,
       ),
       betterPlayerDataSource: betterPlayerDataSource,
     );
@@ -204,6 +215,22 @@ class _InvidiousVideoPlayerWidgetState
             );
           }).toList()
         : null;
+  }
+
+  BoxFit _getBoxFit(String fitMode) {
+    switch (fitMode) {
+      case 'cover':
+        return BoxFit.cover;
+      case 'fill':
+        return BoxFit.fill;
+      case 'fitWidth':
+        return BoxFit.fitWidth;
+      case 'fitHeight':
+        return BoxFit.fitHeight;
+      case 'contain':
+      default:
+        return BoxFit.contain;
+    }
   }
 
   void _updateVideoHistory() async {

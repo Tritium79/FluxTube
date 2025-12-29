@@ -13,7 +13,9 @@ part 'local_store.g.dart';
 @Collection()
 class LocalStoreVideoInfo {
   String id;
-  Id get isarId => fastHash(id);
+  // Use composite key: id + profileName for unique identification per profile
+  @Index(unique: true, composite: [CompositeIndex('profileName')])
+  Id get isarId => fastHash('${id}_$profileName');
   String? title;
   int? views;
   String? thumbnail;
@@ -29,6 +31,8 @@ class LocalStoreVideoInfo {
   bool? isLive;
   int? playbackPosition;
   DateTime? time;
+  @Index()
+  String profileName;
   LocalStoreVideoInfo({
     required this.id,
     this.title,
@@ -46,6 +50,7 @@ class LocalStoreVideoInfo {
     this.isLive,
     this.playbackPosition,
     this.time,
+    this.profileName = 'default',
   });
   LocalStoreVideoInfo.init({
     this.id = '',
@@ -63,5 +68,7 @@ class LocalStoreVideoInfo {
     this.isHistory = false,
     this.isLive = false,
     this.playbackPosition = 0,
-    this.time,});
+    this.time,
+    this.profileName = 'default',
+  });
 }

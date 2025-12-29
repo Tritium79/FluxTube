@@ -16,28 +16,32 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SavedEvent {
+  String get profileName => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(LocalStoreVideoInfo videoInfo) addVideoInfo,
-    required TResult Function(String id) deleteVideoInfo,
-    required TResult Function() getAllVideoInfoList,
-    required TResult Function(String id) checkVideoInfo,
+    required TResult Function(LocalStoreVideoInfo videoInfo, String profileName)
+        addVideoInfo,
+    required TResult Function(String id, String profileName) deleteVideoInfo,
+    required TResult Function(String profileName) getAllVideoInfoList,
+    required TResult Function(String id, String profileName) checkVideoInfo,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(LocalStoreVideoInfo videoInfo)? addVideoInfo,
-    TResult? Function(String id)? deleteVideoInfo,
-    TResult? Function()? getAllVideoInfoList,
-    TResult? Function(String id)? checkVideoInfo,
+    TResult? Function(LocalStoreVideoInfo videoInfo, String profileName)?
+        addVideoInfo,
+    TResult? Function(String id, String profileName)? deleteVideoInfo,
+    TResult? Function(String profileName)? getAllVideoInfoList,
+    TResult? Function(String id, String profileName)? checkVideoInfo,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(LocalStoreVideoInfo videoInfo)? addVideoInfo,
-    TResult Function(String id)? deleteVideoInfo,
-    TResult Function()? getAllVideoInfoList,
-    TResult Function(String id)? checkVideoInfo,
+    TResult Function(LocalStoreVideoInfo videoInfo, String profileName)?
+        addVideoInfo,
+    TResult Function(String id, String profileName)? deleteVideoInfo,
+    TResult Function(String profileName)? getAllVideoInfoList,
+    TResult Function(String id, String profileName)? checkVideoInfo,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -66,6 +70,12 @@ mixin _$SavedEvent {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+
+  /// Create a copy of SavedEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $SavedEventCopyWith<SavedEvent> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -73,6 +83,8 @@ abstract class $SavedEventCopyWith<$Res> {
   factory $SavedEventCopyWith(
           SavedEvent value, $Res Function(SavedEvent) then) =
       _$SavedEventCopyWithImpl<$Res, SavedEvent>;
+  @useResult
+  $Res call({String profileName});
 }
 
 /// @nodoc
@@ -87,15 +99,29 @@ class _$SavedEventCopyWithImpl<$Res, $Val extends SavedEvent>
 
   /// Create a copy of SavedEvent
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? profileName = null,
+  }) {
+    return _then(_value.copyWith(
+      profileName: null == profileName
+          ? _value.profileName
+          : profileName // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$AddVideoInfoImplCopyWith<$Res> {
+abstract class _$$AddVideoInfoImplCopyWith<$Res>
+    implements $SavedEventCopyWith<$Res> {
   factory _$$AddVideoInfoImplCopyWith(
           _$AddVideoInfoImpl value, $Res Function(_$AddVideoInfoImpl) then) =
       __$$AddVideoInfoImplCopyWithImpl<$Res>;
+  @override
   @useResult
-  $Res call({LocalStoreVideoInfo videoInfo});
+  $Res call({LocalStoreVideoInfo videoInfo, String profileName});
 }
 
 /// @nodoc
@@ -112,12 +138,17 @@ class __$$AddVideoInfoImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? videoInfo = null,
+    Object? profileName = null,
   }) {
     return _then(_$AddVideoInfoImpl(
       videoInfo: null == videoInfo
           ? _value.videoInfo
           : videoInfo // ignore: cast_nullable_to_non_nullable
               as LocalStoreVideoInfo,
+      profileName: null == profileName
+          ? _value.profileName
+          : profileName // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -125,14 +156,18 @@ class __$$AddVideoInfoImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$AddVideoInfoImpl implements AddVideoInfo {
-  const _$AddVideoInfoImpl({required this.videoInfo});
+  const _$AddVideoInfoImpl(
+      {required this.videoInfo, this.profileName = 'default'});
 
   @override
   final LocalStoreVideoInfo videoInfo;
+  @override
+  @JsonKey()
+  final String profileName;
 
   @override
   String toString() {
-    return 'SavedEvent.addVideoInfo(videoInfo: $videoInfo)';
+    return 'SavedEvent.addVideoInfo(videoInfo: $videoInfo, profileName: $profileName)';
   }
 
   @override
@@ -141,11 +176,13 @@ class _$AddVideoInfoImpl implements AddVideoInfo {
         (other.runtimeType == runtimeType &&
             other is _$AddVideoInfoImpl &&
             (identical(other.videoInfo, videoInfo) ||
-                other.videoInfo == videoInfo));
+                other.videoInfo == videoInfo) &&
+            (identical(other.profileName, profileName) ||
+                other.profileName == profileName));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, videoInfo);
+  int get hashCode => Object.hash(runtimeType, videoInfo, profileName);
 
   /// Create a copy of SavedEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -158,36 +195,39 @@ class _$AddVideoInfoImpl implements AddVideoInfo {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(LocalStoreVideoInfo videoInfo) addVideoInfo,
-    required TResult Function(String id) deleteVideoInfo,
-    required TResult Function() getAllVideoInfoList,
-    required TResult Function(String id) checkVideoInfo,
+    required TResult Function(LocalStoreVideoInfo videoInfo, String profileName)
+        addVideoInfo,
+    required TResult Function(String id, String profileName) deleteVideoInfo,
+    required TResult Function(String profileName) getAllVideoInfoList,
+    required TResult Function(String id, String profileName) checkVideoInfo,
   }) {
-    return addVideoInfo(videoInfo);
+    return addVideoInfo(videoInfo, profileName);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(LocalStoreVideoInfo videoInfo)? addVideoInfo,
-    TResult? Function(String id)? deleteVideoInfo,
-    TResult? Function()? getAllVideoInfoList,
-    TResult? Function(String id)? checkVideoInfo,
+    TResult? Function(LocalStoreVideoInfo videoInfo, String profileName)?
+        addVideoInfo,
+    TResult? Function(String id, String profileName)? deleteVideoInfo,
+    TResult? Function(String profileName)? getAllVideoInfoList,
+    TResult? Function(String id, String profileName)? checkVideoInfo,
   }) {
-    return addVideoInfo?.call(videoInfo);
+    return addVideoInfo?.call(videoInfo, profileName);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(LocalStoreVideoInfo videoInfo)? addVideoInfo,
-    TResult Function(String id)? deleteVideoInfo,
-    TResult Function()? getAllVideoInfoList,
-    TResult Function(String id)? checkVideoInfo,
+    TResult Function(LocalStoreVideoInfo videoInfo, String profileName)?
+        addVideoInfo,
+    TResult Function(String id, String profileName)? deleteVideoInfo,
+    TResult Function(String profileName)? getAllVideoInfoList,
+    TResult Function(String id, String profileName)? checkVideoInfo,
     required TResult orElse(),
   }) {
     if (addVideoInfo != null) {
-      return addVideoInfo(videoInfo);
+      return addVideoInfo(videoInfo, profileName);
     }
     return orElse();
   }
@@ -231,25 +271,31 @@ class _$AddVideoInfoImpl implements AddVideoInfo {
 }
 
 abstract class AddVideoInfo implements SavedEvent {
-  const factory AddVideoInfo({required final LocalStoreVideoInfo videoInfo}) =
-      _$AddVideoInfoImpl;
+  const factory AddVideoInfo(
+      {required final LocalStoreVideoInfo videoInfo,
+      final String profileName}) = _$AddVideoInfoImpl;
 
   LocalStoreVideoInfo get videoInfo;
+  @override
+  String get profileName;
 
   /// Create a copy of SavedEvent
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AddVideoInfoImplCopyWith<_$AddVideoInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$DeleteVideoInfoImplCopyWith<$Res> {
+abstract class _$$DeleteVideoInfoImplCopyWith<$Res>
+    implements $SavedEventCopyWith<$Res> {
   factory _$$DeleteVideoInfoImplCopyWith(_$DeleteVideoInfoImpl value,
           $Res Function(_$DeleteVideoInfoImpl) then) =
       __$$DeleteVideoInfoImplCopyWithImpl<$Res>;
+  @override
   @useResult
-  $Res call({String id});
+  $Res call({String id, String profileName});
 }
 
 /// @nodoc
@@ -266,11 +312,16 @@ class __$$DeleteVideoInfoImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? profileName = null,
   }) {
     return _then(_$DeleteVideoInfoImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      profileName: null == profileName
+          ? _value.profileName
+          : profileName // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -279,14 +330,17 @@ class __$$DeleteVideoInfoImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$DeleteVideoInfoImpl implements DeleteVideoInfo {
-  const _$DeleteVideoInfoImpl({required this.id});
+  const _$DeleteVideoInfoImpl({required this.id, this.profileName = 'default'});
 
   @override
   final String id;
+  @override
+  @JsonKey()
+  final String profileName;
 
   @override
   String toString() {
-    return 'SavedEvent.deleteVideoInfo(id: $id)';
+    return 'SavedEvent.deleteVideoInfo(id: $id, profileName: $profileName)';
   }
 
   @override
@@ -294,11 +348,13 @@ class _$DeleteVideoInfoImpl implements DeleteVideoInfo {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DeleteVideoInfoImpl &&
-            (identical(other.id, id) || other.id == id));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.profileName, profileName) ||
+                other.profileName == profileName));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id);
+  int get hashCode => Object.hash(runtimeType, id, profileName);
 
   /// Create a copy of SavedEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -312,36 +368,39 @@ class _$DeleteVideoInfoImpl implements DeleteVideoInfo {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(LocalStoreVideoInfo videoInfo) addVideoInfo,
-    required TResult Function(String id) deleteVideoInfo,
-    required TResult Function() getAllVideoInfoList,
-    required TResult Function(String id) checkVideoInfo,
+    required TResult Function(LocalStoreVideoInfo videoInfo, String profileName)
+        addVideoInfo,
+    required TResult Function(String id, String profileName) deleteVideoInfo,
+    required TResult Function(String profileName) getAllVideoInfoList,
+    required TResult Function(String id, String profileName) checkVideoInfo,
   }) {
-    return deleteVideoInfo(id);
+    return deleteVideoInfo(id, profileName);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(LocalStoreVideoInfo videoInfo)? addVideoInfo,
-    TResult? Function(String id)? deleteVideoInfo,
-    TResult? Function()? getAllVideoInfoList,
-    TResult? Function(String id)? checkVideoInfo,
+    TResult? Function(LocalStoreVideoInfo videoInfo, String profileName)?
+        addVideoInfo,
+    TResult? Function(String id, String profileName)? deleteVideoInfo,
+    TResult? Function(String profileName)? getAllVideoInfoList,
+    TResult? Function(String id, String profileName)? checkVideoInfo,
   }) {
-    return deleteVideoInfo?.call(id);
+    return deleteVideoInfo?.call(id, profileName);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(LocalStoreVideoInfo videoInfo)? addVideoInfo,
-    TResult Function(String id)? deleteVideoInfo,
-    TResult Function()? getAllVideoInfoList,
-    TResult Function(String id)? checkVideoInfo,
+    TResult Function(LocalStoreVideoInfo videoInfo, String profileName)?
+        addVideoInfo,
+    TResult Function(String id, String profileName)? deleteVideoInfo,
+    TResult Function(String profileName)? getAllVideoInfoList,
+    TResult Function(String id, String profileName)? checkVideoInfo,
     required TResult orElse(),
   }) {
     if (deleteVideoInfo != null) {
-      return deleteVideoInfo(id);
+      return deleteVideoInfo(id, profileName);
     }
     return orElse();
   }
@@ -385,23 +444,31 @@ class _$DeleteVideoInfoImpl implements DeleteVideoInfo {
 }
 
 abstract class DeleteVideoInfo implements SavedEvent {
-  const factory DeleteVideoInfo({required final String id}) =
-      _$DeleteVideoInfoImpl;
+  const factory DeleteVideoInfo(
+      {required final String id,
+      final String profileName}) = _$DeleteVideoInfoImpl;
 
   String get id;
+  @override
+  String get profileName;
 
   /// Create a copy of SavedEvent
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DeleteVideoInfoImplCopyWith<_$DeleteVideoInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$GetAllVideoInfoListImplCopyWith<$Res> {
+abstract class _$$GetAllVideoInfoListImplCopyWith<$Res>
+    implements $SavedEventCopyWith<$Res> {
   factory _$$GetAllVideoInfoListImplCopyWith(_$GetAllVideoInfoListImpl value,
           $Res Function(_$GetAllVideoInfoListImpl) then) =
       __$$GetAllVideoInfoListImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String profileName});
 }
 
 /// @nodoc
@@ -414,61 +481,91 @@ class __$$GetAllVideoInfoListImplCopyWithImpl<$Res>
 
   /// Create a copy of SavedEvent
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? profileName = null,
+  }) {
+    return _then(_$GetAllVideoInfoListImpl(
+      profileName: null == profileName
+          ? _value.profileName
+          : profileName // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$GetAllVideoInfoListImpl implements GetAllVideoInfoList {
-  const _$GetAllVideoInfoListImpl();
+  const _$GetAllVideoInfoListImpl({this.profileName = 'default'});
+
+  @override
+  @JsonKey()
+  final String profileName;
 
   @override
   String toString() {
-    return 'SavedEvent.getAllVideoInfoList()';
+    return 'SavedEvent.getAllVideoInfoList(profileName: $profileName)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$GetAllVideoInfoListImpl);
+            other is _$GetAllVideoInfoListImpl &&
+            (identical(other.profileName, profileName) ||
+                other.profileName == profileName));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, profileName);
+
+  /// Create a copy of SavedEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GetAllVideoInfoListImplCopyWith<_$GetAllVideoInfoListImpl> get copyWith =>
+      __$$GetAllVideoInfoListImplCopyWithImpl<_$GetAllVideoInfoListImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(LocalStoreVideoInfo videoInfo) addVideoInfo,
-    required TResult Function(String id) deleteVideoInfo,
-    required TResult Function() getAllVideoInfoList,
-    required TResult Function(String id) checkVideoInfo,
+    required TResult Function(LocalStoreVideoInfo videoInfo, String profileName)
+        addVideoInfo,
+    required TResult Function(String id, String profileName) deleteVideoInfo,
+    required TResult Function(String profileName) getAllVideoInfoList,
+    required TResult Function(String id, String profileName) checkVideoInfo,
   }) {
-    return getAllVideoInfoList();
+    return getAllVideoInfoList(profileName);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(LocalStoreVideoInfo videoInfo)? addVideoInfo,
-    TResult? Function(String id)? deleteVideoInfo,
-    TResult? Function()? getAllVideoInfoList,
-    TResult? Function(String id)? checkVideoInfo,
+    TResult? Function(LocalStoreVideoInfo videoInfo, String profileName)?
+        addVideoInfo,
+    TResult? Function(String id, String profileName)? deleteVideoInfo,
+    TResult? Function(String profileName)? getAllVideoInfoList,
+    TResult? Function(String id, String profileName)? checkVideoInfo,
   }) {
-    return getAllVideoInfoList?.call();
+    return getAllVideoInfoList?.call(profileName);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(LocalStoreVideoInfo videoInfo)? addVideoInfo,
-    TResult Function(String id)? deleteVideoInfo,
-    TResult Function()? getAllVideoInfoList,
-    TResult Function(String id)? checkVideoInfo,
+    TResult Function(LocalStoreVideoInfo videoInfo, String profileName)?
+        addVideoInfo,
+    TResult Function(String id, String profileName)? deleteVideoInfo,
+    TResult Function(String profileName)? getAllVideoInfoList,
+    TResult Function(String id, String profileName)? checkVideoInfo,
     required TResult orElse(),
   }) {
     if (getAllVideoInfoList != null) {
-      return getAllVideoInfoList();
+      return getAllVideoInfoList(profileName);
     }
     return orElse();
   }
@@ -512,16 +609,29 @@ class _$GetAllVideoInfoListImpl implements GetAllVideoInfoList {
 }
 
 abstract class GetAllVideoInfoList implements SavedEvent {
-  const factory GetAllVideoInfoList() = _$GetAllVideoInfoListImpl;
+  const factory GetAllVideoInfoList({final String profileName}) =
+      _$GetAllVideoInfoListImpl;
+
+  @override
+  String get profileName;
+
+  /// Create a copy of SavedEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$GetAllVideoInfoListImplCopyWith<_$GetAllVideoInfoListImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$CheckVideoInfoImplCopyWith<$Res> {
+abstract class _$$CheckVideoInfoImplCopyWith<$Res>
+    implements $SavedEventCopyWith<$Res> {
   factory _$$CheckVideoInfoImplCopyWith(_$CheckVideoInfoImpl value,
           $Res Function(_$CheckVideoInfoImpl) then) =
       __$$CheckVideoInfoImplCopyWithImpl<$Res>;
+  @override
   @useResult
-  $Res call({String id});
+  $Res call({String id, String profileName});
 }
 
 /// @nodoc
@@ -538,11 +648,16 @@ class __$$CheckVideoInfoImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? profileName = null,
   }) {
     return _then(_$CheckVideoInfoImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      profileName: null == profileName
+          ? _value.profileName
+          : profileName // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -551,14 +666,17 @@ class __$$CheckVideoInfoImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$CheckVideoInfoImpl implements CheckVideoInfo {
-  const _$CheckVideoInfoImpl({required this.id});
+  const _$CheckVideoInfoImpl({required this.id, this.profileName = 'default'});
 
   @override
   final String id;
+  @override
+  @JsonKey()
+  final String profileName;
 
   @override
   String toString() {
-    return 'SavedEvent.checkVideoInfo(id: $id)';
+    return 'SavedEvent.checkVideoInfo(id: $id, profileName: $profileName)';
   }
 
   @override
@@ -566,11 +684,13 @@ class _$CheckVideoInfoImpl implements CheckVideoInfo {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CheckVideoInfoImpl &&
-            (identical(other.id, id) || other.id == id));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.profileName, profileName) ||
+                other.profileName == profileName));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id);
+  int get hashCode => Object.hash(runtimeType, id, profileName);
 
   /// Create a copy of SavedEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -584,36 +704,39 @@ class _$CheckVideoInfoImpl implements CheckVideoInfo {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(LocalStoreVideoInfo videoInfo) addVideoInfo,
-    required TResult Function(String id) deleteVideoInfo,
-    required TResult Function() getAllVideoInfoList,
-    required TResult Function(String id) checkVideoInfo,
+    required TResult Function(LocalStoreVideoInfo videoInfo, String profileName)
+        addVideoInfo,
+    required TResult Function(String id, String profileName) deleteVideoInfo,
+    required TResult Function(String profileName) getAllVideoInfoList,
+    required TResult Function(String id, String profileName) checkVideoInfo,
   }) {
-    return checkVideoInfo(id);
+    return checkVideoInfo(id, profileName);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(LocalStoreVideoInfo videoInfo)? addVideoInfo,
-    TResult? Function(String id)? deleteVideoInfo,
-    TResult? Function()? getAllVideoInfoList,
-    TResult? Function(String id)? checkVideoInfo,
+    TResult? Function(LocalStoreVideoInfo videoInfo, String profileName)?
+        addVideoInfo,
+    TResult? Function(String id, String profileName)? deleteVideoInfo,
+    TResult? Function(String profileName)? getAllVideoInfoList,
+    TResult? Function(String id, String profileName)? checkVideoInfo,
   }) {
-    return checkVideoInfo?.call(id);
+    return checkVideoInfo?.call(id, profileName);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(LocalStoreVideoInfo videoInfo)? addVideoInfo,
-    TResult Function(String id)? deleteVideoInfo,
-    TResult Function()? getAllVideoInfoList,
-    TResult Function(String id)? checkVideoInfo,
+    TResult Function(LocalStoreVideoInfo videoInfo, String profileName)?
+        addVideoInfo,
+    TResult Function(String id, String profileName)? deleteVideoInfo,
+    TResult Function(String profileName)? getAllVideoInfoList,
+    TResult Function(String id, String profileName)? checkVideoInfo,
     required TResult orElse(),
   }) {
     if (checkVideoInfo != null) {
-      return checkVideoInfo(id);
+      return checkVideoInfo(id, profileName);
     }
     return orElse();
   }
@@ -657,13 +780,17 @@ class _$CheckVideoInfoImpl implements CheckVideoInfo {
 }
 
 abstract class CheckVideoInfo implements SavedEvent {
-  const factory CheckVideoInfo({required final String id}) =
-      _$CheckVideoInfoImpl;
+  const factory CheckVideoInfo(
+      {required final String id,
+      final String profileName}) = _$CheckVideoInfoImpl;
 
   String get id;
+  @override
+  String get profileName;
 
   /// Create a copy of SavedEvent
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CheckVideoInfoImplCopyWith<_$CheckVideoInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;

@@ -63,7 +63,9 @@ class _InvidiousScreenWatchState extends State<InvidiousScreenWatch> {
           previous.defaultQuality != current.defaultQuality ||
           previous.isHlsPlayer != current.isHlsPlayer ||
           previous.isPipDisabled != current.isPipDisabled ||
-          previous.isHideRelated != current.isHideRelated,
+          previous.isHideRelated != current.isHideRelated ||
+          previous.videoFitMode != current.videoFitMode ||
+          previous.skipInterval != current.skipInterval,
       builder: (context, settingsState) {
         return BlocBuilder<WatchBloc, WatchState>(
           buildWhen: (previous, current) =>
@@ -177,6 +179,9 @@ class _InvidiousScreenWatchState extends State<InvidiousScreenWatch> {
                                                         ApiStatus.loading
                                                     ? []
                                                     : state.subtitles,
+                                                videoFitMode: settingsState.videoFitMode,
+                                                skipInterval: settingsState.skipInterval,
+                                                isAudioFocusEnabled: settingsState.isAudioFocusEnabled,
                                               ),
                                 Padding(
                                   padding: const EdgeInsets.only(

@@ -31,6 +31,11 @@ const SubscribeSchema = CollectionSchema(
       id: 2,
       name: r'isVerified',
       type: IsarType.bool,
+    ),
+    r'profileName': PropertySchema(
+      id: 3,
+      name: r'profileName',
+      type: IsarType.string,
     )
   },
   estimateSize: _subscribeEstimateSize,
@@ -38,7 +43,21 @@ const SubscribeSchema = CollectionSchema(
   deserialize: _subscribeDeserialize,
   deserializeProp: _subscribeDeserializeProp,
   idName: r'isarId',
-  indexes: {},
+  indexes: {
+    r'profileName': IndexSchema(
+      id: 83478810300269620,
+      name: r'profileName',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'profileName',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
+    )
+  },
   links: {},
   embeddedSchemas: {},
   getId: _subscribeGetId,
@@ -55,6 +74,7 @@ int _subscribeEstimateSize(
   var bytesCount = offsets.last;
   bytesCount += 3 + object.channelName.length * 3;
   bytesCount += 3 + object.id.length * 3;
+  bytesCount += 3 + object.profileName.length * 3;
   return bytesCount;
 }
 
@@ -67,6 +87,7 @@ void _subscribeSerialize(
   writer.writeString(offsets[0], object.channelName);
   writer.writeString(offsets[1], object.id);
   writer.writeBool(offsets[2], object.isVerified);
+  writer.writeString(offsets[3], object.profileName);
 }
 
 Subscribe _subscribeDeserialize(
@@ -79,6 +100,7 @@ Subscribe _subscribeDeserialize(
     channelName: reader.readString(offsets[0]),
     id: reader.readString(offsets[1]),
     isVerified: reader.readBoolOrNull(offsets[2]),
+    profileName: reader.readStringOrNull(offsets[3]) ?? 'default',
   );
   return object;
 }
@@ -96,6 +118,8 @@ P _subscribeDeserializeProp<P>(
       return (reader.readString(offset)) as P;
     case 2:
       return (reader.readBoolOrNull(offset)) as P;
+    case 3:
+      return (reader.readStringOrNull(offset) ?? 'default') as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -188,6 +212,51 @@ extension SubscribeQueryWhere
         upper: upperIsarId,
         includeUpper: includeUpper,
       ));
+    });
+  }
+
+  QueryBuilder<Subscribe, Subscribe, QAfterWhereClause> profileNameEqualTo(
+      String profileName) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'profileName',
+        value: [profileName],
+      ));
+    });
+  }
+
+  QueryBuilder<Subscribe, Subscribe, QAfterWhereClause> profileNameNotEqualTo(
+      String profileName) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'profileName',
+              lower: [],
+              upper: [profileName],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'profileName',
+              lower: [profileName],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'profileName',
+              lower: [profileName],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'profileName',
+              lower: [],
+              upper: [profileName],
+              includeUpper: false,
+            ));
+      }
     });
   }
 }
@@ -537,6 +606,140 @@ extension SubscribeQueryFilter
       ));
     });
   }
+
+  QueryBuilder<Subscribe, Subscribe, QAfterFilterCondition> profileNameEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'profileName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Subscribe, Subscribe, QAfterFilterCondition>
+      profileNameGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'profileName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Subscribe, Subscribe, QAfterFilterCondition> profileNameLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'profileName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Subscribe, Subscribe, QAfterFilterCondition> profileNameBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'profileName',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Subscribe, Subscribe, QAfterFilterCondition>
+      profileNameStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'profileName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Subscribe, Subscribe, QAfterFilterCondition> profileNameEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'profileName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Subscribe, Subscribe, QAfterFilterCondition> profileNameContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'profileName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Subscribe, Subscribe, QAfterFilterCondition> profileNameMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'profileName',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Subscribe, Subscribe, QAfterFilterCondition>
+      profileNameIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'profileName',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Subscribe, Subscribe, QAfterFilterCondition>
+      profileNameIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'profileName',
+        value: '',
+      ));
+    });
+  }
 }
 
 extension SubscribeQueryObject
@@ -579,6 +782,18 @@ extension SubscribeQuerySortBy on QueryBuilder<Subscribe, Subscribe, QSortBy> {
   QueryBuilder<Subscribe, Subscribe, QAfterSortBy> sortByIsVerifiedDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isVerified', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Subscribe, Subscribe, QAfterSortBy> sortByProfileName() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'profileName', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Subscribe, Subscribe, QAfterSortBy> sortByProfileNameDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'profileName', Sort.desc);
     });
   }
 }
@@ -632,6 +847,18 @@ extension SubscribeQuerySortThenBy
       return query.addSortBy(r'isarId', Sort.desc);
     });
   }
+
+  QueryBuilder<Subscribe, Subscribe, QAfterSortBy> thenByProfileName() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'profileName', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Subscribe, Subscribe, QAfterSortBy> thenByProfileNameDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'profileName', Sort.desc);
+    });
+  }
 }
 
 extension SubscribeQueryWhereDistinct
@@ -653,6 +880,13 @@ extension SubscribeQueryWhereDistinct
   QueryBuilder<Subscribe, Subscribe, QDistinct> distinctByIsVerified() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'isVerified');
+    });
+  }
+
+  QueryBuilder<Subscribe, Subscribe, QDistinct> distinctByProfileName(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'profileName', caseSensitive: caseSensitive);
     });
   }
 }
@@ -680,6 +914,12 @@ extension SubscribeQueryProperty
   QueryBuilder<Subscribe, bool?, QQueryOperations> isVerifiedProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isVerified');
+    });
+  }
+
+  QueryBuilder<Subscribe, String, QQueryOperations> profileNameProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'profileName');
     });
   }
 }

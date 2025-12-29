@@ -22,6 +22,9 @@ class ExplodeVideoPlayerWidget extends StatefulWidget {
     this.liveUrl,
     required this.subtitles,
     this.selectedVideoBasicDetails,
+    this.videoFitMode = "contain",
+    this.skipInterval = 10,
+    this.isAudioFocusEnabled = true,
   });
 
   final ExplodeWatchResp watchInfo;
@@ -33,6 +36,9 @@ class ExplodeVideoPlayerWidget extends StatefulWidget {
   final String? liveUrl;
   final List<Map<String, String>> subtitles;
   final VideoBasicInfo? selectedVideoBasicDetails;
+  final String videoFitMode;
+  final int skipInterval;
+  final bool isAudioFocusEnabled;
 
   @override
   State<ExplodeVideoPlayerWidget> createState() => _ExplodeVideoPlayerWidget();
@@ -163,7 +169,7 @@ class _ExplodeVideoPlayerWidget extends State<ExplodeVideoPlayerWidget>
 
     _betterPlayerController = BetterPlayerController(
       BetterPlayerConfiguration(
-          controlsConfiguration: const BetterPlayerControlsConfiguration(
+          controlsConfiguration: BetterPlayerControlsConfiguration(
             controlBarColor: Colors.black26,
             iconsColor: Colors.white,
             playIcon: Icons.play_arrow_outlined,
@@ -174,6 +180,10 @@ class _ExplodeVideoPlayerWidget extends State<ExplodeVideoPlayerWidget>
             overflowModalColor: Colors.black54,
             overflowModalTextColor: Colors.white,
             overflowMenuIconsColor: Colors.white,
+            skipForwardIcon: Icons.forward_10,
+            skipBackIcon: Icons.replay_10,
+            forwardSkipTimeInMilliseconds: widget.skipInterval * 1000,
+            backwardSkipTimeInMilliseconds: widget.skipInterval * 1000,
           ),
           autoPlay: true,
           startAt: Duration(seconds: startPosition),
@@ -181,10 +191,26 @@ class _ExplodeVideoPlayerWidget extends State<ExplodeVideoPlayerWidget>
           allowedScreenSleep: false,
           expandToFill: false,
           autoDispose: true,
-          fit: BoxFit.contain,
-          handleLifecycle: true),
+          fit: _getBoxFit(widget.videoFitMode),
+          handleLifecycle: widget.isAudioFocusEnabled),
       betterPlayerDataSource: betterPlayerDataSource,
     );
+  }
+
+  BoxFit _getBoxFit(String fitMode) {
+    switch (fitMode) {
+      case 'cover':
+        return BoxFit.cover;
+      case 'fill':
+        return BoxFit.fill;
+      case 'fitWidth':
+        return BoxFit.fitWidth;
+      case 'fitHeight':
+        return BoxFit.fitHeight;
+      case 'contain':
+      default:
+        return BoxFit.contain;
+    }
   }
 
   void _showNoVideoAvailableToast() {

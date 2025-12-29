@@ -47,9 +47,6 @@ class SettingsState with _$SettingsState {
     // Profiles
     required String currentProfile,
     required List<String> profiles,
-    // Sync
-    required bool isSyncEnabled,
-    required String? lastSynced,
   }) = _Initial;
 
   factory SettingsState.initialize() => SettingsState(
@@ -89,7 +86,5 @@ class SettingsState with _$SettingsState {
         isAudioFocusEnabled: true,
         currentProfile: 'default',
         profiles: ['default'],
-        isSyncEnabled: false,
-        lastSynced: null,
       );
 }

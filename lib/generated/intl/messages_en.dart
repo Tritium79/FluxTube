@@ -42,8 +42,13 @@ class MessageLookup extends MessageLookupByLibrary {
       "Export or import your subscriptions",
     ),
     "canada": MessageLookupByLibrary.simpleMessage("Canada"),
+    "cannotDeleteDefault": MessageLookupByLibrary.simpleMessage(
+      "Cannot delete default profile",
+    ),
+    "cannotRenameDefault": MessageLookupByLibrary.simpleMessage(
+      "Cannot rename default profile",
+    ),
     "channelSubscribers": m0,
-    "cloudBackup": MessageLookupByLibrary.simpleMessage("Cloud Backup"),
     "commentAuthorNotFound": MessageLookupByLibrary.simpleMessage("Not found"),
     "commonSettingsTitle": MessageLookupByLibrary.simpleMessage("Common"),
     "defaultProfile": MessageLookupByLibrary.simpleMessage("Default"),
@@ -111,9 +116,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "interaction": MessageLookupByLibrary.simpleMessage("Interaction"),
     "intro": MessageLookupByLibrary.simpleMessage("Intro"),
     "language": MessageLookupByLibrary.simpleMessage("Language"),
-    "lastSynced": MessageLookupByLibrary.simpleMessage("Last synced"),
     "musicOfftopic": MessageLookupByLibrary.simpleMessage("Music: Non-Music"),
     "netherlands": MessageLookupByLibrary.simpleMessage("Netherlands"),
+    "newProfileName": MessageLookupByLibrary.simpleMessage("New Profile Name"),
     "noCommentsFound": MessageLookupByLibrary.simpleMessage(
       "No Comments Found",
     ),
@@ -146,8 +151,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Video player engine",
     ),
     "playlist": MessageLookupByLibrary.simpleMessage("Playlist"),
+    "profileInUse": MessageLookupByLibrary.simpleMessage("Active"),
     "profileName": MessageLookupByLibrary.simpleMessage("Profile Name"),
     "profiles": MessageLookupByLibrary.simpleMessage("Profiles"),
+    "profilesDescription": MessageLookupByLibrary.simpleMessage(
+      "Create separate profiles for different accounts or preferences",
+    ),
     "quality1080p": MessageLookupByLibrary.simpleMessage("1080p"),
     "quality1440p": MessageLookupByLibrary.simpleMessage("1440p"),
     "quality144p": MessageLookupByLibrary.simpleMessage("144p"),
@@ -158,6 +167,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "readMoreText": MessageLookupByLibrary.simpleMessage("Read more"),
     "region": MessageLookupByLibrary.simpleMessage("Region"),
     "relatedTitle": MessageLookupByLibrary.simpleMessage("Related"),
+    "renameProfile": MessageLookupByLibrary.simpleMessage("Rename Profile"),
     "repliesPlural": m1,
     "retrieveDislikeCounts": MessageLookupByLibrary.simpleMessage(
       "Retrieve dislike counts",
@@ -203,12 +213,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "switchRegion": MessageLookupByLibrary.simpleMessage(
       "Please consider switching to a different region for better results.",
     ),
-    "syncData": MessageLookupByLibrary.simpleMessage("Sync Data"),
-    "syncDataDescription": MessageLookupByLibrary.simpleMessage(
-      "Sync your data across devices",
-    ),
-    "syncEnabled": MessageLookupByLibrary.simpleMessage("Sync Enabled"),
-    "syncNow": MessageLookupByLibrary.simpleMessage("Sync Now"),
     "theme": MessageLookupByLibrary.simpleMessage("Theme"),
     "themeDark": MessageLookupByLibrary.simpleMessage("Dark"),
     "themeLight": MessageLookupByLibrary.simpleMessage("Light"),

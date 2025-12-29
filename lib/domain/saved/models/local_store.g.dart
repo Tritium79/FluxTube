@@ -48,53 +48,58 @@ const LocalStoreVideoInfoSchema = CollectionSchema(
       name: r'playbackPosition',
       type: IsarType.long,
     ),
-    r'thumbnail': PropertySchema(
+    r'profileName': PropertySchema(
       id: 6,
+      name: r'profileName',
+      type: IsarType.string,
+    ),
+    r'thumbnail': PropertySchema(
+      id: 7,
       name: r'thumbnail',
       type: IsarType.string,
     ),
     r'time': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'time',
       type: IsarType.dateTime,
     ),
     r'title': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'title',
       type: IsarType.string,
     ),
     r'uploadedDate': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'uploadedDate',
       type: IsarType.string,
     ),
     r'uploaderAvatar': PropertySchema(
-      id: 10,
+      id: 11,
       name: r'uploaderAvatar',
       type: IsarType.string,
     ),
     r'uploaderId': PropertySchema(
-      id: 11,
+      id: 12,
       name: r'uploaderId',
       type: IsarType.string,
     ),
     r'uploaderName': PropertySchema(
-      id: 12,
+      id: 13,
       name: r'uploaderName',
       type: IsarType.string,
     ),
     r'uploaderSubscriberCount': PropertySchema(
-      id: 13,
+      id: 14,
       name: r'uploaderSubscriberCount',
       type: IsarType.string,
     ),
     r'uploaderVerified': PropertySchema(
-      id: 14,
+      id: 15,
       name: r'uploaderVerified',
       type: IsarType.bool,
     ),
     r'views': PropertySchema(
-      id: 15,
+      id: 16,
       name: r'views',
       type: IsarType.long,
     )
@@ -104,7 +109,21 @@ const LocalStoreVideoInfoSchema = CollectionSchema(
   deserialize: _localStoreVideoInfoDeserialize,
   deserializeProp: _localStoreVideoInfoDeserializeProp,
   idName: r'isarId',
-  indexes: {},
+  indexes: {
+    r'profileName': IndexSchema(
+      id: 83478810300269620,
+      name: r'profileName',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'profileName',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
+    )
+  },
   links: {},
   embeddedSchemas: {},
   getId: _localStoreVideoInfoGetId,
@@ -120,6 +139,7 @@ int _localStoreVideoInfoEstimateSize(
 ) {
   var bytesCount = offsets.last;
   bytesCount += 3 + object.id.length * 3;
+  bytesCount += 3 + object.profileName.length * 3;
   {
     final value = object.thumbnail;
     if (value != null) {
@@ -177,16 +197,17 @@ void _localStoreVideoInfoSerialize(
   writer.writeBool(offsets[3], object.isLive);
   writer.writeBool(offsets[4], object.isSaved);
   writer.writeLong(offsets[5], object.playbackPosition);
-  writer.writeString(offsets[6], object.thumbnail);
-  writer.writeDateTime(offsets[7], object.time);
-  writer.writeString(offsets[8], object.title);
-  writer.writeString(offsets[9], object.uploadedDate);
-  writer.writeString(offsets[10], object.uploaderAvatar);
-  writer.writeString(offsets[11], object.uploaderId);
-  writer.writeString(offsets[12], object.uploaderName);
-  writer.writeString(offsets[13], object.uploaderSubscriberCount);
-  writer.writeBool(offsets[14], object.uploaderVerified);
-  writer.writeLong(offsets[15], object.views);
+  writer.writeString(offsets[6], object.profileName);
+  writer.writeString(offsets[7], object.thumbnail);
+  writer.writeDateTime(offsets[8], object.time);
+  writer.writeString(offsets[9], object.title);
+  writer.writeString(offsets[10], object.uploadedDate);
+  writer.writeString(offsets[11], object.uploaderAvatar);
+  writer.writeString(offsets[12], object.uploaderId);
+  writer.writeString(offsets[13], object.uploaderName);
+  writer.writeString(offsets[14], object.uploaderSubscriberCount);
+  writer.writeBool(offsets[15], object.uploaderVerified);
+  writer.writeLong(offsets[16], object.views);
 }
 
 LocalStoreVideoInfo _localStoreVideoInfoDeserialize(
@@ -202,16 +223,17 @@ LocalStoreVideoInfo _localStoreVideoInfoDeserialize(
     isLive: reader.readBoolOrNull(offsets[3]),
     isSaved: reader.readBoolOrNull(offsets[4]),
     playbackPosition: reader.readLongOrNull(offsets[5]),
-    thumbnail: reader.readStringOrNull(offsets[6]),
-    time: reader.readDateTimeOrNull(offsets[7]),
-    title: reader.readStringOrNull(offsets[8]),
-    uploadedDate: reader.readStringOrNull(offsets[9]),
-    uploaderAvatar: reader.readStringOrNull(offsets[10]),
-    uploaderId: reader.readStringOrNull(offsets[11]),
-    uploaderName: reader.readStringOrNull(offsets[12]),
-    uploaderSubscriberCount: reader.readStringOrNull(offsets[13]),
-    uploaderVerified: reader.readBoolOrNull(offsets[14]),
-    views: reader.readLongOrNull(offsets[15]),
+    profileName: reader.readStringOrNull(offsets[6]) ?? 'default',
+    thumbnail: reader.readStringOrNull(offsets[7]),
+    time: reader.readDateTimeOrNull(offsets[8]),
+    title: reader.readStringOrNull(offsets[9]),
+    uploadedDate: reader.readStringOrNull(offsets[10]),
+    uploaderAvatar: reader.readStringOrNull(offsets[11]),
+    uploaderId: reader.readStringOrNull(offsets[12]),
+    uploaderName: reader.readStringOrNull(offsets[13]),
+    uploaderSubscriberCount: reader.readStringOrNull(offsets[14]),
+    uploaderVerified: reader.readBoolOrNull(offsets[15]),
+    views: reader.readLongOrNull(offsets[16]),
   );
   return object;
 }
@@ -236,11 +258,11 @@ P _localStoreVideoInfoDeserializeProp<P>(
     case 5:
       return (reader.readLongOrNull(offset)) as P;
     case 6:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readStringOrNull(offset) ?? 'default') as P;
     case 7:
-      return (reader.readDateTimeOrNull(offset)) as P;
-    case 8:
       return (reader.readStringOrNull(offset)) as P;
+    case 8:
+      return (reader.readDateTimeOrNull(offset)) as P;
     case 9:
       return (reader.readStringOrNull(offset)) as P;
     case 10:
@@ -252,8 +274,10 @@ P _localStoreVideoInfoDeserializeProp<P>(
     case 13:
       return (reader.readStringOrNull(offset)) as P;
     case 14:
-      return (reader.readBoolOrNull(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 15:
+      return (reader.readBoolOrNull(offset)) as P;
+    case 16:
       return (reader.readLongOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -349,6 +373,51 @@ extension LocalStoreVideoInfoQueryWhere
         upper: upperIsarId,
         includeUpper: includeUpper,
       ));
+    });
+  }
+
+  QueryBuilder<LocalStoreVideoInfo, LocalStoreVideoInfo, QAfterWhereClause>
+      profileNameEqualTo(String profileName) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'profileName',
+        value: [profileName],
+      ));
+    });
+  }
+
+  QueryBuilder<LocalStoreVideoInfo, LocalStoreVideoInfo, QAfterWhereClause>
+      profileNameNotEqualTo(String profileName) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'profileName',
+              lower: [],
+              upper: [profileName],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'profileName',
+              lower: [profileName],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'profileName',
+              lower: [profileName],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'profileName',
+              lower: [],
+              upper: [profileName],
+              includeUpper: false,
+            ));
+      }
     });
   }
 }
@@ -775,6 +844,142 @@ extension LocalStoreVideoInfoQueryFilter on QueryBuilder<LocalStoreVideoInfo,
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<LocalStoreVideoInfo, LocalStoreVideoInfo, QAfterFilterCondition>
+      profileNameEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'profileName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<LocalStoreVideoInfo, LocalStoreVideoInfo, QAfterFilterCondition>
+      profileNameGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'profileName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<LocalStoreVideoInfo, LocalStoreVideoInfo, QAfterFilterCondition>
+      profileNameLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'profileName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<LocalStoreVideoInfo, LocalStoreVideoInfo, QAfterFilterCondition>
+      profileNameBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'profileName',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<LocalStoreVideoInfo, LocalStoreVideoInfo, QAfterFilterCondition>
+      profileNameStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'profileName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<LocalStoreVideoInfo, LocalStoreVideoInfo, QAfterFilterCondition>
+      profileNameEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'profileName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<LocalStoreVideoInfo, LocalStoreVideoInfo, QAfterFilterCondition>
+      profileNameContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'profileName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<LocalStoreVideoInfo, LocalStoreVideoInfo, QAfterFilterCondition>
+      profileNameMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'profileName',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<LocalStoreVideoInfo, LocalStoreVideoInfo, QAfterFilterCondition>
+      profileNameIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'profileName',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<LocalStoreVideoInfo, LocalStoreVideoInfo, QAfterFilterCondition>
+      profileNameIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'profileName',
+        value: '',
       ));
     });
   }
@@ -2129,6 +2334,20 @@ extension LocalStoreVideoInfoQuerySortBy
   }
 
   QueryBuilder<LocalStoreVideoInfo, LocalStoreVideoInfo, QAfterSortBy>
+      sortByProfileName() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'profileName', Sort.asc);
+    });
+  }
+
+  QueryBuilder<LocalStoreVideoInfo, LocalStoreVideoInfo, QAfterSortBy>
+      sortByProfileNameDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'profileName', Sort.desc);
+    });
+  }
+
+  QueryBuilder<LocalStoreVideoInfo, LocalStoreVideoInfo, QAfterSortBy>
       sortByThumbnail() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'thumbnail', Sort.asc);
@@ -2370,6 +2589,20 @@ extension LocalStoreVideoInfoQuerySortThenBy
   }
 
   QueryBuilder<LocalStoreVideoInfo, LocalStoreVideoInfo, QAfterSortBy>
+      thenByProfileName() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'profileName', Sort.asc);
+    });
+  }
+
+  QueryBuilder<LocalStoreVideoInfo, LocalStoreVideoInfo, QAfterSortBy>
+      thenByProfileNameDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'profileName', Sort.desc);
+    });
+  }
+
+  QueryBuilder<LocalStoreVideoInfo, LocalStoreVideoInfo, QAfterSortBy>
       thenByThumbnail() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'thumbnail', Sort.asc);
@@ -2555,6 +2788,13 @@ extension LocalStoreVideoInfoQueryWhereDistinct
   }
 
   QueryBuilder<LocalStoreVideoInfo, LocalStoreVideoInfo, QDistinct>
+      distinctByProfileName({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'profileName', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<LocalStoreVideoInfo, LocalStoreVideoInfo, QDistinct>
       distinctByThumbnail({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'thumbnail', caseSensitive: caseSensitive);
@@ -2670,6 +2910,13 @@ extension LocalStoreVideoInfoQueryProperty
       playbackPositionProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'playbackPosition');
+    });
+  }
+
+  QueryBuilder<LocalStoreVideoInfo, String, QQueryOperations>
+      profileNameProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'profileName');
     });
   }
 

@@ -554,6 +554,16 @@ class S {
     return Intl.message('Profiles', name: 'profiles', desc: '', args: []);
   }
 
+  /// `Create separate profiles for different accounts or preferences`
+  String get profilesDescription {
+    return Intl.message(
+      'Create separate profiles for different accounts or preferences',
+      name: 'profilesDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Add Profile`
   String get addProfile {
     return Intl.message('Add Profile', name: 'addProfile', desc: '', args: []);
@@ -564,6 +574,16 @@ class S {
     return Intl.message(
       'Delete Profile',
       name: 'deleteProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rename Profile`
+  String get renameProfile {
+    return Intl.message(
+      'Rename Profile',
+      name: 'renameProfile',
       desc: '',
       args: [],
     );
@@ -589,51 +609,41 @@ class S {
     );
   }
 
+  /// `New Profile Name`
+  String get newProfileName {
+    return Intl.message(
+      'New Profile Name',
+      name: 'newProfileName',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Default`
   String get defaultProfile {
     return Intl.message('Default', name: 'defaultProfile', desc: '', args: []);
   }
 
-  /// `Sync Data`
-  String get syncData {
-    return Intl.message('Sync Data', name: 'syncData', desc: '', args: []);
+  /// `Active`
+  String get profileInUse {
+    return Intl.message('Active', name: 'profileInUse', desc: '', args: []);
   }
 
-  /// `Sync your data across devices`
-  String get syncDataDescription {
+  /// `Cannot delete default profile`
+  String get cannotDeleteDefault {
     return Intl.message(
-      'Sync your data across devices',
-      name: 'syncDataDescription',
+      'Cannot delete default profile',
+      name: 'cannotDeleteDefault',
       desc: '',
       args: [],
     );
   }
 
-  /// `Sync Now`
-  String get syncNow {
-    return Intl.message('Sync Now', name: 'syncNow', desc: '', args: []);
-  }
-
-  /// `Last synced`
-  String get lastSynced {
-    return Intl.message('Last synced', name: 'lastSynced', desc: '', args: []);
-  }
-
-  /// `Sync Enabled`
-  String get syncEnabled {
+  /// `Cannot rename default profile`
+  String get cannotRenameDefault {
     return Intl.message(
-      'Sync Enabled',
-      name: 'syncEnabled',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Cloud Backup`
-  String get cloudBackup {
-    return Intl.message(
-      'Cloud Backup',
-      name: 'cloudBackup',
+      'Cannot rename default profile',
+      name: 'cannotRenameDefault',
       desc: '',
       args: [],
     );

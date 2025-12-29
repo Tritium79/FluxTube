@@ -83,8 +83,8 @@ class ScreenChannel extends StatelessWidget {
                           // style: ButtonStyle(
                           //     backgroundColor:
                           //         WidgetStatePropertyAll(kGreyOpacityColor)),
-                          onPressed: () async => await urlLaunch(
-                              state.invidiousChannelResp!.authorUrl!),
+                          onPressed: () async => await urlLaunchWithSettings(
+                              context, state.invidiousChannelResp!.authorUrl!),
                           icon: SvgPicture.asset(
                             'assets/icons/youtube.svg',
                             height: 25,
@@ -160,7 +160,7 @@ class ScreenChannel extends StatelessWidget {
                         //     backgroundColor:
                         //         WidgetStatePropertyAll(kGreyOpacityColor)),
                         onPressed: () async =>
-                            await urlLaunch('$kYTChannelUrl${channelInfo.id}'),
+                            await urlLaunchWithSettings(context, '$kYTChannelUrl${channelInfo.id}'),
                         icon: SvgPicture.asset(
                           'assets/icons/youtube.svg',
                           height: 25,

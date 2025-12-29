@@ -11,12 +11,17 @@ part 'subscribe.g.dart';
 @Collection()
 class Subscribe {
   late String id;
-  Id get isarId => fastHash(id);
+  // Use composite key: id + profileName for unique identification per profile
+  @Index(unique: true, composite: [CompositeIndex('profileName')])
+  Id get isarId => fastHash('${id}_$profileName');
   late String channelName;
   late bool? isVerified;
+  @Index()
+  String profileName;
   Subscribe({
     required this.id,
     required this.channelName,
     this.isVerified,
+    this.profileName = 'default',
   });
 }

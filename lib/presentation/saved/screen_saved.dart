@@ -15,8 +15,9 @@ class ScreenSaved extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final locals = S.of(context);
+    final currentProfile = context.read<SettingsBloc>().state.currentProfile;
     BlocProvider.of<SavedBloc>(context)
-        .add(const SavedEvent.getAllVideoInfoList());
+        .add(SavedEvent.getAllVideoInfoList(profileName: currentProfile));
     return SafeArea(
         child: NestedScrollView(
             headerSliverBuilder: (context, innerBoxIsScrolled) => [

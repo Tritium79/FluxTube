@@ -598,28 +598,35 @@ class SettingImpl implements SettingsService {
     );
   }
 
-  // Sync methods
   @override
-  Future<Either<MainFailure, bool>> toggleSync({required bool isEnabled}) async {
-    return _setSetting(
-      settingName: syncEnabledKey,
-      value: isEnabled,
-      toStringValue: (v) => v.toString(),
-    );
-  }
-
-  @override
-  Future<Either<MainFailure, String>> syncNow() async {
+  Future<Either<MainFailure, List<String>>> renameProfile({required String oldName, required String newName}) async {
     try {
-      // For now, just update the last synced timestamp
-      // In a full implementation, this would sync with a cloud service
-      final timestamp = DateTime.now().toIso8601String();
-      await _setSetting(
-        settingName: lastSyncedKey,
-        value: timestamp,
-        toStringValue: (v) => v,
+      if (oldName == 'default') {
+        return const Left(MainFailure.serverFailure()); // Cannot rename default profile
+      }
+      if (oldName == newName) {
+        final profiles = await getProfiles();
+        return profiles;
+      }
+      final currentProfiles = await getProfiles();
+      return currentProfiles.fold(
+        (failure) => Left(failure),
+        (profiles) async {
+          if (!profiles.contains(oldName)) {
+            return Right(profiles); // Profile doesn't exist
+          }
+          if (profiles.contains(newName)) {
+            return Right(profiles); // New name already exists
+          }
+          final newProfiles = profiles.map((p) => p == oldName ? newName : p).toList();
+          await _setSetting(
+            settingName: profilesListKey,
+            value: newProfiles,
+            toStringValue: (v) => v.join(','),
+          );
+          return Right(newProfiles);
+        },
       );
-      return Right(timestamp);
     } catch (e) {
       return const Left(MainFailure.serverFailure());
     }

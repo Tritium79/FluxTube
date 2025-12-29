@@ -4,7 +4,6 @@ import 'package:fluxtube/domain/subscribes/subscribe_services.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../core/operations/math_operations.dart';
 import '../../domain/core/failure/main_failure.dart';
 import '../../domain/subscribes/models/subscribe.dart';
 
@@ -23,7 +22,8 @@ class SubscribeBloc extends Bloc<SubscribeEvent, SubscribeState> {
       emit(state.copyWith(
           subscribeStatus: ApiStatus.loading, subscribedChannels: []));
 
-      final _result = await _subscribeServices.getSubscriberInfoList();
+      final _result = await _subscribeServices.getSubscriberInfoList(
+          profileName: event.profileName);
       final _state = _result.fold(
           (MainFailure f) => state.copyWith(subscribeStatus: ApiStatus.error),
           (List<Subscribe> resp) {
@@ -49,39 +49,39 @@ class SubscribeBloc extends Bloc<SubscribeEvent, SubscribeState> {
       emit(state.copyWith(subscribeStatus: ApiStatus.loading));
 
       final _result = await _subscribeServices.addSubscriberInfo(
-          subscribeInfo: event.channelInfo);
+          subscribeInfo: event.channelInfo, profileName: event.profileName);
       final _state = _result.fold(
           (MainFailure f) => state.copyWith(subscribeStatus: ApiStatus.error),
           (List<Subscribe> resp) => state.copyWith(
               subscribeStatus: ApiStatus.loaded, subscribedChannels: resp));
 
       emit(_state);
-      add(CheckSubscribeInfo(id: event.channelInfo.id));
-      add(const GetAllSubscribeList());
+      add(CheckSubscribeInfo(id: event.channelInfo.id, profileName: event.profileName));
+      add(GetAllSubscribeList(profileName: event.profileName));
     });
 
     // delete channel data from local storage
     on<DeleteSubscribeInfo>((event, emit) async {
       emit(state.copyWith(subscribeStatus: ApiStatus.loading));
 
-      final _result =
-          await _subscribeServices.deleteSubscriberInfo(id: fastHash(event.id));
+      final _result = await _subscribeServices.deleteSubscriberInfo(
+          id: event.id, profileName: event.profileName);
       final _state = _result.fold(
           (MainFailure f) => state.copyWith(subscribeStatus: ApiStatus.error),
           (List<Subscribe> resp) => state.copyWith(
               subscribeStatus: ApiStatus.loaded, subscribedChannels: resp));
 
       emit(_state);
-      add(const GetAllSubscribeList());
-      add(CheckSubscribeInfo(id: event.id));
+      add(GetAllSubscribeList(profileName: event.profileName));
+      add(CheckSubscribeInfo(id: event.id, profileName: event.profileName));
     });
 
     // check the playing video's channel present in the subscribed list
     on<CheckSubscribeInfo>((event, emit) async {
       emit(state.copyWith(channelInfo: null));
 
-      final _result =
-          await _subscribeServices.checkSubscriberInfo(id: event.id);
+      final _result = await _subscribeServices.checkSubscriberInfo(
+          id: event.id, profileName: event.profileName);
       final _state = _result.fold(
           (MainFailure f) => state.copyWith(channelInfo: null),
           (Subscribe resp) => state.copyWith(channelInfo: resp));

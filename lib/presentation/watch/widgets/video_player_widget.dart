@@ -2,6 +2,7 @@ import 'package:better_player_plus/better_player_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:fluxtube/application/settings/settings_bloc.dart';
 import 'package:fluxtube/application/watch/watch_bloc.dart';
 import 'package:fluxtube/domain/watch/models/piped/video/video_stream.dart';
 import 'package:fluxtube/domain/watch/models/piped/video/watch_resp.dart';
@@ -20,6 +21,9 @@ class VideoPlayerWidget extends StatefulWidget {
     this.isSaved = false,
     this.isHlsPlayer = false,
     required this.subtitles,
+    this.videoFitMode = "contain",
+    this.skipInterval = 10,
+    this.isAudioFocusEnabled = true,
   });
 
   final WatchResp watchInfo;
@@ -29,6 +33,9 @@ class VideoPlayerWidget extends StatefulWidget {
   final bool isSaved;
   final bool isHlsPlayer;
   final List<Map<String, String>> subtitles;
+  final String videoFitMode;
+  final int skipInterval;
+  final bool isAudioFocusEnabled;
 
   @override
   State<VideoPlayerWidget> createState() => _VideoPlayerWidgetState();
@@ -160,7 +167,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
 
     _betterPlayerController = BetterPlayerController(
       BetterPlayerConfiguration(
-        controlsConfiguration: const BetterPlayerControlsConfiguration(
+        controlsConfiguration: BetterPlayerControlsConfiguration(
           controlBarColor: Colors.black26,
           iconsColor: Colors.white,
           playIcon: Icons.play_arrow_outlined,
@@ -171,6 +178,10 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
           overflowModalColor: Colors.black54,
           overflowModalTextColor: Colors.white,
           overflowMenuIconsColor: Colors.white,
+          skipForwardIcon: Icons.forward_10,
+          skipBackIcon: Icons.replay_10,
+          forwardSkipTimeInMilliseconds: widget.skipInterval * 1000,
+          backwardSkipTimeInMilliseconds: widget.skipInterval * 1000,
         ),
         autoPlay: true,
         startAt: Duration(seconds: startPosition),
@@ -178,7 +189,8 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
         allowedScreenSleep: false,
         expandToFill: false,
         autoDispose: true,
-        fit: BoxFit.contain,
+        fit: _getBoxFit(widget.videoFitMode),
+        handleLifecycle: widget.isAudioFocusEnabled,
       ),
       betterPlayerDataSource: betterPlayerDataSource,
     );
@@ -208,6 +220,22 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
             );
           }).toList()
         : null;
+  }
+
+  BoxFit _getBoxFit(String fitMode) {
+    switch (fitMode) {
+      case 'cover':
+        return BoxFit.cover;
+      case 'fill':
+        return BoxFit.fill;
+      case 'fitWidth':
+        return BoxFit.fitWidth;
+      case 'fitHeight':
+        return BoxFit.fitHeight;
+      case 'contain':
+      default:
+        return BoxFit.contain;
+    }
   }
 
   void _updateVideoHistory() async {

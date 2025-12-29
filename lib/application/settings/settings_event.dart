@@ -44,9 +44,8 @@ class SettingsEvent with _$SettingsEvent {
       DeleteProfile;
   factory SettingsEvent.switchProfile({required String profileName}) =
       SwitchProfile;
-  // Sync events
-  factory SettingsEvent.toggleSync() = ToggleSync;
-  factory SettingsEvent.syncNow() = SyncNow;
+  factory SettingsEvent.renameProfile({required String oldName, required String newName}) =
+      RenameProfile;
   // Import/Export events
   factory SettingsEvent.exportSubscriptions() = ExportSubscriptions;
   factory SettingsEvent.importSubscriptions({required String filePath}) =

@@ -498,12 +498,11 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       emit(_state);
     });
 
-    on<ToggleHideFeed>((event, emit) async {
-      final _result = await settingsService.toggleHideFeed(
-          isHideFeed: !state.isHideFeed);
+    on<SetHomeFeedMode>((event, emit) async {
+      final _result = await settingsService.setHomeFeedMode(mode: event.mode);
       final _state = _result.fold(
-          (MainFailure f) => state.copyWith(isHideFeed: state.isHideFeed),
-          (bool isHideFeed) => state.copyWith(isHideFeed: isHideFeed));
+          (MainFailure f) => state.copyWith(homeFeedMode: state.homeFeedMode),
+          (String mode) => state.copyWith(homeFeedMode: mode));
       emit(_state);
     });
 

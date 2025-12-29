@@ -23,7 +23,8 @@ class ScreenHome extends StatelessWidget {
     return BlocBuilder<SettingsBloc, SettingsState>(
       buildWhen: (previous, current) =>
           previous.ytService != current.ytService ||
-          previous.defaultRegion != current.defaultRegion,
+          previous.defaultRegion != current.defaultRegion ||
+          previous.homeFeedMode != current.homeFeedMode,
       builder: (context, settingsState) {
         return SafeArea(
           child: NestedScrollView(
@@ -92,6 +93,9 @@ class ScreenHome extends StatelessWidget {
       SubscribeState subscribeState,
       TrendingBloc trendingBloc,
       SettingsState settingsState) {
+    final homeFeedMode = settingsState.homeFeedMode;
+
+    // Always fetch trending data if not available
     if (trendingState.trendingResult.isEmpty &&
         !(trendingState.fetchTrendingStatus == ApiStatus.error)) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -106,13 +110,40 @@ class ScreenHome extends StatelessWidget {
       return _buildLoadingList();
     }
 
+    // Trending Only mode - always show trending
+    if (homeFeedMode == HomeFeedMode.trendingOnly.name) {
+      return _buildErrorOrTrendingSection(
+        context,
+        trendingState,
+        locals,
+        settingsState,
+      );
+    }
+
+    // Feed Only mode - show feed or empty state
+    if (homeFeedMode == HomeFeedMode.feedOnly.name) {
+      if (trendingState.fetchFeedStatus == ApiStatus.loading) {
+        return _buildLoadingList();
+      }
+      if (trendingState.feedResult.isEmpty) {
+        return _buildEmptySubscriptionState(context, locals);
+      }
+      return _buildFeedSection(
+        trendingState,
+        locals,
+        subscribeState,
+        trendingBloc,
+      );
+    }
+
+    // Auto mode (feedOrTrending) - show feed if available, otherwise trending
     if (trendingState.fetchFeedStatus == ApiStatus.loading) {
       return _buildLoadingList();
     }
 
     if (trendingState.feedResult.isEmpty ||
         trendingState.fetchFeedStatus == ApiStatus.error) {
-      log("Feed Error");
+      log("Feed Error or empty - showing trending");
       return _buildErrorOrTrendingSection(
         context,
         trendingState,
@@ -137,6 +168,9 @@ class ScreenHome extends StatelessWidget {
     TrendingBloc trendingBloc,
     SettingsState settingsState,
   ) {
+    final homeFeedMode = settingsState.homeFeedMode;
+
+    // Always fetch trending data if not available
     if (trendingState.invidiousTrendingResult.isEmpty &&
         !(trendingState.fetchInvidiousTrendingStatus == ApiStatus.error)) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -151,6 +185,33 @@ class ScreenHome extends StatelessWidget {
       return _buildLoadingList();
     }
 
+    // Trending Only mode - always show trending
+    if (homeFeedMode == HomeFeedMode.trendingOnly.name) {
+      return _buildErrorOrTrendingSection(
+        context,
+        trendingState,
+        locals,
+        settingsState,
+      );
+    }
+
+    // Feed Only mode - show feed or empty state
+    if (homeFeedMode == HomeFeedMode.feedOnly.name) {
+      if (trendingState.fetchFeedStatus == ApiStatus.loading) {
+        return _buildLoadingList();
+      }
+      if (trendingState.feedResult.isEmpty) {
+        return _buildEmptySubscriptionState(context, locals);
+      }
+      return _buildFeedSection(
+        trendingState,
+        locals,
+        subscribeState,
+        trendingBloc,
+      );
+    }
+
+    // Auto mode (feedOrTrending) - show feed if available, otherwise trending
     if (trendingState.fetchFeedStatus == ApiStatus.loading) {
       return _buildLoadingList();
     }
@@ -244,6 +305,38 @@ class ScreenHome extends StatelessWidget {
         trendingState: trendingState,
         locals: locals,
         subscribeState: subscribeState,
+      ),
+    );
+  }
+
+  Widget _buildEmptySubscriptionState(BuildContext context, S locals) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(32.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.subscriptions_outlined,
+              size: 64,
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5),
+            ),
+            kHeightBox20,
+            Text(
+              locals.noSubscriptions,
+              style: Theme.of(context).textTheme.titleMedium,
+              textAlign: TextAlign.center,
+            ),
+            kHeightBox10,
+            Text(
+              locals.noSubscriptionsHint,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
+                  ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
       ),
     );
   }

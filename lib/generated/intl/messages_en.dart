@@ -75,10 +75,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "hideCommentsButtonFromWatchScreen": MessageLookupByLibrary.simpleMessage(
       "Hide comments button from watch screen.",
     ),
-    "hideFeed": MessageLookupByLibrary.simpleMessage("Hide Feed"),
-    "hideFeedDescription": MessageLookupByLibrary.simpleMessage(
-      "Hide the home feed",
-    ),
     "hideRelated": MessageLookupByLibrary.simpleMessage("Hide Related"),
     "hideRelatedVideosFromWatchScreen": MessageLookupByLibrary.simpleMessage(
       "Hide related videos from watch screen",
@@ -86,6 +82,23 @@ class MessageLookup extends MessageLookupByLibrary {
     "history": MessageLookupByLibrary.simpleMessage("History"),
     "hlsPlayer": MessageLookupByLibrary.simpleMessage("Hls Player"),
     "home": MessageLookupByLibrary.simpleMessage("Home"),
+    "homeFeedMode": MessageLookupByLibrary.simpleMessage("Home Feed"),
+    "homeFeedModeAuto": MessageLookupByLibrary.simpleMessage("Auto"),
+    "homeFeedModeAutoHint": MessageLookupByLibrary.simpleMessage(
+      "Show subscriptions if available, otherwise trending",
+    ),
+    "homeFeedModeFeedOnly": MessageLookupByLibrary.simpleMessage(
+      "Subscriptions",
+    ),
+    "homeFeedModeFeedOnlyHint": MessageLookupByLibrary.simpleMessage(
+      "Only show videos from subscribed channels",
+    ),
+    "homeFeedModeTrendingOnly": MessageLookupByLibrary.simpleMessage(
+      "Trending",
+    ),
+    "homeFeedModeTrendingOnlyHint": MessageLookupByLibrary.simpleMessage(
+      "Always show trending videos only",
+    ),
     "importData": MessageLookupByLibrary.simpleMessage("Import Data"),
     "importError": MessageLookupByLibrary.simpleMessage("Import failed"),
     "importSubscriptions": MessageLookupByLibrary.simpleMessage(
@@ -103,6 +116,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "netherlands": MessageLookupByLibrary.simpleMessage("Netherlands"),
     "noCommentsFound": MessageLookupByLibrary.simpleMessage(
       "No Comments Found",
+    ),
+    "noSubscriptions": MessageLookupByLibrary.simpleMessage("No Subscriptions"),
+    "noSubscriptionsHint": MessageLookupByLibrary.simpleMessage(
+      "Subscribe to channels to see their videos here",
     ),
     "noUploadDate": MessageLookupByLibrary.simpleMessage("No date"),
     "noUploaderName": MessageLookupByLibrary.simpleMessage("No name"),

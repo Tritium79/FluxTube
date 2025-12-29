@@ -52,7 +52,7 @@ abstract class SettingsService {
       {required List<String> categories});
   Future<Either<MainFailure, bool>> toggleOpenLinksInBrowser(
       {required bool openInBrowser});
-  Future<Either<MainFailure, bool>> toggleHideFeed({required bool isHideFeed});
+  Future<Either<MainFailure, String>> setHomeFeedMode({required String mode});
   Future<Either<MainFailure, bool>> toggleAudioFocus({required bool isEnabled});
   // Profile methods
   Future<Either<MainFailure, List<String>>> addProfile({required String profileName});

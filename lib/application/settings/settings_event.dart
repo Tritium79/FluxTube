@@ -36,7 +36,7 @@ class SettingsEvent with _$SettingsEvent {
   factory SettingsEvent.setSponsorBlockCategories(
       {required List<String> categories}) = SetSponsorBlockCategories;
   factory SettingsEvent.toggleOpenLinksInBrowser() = ToggleOpenLinksInBrowser;
-  factory SettingsEvent.toggleHideFeed() = ToggleHideFeed;
+  factory SettingsEvent.setHomeFeedMode({required String mode}) = SetHomeFeedMode;
   factory SettingsEvent.toggleAudioFocus() = ToggleAudioFocus;
   // Profile events
   factory SettingsEvent.addProfile({required String profileName}) = AddProfile;

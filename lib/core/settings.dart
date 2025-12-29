@@ -28,8 +28,8 @@ const sponsorBlockCategoriesKey = 'sponsorblock-categories';
 // Open links in browser
 const openLinksInBrowserKey = 'open-links-browser';
 
-// Hide feed
-const feedVisibilityKey = 'feed-visibility';
+// Home feed mode (feedOrTrending, feedOnly, trendingOnly)
+const homeFeedModeKey = 'home-feed-mode';
 
 // Audio focus / pause on interruption
 const audioFocusEnabledKey = 'audio-focus-enabled';

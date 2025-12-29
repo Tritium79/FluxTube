@@ -102,7 +102,12 @@ class SettingImpl implements SettingsService {
       {"name": youtubeService, "default": YouTubeServices.iframe.name},
       {"name": playerTypeKey, "default": PlayerType.betterPlayer.name},
       {"name": pipDisabled, "default": "false"},
-      // Add more settings here
+      {"name": homeFeedModeKey, "default": HomeFeedMode.feedOrTrending.name},
+      {"name": videoFitModeKey, "default": "contain"},
+      {"name": skipIntervalKey, "default": "10"},
+      {"name": openLinksInBrowserKey, "default": "false"},
+      {"name": audioFocusEnabledKey, "default": "true"},
+      {"name": sponsorBlockEnabledKey, "default": "false"},
     ];
 
     // Initialize settings list
@@ -498,11 +503,11 @@ class SettingImpl implements SettingsService {
   }
 
   @override
-  Future<Either<MainFailure, bool>> toggleHideFeed({required bool isHideFeed}) async {
+  Future<Either<MainFailure, String>> setHomeFeedMode({required String mode}) async {
     return _setSetting(
-      settingName: feedVisibilityKey,
-      value: isHideFeed,
-      toStringValue: (v) => v.toString(),
+      settingName: homeFeedModeKey,
+      value: mode,
+      toStringValue: (v) => v,
     );
   }
 

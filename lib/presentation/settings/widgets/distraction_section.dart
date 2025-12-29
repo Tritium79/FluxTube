@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluxtube/application/settings/settings_bloc.dart';
 import 'package:fluxtube/core/constants.dart';
+import 'package:fluxtube/core/enums.dart';
 import 'package:fluxtube/generated/l10n.dart';
 
 class DistractionFreeSettingsSection extends StatelessWidget {
@@ -15,7 +16,7 @@ class DistractionFreeSettingsSection extends StatelessWidget {
       buildWhen: (previous, current) =>
           previous.isHideComments != current.isHideComments ||
           previous.isHideRelated != current.isHideRelated ||
-          previous.isHideFeed != current.isHideFeed,
+          previous.homeFeedMode != current.homeFeedMode,
       builder: (context, state) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,15 +56,32 @@ class DistractionFreeSettingsSection extends StatelessWidget {
               ),
             ),
             ListTile(
-              title: Text(locals.hideFeed,
+              title: Text(locals.homeFeedMode,
                   style: Theme.of(context).textTheme.titleMedium),
-              subtitle: Text(locals.hideFeedDescription),
+              subtitle: Text(_getHomeFeedModeDescription(state.homeFeedMode, locals)),
               leading: const Icon(Icons.home_outlined),
-              trailing: Switch(
-                value: state.isHideFeed,
-                onChanged: (_) {
-                  BlocProvider.of<SettingsBloc>(context)
-                      .add(SettingsEvent.toggleHideFeed());
+              trailing: DropdownButton<String>(
+                value: state.homeFeedMode,
+                underline: const SizedBox(),
+                items: [
+                  DropdownMenuItem(
+                    value: HomeFeedMode.feedOrTrending.name,
+                    child: Text(locals.homeFeedModeAuto),
+                  ),
+                  DropdownMenuItem(
+                    value: HomeFeedMode.feedOnly.name,
+                    child: Text(locals.homeFeedModeFeedOnly),
+                  ),
+                  DropdownMenuItem(
+                    value: HomeFeedMode.trendingOnly.name,
+                    child: Text(locals.homeFeedModeTrendingOnly),
+                  ),
+                ],
+                onChanged: (mode) {
+                  if (mode != null) {
+                    BlocProvider.of<SettingsBloc>(context)
+                        .add(SettingsEvent.setHomeFeedMode(mode: mode));
+                  }
                 },
               ),
             ),
@@ -71,6 +89,15 @@ class DistractionFreeSettingsSection extends StatelessWidget {
         );
       },
     );
+  }
+
+  String _getHomeFeedModeDescription(String mode, S locals) {
+    if (mode == HomeFeedMode.feedOnly.name) {
+      return locals.homeFeedModeFeedOnlyHint;
+    } else if (mode == HomeFeedMode.trendingOnly.name) {
+      return locals.homeFeedModeTrendingOnlyHint;
+    }
+    return locals.homeFeedModeAutoHint;
   }
 }
 

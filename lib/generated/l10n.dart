@@ -469,16 +469,81 @@ class S {
     return Intl.message('Select File', name: 'selectFile', desc: '', args: []);
   }
 
-  /// `Hide Feed`
-  String get hideFeed {
-    return Intl.message('Hide Feed', name: 'hideFeed', desc: '', args: []);
+  /// `Home Feed`
+  String get homeFeedMode {
+    return Intl.message('Home Feed', name: 'homeFeedMode', desc: '', args: []);
   }
 
-  /// `Hide the home feed`
-  String get hideFeedDescription {
+  /// `Auto`
+  String get homeFeedModeAuto {
+    return Intl.message('Auto', name: 'homeFeedModeAuto', desc: '', args: []);
+  }
+
+  /// `Subscriptions`
+  String get homeFeedModeFeedOnly {
     return Intl.message(
-      'Hide the home feed',
-      name: 'hideFeedDescription',
+      'Subscriptions',
+      name: 'homeFeedModeFeedOnly',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Trending`
+  String get homeFeedModeTrendingOnly {
+    return Intl.message(
+      'Trending',
+      name: 'homeFeedModeTrendingOnly',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Show subscriptions if available, otherwise trending`
+  String get homeFeedModeAutoHint {
+    return Intl.message(
+      'Show subscriptions if available, otherwise trending',
+      name: 'homeFeedModeAutoHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Only show videos from subscribed channels`
+  String get homeFeedModeFeedOnlyHint {
+    return Intl.message(
+      'Only show videos from subscribed channels',
+      name: 'homeFeedModeFeedOnlyHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Always show trending videos only`
+  String get homeFeedModeTrendingOnlyHint {
+    return Intl.message(
+      'Always show trending videos only',
+      name: 'homeFeedModeTrendingOnlyHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No Subscriptions`
+  String get noSubscriptions {
+    return Intl.message(
+      'No Subscriptions',
+      name: 'noSubscriptions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Subscribe to channels to see their videos here`
+  String get noSubscriptionsHint {
+    return Intl.message(
+      'Subscribe to channels to see their videos here',
+      name: 'noSubscriptionsHint',
       desc: '',
       args: [],
     );

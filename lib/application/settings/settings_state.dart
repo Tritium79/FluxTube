@@ -40,8 +40,8 @@ class SettingsState with _$SettingsState {
     required List<String> sponsorBlockCategories,
     // Open links in external browser
     required bool openLinksInBrowser,
-    // Hide feed
-    required bool isHideFeed,
+    // Home feed display mode
+    required String homeFeedMode,
     // Audio focus / pause on interruption
     required bool isAudioFocusEnabled,
     // Profiles
@@ -85,7 +85,7 @@ class SettingsState with _$SettingsState {
         isSponsorBlockEnabled: false,
         sponsorBlockCategories: ['sponsor', 'intro', 'outro', 'selfpromo'],
         openLinksInBrowser: false,
-        isHideFeed: false,
+        homeFeedMode: HomeFeedMode.feedOrTrending.name,
         isAudioFocusEnabled: true,
         currentProfile: 'default',
         profiles: ['default'],

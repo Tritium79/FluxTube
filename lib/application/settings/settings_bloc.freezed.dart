@@ -41,7 +41,7 @@ mixin _$SettingsEvent {
     required TResult Function(List<String> categories)
         setSponsorBlockCategories,
     required TResult Function() toggleOpenLinksInBrowser,
-    required TResult Function() toggleHideFeed,
+    required TResult Function(String mode) setHomeFeedMode,
     required TResult Function() toggleAudioFocus,
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
@@ -76,7 +76,7 @@ mixin _$SettingsEvent {
     TResult? Function()? toggleSponsorBlock,
     TResult? Function(List<String> categories)? setSponsorBlockCategories,
     TResult? Function()? toggleOpenLinksInBrowser,
-    TResult? Function()? toggleHideFeed,
+    TResult? Function(String mode)? setHomeFeedMode,
     TResult? Function()? toggleAudioFocus,
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
@@ -111,7 +111,7 @@ mixin _$SettingsEvent {
     TResult Function()? toggleSponsorBlock,
     TResult Function(List<String> categories)? setSponsorBlockCategories,
     TResult Function()? toggleOpenLinksInBrowser,
-    TResult Function()? toggleHideFeed,
+    TResult Function(String mode)? setHomeFeedMode,
     TResult Function()? toggleAudioFocus,
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
@@ -154,7 +154,7 @@ mixin _$SettingsEvent {
         setSponsorBlockCategories,
     required TResult Function(ToggleOpenLinksInBrowser value)
         toggleOpenLinksInBrowser,
-    required TResult Function(ToggleHideFeed value) toggleHideFeed,
+    required TResult Function(SetHomeFeedMode value) setHomeFeedMode,
     required TResult Function(ToggleAudioFocus value) toggleAudioFocus,
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
@@ -191,7 +191,7 @@ mixin _$SettingsEvent {
     TResult? Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult? Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult? Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult? Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult? Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
@@ -228,7 +228,7 @@ mixin _$SettingsEvent {
     TResult Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
@@ -327,7 +327,7 @@ class _$InitializeSettingsImpl implements InitializeSettings {
     required TResult Function(List<String> categories)
         setSponsorBlockCategories,
     required TResult Function() toggleOpenLinksInBrowser,
-    required TResult Function() toggleHideFeed,
+    required TResult Function(String mode) setHomeFeedMode,
     required TResult Function() toggleAudioFocus,
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
@@ -365,7 +365,7 @@ class _$InitializeSettingsImpl implements InitializeSettings {
     TResult? Function()? toggleSponsorBlock,
     TResult? Function(List<String> categories)? setSponsorBlockCategories,
     TResult? Function()? toggleOpenLinksInBrowser,
-    TResult? Function()? toggleHideFeed,
+    TResult? Function(String mode)? setHomeFeedMode,
     TResult? Function()? toggleAudioFocus,
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
@@ -403,7 +403,7 @@ class _$InitializeSettingsImpl implements InitializeSettings {
     TResult Function()? toggleSponsorBlock,
     TResult Function(List<String> categories)? setSponsorBlockCategories,
     TResult Function()? toggleOpenLinksInBrowser,
-    TResult Function()? toggleHideFeed,
+    TResult Function(String mode)? setHomeFeedMode,
     TResult Function()? toggleAudioFocus,
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
@@ -452,7 +452,7 @@ class _$InitializeSettingsImpl implements InitializeSettings {
         setSponsorBlockCategories,
     required TResult Function(ToggleOpenLinksInBrowser value)
         toggleOpenLinksInBrowser,
-    required TResult Function(ToggleHideFeed value) toggleHideFeed,
+    required TResult Function(SetHomeFeedMode value) setHomeFeedMode,
     required TResult Function(ToggleAudioFocus value) toggleAudioFocus,
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
@@ -492,7 +492,7 @@ class _$InitializeSettingsImpl implements InitializeSettings {
     TResult? Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult? Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult? Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult? Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult? Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
@@ -532,7 +532,7 @@ class _$InitializeSettingsImpl implements InitializeSettings {
     TResult Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
@@ -647,7 +647,7 @@ class _$GetDefaultLanguageImpl implements GetDefaultLanguage {
     required TResult Function(List<String> categories)
         setSponsorBlockCategories,
     required TResult Function() toggleOpenLinksInBrowser,
-    required TResult Function() toggleHideFeed,
+    required TResult Function(String mode) setHomeFeedMode,
     required TResult Function() toggleAudioFocus,
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
@@ -685,7 +685,7 @@ class _$GetDefaultLanguageImpl implements GetDefaultLanguage {
     TResult? Function()? toggleSponsorBlock,
     TResult? Function(List<String> categories)? setSponsorBlockCategories,
     TResult? Function()? toggleOpenLinksInBrowser,
-    TResult? Function()? toggleHideFeed,
+    TResult? Function(String mode)? setHomeFeedMode,
     TResult? Function()? toggleAudioFocus,
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
@@ -723,7 +723,7 @@ class _$GetDefaultLanguageImpl implements GetDefaultLanguage {
     TResult Function()? toggleSponsorBlock,
     TResult Function(List<String> categories)? setSponsorBlockCategories,
     TResult Function()? toggleOpenLinksInBrowser,
-    TResult Function()? toggleHideFeed,
+    TResult Function(String mode)? setHomeFeedMode,
     TResult Function()? toggleAudioFocus,
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
@@ -772,7 +772,7 @@ class _$GetDefaultLanguageImpl implements GetDefaultLanguage {
         setSponsorBlockCategories,
     required TResult Function(ToggleOpenLinksInBrowser value)
         toggleOpenLinksInBrowser,
-    required TResult Function(ToggleHideFeed value) toggleHideFeed,
+    required TResult Function(SetHomeFeedMode value) setHomeFeedMode,
     required TResult Function(ToggleAudioFocus value) toggleAudioFocus,
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
@@ -812,7 +812,7 @@ class _$GetDefaultLanguageImpl implements GetDefaultLanguage {
     TResult? Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult? Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult? Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult? Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult? Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
@@ -852,7 +852,7 @@ class _$GetDefaultLanguageImpl implements GetDefaultLanguage {
     TResult Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
@@ -975,7 +975,7 @@ class _$GetDefaultQualityImpl implements GetDefaultQuality {
     required TResult Function(List<String> categories)
         setSponsorBlockCategories,
     required TResult Function() toggleOpenLinksInBrowser,
-    required TResult Function() toggleHideFeed,
+    required TResult Function(String mode) setHomeFeedMode,
     required TResult Function() toggleAudioFocus,
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
@@ -1013,7 +1013,7 @@ class _$GetDefaultQualityImpl implements GetDefaultQuality {
     TResult? Function()? toggleSponsorBlock,
     TResult? Function(List<String> categories)? setSponsorBlockCategories,
     TResult? Function()? toggleOpenLinksInBrowser,
-    TResult? Function()? toggleHideFeed,
+    TResult? Function(String mode)? setHomeFeedMode,
     TResult? Function()? toggleAudioFocus,
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
@@ -1051,7 +1051,7 @@ class _$GetDefaultQualityImpl implements GetDefaultQuality {
     TResult Function()? toggleSponsorBlock,
     TResult Function(List<String> categories)? setSponsorBlockCategories,
     TResult Function()? toggleOpenLinksInBrowser,
-    TResult Function()? toggleHideFeed,
+    TResult Function(String mode)? setHomeFeedMode,
     TResult Function()? toggleAudioFocus,
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
@@ -1100,7 +1100,7 @@ class _$GetDefaultQualityImpl implements GetDefaultQuality {
         setSponsorBlockCategories,
     required TResult Function(ToggleOpenLinksInBrowser value)
         toggleOpenLinksInBrowser,
-    required TResult Function(ToggleHideFeed value) toggleHideFeed,
+    required TResult Function(SetHomeFeedMode value) setHomeFeedMode,
     required TResult Function(ToggleAudioFocus value) toggleAudioFocus,
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
@@ -1140,7 +1140,7 @@ class _$GetDefaultQualityImpl implements GetDefaultQuality {
     TResult? Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult? Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult? Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult? Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult? Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
@@ -1180,7 +1180,7 @@ class _$GetDefaultQualityImpl implements GetDefaultQuality {
     TResult Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
@@ -1303,7 +1303,7 @@ class _$GetDefaultRegionImpl implements GetDefaultRegion {
     required TResult Function(List<String> categories)
         setSponsorBlockCategories,
     required TResult Function() toggleOpenLinksInBrowser,
-    required TResult Function() toggleHideFeed,
+    required TResult Function(String mode) setHomeFeedMode,
     required TResult Function() toggleAudioFocus,
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
@@ -1341,7 +1341,7 @@ class _$GetDefaultRegionImpl implements GetDefaultRegion {
     TResult? Function()? toggleSponsorBlock,
     TResult? Function(List<String> categories)? setSponsorBlockCategories,
     TResult? Function()? toggleOpenLinksInBrowser,
-    TResult? Function()? toggleHideFeed,
+    TResult? Function(String mode)? setHomeFeedMode,
     TResult? Function()? toggleAudioFocus,
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
@@ -1379,7 +1379,7 @@ class _$GetDefaultRegionImpl implements GetDefaultRegion {
     TResult Function()? toggleSponsorBlock,
     TResult Function(List<String> categories)? setSponsorBlockCategories,
     TResult Function()? toggleOpenLinksInBrowser,
-    TResult Function()? toggleHideFeed,
+    TResult Function(String mode)? setHomeFeedMode,
     TResult Function()? toggleAudioFocus,
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
@@ -1428,7 +1428,7 @@ class _$GetDefaultRegionImpl implements GetDefaultRegion {
         setSponsorBlockCategories,
     required TResult Function(ToggleOpenLinksInBrowser value)
         toggleOpenLinksInBrowser,
-    required TResult Function(ToggleHideFeed value) toggleHideFeed,
+    required TResult Function(SetHomeFeedMode value) setHomeFeedMode,
     required TResult Function(ToggleAudioFocus value) toggleAudioFocus,
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
@@ -1468,7 +1468,7 @@ class _$GetDefaultRegionImpl implements GetDefaultRegion {
     TResult? Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult? Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult? Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult? Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult? Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
@@ -1508,7 +1508,7 @@ class _$GetDefaultRegionImpl implements GetDefaultRegion {
     TResult Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
@@ -1631,7 +1631,7 @@ class _$ChangeThemeImpl implements ChangeTheme {
     required TResult Function(List<String> categories)
         setSponsorBlockCategories,
     required TResult Function() toggleOpenLinksInBrowser,
-    required TResult Function() toggleHideFeed,
+    required TResult Function(String mode) setHomeFeedMode,
     required TResult Function() toggleAudioFocus,
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
@@ -1669,7 +1669,7 @@ class _$ChangeThemeImpl implements ChangeTheme {
     TResult? Function()? toggleSponsorBlock,
     TResult? Function(List<String> categories)? setSponsorBlockCategories,
     TResult? Function()? toggleOpenLinksInBrowser,
-    TResult? Function()? toggleHideFeed,
+    TResult? Function(String mode)? setHomeFeedMode,
     TResult? Function()? toggleAudioFocus,
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
@@ -1707,7 +1707,7 @@ class _$ChangeThemeImpl implements ChangeTheme {
     TResult Function()? toggleSponsorBlock,
     TResult Function(List<String> categories)? setSponsorBlockCategories,
     TResult Function()? toggleOpenLinksInBrowser,
-    TResult Function()? toggleHideFeed,
+    TResult Function(String mode)? setHomeFeedMode,
     TResult Function()? toggleAudioFocus,
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
@@ -1756,7 +1756,7 @@ class _$ChangeThemeImpl implements ChangeTheme {
         setSponsorBlockCategories,
     required TResult Function(ToggleOpenLinksInBrowser value)
         toggleOpenLinksInBrowser,
-    required TResult Function(ToggleHideFeed value) toggleHideFeed,
+    required TResult Function(SetHomeFeedMode value) setHomeFeedMode,
     required TResult Function(ToggleAudioFocus value) toggleAudioFocus,
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
@@ -1796,7 +1796,7 @@ class _$ChangeThemeImpl implements ChangeTheme {
     TResult? Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult? Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult? Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult? Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult? Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
@@ -1836,7 +1836,7 @@ class _$ChangeThemeImpl implements ChangeTheme {
     TResult Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
@@ -1933,7 +1933,7 @@ class _$ToggleHistoryVisibilityImpl implements ToggleHistoryVisibility {
     required TResult Function(List<String> categories)
         setSponsorBlockCategories,
     required TResult Function() toggleOpenLinksInBrowser,
-    required TResult Function() toggleHideFeed,
+    required TResult Function(String mode) setHomeFeedMode,
     required TResult Function() toggleAudioFocus,
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
@@ -1971,7 +1971,7 @@ class _$ToggleHistoryVisibilityImpl implements ToggleHistoryVisibility {
     TResult? Function()? toggleSponsorBlock,
     TResult? Function(List<String> categories)? setSponsorBlockCategories,
     TResult? Function()? toggleOpenLinksInBrowser,
-    TResult? Function()? toggleHideFeed,
+    TResult? Function(String mode)? setHomeFeedMode,
     TResult? Function()? toggleAudioFocus,
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
@@ -2009,7 +2009,7 @@ class _$ToggleHistoryVisibilityImpl implements ToggleHistoryVisibility {
     TResult Function()? toggleSponsorBlock,
     TResult Function(List<String> categories)? setSponsorBlockCategories,
     TResult Function()? toggleOpenLinksInBrowser,
-    TResult Function()? toggleHideFeed,
+    TResult Function(String mode)? setHomeFeedMode,
     TResult Function()? toggleAudioFocus,
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
@@ -2058,7 +2058,7 @@ class _$ToggleHistoryVisibilityImpl implements ToggleHistoryVisibility {
         setSponsorBlockCategories,
     required TResult Function(ToggleOpenLinksInBrowser value)
         toggleOpenLinksInBrowser,
-    required TResult Function(ToggleHideFeed value) toggleHideFeed,
+    required TResult Function(SetHomeFeedMode value) setHomeFeedMode,
     required TResult Function(ToggleAudioFocus value) toggleAudioFocus,
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
@@ -2098,7 +2098,7 @@ class _$ToggleHistoryVisibilityImpl implements ToggleHistoryVisibility {
     TResult? Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult? Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult? Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult? Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult? Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
@@ -2138,7 +2138,7 @@ class _$ToggleHistoryVisibilityImpl implements ToggleHistoryVisibility {
     TResult Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
@@ -2227,7 +2227,7 @@ class _$ToggleDislikeVisibilityImpl implements ToggleDislikeVisibility {
     required TResult Function(List<String> categories)
         setSponsorBlockCategories,
     required TResult Function() toggleOpenLinksInBrowser,
-    required TResult Function() toggleHideFeed,
+    required TResult Function(String mode) setHomeFeedMode,
     required TResult Function() toggleAudioFocus,
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
@@ -2265,7 +2265,7 @@ class _$ToggleDislikeVisibilityImpl implements ToggleDislikeVisibility {
     TResult? Function()? toggleSponsorBlock,
     TResult? Function(List<String> categories)? setSponsorBlockCategories,
     TResult? Function()? toggleOpenLinksInBrowser,
-    TResult? Function()? toggleHideFeed,
+    TResult? Function(String mode)? setHomeFeedMode,
     TResult? Function()? toggleAudioFocus,
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
@@ -2303,7 +2303,7 @@ class _$ToggleDislikeVisibilityImpl implements ToggleDislikeVisibility {
     TResult Function()? toggleSponsorBlock,
     TResult Function(List<String> categories)? setSponsorBlockCategories,
     TResult Function()? toggleOpenLinksInBrowser,
-    TResult Function()? toggleHideFeed,
+    TResult Function(String mode)? setHomeFeedMode,
     TResult Function()? toggleAudioFocus,
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
@@ -2352,7 +2352,7 @@ class _$ToggleDislikeVisibilityImpl implements ToggleDislikeVisibility {
         setSponsorBlockCategories,
     required TResult Function(ToggleOpenLinksInBrowser value)
         toggleOpenLinksInBrowser,
-    required TResult Function(ToggleHideFeed value) toggleHideFeed,
+    required TResult Function(SetHomeFeedMode value) setHomeFeedMode,
     required TResult Function(ToggleAudioFocus value) toggleAudioFocus,
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
@@ -2392,7 +2392,7 @@ class _$ToggleDislikeVisibilityImpl implements ToggleDislikeVisibility {
     TResult? Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult? Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult? Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult? Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult? Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
@@ -2432,7 +2432,7 @@ class _$ToggleDislikeVisibilityImpl implements ToggleDislikeVisibility {
     TResult Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
@@ -2518,7 +2518,7 @@ class _$ToggleHlsPlayerImpl implements ToggleHlsPlayer {
     required TResult Function(List<String> categories)
         setSponsorBlockCategories,
     required TResult Function() toggleOpenLinksInBrowser,
-    required TResult Function() toggleHideFeed,
+    required TResult Function(String mode) setHomeFeedMode,
     required TResult Function() toggleAudioFocus,
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
@@ -2556,7 +2556,7 @@ class _$ToggleHlsPlayerImpl implements ToggleHlsPlayer {
     TResult? Function()? toggleSponsorBlock,
     TResult? Function(List<String> categories)? setSponsorBlockCategories,
     TResult? Function()? toggleOpenLinksInBrowser,
-    TResult? Function()? toggleHideFeed,
+    TResult? Function(String mode)? setHomeFeedMode,
     TResult? Function()? toggleAudioFocus,
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
@@ -2594,7 +2594,7 @@ class _$ToggleHlsPlayerImpl implements ToggleHlsPlayer {
     TResult Function()? toggleSponsorBlock,
     TResult Function(List<String> categories)? setSponsorBlockCategories,
     TResult Function()? toggleOpenLinksInBrowser,
-    TResult Function()? toggleHideFeed,
+    TResult Function(String mode)? setHomeFeedMode,
     TResult Function()? toggleAudioFocus,
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
@@ -2643,7 +2643,7 @@ class _$ToggleHlsPlayerImpl implements ToggleHlsPlayer {
         setSponsorBlockCategories,
     required TResult Function(ToggleOpenLinksInBrowser value)
         toggleOpenLinksInBrowser,
-    required TResult Function(ToggleHideFeed value) toggleHideFeed,
+    required TResult Function(SetHomeFeedMode value) setHomeFeedMode,
     required TResult Function(ToggleAudioFocus value) toggleAudioFocus,
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
@@ -2683,7 +2683,7 @@ class _$ToggleHlsPlayerImpl implements ToggleHlsPlayer {
     TResult? Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult? Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult? Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult? Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult? Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
@@ -2723,7 +2723,7 @@ class _$ToggleHlsPlayerImpl implements ToggleHlsPlayer {
     TResult Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
@@ -2812,7 +2812,7 @@ class _$ToggleCommentVisibilityImpl implements ToggleCommentVisibility {
     required TResult Function(List<String> categories)
         setSponsorBlockCategories,
     required TResult Function() toggleOpenLinksInBrowser,
-    required TResult Function() toggleHideFeed,
+    required TResult Function(String mode) setHomeFeedMode,
     required TResult Function() toggleAudioFocus,
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
@@ -2850,7 +2850,7 @@ class _$ToggleCommentVisibilityImpl implements ToggleCommentVisibility {
     TResult? Function()? toggleSponsorBlock,
     TResult? Function(List<String> categories)? setSponsorBlockCategories,
     TResult? Function()? toggleOpenLinksInBrowser,
-    TResult? Function()? toggleHideFeed,
+    TResult? Function(String mode)? setHomeFeedMode,
     TResult? Function()? toggleAudioFocus,
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
@@ -2888,7 +2888,7 @@ class _$ToggleCommentVisibilityImpl implements ToggleCommentVisibility {
     TResult Function()? toggleSponsorBlock,
     TResult Function(List<String> categories)? setSponsorBlockCategories,
     TResult Function()? toggleOpenLinksInBrowser,
-    TResult Function()? toggleHideFeed,
+    TResult Function(String mode)? setHomeFeedMode,
     TResult Function()? toggleAudioFocus,
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
@@ -2937,7 +2937,7 @@ class _$ToggleCommentVisibilityImpl implements ToggleCommentVisibility {
         setSponsorBlockCategories,
     required TResult Function(ToggleOpenLinksInBrowser value)
         toggleOpenLinksInBrowser,
-    required TResult Function(ToggleHideFeed value) toggleHideFeed,
+    required TResult Function(SetHomeFeedMode value) setHomeFeedMode,
     required TResult Function(ToggleAudioFocus value) toggleAudioFocus,
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
@@ -2977,7 +2977,7 @@ class _$ToggleCommentVisibilityImpl implements ToggleCommentVisibility {
     TResult? Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult? Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult? Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult? Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult? Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
@@ -3017,7 +3017,7 @@ class _$ToggleCommentVisibilityImpl implements ToggleCommentVisibility {
     TResult Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
@@ -3108,7 +3108,7 @@ class _$ToggleRelatedVideoVisibilityImpl
     required TResult Function(List<String> categories)
         setSponsorBlockCategories,
     required TResult Function() toggleOpenLinksInBrowser,
-    required TResult Function() toggleHideFeed,
+    required TResult Function(String mode) setHomeFeedMode,
     required TResult Function() toggleAudioFocus,
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
@@ -3146,7 +3146,7 @@ class _$ToggleRelatedVideoVisibilityImpl
     TResult? Function()? toggleSponsorBlock,
     TResult? Function(List<String> categories)? setSponsorBlockCategories,
     TResult? Function()? toggleOpenLinksInBrowser,
-    TResult? Function()? toggleHideFeed,
+    TResult? Function(String mode)? setHomeFeedMode,
     TResult? Function()? toggleAudioFocus,
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
@@ -3184,7 +3184,7 @@ class _$ToggleRelatedVideoVisibilityImpl
     TResult Function()? toggleSponsorBlock,
     TResult Function(List<String> categories)? setSponsorBlockCategories,
     TResult Function()? toggleOpenLinksInBrowser,
-    TResult Function()? toggleHideFeed,
+    TResult Function(String mode)? setHomeFeedMode,
     TResult Function()? toggleAudioFocus,
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
@@ -3233,7 +3233,7 @@ class _$ToggleRelatedVideoVisibilityImpl
         setSponsorBlockCategories,
     required TResult Function(ToggleOpenLinksInBrowser value)
         toggleOpenLinksInBrowser,
-    required TResult Function(ToggleHideFeed value) toggleHideFeed,
+    required TResult Function(SetHomeFeedMode value) setHomeFeedMode,
     required TResult Function(ToggleAudioFocus value) toggleAudioFocus,
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
@@ -3273,7 +3273,7 @@ class _$ToggleRelatedVideoVisibilityImpl
     TResult? Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult? Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult? Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult? Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult? Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
@@ -3313,7 +3313,7 @@ class _$ToggleRelatedVideoVisibilityImpl
     TResult Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
@@ -3400,7 +3400,7 @@ class _$FetchPipedInstancesImpl implements FetchPipedInstances {
     required TResult Function(List<String> categories)
         setSponsorBlockCategories,
     required TResult Function() toggleOpenLinksInBrowser,
-    required TResult Function() toggleHideFeed,
+    required TResult Function(String mode) setHomeFeedMode,
     required TResult Function() toggleAudioFocus,
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
@@ -3438,7 +3438,7 @@ class _$FetchPipedInstancesImpl implements FetchPipedInstances {
     TResult? Function()? toggleSponsorBlock,
     TResult? Function(List<String> categories)? setSponsorBlockCategories,
     TResult? Function()? toggleOpenLinksInBrowser,
-    TResult? Function()? toggleHideFeed,
+    TResult? Function(String mode)? setHomeFeedMode,
     TResult? Function()? toggleAudioFocus,
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
@@ -3476,7 +3476,7 @@ class _$FetchPipedInstancesImpl implements FetchPipedInstances {
     TResult Function()? toggleSponsorBlock,
     TResult Function(List<String> categories)? setSponsorBlockCategories,
     TResult Function()? toggleOpenLinksInBrowser,
-    TResult Function()? toggleHideFeed,
+    TResult Function(String mode)? setHomeFeedMode,
     TResult Function()? toggleAudioFocus,
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
@@ -3525,7 +3525,7 @@ class _$FetchPipedInstancesImpl implements FetchPipedInstances {
         setSponsorBlockCategories,
     required TResult Function(ToggleOpenLinksInBrowser value)
         toggleOpenLinksInBrowser,
-    required TResult Function(ToggleHideFeed value) toggleHideFeed,
+    required TResult Function(SetHomeFeedMode value) setHomeFeedMode,
     required TResult Function(ToggleAudioFocus value) toggleAudioFocus,
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
@@ -3565,7 +3565,7 @@ class _$FetchPipedInstancesImpl implements FetchPipedInstances {
     TResult? Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult? Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult? Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult? Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult? Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
@@ -3605,7 +3605,7 @@ class _$FetchPipedInstancesImpl implements FetchPipedInstances {
     TResult Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
@@ -3694,7 +3694,7 @@ class _$FetchInvidiousInstancesImpl implements FetchInvidiousInstances {
     required TResult Function(List<String> categories)
         setSponsorBlockCategories,
     required TResult Function() toggleOpenLinksInBrowser,
-    required TResult Function() toggleHideFeed,
+    required TResult Function(String mode) setHomeFeedMode,
     required TResult Function() toggleAudioFocus,
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
@@ -3732,7 +3732,7 @@ class _$FetchInvidiousInstancesImpl implements FetchInvidiousInstances {
     TResult? Function()? toggleSponsorBlock,
     TResult? Function(List<String> categories)? setSponsorBlockCategories,
     TResult? Function()? toggleOpenLinksInBrowser,
-    TResult? Function()? toggleHideFeed,
+    TResult? Function(String mode)? setHomeFeedMode,
     TResult? Function()? toggleAudioFocus,
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
@@ -3770,7 +3770,7 @@ class _$FetchInvidiousInstancesImpl implements FetchInvidiousInstances {
     TResult Function()? toggleSponsorBlock,
     TResult Function(List<String> categories)? setSponsorBlockCategories,
     TResult Function()? toggleOpenLinksInBrowser,
-    TResult Function()? toggleHideFeed,
+    TResult Function(String mode)? setHomeFeedMode,
     TResult Function()? toggleAudioFocus,
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
@@ -3819,7 +3819,7 @@ class _$FetchInvidiousInstancesImpl implements FetchInvidiousInstances {
         setSponsorBlockCategories,
     required TResult Function(ToggleOpenLinksInBrowser value)
         toggleOpenLinksInBrowser,
-    required TResult Function(ToggleHideFeed value) toggleHideFeed,
+    required TResult Function(SetHomeFeedMode value) setHomeFeedMode,
     required TResult Function(ToggleAudioFocus value) toggleAudioFocus,
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
@@ -3859,7 +3859,7 @@ class _$FetchInvidiousInstancesImpl implements FetchInvidiousInstances {
     TResult? Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult? Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult? Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult? Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult? Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
@@ -3899,7 +3899,7 @@ class _$FetchInvidiousInstancesImpl implements FetchInvidiousInstances {
     TResult Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
@@ -4013,7 +4013,7 @@ class _$SetInstanceImpl implements SetInstance {
     required TResult Function(List<String> categories)
         setSponsorBlockCategories,
     required TResult Function() toggleOpenLinksInBrowser,
-    required TResult Function() toggleHideFeed,
+    required TResult Function(String mode) setHomeFeedMode,
     required TResult Function() toggleAudioFocus,
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
@@ -4051,7 +4051,7 @@ class _$SetInstanceImpl implements SetInstance {
     TResult? Function()? toggleSponsorBlock,
     TResult? Function(List<String> categories)? setSponsorBlockCategories,
     TResult? Function()? toggleOpenLinksInBrowser,
-    TResult? Function()? toggleHideFeed,
+    TResult? Function(String mode)? setHomeFeedMode,
     TResult? Function()? toggleAudioFocus,
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
@@ -4089,7 +4089,7 @@ class _$SetInstanceImpl implements SetInstance {
     TResult Function()? toggleSponsorBlock,
     TResult Function(List<String> categories)? setSponsorBlockCategories,
     TResult Function()? toggleOpenLinksInBrowser,
-    TResult Function()? toggleHideFeed,
+    TResult Function(String mode)? setHomeFeedMode,
     TResult Function()? toggleAudioFocus,
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
@@ -4138,7 +4138,7 @@ class _$SetInstanceImpl implements SetInstance {
         setSponsorBlockCategories,
     required TResult Function(ToggleOpenLinksInBrowser value)
         toggleOpenLinksInBrowser,
-    required TResult Function(ToggleHideFeed value) toggleHideFeed,
+    required TResult Function(SetHomeFeedMode value) setHomeFeedMode,
     required TResult Function(ToggleAudioFocus value) toggleAudioFocus,
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
@@ -4178,7 +4178,7 @@ class _$SetInstanceImpl implements SetInstance {
     TResult? Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult? Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult? Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult? Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult? Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
@@ -4218,7 +4218,7 @@ class _$SetInstanceImpl implements SetInstance {
     TResult Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
@@ -4339,7 +4339,7 @@ class _$SetYTServiceImpl implements SetYTService {
     required TResult Function(List<String> categories)
         setSponsorBlockCategories,
     required TResult Function() toggleOpenLinksInBrowser,
-    required TResult Function() toggleHideFeed,
+    required TResult Function(String mode) setHomeFeedMode,
     required TResult Function() toggleAudioFocus,
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
@@ -4377,7 +4377,7 @@ class _$SetYTServiceImpl implements SetYTService {
     TResult? Function()? toggleSponsorBlock,
     TResult? Function(List<String> categories)? setSponsorBlockCategories,
     TResult? Function()? toggleOpenLinksInBrowser,
-    TResult? Function()? toggleHideFeed,
+    TResult? Function(String mode)? setHomeFeedMode,
     TResult? Function()? toggleAudioFocus,
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
@@ -4415,7 +4415,7 @@ class _$SetYTServiceImpl implements SetYTService {
     TResult Function()? toggleSponsorBlock,
     TResult Function(List<String> categories)? setSponsorBlockCategories,
     TResult Function()? toggleOpenLinksInBrowser,
-    TResult Function()? toggleHideFeed,
+    TResult Function(String mode)? setHomeFeedMode,
     TResult Function()? toggleAudioFocus,
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
@@ -4464,7 +4464,7 @@ class _$SetYTServiceImpl implements SetYTService {
         setSponsorBlockCategories,
     required TResult Function(ToggleOpenLinksInBrowser value)
         toggleOpenLinksInBrowser,
-    required TResult Function(ToggleHideFeed value) toggleHideFeed,
+    required TResult Function(SetHomeFeedMode value) setHomeFeedMode,
     required TResult Function(ToggleAudioFocus value) toggleAudioFocus,
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
@@ -4504,7 +4504,7 @@ class _$SetYTServiceImpl implements SetYTService {
     TResult? Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult? Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult? Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult? Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult? Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
@@ -4544,7 +4544,7 @@ class _$SetYTServiceImpl implements SetYTService {
     TResult Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
@@ -4667,7 +4667,7 @@ class _$SetPlayerTypeImpl implements SetPlayerType {
     required TResult Function(List<String> categories)
         setSponsorBlockCategories,
     required TResult Function() toggleOpenLinksInBrowser,
-    required TResult Function() toggleHideFeed,
+    required TResult Function(String mode) setHomeFeedMode,
     required TResult Function() toggleAudioFocus,
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
@@ -4705,7 +4705,7 @@ class _$SetPlayerTypeImpl implements SetPlayerType {
     TResult? Function()? toggleSponsorBlock,
     TResult? Function(List<String> categories)? setSponsorBlockCategories,
     TResult? Function()? toggleOpenLinksInBrowser,
-    TResult? Function()? toggleHideFeed,
+    TResult? Function(String mode)? setHomeFeedMode,
     TResult? Function()? toggleAudioFocus,
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
@@ -4743,7 +4743,7 @@ class _$SetPlayerTypeImpl implements SetPlayerType {
     TResult Function()? toggleSponsorBlock,
     TResult Function(List<String> categories)? setSponsorBlockCategories,
     TResult Function()? toggleOpenLinksInBrowser,
-    TResult Function()? toggleHideFeed,
+    TResult Function(String mode)? setHomeFeedMode,
     TResult Function()? toggleAudioFocus,
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
@@ -4792,7 +4792,7 @@ class _$SetPlayerTypeImpl implements SetPlayerType {
         setSponsorBlockCategories,
     required TResult Function(ToggleOpenLinksInBrowser value)
         toggleOpenLinksInBrowser,
-    required TResult Function(ToggleHideFeed value) toggleHideFeed,
+    required TResult Function(SetHomeFeedMode value) setHomeFeedMode,
     required TResult Function(ToggleAudioFocus value) toggleAudioFocus,
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
@@ -4832,7 +4832,7 @@ class _$SetPlayerTypeImpl implements SetPlayerType {
     TResult? Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult? Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult? Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult? Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult? Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
@@ -4872,7 +4872,7 @@ class _$SetPlayerTypeImpl implements SetPlayerType {
     TResult Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
@@ -4967,7 +4967,7 @@ class _$TogglePipPlayerImpl implements TogglePipPlayer {
     required TResult Function(List<String> categories)
         setSponsorBlockCategories,
     required TResult Function() toggleOpenLinksInBrowser,
-    required TResult Function() toggleHideFeed,
+    required TResult Function(String mode) setHomeFeedMode,
     required TResult Function() toggleAudioFocus,
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
@@ -5005,7 +5005,7 @@ class _$TogglePipPlayerImpl implements TogglePipPlayer {
     TResult? Function()? toggleSponsorBlock,
     TResult? Function(List<String> categories)? setSponsorBlockCategories,
     TResult? Function()? toggleOpenLinksInBrowser,
-    TResult? Function()? toggleHideFeed,
+    TResult? Function(String mode)? setHomeFeedMode,
     TResult? Function()? toggleAudioFocus,
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
@@ -5043,7 +5043,7 @@ class _$TogglePipPlayerImpl implements TogglePipPlayer {
     TResult Function()? toggleSponsorBlock,
     TResult Function(List<String> categories)? setSponsorBlockCategories,
     TResult Function()? toggleOpenLinksInBrowser,
-    TResult Function()? toggleHideFeed,
+    TResult Function(String mode)? setHomeFeedMode,
     TResult Function()? toggleAudioFocus,
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
@@ -5092,7 +5092,7 @@ class _$TogglePipPlayerImpl implements TogglePipPlayer {
         setSponsorBlockCategories,
     required TResult Function(ToggleOpenLinksInBrowser value)
         toggleOpenLinksInBrowser,
-    required TResult Function(ToggleHideFeed value) toggleHideFeed,
+    required TResult Function(SetHomeFeedMode value) setHomeFeedMode,
     required TResult Function(ToggleAudioFocus value) toggleAudioFocus,
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
@@ -5132,7 +5132,7 @@ class _$TogglePipPlayerImpl implements TogglePipPlayer {
     TResult? Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult? Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult? Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult? Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult? Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
@@ -5172,7 +5172,7 @@ class _$TogglePipPlayerImpl implements TogglePipPlayer {
     TResult Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
@@ -5286,7 +5286,7 @@ class _$SetSearchFilterImpl implements SetSearchFilter {
     required TResult Function(List<String> categories)
         setSponsorBlockCategories,
     required TResult Function() toggleOpenLinksInBrowser,
-    required TResult Function() toggleHideFeed,
+    required TResult Function(String mode) setHomeFeedMode,
     required TResult Function() toggleAudioFocus,
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
@@ -5324,7 +5324,7 @@ class _$SetSearchFilterImpl implements SetSearchFilter {
     TResult? Function()? toggleSponsorBlock,
     TResult? Function(List<String> categories)? setSponsorBlockCategories,
     TResult? Function()? toggleOpenLinksInBrowser,
-    TResult? Function()? toggleHideFeed,
+    TResult? Function(String mode)? setHomeFeedMode,
     TResult? Function()? toggleAudioFocus,
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
@@ -5362,7 +5362,7 @@ class _$SetSearchFilterImpl implements SetSearchFilter {
     TResult Function()? toggleSponsorBlock,
     TResult Function(List<String> categories)? setSponsorBlockCategories,
     TResult Function()? toggleOpenLinksInBrowser,
-    TResult Function()? toggleHideFeed,
+    TResult Function(String mode)? setHomeFeedMode,
     TResult Function()? toggleAudioFocus,
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
@@ -5411,7 +5411,7 @@ class _$SetSearchFilterImpl implements SetSearchFilter {
         setSponsorBlockCategories,
     required TResult Function(ToggleOpenLinksInBrowser value)
         toggleOpenLinksInBrowser,
-    required TResult Function(ToggleHideFeed value) toggleHideFeed,
+    required TResult Function(SetHomeFeedMode value) setHomeFeedMode,
     required TResult Function(ToggleAudioFocus value) toggleAudioFocus,
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
@@ -5451,7 +5451,7 @@ class _$SetSearchFilterImpl implements SetSearchFilter {
     TResult? Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult? Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult? Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult? Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult? Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
@@ -5491,7 +5491,7 @@ class _$SetSearchFilterImpl implements SetSearchFilter {
     TResult Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
@@ -5614,7 +5614,7 @@ class _$SetVideoFitModeImpl implements SetVideoFitMode {
     required TResult Function(List<String> categories)
         setSponsorBlockCategories,
     required TResult Function() toggleOpenLinksInBrowser,
-    required TResult Function() toggleHideFeed,
+    required TResult Function(String mode) setHomeFeedMode,
     required TResult Function() toggleAudioFocus,
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
@@ -5652,7 +5652,7 @@ class _$SetVideoFitModeImpl implements SetVideoFitMode {
     TResult? Function()? toggleSponsorBlock,
     TResult? Function(List<String> categories)? setSponsorBlockCategories,
     TResult? Function()? toggleOpenLinksInBrowser,
-    TResult? Function()? toggleHideFeed,
+    TResult? Function(String mode)? setHomeFeedMode,
     TResult? Function()? toggleAudioFocus,
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
@@ -5690,7 +5690,7 @@ class _$SetVideoFitModeImpl implements SetVideoFitMode {
     TResult Function()? toggleSponsorBlock,
     TResult Function(List<String> categories)? setSponsorBlockCategories,
     TResult Function()? toggleOpenLinksInBrowser,
-    TResult Function()? toggleHideFeed,
+    TResult Function(String mode)? setHomeFeedMode,
     TResult Function()? toggleAudioFocus,
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
@@ -5739,7 +5739,7 @@ class _$SetVideoFitModeImpl implements SetVideoFitMode {
         setSponsorBlockCategories,
     required TResult Function(ToggleOpenLinksInBrowser value)
         toggleOpenLinksInBrowser,
-    required TResult Function(ToggleHideFeed value) toggleHideFeed,
+    required TResult Function(SetHomeFeedMode value) setHomeFeedMode,
     required TResult Function(ToggleAudioFocus value) toggleAudioFocus,
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
@@ -5779,7 +5779,7 @@ class _$SetVideoFitModeImpl implements SetVideoFitMode {
     TResult? Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult? Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult? Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult? Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult? Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
@@ -5819,7 +5819,7 @@ class _$SetVideoFitModeImpl implements SetVideoFitMode {
     TResult Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
@@ -5942,7 +5942,7 @@ class _$SetSkipIntervalImpl implements SetSkipInterval {
     required TResult Function(List<String> categories)
         setSponsorBlockCategories,
     required TResult Function() toggleOpenLinksInBrowser,
-    required TResult Function() toggleHideFeed,
+    required TResult Function(String mode) setHomeFeedMode,
     required TResult Function() toggleAudioFocus,
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
@@ -5980,7 +5980,7 @@ class _$SetSkipIntervalImpl implements SetSkipInterval {
     TResult? Function()? toggleSponsorBlock,
     TResult? Function(List<String> categories)? setSponsorBlockCategories,
     TResult? Function()? toggleOpenLinksInBrowser,
-    TResult? Function()? toggleHideFeed,
+    TResult? Function(String mode)? setHomeFeedMode,
     TResult? Function()? toggleAudioFocus,
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
@@ -6018,7 +6018,7 @@ class _$SetSkipIntervalImpl implements SetSkipInterval {
     TResult Function()? toggleSponsorBlock,
     TResult Function(List<String> categories)? setSponsorBlockCategories,
     TResult Function()? toggleOpenLinksInBrowser,
-    TResult Function()? toggleHideFeed,
+    TResult Function(String mode)? setHomeFeedMode,
     TResult Function()? toggleAudioFocus,
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
@@ -6067,7 +6067,7 @@ class _$SetSkipIntervalImpl implements SetSkipInterval {
         setSponsorBlockCategories,
     required TResult Function(ToggleOpenLinksInBrowser value)
         toggleOpenLinksInBrowser,
-    required TResult Function(ToggleHideFeed value) toggleHideFeed,
+    required TResult Function(SetHomeFeedMode value) setHomeFeedMode,
     required TResult Function(ToggleAudioFocus value) toggleAudioFocus,
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
@@ -6107,7 +6107,7 @@ class _$SetSkipIntervalImpl implements SetSkipInterval {
     TResult? Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult? Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult? Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult? Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult? Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
@@ -6147,7 +6147,7 @@ class _$SetSkipIntervalImpl implements SetSkipInterval {
     TResult Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
@@ -6241,7 +6241,7 @@ class _$ToggleSponsorBlockImpl implements ToggleSponsorBlock {
     required TResult Function(List<String> categories)
         setSponsorBlockCategories,
     required TResult Function() toggleOpenLinksInBrowser,
-    required TResult Function() toggleHideFeed,
+    required TResult Function(String mode) setHomeFeedMode,
     required TResult Function() toggleAudioFocus,
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
@@ -6279,7 +6279,7 @@ class _$ToggleSponsorBlockImpl implements ToggleSponsorBlock {
     TResult? Function()? toggleSponsorBlock,
     TResult? Function(List<String> categories)? setSponsorBlockCategories,
     TResult? Function()? toggleOpenLinksInBrowser,
-    TResult? Function()? toggleHideFeed,
+    TResult? Function(String mode)? setHomeFeedMode,
     TResult? Function()? toggleAudioFocus,
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
@@ -6317,7 +6317,7 @@ class _$ToggleSponsorBlockImpl implements ToggleSponsorBlock {
     TResult Function()? toggleSponsorBlock,
     TResult Function(List<String> categories)? setSponsorBlockCategories,
     TResult Function()? toggleOpenLinksInBrowser,
-    TResult Function()? toggleHideFeed,
+    TResult Function(String mode)? setHomeFeedMode,
     TResult Function()? toggleAudioFocus,
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
@@ -6366,7 +6366,7 @@ class _$ToggleSponsorBlockImpl implements ToggleSponsorBlock {
         setSponsorBlockCategories,
     required TResult Function(ToggleOpenLinksInBrowser value)
         toggleOpenLinksInBrowser,
-    required TResult Function(ToggleHideFeed value) toggleHideFeed,
+    required TResult Function(SetHomeFeedMode value) setHomeFeedMode,
     required TResult Function(ToggleAudioFocus value) toggleAudioFocus,
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
@@ -6406,7 +6406,7 @@ class _$ToggleSponsorBlockImpl implements ToggleSponsorBlock {
     TResult? Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult? Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult? Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult? Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult? Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
@@ -6446,7 +6446,7 @@ class _$ToggleSponsorBlockImpl implements ToggleSponsorBlock {
     TResult Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
@@ -6570,7 +6570,7 @@ class _$SetSponsorBlockCategoriesImpl implements SetSponsorBlockCategories {
     required TResult Function(List<String> categories)
         setSponsorBlockCategories,
     required TResult Function() toggleOpenLinksInBrowser,
-    required TResult Function() toggleHideFeed,
+    required TResult Function(String mode) setHomeFeedMode,
     required TResult Function() toggleAudioFocus,
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
@@ -6608,7 +6608,7 @@ class _$SetSponsorBlockCategoriesImpl implements SetSponsorBlockCategories {
     TResult? Function()? toggleSponsorBlock,
     TResult? Function(List<String> categories)? setSponsorBlockCategories,
     TResult? Function()? toggleOpenLinksInBrowser,
-    TResult? Function()? toggleHideFeed,
+    TResult? Function(String mode)? setHomeFeedMode,
     TResult? Function()? toggleAudioFocus,
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
@@ -6646,7 +6646,7 @@ class _$SetSponsorBlockCategoriesImpl implements SetSponsorBlockCategories {
     TResult Function()? toggleSponsorBlock,
     TResult Function(List<String> categories)? setSponsorBlockCategories,
     TResult Function()? toggleOpenLinksInBrowser,
-    TResult Function()? toggleHideFeed,
+    TResult Function(String mode)? setHomeFeedMode,
     TResult Function()? toggleAudioFocus,
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
@@ -6695,7 +6695,7 @@ class _$SetSponsorBlockCategoriesImpl implements SetSponsorBlockCategories {
         setSponsorBlockCategories,
     required TResult Function(ToggleOpenLinksInBrowser value)
         toggleOpenLinksInBrowser,
-    required TResult Function(ToggleHideFeed value) toggleHideFeed,
+    required TResult Function(SetHomeFeedMode value) setHomeFeedMode,
     required TResult Function(ToggleAudioFocus value) toggleAudioFocus,
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
@@ -6735,7 +6735,7 @@ class _$SetSponsorBlockCategoriesImpl implements SetSponsorBlockCategories {
     TResult? Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult? Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult? Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult? Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult? Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
@@ -6775,7 +6775,7 @@ class _$SetSponsorBlockCategoriesImpl implements SetSponsorBlockCategories {
     TResult Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
@@ -6873,7 +6873,7 @@ class _$ToggleOpenLinksInBrowserImpl implements ToggleOpenLinksInBrowser {
     required TResult Function(List<String> categories)
         setSponsorBlockCategories,
     required TResult Function() toggleOpenLinksInBrowser,
-    required TResult Function() toggleHideFeed,
+    required TResult Function(String mode) setHomeFeedMode,
     required TResult Function() toggleAudioFocus,
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
@@ -6911,7 +6911,7 @@ class _$ToggleOpenLinksInBrowserImpl implements ToggleOpenLinksInBrowser {
     TResult? Function()? toggleSponsorBlock,
     TResult? Function(List<String> categories)? setSponsorBlockCategories,
     TResult? Function()? toggleOpenLinksInBrowser,
-    TResult? Function()? toggleHideFeed,
+    TResult? Function(String mode)? setHomeFeedMode,
     TResult? Function()? toggleAudioFocus,
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
@@ -6949,7 +6949,7 @@ class _$ToggleOpenLinksInBrowserImpl implements ToggleOpenLinksInBrowser {
     TResult Function()? toggleSponsorBlock,
     TResult Function(List<String> categories)? setSponsorBlockCategories,
     TResult Function()? toggleOpenLinksInBrowser,
-    TResult Function()? toggleHideFeed,
+    TResult Function(String mode)? setHomeFeedMode,
     TResult Function()? toggleAudioFocus,
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
@@ -6998,7 +6998,7 @@ class _$ToggleOpenLinksInBrowserImpl implements ToggleOpenLinksInBrowser {
         setSponsorBlockCategories,
     required TResult Function(ToggleOpenLinksInBrowser value)
         toggleOpenLinksInBrowser,
-    required TResult Function(ToggleHideFeed value) toggleHideFeed,
+    required TResult Function(SetHomeFeedMode value) setHomeFeedMode,
     required TResult Function(ToggleAudioFocus value) toggleAudioFocus,
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
@@ -7038,7 +7038,7 @@ class _$ToggleOpenLinksInBrowserImpl implements ToggleOpenLinksInBrowser {
     TResult? Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult? Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult? Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult? Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult? Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
@@ -7078,7 +7078,7 @@ class _$ToggleOpenLinksInBrowserImpl implements ToggleOpenLinksInBrowser {
     TResult Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
@@ -7101,42 +7101,70 @@ abstract class ToggleOpenLinksInBrowser implements SettingsEvent {
 }
 
 /// @nodoc
-abstract class _$$ToggleHideFeedImplCopyWith<$Res> {
-  factory _$$ToggleHideFeedImplCopyWith(_$ToggleHideFeedImpl value,
-          $Res Function(_$ToggleHideFeedImpl) then) =
-      __$$ToggleHideFeedImplCopyWithImpl<$Res>;
+abstract class _$$SetHomeFeedModeImplCopyWith<$Res> {
+  factory _$$SetHomeFeedModeImplCopyWith(_$SetHomeFeedModeImpl value,
+          $Res Function(_$SetHomeFeedModeImpl) then) =
+      __$$SetHomeFeedModeImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String mode});
 }
 
 /// @nodoc
-class __$$ToggleHideFeedImplCopyWithImpl<$Res>
-    extends _$SettingsEventCopyWithImpl<$Res, _$ToggleHideFeedImpl>
-    implements _$$ToggleHideFeedImplCopyWith<$Res> {
-  __$$ToggleHideFeedImplCopyWithImpl(
-      _$ToggleHideFeedImpl _value, $Res Function(_$ToggleHideFeedImpl) _then)
+class __$$SetHomeFeedModeImplCopyWithImpl<$Res>
+    extends _$SettingsEventCopyWithImpl<$Res, _$SetHomeFeedModeImpl>
+    implements _$$SetHomeFeedModeImplCopyWith<$Res> {
+  __$$SetHomeFeedModeImplCopyWithImpl(
+      _$SetHomeFeedModeImpl _value, $Res Function(_$SetHomeFeedModeImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of SettingsEvent
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? mode = null,
+  }) {
+    return _then(_$SetHomeFeedModeImpl(
+      mode: null == mode
+          ? _value.mode
+          : mode // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
-class _$ToggleHideFeedImpl implements ToggleHideFeed {
-  _$ToggleHideFeedImpl();
+class _$SetHomeFeedModeImpl implements SetHomeFeedMode {
+  _$SetHomeFeedModeImpl({required this.mode});
+
+  @override
+  final String mode;
 
   @override
   String toString() {
-    return 'SettingsEvent.toggleHideFeed()';
+    return 'SettingsEvent.setHomeFeedMode(mode: $mode)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$ToggleHideFeedImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$SetHomeFeedModeImpl &&
+            (identical(other.mode, mode) || other.mode == mode));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, mode);
+
+  /// Create a copy of SettingsEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SetHomeFeedModeImplCopyWith<_$SetHomeFeedModeImpl> get copyWith =>
+      __$$SetHomeFeedModeImplCopyWithImpl<_$SetHomeFeedModeImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -7164,7 +7192,7 @@ class _$ToggleHideFeedImpl implements ToggleHideFeed {
     required TResult Function(List<String> categories)
         setSponsorBlockCategories,
     required TResult Function() toggleOpenLinksInBrowser,
-    required TResult Function() toggleHideFeed,
+    required TResult Function(String mode) setHomeFeedMode,
     required TResult Function() toggleAudioFocus,
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
@@ -7174,7 +7202,7 @@ class _$ToggleHideFeedImpl implements ToggleHideFeed {
     required TResult Function() exportSubscriptions,
     required TResult Function(String filePath) importSubscriptions,
   }) {
-    return toggleHideFeed();
+    return setHomeFeedMode(mode);
   }
 
   @override
@@ -7202,7 +7230,7 @@ class _$ToggleHideFeedImpl implements ToggleHideFeed {
     TResult? Function()? toggleSponsorBlock,
     TResult? Function(List<String> categories)? setSponsorBlockCategories,
     TResult? Function()? toggleOpenLinksInBrowser,
-    TResult? Function()? toggleHideFeed,
+    TResult? Function(String mode)? setHomeFeedMode,
     TResult? Function()? toggleAudioFocus,
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
@@ -7212,7 +7240,7 @@ class _$ToggleHideFeedImpl implements ToggleHideFeed {
     TResult? Function()? exportSubscriptions,
     TResult? Function(String filePath)? importSubscriptions,
   }) {
-    return toggleHideFeed?.call();
+    return setHomeFeedMode?.call(mode);
   }
 
   @override
@@ -7240,7 +7268,7 @@ class _$ToggleHideFeedImpl implements ToggleHideFeed {
     TResult Function()? toggleSponsorBlock,
     TResult Function(List<String> categories)? setSponsorBlockCategories,
     TResult Function()? toggleOpenLinksInBrowser,
-    TResult Function()? toggleHideFeed,
+    TResult Function(String mode)? setHomeFeedMode,
     TResult Function()? toggleAudioFocus,
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
@@ -7251,8 +7279,8 @@ class _$ToggleHideFeedImpl implements ToggleHideFeed {
     TResult Function(String filePath)? importSubscriptions,
     required TResult orElse(),
   }) {
-    if (toggleHideFeed != null) {
-      return toggleHideFeed();
+    if (setHomeFeedMode != null) {
+      return setHomeFeedMode(mode);
     }
     return orElse();
   }
@@ -7289,7 +7317,7 @@ class _$ToggleHideFeedImpl implements ToggleHideFeed {
         setSponsorBlockCategories,
     required TResult Function(ToggleOpenLinksInBrowser value)
         toggleOpenLinksInBrowser,
-    required TResult Function(ToggleHideFeed value) toggleHideFeed,
+    required TResult Function(SetHomeFeedMode value) setHomeFeedMode,
     required TResult Function(ToggleAudioFocus value) toggleAudioFocus,
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
@@ -7299,7 +7327,7 @@ class _$ToggleHideFeedImpl implements ToggleHideFeed {
     required TResult Function(ExportSubscriptions value) exportSubscriptions,
     required TResult Function(ImportSubscriptions value) importSubscriptions,
   }) {
-    return toggleHideFeed(this);
+    return setHomeFeedMode(this);
   }
 
   @override
@@ -7329,7 +7357,7 @@ class _$ToggleHideFeedImpl implements ToggleHideFeed {
     TResult? Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult? Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult? Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult? Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult? Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
@@ -7339,7 +7367,7 @@ class _$ToggleHideFeedImpl implements ToggleHideFeed {
     TResult? Function(ExportSubscriptions value)? exportSubscriptions,
     TResult? Function(ImportSubscriptions value)? importSubscriptions,
   }) {
-    return toggleHideFeed?.call(this);
+    return setHomeFeedMode?.call(this);
   }
 
   @override
@@ -7369,7 +7397,7 @@ class _$ToggleHideFeedImpl implements ToggleHideFeed {
     TResult Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
@@ -7380,15 +7408,23 @@ class _$ToggleHideFeedImpl implements ToggleHideFeed {
     TResult Function(ImportSubscriptions value)? importSubscriptions,
     required TResult orElse(),
   }) {
-    if (toggleHideFeed != null) {
-      return toggleHideFeed(this);
+    if (setHomeFeedMode != null) {
+      return setHomeFeedMode(this);
     }
     return orElse();
   }
 }
 
-abstract class ToggleHideFeed implements SettingsEvent {
-  factory ToggleHideFeed() = _$ToggleHideFeedImpl;
+abstract class SetHomeFeedMode implements SettingsEvent {
+  factory SetHomeFeedMode({required final String mode}) = _$SetHomeFeedModeImpl;
+
+  String get mode;
+
+  /// Create a copy of SettingsEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$SetHomeFeedModeImplCopyWith<_$SetHomeFeedModeImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -7455,7 +7491,7 @@ class _$ToggleAudioFocusImpl implements ToggleAudioFocus {
     required TResult Function(List<String> categories)
         setSponsorBlockCategories,
     required TResult Function() toggleOpenLinksInBrowser,
-    required TResult Function() toggleHideFeed,
+    required TResult Function(String mode) setHomeFeedMode,
     required TResult Function() toggleAudioFocus,
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
@@ -7493,7 +7529,7 @@ class _$ToggleAudioFocusImpl implements ToggleAudioFocus {
     TResult? Function()? toggleSponsorBlock,
     TResult? Function(List<String> categories)? setSponsorBlockCategories,
     TResult? Function()? toggleOpenLinksInBrowser,
-    TResult? Function()? toggleHideFeed,
+    TResult? Function(String mode)? setHomeFeedMode,
     TResult? Function()? toggleAudioFocus,
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
@@ -7531,7 +7567,7 @@ class _$ToggleAudioFocusImpl implements ToggleAudioFocus {
     TResult Function()? toggleSponsorBlock,
     TResult Function(List<String> categories)? setSponsorBlockCategories,
     TResult Function()? toggleOpenLinksInBrowser,
-    TResult Function()? toggleHideFeed,
+    TResult Function(String mode)? setHomeFeedMode,
     TResult Function()? toggleAudioFocus,
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
@@ -7580,7 +7616,7 @@ class _$ToggleAudioFocusImpl implements ToggleAudioFocus {
         setSponsorBlockCategories,
     required TResult Function(ToggleOpenLinksInBrowser value)
         toggleOpenLinksInBrowser,
-    required TResult Function(ToggleHideFeed value) toggleHideFeed,
+    required TResult Function(SetHomeFeedMode value) setHomeFeedMode,
     required TResult Function(ToggleAudioFocus value) toggleAudioFocus,
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
@@ -7620,7 +7656,7 @@ class _$ToggleAudioFocusImpl implements ToggleAudioFocus {
     TResult? Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult? Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult? Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult? Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult? Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
@@ -7660,7 +7696,7 @@ class _$ToggleAudioFocusImpl implements ToggleAudioFocus {
     TResult Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
@@ -7774,7 +7810,7 @@ class _$AddProfileImpl implements AddProfile {
     required TResult Function(List<String> categories)
         setSponsorBlockCategories,
     required TResult Function() toggleOpenLinksInBrowser,
-    required TResult Function() toggleHideFeed,
+    required TResult Function(String mode) setHomeFeedMode,
     required TResult Function() toggleAudioFocus,
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
@@ -7812,7 +7848,7 @@ class _$AddProfileImpl implements AddProfile {
     TResult? Function()? toggleSponsorBlock,
     TResult? Function(List<String> categories)? setSponsorBlockCategories,
     TResult? Function()? toggleOpenLinksInBrowser,
-    TResult? Function()? toggleHideFeed,
+    TResult? Function(String mode)? setHomeFeedMode,
     TResult? Function()? toggleAudioFocus,
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
@@ -7850,7 +7886,7 @@ class _$AddProfileImpl implements AddProfile {
     TResult Function()? toggleSponsorBlock,
     TResult Function(List<String> categories)? setSponsorBlockCategories,
     TResult Function()? toggleOpenLinksInBrowser,
-    TResult Function()? toggleHideFeed,
+    TResult Function(String mode)? setHomeFeedMode,
     TResult Function()? toggleAudioFocus,
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
@@ -7899,7 +7935,7 @@ class _$AddProfileImpl implements AddProfile {
         setSponsorBlockCategories,
     required TResult Function(ToggleOpenLinksInBrowser value)
         toggleOpenLinksInBrowser,
-    required TResult Function(ToggleHideFeed value) toggleHideFeed,
+    required TResult Function(SetHomeFeedMode value) setHomeFeedMode,
     required TResult Function(ToggleAudioFocus value) toggleAudioFocus,
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
@@ -7939,7 +7975,7 @@ class _$AddProfileImpl implements AddProfile {
     TResult? Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult? Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult? Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult? Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult? Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
@@ -7979,7 +8015,7 @@ class _$AddProfileImpl implements AddProfile {
     TResult Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
@@ -8101,7 +8137,7 @@ class _$DeleteProfileImpl implements DeleteProfile {
     required TResult Function(List<String> categories)
         setSponsorBlockCategories,
     required TResult Function() toggleOpenLinksInBrowser,
-    required TResult Function() toggleHideFeed,
+    required TResult Function(String mode) setHomeFeedMode,
     required TResult Function() toggleAudioFocus,
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
@@ -8139,7 +8175,7 @@ class _$DeleteProfileImpl implements DeleteProfile {
     TResult? Function()? toggleSponsorBlock,
     TResult? Function(List<String> categories)? setSponsorBlockCategories,
     TResult? Function()? toggleOpenLinksInBrowser,
-    TResult? Function()? toggleHideFeed,
+    TResult? Function(String mode)? setHomeFeedMode,
     TResult? Function()? toggleAudioFocus,
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
@@ -8177,7 +8213,7 @@ class _$DeleteProfileImpl implements DeleteProfile {
     TResult Function()? toggleSponsorBlock,
     TResult Function(List<String> categories)? setSponsorBlockCategories,
     TResult Function()? toggleOpenLinksInBrowser,
-    TResult Function()? toggleHideFeed,
+    TResult Function(String mode)? setHomeFeedMode,
     TResult Function()? toggleAudioFocus,
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
@@ -8226,7 +8262,7 @@ class _$DeleteProfileImpl implements DeleteProfile {
         setSponsorBlockCategories,
     required TResult Function(ToggleOpenLinksInBrowser value)
         toggleOpenLinksInBrowser,
-    required TResult Function(ToggleHideFeed value) toggleHideFeed,
+    required TResult Function(SetHomeFeedMode value) setHomeFeedMode,
     required TResult Function(ToggleAudioFocus value) toggleAudioFocus,
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
@@ -8266,7 +8302,7 @@ class _$DeleteProfileImpl implements DeleteProfile {
     TResult? Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult? Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult? Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult? Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult? Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
@@ -8306,7 +8342,7 @@ class _$DeleteProfileImpl implements DeleteProfile {
     TResult Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
@@ -8429,7 +8465,7 @@ class _$SwitchProfileImpl implements SwitchProfile {
     required TResult Function(List<String> categories)
         setSponsorBlockCategories,
     required TResult Function() toggleOpenLinksInBrowser,
-    required TResult Function() toggleHideFeed,
+    required TResult Function(String mode) setHomeFeedMode,
     required TResult Function() toggleAudioFocus,
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
@@ -8467,7 +8503,7 @@ class _$SwitchProfileImpl implements SwitchProfile {
     TResult? Function()? toggleSponsorBlock,
     TResult? Function(List<String> categories)? setSponsorBlockCategories,
     TResult? Function()? toggleOpenLinksInBrowser,
-    TResult? Function()? toggleHideFeed,
+    TResult? Function(String mode)? setHomeFeedMode,
     TResult? Function()? toggleAudioFocus,
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
@@ -8505,7 +8541,7 @@ class _$SwitchProfileImpl implements SwitchProfile {
     TResult Function()? toggleSponsorBlock,
     TResult Function(List<String> categories)? setSponsorBlockCategories,
     TResult Function()? toggleOpenLinksInBrowser,
-    TResult Function()? toggleHideFeed,
+    TResult Function(String mode)? setHomeFeedMode,
     TResult Function()? toggleAudioFocus,
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
@@ -8554,7 +8590,7 @@ class _$SwitchProfileImpl implements SwitchProfile {
         setSponsorBlockCategories,
     required TResult Function(ToggleOpenLinksInBrowser value)
         toggleOpenLinksInBrowser,
-    required TResult Function(ToggleHideFeed value) toggleHideFeed,
+    required TResult Function(SetHomeFeedMode value) setHomeFeedMode,
     required TResult Function(ToggleAudioFocus value) toggleAudioFocus,
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
@@ -8594,7 +8630,7 @@ class _$SwitchProfileImpl implements SwitchProfile {
     TResult? Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult? Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult? Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult? Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult? Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
@@ -8634,7 +8670,7 @@ class _$SwitchProfileImpl implements SwitchProfile {
     TResult Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
@@ -8729,7 +8765,7 @@ class _$ToggleSyncImpl implements ToggleSync {
     required TResult Function(List<String> categories)
         setSponsorBlockCategories,
     required TResult Function() toggleOpenLinksInBrowser,
-    required TResult Function() toggleHideFeed,
+    required TResult Function(String mode) setHomeFeedMode,
     required TResult Function() toggleAudioFocus,
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
@@ -8767,7 +8803,7 @@ class _$ToggleSyncImpl implements ToggleSync {
     TResult? Function()? toggleSponsorBlock,
     TResult? Function(List<String> categories)? setSponsorBlockCategories,
     TResult? Function()? toggleOpenLinksInBrowser,
-    TResult? Function()? toggleHideFeed,
+    TResult? Function(String mode)? setHomeFeedMode,
     TResult? Function()? toggleAudioFocus,
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
@@ -8805,7 +8841,7 @@ class _$ToggleSyncImpl implements ToggleSync {
     TResult Function()? toggleSponsorBlock,
     TResult Function(List<String> categories)? setSponsorBlockCategories,
     TResult Function()? toggleOpenLinksInBrowser,
-    TResult Function()? toggleHideFeed,
+    TResult Function(String mode)? setHomeFeedMode,
     TResult Function()? toggleAudioFocus,
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
@@ -8854,7 +8890,7 @@ class _$ToggleSyncImpl implements ToggleSync {
         setSponsorBlockCategories,
     required TResult Function(ToggleOpenLinksInBrowser value)
         toggleOpenLinksInBrowser,
-    required TResult Function(ToggleHideFeed value) toggleHideFeed,
+    required TResult Function(SetHomeFeedMode value) setHomeFeedMode,
     required TResult Function(ToggleAudioFocus value) toggleAudioFocus,
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
@@ -8894,7 +8930,7 @@ class _$ToggleSyncImpl implements ToggleSync {
     TResult? Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult? Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult? Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult? Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult? Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
@@ -8934,7 +8970,7 @@ class _$ToggleSyncImpl implements ToggleSync {
     TResult Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
@@ -9020,7 +9056,7 @@ class _$SyncNowImpl implements SyncNow {
     required TResult Function(List<String> categories)
         setSponsorBlockCategories,
     required TResult Function() toggleOpenLinksInBrowser,
-    required TResult Function() toggleHideFeed,
+    required TResult Function(String mode) setHomeFeedMode,
     required TResult Function() toggleAudioFocus,
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
@@ -9058,7 +9094,7 @@ class _$SyncNowImpl implements SyncNow {
     TResult? Function()? toggleSponsorBlock,
     TResult? Function(List<String> categories)? setSponsorBlockCategories,
     TResult? Function()? toggleOpenLinksInBrowser,
-    TResult? Function()? toggleHideFeed,
+    TResult? Function(String mode)? setHomeFeedMode,
     TResult? Function()? toggleAudioFocus,
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
@@ -9096,7 +9132,7 @@ class _$SyncNowImpl implements SyncNow {
     TResult Function()? toggleSponsorBlock,
     TResult Function(List<String> categories)? setSponsorBlockCategories,
     TResult Function()? toggleOpenLinksInBrowser,
-    TResult Function()? toggleHideFeed,
+    TResult Function(String mode)? setHomeFeedMode,
     TResult Function()? toggleAudioFocus,
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
@@ -9145,7 +9181,7 @@ class _$SyncNowImpl implements SyncNow {
         setSponsorBlockCategories,
     required TResult Function(ToggleOpenLinksInBrowser value)
         toggleOpenLinksInBrowser,
-    required TResult Function(ToggleHideFeed value) toggleHideFeed,
+    required TResult Function(SetHomeFeedMode value) setHomeFeedMode,
     required TResult Function(ToggleAudioFocus value) toggleAudioFocus,
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
@@ -9185,7 +9221,7 @@ class _$SyncNowImpl implements SyncNow {
     TResult? Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult? Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult? Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult? Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult? Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
@@ -9225,7 +9261,7 @@ class _$SyncNowImpl implements SyncNow {
     TResult Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
@@ -9312,7 +9348,7 @@ class _$ExportSubscriptionsImpl implements ExportSubscriptions {
     required TResult Function(List<String> categories)
         setSponsorBlockCategories,
     required TResult Function() toggleOpenLinksInBrowser,
-    required TResult Function() toggleHideFeed,
+    required TResult Function(String mode) setHomeFeedMode,
     required TResult Function() toggleAudioFocus,
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
@@ -9350,7 +9386,7 @@ class _$ExportSubscriptionsImpl implements ExportSubscriptions {
     TResult? Function()? toggleSponsorBlock,
     TResult? Function(List<String> categories)? setSponsorBlockCategories,
     TResult? Function()? toggleOpenLinksInBrowser,
-    TResult? Function()? toggleHideFeed,
+    TResult? Function(String mode)? setHomeFeedMode,
     TResult? Function()? toggleAudioFocus,
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
@@ -9388,7 +9424,7 @@ class _$ExportSubscriptionsImpl implements ExportSubscriptions {
     TResult Function()? toggleSponsorBlock,
     TResult Function(List<String> categories)? setSponsorBlockCategories,
     TResult Function()? toggleOpenLinksInBrowser,
-    TResult Function()? toggleHideFeed,
+    TResult Function(String mode)? setHomeFeedMode,
     TResult Function()? toggleAudioFocus,
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
@@ -9437,7 +9473,7 @@ class _$ExportSubscriptionsImpl implements ExportSubscriptions {
         setSponsorBlockCategories,
     required TResult Function(ToggleOpenLinksInBrowser value)
         toggleOpenLinksInBrowser,
-    required TResult Function(ToggleHideFeed value) toggleHideFeed,
+    required TResult Function(SetHomeFeedMode value) setHomeFeedMode,
     required TResult Function(ToggleAudioFocus value) toggleAudioFocus,
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
@@ -9477,7 +9513,7 @@ class _$ExportSubscriptionsImpl implements ExportSubscriptions {
     TResult? Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult? Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult? Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult? Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult? Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
@@ -9517,7 +9553,7 @@ class _$ExportSubscriptionsImpl implements ExportSubscriptions {
     TResult Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
@@ -9632,7 +9668,7 @@ class _$ImportSubscriptionsImpl implements ImportSubscriptions {
     required TResult Function(List<String> categories)
         setSponsorBlockCategories,
     required TResult Function() toggleOpenLinksInBrowser,
-    required TResult Function() toggleHideFeed,
+    required TResult Function(String mode) setHomeFeedMode,
     required TResult Function() toggleAudioFocus,
     required TResult Function(String profileName) addProfile,
     required TResult Function(String profileName) deleteProfile,
@@ -9670,7 +9706,7 @@ class _$ImportSubscriptionsImpl implements ImportSubscriptions {
     TResult? Function()? toggleSponsorBlock,
     TResult? Function(List<String> categories)? setSponsorBlockCategories,
     TResult? Function()? toggleOpenLinksInBrowser,
-    TResult? Function()? toggleHideFeed,
+    TResult? Function(String mode)? setHomeFeedMode,
     TResult? Function()? toggleAudioFocus,
     TResult? Function(String profileName)? addProfile,
     TResult? Function(String profileName)? deleteProfile,
@@ -9708,7 +9744,7 @@ class _$ImportSubscriptionsImpl implements ImportSubscriptions {
     TResult Function()? toggleSponsorBlock,
     TResult Function(List<String> categories)? setSponsorBlockCategories,
     TResult Function()? toggleOpenLinksInBrowser,
-    TResult Function()? toggleHideFeed,
+    TResult Function(String mode)? setHomeFeedMode,
     TResult Function()? toggleAudioFocus,
     TResult Function(String profileName)? addProfile,
     TResult Function(String profileName)? deleteProfile,
@@ -9757,7 +9793,7 @@ class _$ImportSubscriptionsImpl implements ImportSubscriptions {
         setSponsorBlockCategories,
     required TResult Function(ToggleOpenLinksInBrowser value)
         toggleOpenLinksInBrowser,
-    required TResult Function(ToggleHideFeed value) toggleHideFeed,
+    required TResult Function(SetHomeFeedMode value) setHomeFeedMode,
     required TResult Function(ToggleAudioFocus value) toggleAudioFocus,
     required TResult Function(AddProfile value) addProfile,
     required TResult Function(DeleteProfile value) deleteProfile,
@@ -9797,7 +9833,7 @@ class _$ImportSubscriptionsImpl implements ImportSubscriptions {
     TResult? Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult? Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult? Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult? Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult? Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult? Function(AddProfile value)? addProfile,
     TResult? Function(DeleteProfile value)? deleteProfile,
@@ -9837,7 +9873,7 @@ class _$ImportSubscriptionsImpl implements ImportSubscriptions {
     TResult Function(SetSponsorBlockCategories value)?
         setSponsorBlockCategories,
     TResult Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
-    TResult Function(ToggleHideFeed value)? toggleHideFeed,
+    TResult Function(SetHomeFeedMode value)? setHomeFeedMode,
     TResult Function(ToggleAudioFocus value)? toggleAudioFocus,
     TResult Function(AddProfile value)? addProfile,
     TResult Function(DeleteProfile value)? deleteProfile,
@@ -9907,8 +9943,8 @@ mixin _$SettingsState {
   List<String> get sponsorBlockCategories =>
       throw _privateConstructorUsedError; // Open links in external browser
   bool get openLinksInBrowser =>
-      throw _privateConstructorUsedError; // Hide feed
-  bool get isHideFeed =>
+      throw _privateConstructorUsedError; // Home feed display mode
+  String get homeFeedMode =>
       throw _privateConstructorUsedError; // Audio focus / pause on interruption
   bool get isAudioFocusEnabled =>
       throw _privateConstructorUsedError; // Profiles
@@ -9961,7 +9997,7 @@ abstract class $SettingsStateCopyWith<$Res> {
       bool isSponsorBlockEnabled,
       List<String> sponsorBlockCategories,
       bool openLinksInBrowser,
-      bool isHideFeed,
+      String homeFeedMode,
       bool isAudioFocusEnabled,
       String currentProfile,
       List<String> profiles,
@@ -10014,7 +10050,7 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
     Object? isSponsorBlockEnabled = null,
     Object? sponsorBlockCategories = null,
     Object? openLinksInBrowser = null,
-    Object? isHideFeed = null,
+    Object? homeFeedMode = null,
     Object? isAudioFocusEnabled = null,
     Object? currentProfile = null,
     Object? profiles = null,
@@ -10142,10 +10178,10 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
           ? _value.openLinksInBrowser
           : openLinksInBrowser // ignore: cast_nullable_to_non_nullable
               as bool,
-      isHideFeed: null == isHideFeed
-          ? _value.isHideFeed
-          : isHideFeed // ignore: cast_nullable_to_non_nullable
-              as bool,
+      homeFeedMode: null == homeFeedMode
+          ? _value.homeFeedMode
+          : homeFeedMode // ignore: cast_nullable_to_non_nullable
+              as String,
       isAudioFocusEnabled: null == isAudioFocusEnabled
           ? _value.isAudioFocusEnabled
           : isAudioFocusEnabled // ignore: cast_nullable_to_non_nullable
@@ -10209,7 +10245,7 @@ abstract class _$$InitialImplCopyWith<$Res>
       bool isSponsorBlockEnabled,
       List<String> sponsorBlockCategories,
       bool openLinksInBrowser,
-      bool isHideFeed,
+      String homeFeedMode,
       bool isAudioFocusEnabled,
       String currentProfile,
       List<String> profiles,
@@ -10260,7 +10296,7 @@ class __$$InitialImplCopyWithImpl<$Res>
     Object? isSponsorBlockEnabled = null,
     Object? sponsorBlockCategories = null,
     Object? openLinksInBrowser = null,
-    Object? isHideFeed = null,
+    Object? homeFeedMode = null,
     Object? isAudioFocusEnabled = null,
     Object? currentProfile = null,
     Object? profiles = null,
@@ -10388,10 +10424,10 @@ class __$$InitialImplCopyWithImpl<$Res>
           ? _value.openLinksInBrowser
           : openLinksInBrowser // ignore: cast_nullable_to_non_nullable
               as bool,
-      isHideFeed: null == isHideFeed
-          ? _value.isHideFeed
-          : isHideFeed // ignore: cast_nullable_to_non_nullable
-              as bool,
+      homeFeedMode: null == homeFeedMode
+          ? _value.homeFeedMode
+          : homeFeedMode // ignore: cast_nullable_to_non_nullable
+              as String,
       isAudioFocusEnabled: null == isAudioFocusEnabled
           ? _value.isAudioFocusEnabled
           : isAudioFocusEnabled // ignore: cast_nullable_to_non_nullable
@@ -10450,7 +10486,7 @@ class _$InitialImpl implements _Initial {
       required this.isSponsorBlockEnabled,
       required final List<String> sponsorBlockCategories,
       required this.openLinksInBrowser,
-      required this.isHideFeed,
+      required this.homeFeedMode,
       required this.isAudioFocusEnabled,
       required this.currentProfile,
       required final List<String> profiles,
@@ -10548,9 +10584,9 @@ class _$InitialImpl implements _Initial {
 // Open links in external browser
   @override
   final bool openLinksInBrowser;
-// Hide feed
+// Home feed display mode
   @override
-  final bool isHideFeed;
+  final String homeFeedMode;
 // Audio focus / pause on interruption
   @override
   final bool isAudioFocusEnabled;
@@ -10573,7 +10609,7 @@ class _$InitialImpl implements _Initial {
 
   @override
   String toString() {
-    return 'SettingsState(defaultLanguage: $defaultLanguage, defaultQuality: $defaultQuality, defaultRegion: $defaultRegion, themeMode: $themeMode, version: $version, isHistoryVisible: $isHistoryVisible, isDislikeVisible: $isDislikeVisible, isHlsPlayer: $isHlsPlayer, isHideComments: $isHideComments, isHideRelated: $isHideRelated, pipedInstances: $pipedInstances, pipedInstanceStatus: $pipedInstanceStatus, instance: $instance, invidiousInstances: $invidiousInstances, invidiousInstanceStatus: $invidiousInstanceStatus, ytService: $ytService, playerType: $playerType, initialized: $initialized, settingsStatus: $settingsStatus, isPipDisabled: $isPipDisabled, connectingToInstance: $connectingToInstance, isTestingConnection: $isTestingConnection, userInstanceFailed: $userInstanceFailed, failedInstanceName: $failedInstanceName, searchFilter: $searchFilter, videoFitMode: $videoFitMode, skipInterval: $skipInterval, isSponsorBlockEnabled: $isSponsorBlockEnabled, sponsorBlockCategories: $sponsorBlockCategories, openLinksInBrowser: $openLinksInBrowser, isHideFeed: $isHideFeed, isAudioFocusEnabled: $isAudioFocusEnabled, currentProfile: $currentProfile, profiles: $profiles, isSyncEnabled: $isSyncEnabled, lastSynced: $lastSynced)';
+    return 'SettingsState(defaultLanguage: $defaultLanguage, defaultQuality: $defaultQuality, defaultRegion: $defaultRegion, themeMode: $themeMode, version: $version, isHistoryVisible: $isHistoryVisible, isDislikeVisible: $isDislikeVisible, isHlsPlayer: $isHlsPlayer, isHideComments: $isHideComments, isHideRelated: $isHideRelated, pipedInstances: $pipedInstances, pipedInstanceStatus: $pipedInstanceStatus, instance: $instance, invidiousInstances: $invidiousInstances, invidiousInstanceStatus: $invidiousInstanceStatus, ytService: $ytService, playerType: $playerType, initialized: $initialized, settingsStatus: $settingsStatus, isPipDisabled: $isPipDisabled, connectingToInstance: $connectingToInstance, isTestingConnection: $isTestingConnection, userInstanceFailed: $userInstanceFailed, failedInstanceName: $failedInstanceName, searchFilter: $searchFilter, videoFitMode: $videoFitMode, skipInterval: $skipInterval, isSponsorBlockEnabled: $isSponsorBlockEnabled, sponsorBlockCategories: $sponsorBlockCategories, openLinksInBrowser: $openLinksInBrowser, homeFeedMode: $homeFeedMode, isAudioFocusEnabled: $isAudioFocusEnabled, currentProfile: $currentProfile, profiles: $profiles, isSyncEnabled: $isSyncEnabled, lastSynced: $lastSynced)';
   }
 
   @override
@@ -10641,8 +10677,8 @@ class _$InitialImpl implements _Initial {
                 other._sponsorBlockCategories, _sponsorBlockCategories) &&
             (identical(other.openLinksInBrowser, openLinksInBrowser) ||
                 other.openLinksInBrowser == openLinksInBrowser) &&
-            (identical(other.isHideFeed, isHideFeed) ||
-                other.isHideFeed == isHideFeed) &&
+            (identical(other.homeFeedMode, homeFeedMode) ||
+                other.homeFeedMode == homeFeedMode) &&
             (identical(other.isAudioFocusEnabled, isAudioFocusEnabled) ||
                 other.isAudioFocusEnabled == isAudioFocusEnabled) &&
             (identical(other.currentProfile, currentProfile) ||
@@ -10687,7 +10723,7 @@ class _$InitialImpl implements _Initial {
         isSponsorBlockEnabled,
         const DeepCollectionEquality().hash(_sponsorBlockCategories),
         openLinksInBrowser,
-        isHideFeed,
+        homeFeedMode,
         isAudioFocusEnabled,
         currentProfile,
         const DeepCollectionEquality().hash(_profiles),
@@ -10736,7 +10772,7 @@ abstract class _Initial implements SettingsState {
       required final bool isSponsorBlockEnabled,
       required final List<String> sponsorBlockCategories,
       required final bool openLinksInBrowser,
-      required final bool isHideFeed,
+      required final String homeFeedMode,
       required final bool isAudioFocusEnabled,
       required final String currentProfile,
       required final List<String> profiles,
@@ -10804,9 +10840,9 @@ abstract class _Initial implements SettingsState {
   @override
   List<String> get sponsorBlockCategories; // Open links in external browser
   @override
-  bool get openLinksInBrowser; // Hide feed
+  bool get openLinksInBrowser; // Home feed display mode
   @override
-  bool get isHideFeed; // Audio focus / pause on interruption
+  String get homeFeedMode; // Audio focus / pause on interruption
   @override
   bool get isAudioFocusEnabled; // Profiles
   @override

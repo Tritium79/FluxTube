@@ -9,6 +9,7 @@ class OmniVideoPlayerWidget extends StatelessWidget {
     required String videoId,
     required this.onControllerCreated,
     this.startPosition = 0,
+    this.isLive = false,
   })  : _videoId = videoId,
         _networkUrl = null;
 
@@ -17,6 +18,7 @@ class OmniVideoPlayerWidget extends StatelessWidget {
     required String url,
     required this.onControllerCreated,
     this.startPosition = 0,
+    this.isLive = false,
     bool isHls = false, // kept for API compatibility, player auto-detects
   })  : _networkUrl = url,
         _videoId = null;
@@ -25,6 +27,7 @@ class OmniVideoPlayerWidget extends StatelessWidget {
   final String? _networkUrl;
   final void Function(OmniPlaybackController controller) onControllerCreated;
   final int startPosition;
+  final bool isLive;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +39,8 @@ class OmniVideoPlayerWidget extends StatelessWidget {
         videoUrl: Uri.parse('https://www.youtube.com/watch?v=$_videoId'),
       ).copyWith(
         autoPlay: true,
-        initialPosition: Duration(seconds: startPosition),
+        initialPosition: isLive ? Duration.zero : Duration(seconds: startPosition),
+        allowSeeking: !isLive,
       );
     } else {
       // Network URL mode (for Piped/Invidious/Explode streams)
@@ -44,15 +48,34 @@ class OmniVideoPlayerWidget extends StatelessWidget {
         videoUrl: Uri.parse(_networkUrl!),
       ).copyWith(
         autoPlay: true,
-        initialPosition: Duration(seconds: startPosition),
+        initialPosition: isLive ? Duration.zero : Duration(seconds: startPosition),
+        allowSeeking: !isLive,
       );
     }
+
+    // Configure UI visibility for live streams
+    final uiOptions = isLive
+        ? const PlayerUIVisibilityOptions(
+            showSeekBar: false,
+            showCurrentTime: false,
+            showDurationTime: false,
+            showRemainingTime: false,
+            showLiveIndicator: true,
+            showReplayButton: false,
+            showPlaybackSpeedButton: false,
+            showScrubbingThumbnailPreview: false,
+            enableForwardGesture: false,
+            enableBackwardGesture: false,
+          )
+        : const PlayerUIVisibilityOptions();
 
     return AspectRatio(
       aspectRatio: 16 / 9,
       child: OmniVideoPlayer(
         configuration: VideoPlayerConfiguration(
           videoSourceConfiguration: sourceConfig,
+          playerUIVisibilityOptions: uiOptions,
+          liveLabel: 'LIVE',
         ),
         callbacks: VideoPlayerCallbacks(
           onControllerCreated: onControllerCreated,

@@ -369,6 +369,7 @@ class _InvidiousScreenWatchState extends State<InvidiousScreenWatch> {
       // Don't set start position for live streams
       startPosition: isLive ? 0 : startPosition,
       isHls: isHls,
+      isLive: isLive,
       onControllerCreated: (controller) {
         // Controller can be used for playback position tracking if needed
       },

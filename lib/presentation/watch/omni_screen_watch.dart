@@ -93,6 +93,62 @@ class _OmniScreenWatchState extends State<OmniScreenWatch> {
     }
   }
 
+  Widget _buildVideoPlayer(WatchState state) {
+    // Wait until we know the live status before creating the player
+    final bool isDataLoaded = state.fetchExplodeWatchInfoStatus == ApiStatus.loaded;
+
+    // Show loading placeholder while waiting for data
+    if (!isDataLoaded) {
+      return AspectRatio(
+        aspectRatio: 16 / 9,
+        child: Container(
+          color: Colors.black,
+          child: cIndicator(context),
+        ),
+      );
+    }
+
+    final isLive = state.explodeWatchResp.isLive;
+
+    // Configure UI visibility for live streams
+    final uiOptions = isLive
+        ? const PlayerUIVisibilityOptions(
+            showSeekBar: false,
+            showCurrentTime: false,
+            showDurationTime: false,
+            showRemainingTime: false,
+            showLiveIndicator: true,
+            showReplayButton: false,
+            showPlaybackSpeedButton: false,
+            showScrubbingThumbnailPreview: false,
+            enableForwardGesture: false,
+            enableBackwardGesture: false,
+          )
+        : const PlayerUIVisibilityOptions();
+
+    return AspectRatio(
+      aspectRatio: 16 / 9,
+      child: OmniVideoPlayer(
+        // Key to ensure player recreates if video ID changes
+        key: ValueKey('${widget.id}_$isLive'),
+        configuration: VideoPlayerConfiguration(
+          videoSourceConfiguration: VideoSourceConfiguration.youtube(
+            videoUrl: Uri.parse('https://www.youtube.com/watch?v=${widget.id}'),
+          ).copyWith(
+            autoPlay: true,
+            initialPosition: isLive ? Duration.zero : Duration(seconds: _startPosition),
+            allowSeeking: !isLive,
+          ),
+          playerUIVisibilityOptions: uiOptions,
+          liveLabel: 'LIVE',
+        ),
+        callbacks: VideoPlayerCallbacks(
+          onControllerCreated: _onControllerCreated,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final locals = S.of(context);
@@ -172,21 +228,7 @@ class _OmniScreenWatchState extends State<OmniScreenWatch> {
                                   );
                                 });
                               },
-                              child: AspectRatio(
-                                aspectRatio: 16 / 9,
-                                child: OmniVideoPlayer(
-                                  configuration: VideoPlayerConfiguration(
-                                    videoSourceConfiguration:
-                                        VideoSourceConfiguration.youtube(
-                                      videoUrl: Uri.parse(
-                                          'https://www.youtube.com/watch?v=${widget.id}'),
-                                    ).copyWith(autoPlay: true),
-                                  ),
-                                  callbacks: VideoPlayerCallbacks(
-                                    onControllerCreated: _onControllerCreated,
-                                  ),
-                                ),
-                              ),
+                              child: _buildVideoPlayer(state),
                             ),
                             _buildVideoInfo(
                                 context, state, savedState, settingsState,

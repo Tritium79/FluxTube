@@ -361,6 +361,7 @@ class _ExplodeScreenWatchState extends State<ExplodeScreenWatch> {
       // Don't set start position for live streams
       startPosition: isLive ? 0 : startPosition,
       isHls: isLive,
+      isLive: isLive,
       onControllerCreated: (controller) {
         // Controller can be used for playback position tracking if needed
       },

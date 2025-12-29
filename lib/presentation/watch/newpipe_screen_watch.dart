@@ -341,6 +341,7 @@ class _NewPipeScreenWatchState extends State<NewPipeScreenWatch> {
       url: streamUrl,
       startPosition: isLive ? 0 : startPosition,
       isHls: isHls,
+      isLive: isLive,
       onControllerCreated: (controller) {},
     );
   }

@@ -26,12 +26,13 @@ class ProfilesSettingsSection extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .bodyMedium
-                  ?.copyWith(fontSize: 16),
+                  ?.copyWith(fontSize: 14),
             ),
             kHeightBox5,
             Text(
               locals.profilesDescription,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    fontSize: 12,
                     color: isDarkMode
                         ? kWhiteColor.withValues(alpha: 0.6)
                         : kGreyColor,
@@ -43,13 +44,12 @@ class ProfilesSettingsSection extends StatelessWidget {
               final isDefault = profile == 'default';
               return Card(
                 margin: const EdgeInsets.only(bottom: 8),
-                color: isSelected
-                    ? (isDarkMode
+                color: isDarkMode
+                    ? (isSelected
                         ? kRedColor.withValues(alpha: 0.2)
-                        : kRedColor.withValues(alpha: 0.1))
-                    : (isDarkMode
-                        ? kWhiteColor.withValues(alpha: 0.05)
-                        : kWhiteColor),
+                        : kWhiteColor.withValues(alpha: 0.05))
+                    : Colors.transparent,
+                elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                   side: BorderSide(
@@ -57,19 +57,21 @@ class ProfilesSettingsSection extends StatelessWidget {
                         ? kRedColor
                         : (isDarkMode
                             ? kWhiteColor.withValues(alpha: 0.1)
-                            : kGreyOpacityColor!),
+                            : kGreyColor!.withValues(alpha: 0.3)),
                     width: isSelected ? 2 : 1,
                   ),
                 ),
                 child: ListTile(
                   contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+                  visualDensity: VisualDensity.compact,
                   title: Row(
                     children: [
                       Text(
                         isDefault ? locals.defaultProfile : profile,
                         style:
-                            Theme.of(context).textTheme.titleMedium?.copyWith(
+                            Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  fontSize: 14,
                                   fontWeight: isSelected
                                       ? FontWeight.w600
                                       : FontWeight.normal,
@@ -79,10 +81,10 @@ class ProfilesSettingsSection extends StatelessWidget {
                         kWidthBox10,
                         Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 2),
+                              horizontal: 6, vertical: 2),
                           decoration: BoxDecoration(
-                            color: kRedColor.withValues(alpha: 0.2),
-                            borderRadius: BorderRadius.circular(8),
+                            color: kRedColor.withValues(alpha: 0.15),
+                            borderRadius: BorderRadius.circular(6),
                           ),
                           child: Text(
                             locals.profileInUse,
@@ -90,6 +92,7 @@ class ProfilesSettingsSection extends StatelessWidget {
                                 .textTheme
                                 .bodySmall
                                 ?.copyWith(
+                                  fontSize: 10,
                                   color: kRedColor,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -101,6 +104,7 @@ class ProfilesSettingsSection extends StatelessWidget {
                   leading: Icon(
                     isSelected ? Icons.person : Icons.person_outline,
                     color: isSelected ? kRedColor : null,
+                    size: 20,
                   ),
                   trailing: !isDefault
                       ? PopupMenuButton<String>(
@@ -147,7 +151,7 @@ class ProfilesSettingsSection extends StatelessWidget {
                           ],
                         )
                       : (isSelected
-                          ? Icon(Icons.check_circle, color: kRedColor)
+                          ? Icon(Icons.check_circle, color: kRedColor, size: 20)
                           : null),
                   onTap: () {
                     if (!isSelected) {
@@ -161,20 +165,23 @@ class ProfilesSettingsSection extends StatelessWidget {
             kHeightBox5,
             OutlinedButton.icon(
               onPressed: () => _showAddProfileDialog(context, locals),
-              icon: const Icon(Icons.add),
-              label: Text(locals.addProfile),
+              icon: const Icon(Icons.add, size: 18),
+              label: Text(
+                locals.addProfile,
+                style: const TextStyle(fontSize: 13),
+              ),
               style: OutlinedButton.styleFrom(
                 foregroundColor: isDarkMode ? kWhiteColor : kBlackColor,
                 side: BorderSide(
                   color: isDarkMode
                       ? kWhiteColor.withValues(alpha: 0.3)
-                      : kGreyColor!.withValues(alpha: 0.5),
+                      : kGreyColor!.withValues(alpha: 0.4),
                 ),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(10),
                 ),
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               ),
             ),
           ],
@@ -215,15 +222,22 @@ class ProfilesSettingsSection extends StatelessWidget {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: Text(locals.addProfile),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        title: Text(
+          locals.addProfile,
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+        ),
         content: TextField(
           controller: controller,
+          style: const TextStyle(fontSize: 14),
           decoration: InputDecoration(
             labelText: locals.profileName,
+            labelStyle: const TextStyle(fontSize: 13),
             hintText: 'Enter profile name',
+            hintStyle: const TextStyle(fontSize: 13),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(10),
             ),
           ),
           autofocus: true,
@@ -232,7 +246,7 @@ class ProfilesSettingsSection extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Cancel'),
+            child: const Text('Cancel', style: TextStyle(fontSize: 13)),
           ),
           FilledButton(
             onPressed: () {
@@ -244,7 +258,7 @@ class ProfilesSettingsSection extends StatelessWidget {
               Navigator.pop(ctx);
             },
             style: FilledButton.styleFrom(backgroundColor: kRedColor),
-            child: const Text('Add'),
+            child: const Text('Add', style: TextStyle(fontSize: 13)),
           ),
         ],
       ),
@@ -257,15 +271,22 @@ class ProfilesSettingsSection extends StatelessWidget {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: Text(locals.renameProfile),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        title: Text(
+          locals.renameProfile,
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+        ),
         content: TextField(
           controller: controller,
+          style: const TextStyle(fontSize: 14),
           decoration: InputDecoration(
             labelText: locals.newProfileName,
+            labelStyle: const TextStyle(fontSize: 13),
             hintText: 'Enter new name',
+            hintStyle: const TextStyle(fontSize: 13),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(10),
             ),
           ),
           autofocus: true,
@@ -274,7 +295,7 @@ class ProfilesSettingsSection extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Cancel'),
+            child: const Text('Cancel', style: TextStyle(fontSize: 13)),
           ),
           FilledButton(
             onPressed: () {
@@ -287,7 +308,7 @@ class ProfilesSettingsSection extends StatelessWidget {
               Navigator.pop(ctx);
             },
             style: FilledButton.styleFrom(backgroundColor: kRedColor),
-            child: const Text('Rename'),
+            child: const Text('Rename', style: TextStyle(fontSize: 13)),
           ),
         ],
       ),

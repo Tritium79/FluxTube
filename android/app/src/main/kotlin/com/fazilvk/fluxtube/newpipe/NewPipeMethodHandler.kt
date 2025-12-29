@@ -77,6 +77,10 @@ class NewPipeMethodHandler : MethodChannel.MethodCallHandler {
                 val url = "https://www.youtube.com/watch?v=$videoId"
                 val streamInfo = StreamInfo.getInfo(ServiceList.YouTube, url)
 
+                // Get the best quality thumbnail
+                val bestThumbnail = streamInfo.thumbnails.maxByOrNull { it.width * it.height }?.url
+                    ?: streamInfo.thumbnails.lastOrNull()?.url
+
                 val response = mapOf(
                     "id" to streamInfo.id,
                     "title" to streamInfo.name,
@@ -86,7 +90,7 @@ class NewPipeMethodHandler : MethodChannel.MethodCallHandler {
                     "uploaderAvatarUrl" to streamInfo.uploaderAvatars.firstOrNull()?.url,
                     "uploaderVerified" to streamInfo.isUploaderVerified,
                     "uploaderSubscriberCount" to streamInfo.uploaderSubscriberCount,
-                    "thumbnailUrl" to streamInfo.thumbnails.firstOrNull()?.url,
+                    "thumbnailUrl" to bestThumbnail,
                     "duration" to streamInfo.duration,
                     "viewCount" to streamInfo.viewCount,
                     "likeCount" to streamInfo.likeCount,
@@ -269,12 +273,18 @@ class NewPipeMethodHandler : MethodChannel.MethodCallHandler {
                     }
                 }
 
+                // Get best quality avatar and banner
+                val bestAvatar = channelInfo.avatars.maxByOrNull { it.width * it.height }?.url
+                    ?: channelInfo.avatars.lastOrNull()?.url
+                val bestBanner = channelInfo.banners.maxByOrNull { it.width * it.height }?.url
+                    ?: channelInfo.banners.lastOrNull()?.url
+
                 val response = mapOf(
                     "id" to channelInfo.id,
                     "name" to channelInfo.name,
                     "description" to channelInfo.description,
-                    "avatarUrl" to channelInfo.avatars.firstOrNull()?.url,
-                    "bannerUrl" to channelInfo.banners.firstOrNull()?.url,
+                    "avatarUrl" to bestAvatar,
+                    "bannerUrl" to bestBanner,
                     "subscriberCount" to channelInfo.subscriberCount,
                     "isVerified" to channelInfo.isVerified,
                     "videos" to initialVideos,
@@ -405,13 +415,19 @@ class NewPipeMethodHandler : MethodChannel.MethodCallHandler {
 
                 val playlistInfo = PlaylistInfo.getInfo(ServiceList.YouTube, url)
 
+                // Get best quality thumbnails
+                val bestPlaylistThumbnail = playlistInfo.thumbnails.maxByOrNull { it.width * it.height }?.url
+                    ?: playlistInfo.thumbnails.lastOrNull()?.url
+                val bestUploaderAvatar = playlistInfo.uploaderAvatars.maxByOrNull { it.width * it.height }?.url
+                    ?: playlistInfo.uploaderAvatars.lastOrNull()?.url
+
                 val response = mapOf(
                     "id" to playlistInfo.id,
                     "name" to playlistInfo.name,
-                    "thumbnailUrl" to playlistInfo.thumbnails.firstOrNull()?.url,
+                    "thumbnailUrl" to bestPlaylistThumbnail,
                     "uploaderName" to playlistInfo.uploaderName,
                     "uploaderUrl" to playlistInfo.uploaderUrl,
-                    "uploaderAvatarUrl" to playlistInfo.uploaderAvatars.firstOrNull()?.url,
+                    "uploaderAvatarUrl" to bestUploaderAvatar,
                     "streamCount" to playlistInfo.streamCount,
                     "videos" to playlistInfo.relatedItems.map { mapInfoItem(it) },
                     "nextPage" to playlistInfo.nextPage?.url
@@ -479,10 +495,14 @@ class NewPipeMethodHandler : MethodChannel.MethodCallHandler {
     }
 
     private fun mapInfoItem(item: InfoItem): Map<String, Any?> {
+        // Get the best quality thumbnail (last one is usually highest resolution)
+        val bestThumbnail = item.thumbnails.maxByOrNull { it.width * it.height }?.url
+            ?: item.thumbnails.lastOrNull()?.url
+
         return mapOf(
             "url" to item.url,
             "name" to item.name,
-            "thumbnailUrl" to item.thumbnails.firstOrNull()?.url,
+            "thumbnailUrl" to bestThumbnail,
             "type" to item.infoType.name,
             // Stream-specific fields
             "uploaderName" to (item as? org.schabi.newpipe.extractor.stream.StreamInfoItem)?.uploaderName,

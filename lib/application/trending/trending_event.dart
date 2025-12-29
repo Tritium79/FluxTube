@@ -11,4 +11,9 @@ class TrendingEvent with _$TrendingEvent {
       {required List<Subscribe> channels}) = GetHomeFeedData;
   const factory TrendingEvent.getForcedHomeFeedData(
       {required List<Subscribe> channels}) = GetForcedHomeFeedData;
+  // NewPipe feed
+  const factory TrendingEvent.getNewPipeHomeFeedData(
+      {required List<Subscribe> channels}) = GetNewPipeHomeFeedData;
+  const factory TrendingEvent.getForcedNewPipeHomeFeedData(
+      {required List<Subscribe> channels}) = GetForcedNewPipeHomeFeedData;
 }

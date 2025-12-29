@@ -40,7 +40,8 @@ class ScreenChannel extends StatelessWidget {
       builder: (context, subscribeState) {
         return BlocBuilder<ChannelBloc, ChannelState>(
           buildWhen: (previous, current) =>
-              previous.channelDetailsFetchStatus != current.channelDetailsFetchStatus ||
+              previous.channelDetailsFetchStatus !=
+                  current.channelDetailsFetchStatus ||
               previous.pipedChannelResp != current.pipedChannelResp ||
               previous.invidiousChannelResp != current.invidiousChannelResp,
           builder: (context, state) {
@@ -96,38 +97,22 @@ class ScreenChannel extends StatelessWidget {
                     child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      height: 230,
-                      child: Stack(
-                        children: [
-                          ChannelBannerWidget(
-                              width: _width,
-                              name: state.invidiousChannelResp!.author,
-                              bannerUrl: state.invidiousChannelResp
-                                  ?.authorBanners?.last.url),
-                          Align(
-                            alignment: Alignment.bottomLeft,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 20, right: 20),
-                              child: ChannelWidget(
-                                channelName: state.invidiousChannelResp!.author,
-                                isVerified:
-                                    state.invidiousChannelResp!.authorVerified,
-                                subscriberCount:
-                                    state.invidiousChannelResp!.subCount,
-                                thumbnail: state.invidiousChannelResp
-                                        ?.authorThumbnails?.last.url ??
-                                    _avatarUrl,
-                                isSubscribed: _isSubscribed,
-                                channelId: _channelId ?? '',
-                                locals: locals,
-                                isTapEnabled: false,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                    ChannelBannerWidget(
+                        width: _width,
+                        name: state.invidiousChannelResp!.author,
+                        bannerUrl: state
+                            .invidiousChannelResp?.authorBanners?.last.url),
+                    ChannelWidget(
+                      channelName: state.invidiousChannelResp!.author,
+                      isVerified: state.invidiousChannelResp!.authorVerified,
+                      subscriberCount: state.invidiousChannelResp!.subCount,
+                      thumbnail: state.invidiousChannelResp?.authorThumbnails
+                              ?.last.url ??
+                          _avatarUrl,
+                      isSubscribed: _isSubscribed,
+                      channelId: _channelId ?? '',
+                      locals: locals,
+                      isTapEnabled: false,
                     ),
                     Expanded(
                         child: InvidiousChannelRelatedVideoSection(
@@ -159,8 +144,8 @@ class ScreenChannel extends StatelessWidget {
                         // style: ButtonStyle(
                         //     backgroundColor:
                         //         WidgetStatePropertyAll(kGreyOpacityColor)),
-                        onPressed: () async =>
-                            await urlLaunchWithSettings(context, '$kYTChannelUrl${channelInfo.id}'),
+                        onPressed: () async => await urlLaunchWithSettings(
+                            context, '$kYTChannelUrl${channelInfo.id}'),
                         icon: SvgPicture.asset(
                           'assets/icons/youtube.svg',
                           height: 25,
@@ -172,33 +157,22 @@ class ScreenChannel extends StatelessWidget {
                   child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: 230,
-                    child: Stack(
-                      children: [
-                        ChannelBannerWidget(
-                            width: _width,
-                            name: channelInfo.name,
-                            bannerUrl: channelInfo.bannerUrl),
-                        Align(
-                          alignment: Alignment.bottomLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 20, right: 20),
-                            child: ChannelWidget(
-                              channelName: channelInfo.name,
-                              isVerified: channelInfo.verified,
-                              subscriberCount: channelInfo.subscriberCount,
-                              thumbnail: channelInfo.avatarUrl ?? _avatarUrl,
-                              isSubscribed: _isSubscribed,
-                              channelId: _channelId ?? '',
-                              locals: locals,
-                              isTapEnabled: false,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                  ChannelBannerWidget(
+                      width: _width,
+                      name: channelInfo.name,
+                      bannerUrl: channelInfo.bannerUrl),
+                  SizedBox(height: 10),
+                  ChannelWidget(
+                    channelName: channelInfo.name,
+                    isVerified: channelInfo.verified,
+                    subscriberCount: channelInfo.subscriberCount,
+                    thumbnail: channelInfo.avatarUrl ?? _avatarUrl,
+                    isSubscribed: _isSubscribed,
+                    channelId: _channelId ?? '',
+                    locals: locals,
+                    isTapEnabled: false,
                   ),
+                  SizedBox(height: 10),
                   Expanded(
                       child: ChannelRelatedVideoSection(
                           channelId: _channelId ?? '',

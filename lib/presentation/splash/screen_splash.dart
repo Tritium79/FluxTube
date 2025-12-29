@@ -93,8 +93,26 @@ class SplashScreenState extends State<SplashScreen> {
 
     if (!state.initialized) return;
 
+    final bool isNewPipe = state.ytService == YouTubeServices.newpipe.name;
     final bool isInvidious = state.ytService == YouTubeServices.invidious.name;
 
+    // NewPipe doesn't need instance selection - skip directly
+    if (isNewPipe) {
+      if ((state.settingsStatus == ApiStatus.loaded ||
+              state.settingsStatus == ApiStatus.error) &&
+          (subscribeState.subscribeStatus == ApiStatus.loaded ||
+              subscribeState.subscribeStatus == ApiStatus.error)) {
+        await Future.delayed(const Duration());
+        if (mounted) {
+          Router.neglect(context, () {
+            context.goNamed('main');
+          });
+        }
+      }
+      return;
+    }
+
+    // For other services, fetch instances
     if (isInvidious) {
       if (state.invidiousInstances.isEmpty &&
           state.invidiousInstanceStatus == ApiStatus.initial) {

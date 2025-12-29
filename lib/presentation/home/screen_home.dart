@@ -6,6 +6,7 @@ import 'package:fluxtube/application/application.dart';
 import 'package:fluxtube/core/constants.dart';
 import 'package:fluxtube/core/enums.dart';
 import 'package:fluxtube/generated/l10n.dart';
+import 'package:fluxtube/presentation/home/widgets/newpipe/feed_section.dart';
 import 'package:fluxtube/presentation/trending/widgets/invidious/trending_videos_section.dart';
 import 'package:fluxtube/presentation/trending/widgets/newpipe/trending_videos_section.dart';
 import 'package:fluxtube/presentation/trending/widgets/piped/trending_videos_section.dart';
@@ -41,8 +42,14 @@ class ScreenHome extends StatelessWidget {
                     subscribeState.oldList.length !=
                         subscribeState.subscribedChannels.length) {
                   log("oldList: ${subscribeState.oldList.length} & subscribedChannels: ${subscribeState.subscribedChannels.length}");
-                  trendingBloc.add(GetForcedHomeFeedData(
-                      channels: subscribeState.subscribedChannels));
+                  // Use the appropriate feed based on service type
+                  if (settingsState.ytService == YouTubeServices.newpipe.name) {
+                    trendingBloc.add(GetForcedNewPipeHomeFeedData(
+                        channels: subscribeState.subscribedChannels));
+                  } else {
+                    trendingBloc.add(GetForcedHomeFeedData(
+                        channels: subscribeState.subscribedChannels));
+                  }
                   BlocProvider.of<SubscribeBloc>(context).add(
                       SubscribeEvent.updateSubscribeOldList(
                           subscribedChannels:
@@ -56,7 +63,9 @@ class ScreenHome extends StatelessWidget {
                             current.fetchInvidiousTrendingStatus ||
                         previous.fetchNewPipeTrendingStatus !=
                             current.fetchNewPipeTrendingStatus ||
-                        previous.fetchFeedStatus != current.fetchFeedStatus;
+                        previous.fetchFeedStatus != current.fetchFeedStatus ||
+                        previous.fetchNewPipeFeedStatus != current.fetchNewPipeFeedStatus ||
+                        previous.newPipeFeedResult != current.newPipeFeedResult;
                   },
                   builder: (context, trendingState) {
                     if (settingsState.ytService ==
@@ -193,6 +202,16 @@ class ScreenHome extends StatelessWidget {
       });
     }
 
+    // Fetch NewPipe feed if subscriptions exist and feed is empty
+    if (subscribeState.subscribedChannels.isNotEmpty &&
+        trendingState.newPipeFeedResult.isEmpty &&
+        trendingState.fetchNewPipeFeedStatus == ApiStatus.initial) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        trendingBloc.add(TrendingEvent.getNewPipeHomeFeedData(
+            channels: subscribeState.subscribedChannels));
+      });
+    }
+
     if (trendingState.fetchNewPipeTrendingStatus == ApiStatus.loading ||
         trendingState.fetchNewPipeTrendingStatus == ApiStatus.initial) {
       return _buildLoadingList();
@@ -210,13 +229,13 @@ class ScreenHome extends StatelessWidget {
 
     // Feed Only mode - show feed or empty state
     if (homeFeedMode == HomeFeedMode.feedOnly.name) {
-      if (trendingState.fetchFeedStatus == ApiStatus.loading) {
+      if (trendingState.fetchNewPipeFeedStatus == ApiStatus.loading) {
         return _buildLoadingList();
       }
-      if (trendingState.feedResult.isEmpty) {
+      if (trendingState.newPipeFeedResult.isEmpty) {
         return _buildEmptySubscriptionState(context, locals);
       }
-      return _buildFeedSection(
+      return _buildNewPipeFeedSection(
         trendingState,
         locals,
         subscribeState,
@@ -225,13 +244,13 @@ class ScreenHome extends StatelessWidget {
     }
 
     // Auto mode (feedOrTrending) - show feed if available, otherwise trending
-    if (trendingState.fetchFeedStatus == ApiStatus.loading) {
+    if (trendingState.fetchNewPipeFeedStatus == ApiStatus.loading) {
       return _buildLoadingList();
     }
 
-    if (trendingState.feedResult.isEmpty ||
-        trendingState.fetchFeedStatus == ApiStatus.error) {
-      log("Feed Error or empty - showing NewPipe trending");
+    if (trendingState.newPipeFeedResult.isEmpty ||
+        trendingState.fetchNewPipeFeedStatus == ApiStatus.error) {
+      log("NewPipe Feed Error or empty - showing NewPipe trending");
       return _buildErrorOrTrendingSection(
         context,
         trendingState,
@@ -240,7 +259,7 @@ class ScreenHome extends StatelessWidget {
       );
     }
 
-    return _buildFeedSection(
+    return _buildNewPipeFeedSection(
       trendingState,
       locals,
       subscribeState,
@@ -409,6 +428,26 @@ class ScreenHome extends StatelessWidget {
         ));
       },
       child: FeedVideoSection(
+        trendingState: trendingState,
+        locals: locals,
+        subscribeState: subscribeState,
+      ),
+    );
+  }
+
+  Widget _buildNewPipeFeedSection(
+    TrendingState trendingState,
+    S locals,
+    SubscribeState subscribeState,
+    TrendingBloc trendingBloc,
+  ) {
+    return RefreshIndicator(
+      onRefresh: () async {
+        trendingBloc.add(TrendingEvent.getForcedNewPipeHomeFeedData(
+          channels: subscribeState.subscribedChannels,
+        ));
+      },
+      child: NewPipeFeedVideoSection(
         trendingState: trendingState,
         locals: locals,
         subscribeState: subscribeState,

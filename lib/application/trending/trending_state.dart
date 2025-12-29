@@ -20,6 +20,8 @@ class TrendingState with _$TrendingState {
 
     required ApiStatus fetchNewPipeTrendingStatus,
     required List<NewPipeTrendingResp> newPipeTrendingResult,
+    required ApiStatus fetchNewPipeFeedStatus,
+    required List<NewPipeTrendingResp> newPipeFeedResult,
   }) = _Initial;
 
   factory TrendingState.initialize() => const TrendingState(
@@ -41,5 +43,7 @@ class TrendingState with _$TrendingState {
 
         fetchNewPipeTrendingStatus: ApiStatus.initial,
         newPipeTrendingResult: [],
+        fetchNewPipeFeedStatus: ApiStatus.initial,
+        newPipeFeedResult: [],
       );
 }

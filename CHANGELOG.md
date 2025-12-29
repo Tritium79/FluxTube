@@ -4,9 +4,13 @@
 
 - Added NewPipe Extractor as the recommended YouTube service (Android only).
 - NewPipe provides direct extraction without requiring third-party instances.
+- NewPipe now supports home feed, trending tab, search with suggestions, and all filters.
+- Improved thumbnail quality for NewPipe (uses highest resolution available).
+- Skip instance selection on splash screen for NewPipe users (faster startup).
 - Added OmniPlayer (experimental cross-platform video player).
 - Added user profiles with separate subscriptions and history per profile.
 - Added auto-check instances feature for automatic failover.
+- Improved instances screen with auto-connect button and better UI.
 - Added playlist support.
 - Added home feed mode options (Auto/Subscriptions Only/Trending Only).
 - Added video fit mode, skip interval, and audio focus settings.

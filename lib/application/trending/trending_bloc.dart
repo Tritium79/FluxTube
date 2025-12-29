@@ -120,6 +120,50 @@ class TrendingBloc extends Bloc<TrendingEvent, TrendingState> {
       });
       emit(_state);
     });
+
+    // NewPipe feed call
+    on<GetNewPipeHomeFeedData>((event, emit) async {
+      if (state.newPipeFeedResult.isNotEmpty) {
+        return emit(state);
+      }
+
+      //make loading
+      emit(state.copyWith(fetchNewPipeFeedStatus: ApiStatus.loading));
+
+      final result =
+          await homeServices.getNewPipeHomeFeedData(channels: event.channels);
+
+      final _state = result.fold(
+          (MainFailure failure) =>
+              state.copyWith(fetchNewPipeFeedStatus: ApiStatus.error),
+          (List<NewPipeTrendingResp> resp) {
+        subscribeBloc.add(SubscribeEvent.updateSubscribeOldList(
+            subscribedChannels: event.channels));
+        return state.copyWith(
+            newPipeFeedResult: resp, fetchNewPipeFeedStatus: ApiStatus.loaded);
+      });
+      emit(_state);
+    });
+
+    // NewPipe get data when refresh
+    on<GetForcedNewPipeHomeFeedData>((event, emit) async {
+      //make loading
+      emit(state.copyWith(fetchNewPipeFeedStatus: ApiStatus.loading));
+
+      final result =
+          await homeServices.getNewPipeHomeFeedData(channels: event.channels);
+
+      final _state = result.fold(
+          (MainFailure failure) =>
+              state.copyWith(fetchNewPipeFeedStatus: ApiStatus.error),
+          (List<NewPipeTrendingResp> resp) {
+        subscribeBloc.add(SubscribeEvent.updateSubscribeOldList(
+            subscribedChannels: event.channels));
+        return state.copyWith(
+            newPipeFeedResult: resp, fetchNewPipeFeedStatus: ApiStatus.loaded);
+      });
+      emit(_state);
+    });
   }
 
   _fetchPipedTrendingInfo(event, emit) async {

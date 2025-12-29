@@ -24,6 +24,9 @@ mixin _$TrendingEvent {
         getForcedTrendingData,
     required TResult Function(List<Subscribe> channels) getHomeFeedData,
     required TResult Function(List<Subscribe> channels) getForcedHomeFeedData,
+    required TResult Function(List<Subscribe> channels) getNewPipeHomeFeedData,
+    required TResult Function(List<Subscribe> channels)
+        getForcedNewPipeHomeFeedData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -32,6 +35,8 @@ mixin _$TrendingEvent {
     TResult? Function(String serviceType, String region)? getForcedTrendingData,
     TResult? Function(List<Subscribe> channels)? getHomeFeedData,
     TResult? Function(List<Subscribe> channels)? getForcedHomeFeedData,
+    TResult? Function(List<Subscribe> channels)? getNewPipeHomeFeedData,
+    TResult? Function(List<Subscribe> channels)? getForcedNewPipeHomeFeedData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -40,6 +45,8 @@ mixin _$TrendingEvent {
     TResult Function(String serviceType, String region)? getForcedTrendingData,
     TResult Function(List<Subscribe> channels)? getHomeFeedData,
     TResult Function(List<Subscribe> channels)? getForcedHomeFeedData,
+    TResult Function(List<Subscribe> channels)? getNewPipeHomeFeedData,
+    TResult Function(List<Subscribe> channels)? getForcedNewPipeHomeFeedData,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -51,6 +58,10 @@ mixin _$TrendingEvent {
     required TResult Function(GetHomeFeedData value) getHomeFeedData,
     required TResult Function(GetForcedHomeFeedData value)
         getForcedHomeFeedData,
+    required TResult Function(GetNewPipeHomeFeedData value)
+        getNewPipeHomeFeedData,
+    required TResult Function(GetForcedNewPipeHomeFeedData value)
+        getForcedNewPipeHomeFeedData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -59,6 +70,9 @@ mixin _$TrendingEvent {
     TResult? Function(GetForcedTrendingData value)? getForcedTrendingData,
     TResult? Function(GetHomeFeedData value)? getHomeFeedData,
     TResult? Function(GetForcedHomeFeedData value)? getForcedHomeFeedData,
+    TResult? Function(GetNewPipeHomeFeedData value)? getNewPipeHomeFeedData,
+    TResult? Function(GetForcedNewPipeHomeFeedData value)?
+        getForcedNewPipeHomeFeedData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -67,6 +81,9 @@ mixin _$TrendingEvent {
     TResult Function(GetForcedTrendingData value)? getForcedTrendingData,
     TResult Function(GetHomeFeedData value)? getHomeFeedData,
     TResult Function(GetForcedHomeFeedData value)? getForcedHomeFeedData,
+    TResult Function(GetNewPipeHomeFeedData value)? getNewPipeHomeFeedData,
+    TResult Function(GetForcedNewPipeHomeFeedData value)?
+        getForcedNewPipeHomeFeedData,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -178,6 +195,9 @@ class _$GetTrendingDataImpl implements GetTrendingData {
         getForcedTrendingData,
     required TResult Function(List<Subscribe> channels) getHomeFeedData,
     required TResult Function(List<Subscribe> channels) getForcedHomeFeedData,
+    required TResult Function(List<Subscribe> channels) getNewPipeHomeFeedData,
+    required TResult Function(List<Subscribe> channels)
+        getForcedNewPipeHomeFeedData,
   }) {
     return getTrendingData(serviceType, region);
   }
@@ -189,6 +209,8 @@ class _$GetTrendingDataImpl implements GetTrendingData {
     TResult? Function(String serviceType, String region)? getForcedTrendingData,
     TResult? Function(List<Subscribe> channels)? getHomeFeedData,
     TResult? Function(List<Subscribe> channels)? getForcedHomeFeedData,
+    TResult? Function(List<Subscribe> channels)? getNewPipeHomeFeedData,
+    TResult? Function(List<Subscribe> channels)? getForcedNewPipeHomeFeedData,
   }) {
     return getTrendingData?.call(serviceType, region);
   }
@@ -200,6 +222,8 @@ class _$GetTrendingDataImpl implements GetTrendingData {
     TResult Function(String serviceType, String region)? getForcedTrendingData,
     TResult Function(List<Subscribe> channels)? getHomeFeedData,
     TResult Function(List<Subscribe> channels)? getForcedHomeFeedData,
+    TResult Function(List<Subscribe> channels)? getNewPipeHomeFeedData,
+    TResult Function(List<Subscribe> channels)? getForcedNewPipeHomeFeedData,
     required TResult orElse(),
   }) {
     if (getTrendingData != null) {
@@ -217,6 +241,10 @@ class _$GetTrendingDataImpl implements GetTrendingData {
     required TResult Function(GetHomeFeedData value) getHomeFeedData,
     required TResult Function(GetForcedHomeFeedData value)
         getForcedHomeFeedData,
+    required TResult Function(GetNewPipeHomeFeedData value)
+        getNewPipeHomeFeedData,
+    required TResult Function(GetForcedNewPipeHomeFeedData value)
+        getForcedNewPipeHomeFeedData,
   }) {
     return getTrendingData(this);
   }
@@ -228,6 +256,9 @@ class _$GetTrendingDataImpl implements GetTrendingData {
     TResult? Function(GetForcedTrendingData value)? getForcedTrendingData,
     TResult? Function(GetHomeFeedData value)? getHomeFeedData,
     TResult? Function(GetForcedHomeFeedData value)? getForcedHomeFeedData,
+    TResult? Function(GetNewPipeHomeFeedData value)? getNewPipeHomeFeedData,
+    TResult? Function(GetForcedNewPipeHomeFeedData value)?
+        getForcedNewPipeHomeFeedData,
   }) {
     return getTrendingData?.call(this);
   }
@@ -239,6 +270,9 @@ class _$GetTrendingDataImpl implements GetTrendingData {
     TResult Function(GetForcedTrendingData value)? getForcedTrendingData,
     TResult Function(GetHomeFeedData value)? getHomeFeedData,
     TResult Function(GetForcedHomeFeedData value)? getForcedHomeFeedData,
+    TResult Function(GetNewPipeHomeFeedData value)? getNewPipeHomeFeedData,
+    TResult Function(GetForcedNewPipeHomeFeedData value)?
+        getForcedNewPipeHomeFeedData,
     required TResult orElse(),
   }) {
     if (getTrendingData != null) {
@@ -349,6 +383,9 @@ class _$GetForcedTrendingDataImpl implements GetForcedTrendingData {
         getForcedTrendingData,
     required TResult Function(List<Subscribe> channels) getHomeFeedData,
     required TResult Function(List<Subscribe> channels) getForcedHomeFeedData,
+    required TResult Function(List<Subscribe> channels) getNewPipeHomeFeedData,
+    required TResult Function(List<Subscribe> channels)
+        getForcedNewPipeHomeFeedData,
   }) {
     return getForcedTrendingData(serviceType, region);
   }
@@ -360,6 +397,8 @@ class _$GetForcedTrendingDataImpl implements GetForcedTrendingData {
     TResult? Function(String serviceType, String region)? getForcedTrendingData,
     TResult? Function(List<Subscribe> channels)? getHomeFeedData,
     TResult? Function(List<Subscribe> channels)? getForcedHomeFeedData,
+    TResult? Function(List<Subscribe> channels)? getNewPipeHomeFeedData,
+    TResult? Function(List<Subscribe> channels)? getForcedNewPipeHomeFeedData,
   }) {
     return getForcedTrendingData?.call(serviceType, region);
   }
@@ -371,6 +410,8 @@ class _$GetForcedTrendingDataImpl implements GetForcedTrendingData {
     TResult Function(String serviceType, String region)? getForcedTrendingData,
     TResult Function(List<Subscribe> channels)? getHomeFeedData,
     TResult Function(List<Subscribe> channels)? getForcedHomeFeedData,
+    TResult Function(List<Subscribe> channels)? getNewPipeHomeFeedData,
+    TResult Function(List<Subscribe> channels)? getForcedNewPipeHomeFeedData,
     required TResult orElse(),
   }) {
     if (getForcedTrendingData != null) {
@@ -388,6 +429,10 @@ class _$GetForcedTrendingDataImpl implements GetForcedTrendingData {
     required TResult Function(GetHomeFeedData value) getHomeFeedData,
     required TResult Function(GetForcedHomeFeedData value)
         getForcedHomeFeedData,
+    required TResult Function(GetNewPipeHomeFeedData value)
+        getNewPipeHomeFeedData,
+    required TResult Function(GetForcedNewPipeHomeFeedData value)
+        getForcedNewPipeHomeFeedData,
   }) {
     return getForcedTrendingData(this);
   }
@@ -399,6 +444,9 @@ class _$GetForcedTrendingDataImpl implements GetForcedTrendingData {
     TResult? Function(GetForcedTrendingData value)? getForcedTrendingData,
     TResult? Function(GetHomeFeedData value)? getHomeFeedData,
     TResult? Function(GetForcedHomeFeedData value)? getForcedHomeFeedData,
+    TResult? Function(GetNewPipeHomeFeedData value)? getNewPipeHomeFeedData,
+    TResult? Function(GetForcedNewPipeHomeFeedData value)?
+        getForcedNewPipeHomeFeedData,
   }) {
     return getForcedTrendingData?.call(this);
   }
@@ -410,6 +458,9 @@ class _$GetForcedTrendingDataImpl implements GetForcedTrendingData {
     TResult Function(GetForcedTrendingData value)? getForcedTrendingData,
     TResult Function(GetHomeFeedData value)? getHomeFeedData,
     TResult Function(GetForcedHomeFeedData value)? getForcedHomeFeedData,
+    TResult Function(GetNewPipeHomeFeedData value)? getNewPipeHomeFeedData,
+    TResult Function(GetForcedNewPipeHomeFeedData value)?
+        getForcedNewPipeHomeFeedData,
     required TResult orElse(),
   }) {
     if (getForcedTrendingData != null) {
@@ -516,6 +567,9 @@ class _$GetHomeFeedDataImpl implements GetHomeFeedData {
         getForcedTrendingData,
     required TResult Function(List<Subscribe> channels) getHomeFeedData,
     required TResult Function(List<Subscribe> channels) getForcedHomeFeedData,
+    required TResult Function(List<Subscribe> channels) getNewPipeHomeFeedData,
+    required TResult Function(List<Subscribe> channels)
+        getForcedNewPipeHomeFeedData,
   }) {
     return getHomeFeedData(channels);
   }
@@ -527,6 +581,8 @@ class _$GetHomeFeedDataImpl implements GetHomeFeedData {
     TResult? Function(String serviceType, String region)? getForcedTrendingData,
     TResult? Function(List<Subscribe> channels)? getHomeFeedData,
     TResult? Function(List<Subscribe> channels)? getForcedHomeFeedData,
+    TResult? Function(List<Subscribe> channels)? getNewPipeHomeFeedData,
+    TResult? Function(List<Subscribe> channels)? getForcedNewPipeHomeFeedData,
   }) {
     return getHomeFeedData?.call(channels);
   }
@@ -538,6 +594,8 @@ class _$GetHomeFeedDataImpl implements GetHomeFeedData {
     TResult Function(String serviceType, String region)? getForcedTrendingData,
     TResult Function(List<Subscribe> channels)? getHomeFeedData,
     TResult Function(List<Subscribe> channels)? getForcedHomeFeedData,
+    TResult Function(List<Subscribe> channels)? getNewPipeHomeFeedData,
+    TResult Function(List<Subscribe> channels)? getForcedNewPipeHomeFeedData,
     required TResult orElse(),
   }) {
     if (getHomeFeedData != null) {
@@ -555,6 +613,10 @@ class _$GetHomeFeedDataImpl implements GetHomeFeedData {
     required TResult Function(GetHomeFeedData value) getHomeFeedData,
     required TResult Function(GetForcedHomeFeedData value)
         getForcedHomeFeedData,
+    required TResult Function(GetNewPipeHomeFeedData value)
+        getNewPipeHomeFeedData,
+    required TResult Function(GetForcedNewPipeHomeFeedData value)
+        getForcedNewPipeHomeFeedData,
   }) {
     return getHomeFeedData(this);
   }
@@ -566,6 +628,9 @@ class _$GetHomeFeedDataImpl implements GetHomeFeedData {
     TResult? Function(GetForcedTrendingData value)? getForcedTrendingData,
     TResult? Function(GetHomeFeedData value)? getHomeFeedData,
     TResult? Function(GetForcedHomeFeedData value)? getForcedHomeFeedData,
+    TResult? Function(GetNewPipeHomeFeedData value)? getNewPipeHomeFeedData,
+    TResult? Function(GetForcedNewPipeHomeFeedData value)?
+        getForcedNewPipeHomeFeedData,
   }) {
     return getHomeFeedData?.call(this);
   }
@@ -577,6 +642,9 @@ class _$GetHomeFeedDataImpl implements GetHomeFeedData {
     TResult Function(GetForcedTrendingData value)? getForcedTrendingData,
     TResult Function(GetHomeFeedData value)? getHomeFeedData,
     TResult Function(GetForcedHomeFeedData value)? getForcedHomeFeedData,
+    TResult Function(GetNewPipeHomeFeedData value)? getNewPipeHomeFeedData,
+    TResult Function(GetForcedNewPipeHomeFeedData value)?
+        getForcedNewPipeHomeFeedData,
     required TResult orElse(),
   }) {
     if (getHomeFeedData != null) {
@@ -682,6 +750,9 @@ class _$GetForcedHomeFeedDataImpl implements GetForcedHomeFeedData {
         getForcedTrendingData,
     required TResult Function(List<Subscribe> channels) getHomeFeedData,
     required TResult Function(List<Subscribe> channels) getForcedHomeFeedData,
+    required TResult Function(List<Subscribe> channels) getNewPipeHomeFeedData,
+    required TResult Function(List<Subscribe> channels)
+        getForcedNewPipeHomeFeedData,
   }) {
     return getForcedHomeFeedData(channels);
   }
@@ -693,6 +764,8 @@ class _$GetForcedHomeFeedDataImpl implements GetForcedHomeFeedData {
     TResult? Function(String serviceType, String region)? getForcedTrendingData,
     TResult? Function(List<Subscribe> channels)? getHomeFeedData,
     TResult? Function(List<Subscribe> channels)? getForcedHomeFeedData,
+    TResult? Function(List<Subscribe> channels)? getNewPipeHomeFeedData,
+    TResult? Function(List<Subscribe> channels)? getForcedNewPipeHomeFeedData,
   }) {
     return getForcedHomeFeedData?.call(channels);
   }
@@ -704,6 +777,8 @@ class _$GetForcedHomeFeedDataImpl implements GetForcedHomeFeedData {
     TResult Function(String serviceType, String region)? getForcedTrendingData,
     TResult Function(List<Subscribe> channels)? getHomeFeedData,
     TResult Function(List<Subscribe> channels)? getForcedHomeFeedData,
+    TResult Function(List<Subscribe> channels)? getNewPipeHomeFeedData,
+    TResult Function(List<Subscribe> channels)? getForcedNewPipeHomeFeedData,
     required TResult orElse(),
   }) {
     if (getForcedHomeFeedData != null) {
@@ -721,6 +796,10 @@ class _$GetForcedHomeFeedDataImpl implements GetForcedHomeFeedData {
     required TResult Function(GetHomeFeedData value) getHomeFeedData,
     required TResult Function(GetForcedHomeFeedData value)
         getForcedHomeFeedData,
+    required TResult Function(GetNewPipeHomeFeedData value)
+        getNewPipeHomeFeedData,
+    required TResult Function(GetForcedNewPipeHomeFeedData value)
+        getForcedNewPipeHomeFeedData,
   }) {
     return getForcedHomeFeedData(this);
   }
@@ -732,6 +811,9 @@ class _$GetForcedHomeFeedDataImpl implements GetForcedHomeFeedData {
     TResult? Function(GetForcedTrendingData value)? getForcedTrendingData,
     TResult? Function(GetHomeFeedData value)? getHomeFeedData,
     TResult? Function(GetForcedHomeFeedData value)? getForcedHomeFeedData,
+    TResult? Function(GetNewPipeHomeFeedData value)? getNewPipeHomeFeedData,
+    TResult? Function(GetForcedNewPipeHomeFeedData value)?
+        getForcedNewPipeHomeFeedData,
   }) {
     return getForcedHomeFeedData?.call(this);
   }
@@ -743,6 +825,9 @@ class _$GetForcedHomeFeedDataImpl implements GetForcedHomeFeedData {
     TResult Function(GetForcedTrendingData value)? getForcedTrendingData,
     TResult Function(GetHomeFeedData value)? getHomeFeedData,
     TResult Function(GetForcedHomeFeedData value)? getForcedHomeFeedData,
+    TResult Function(GetNewPipeHomeFeedData value)? getNewPipeHomeFeedData,
+    TResult Function(GetForcedNewPipeHomeFeedData value)?
+        getForcedNewPipeHomeFeedData,
     required TResult orElse(),
   }) {
     if (getForcedHomeFeedData != null) {
@@ -766,6 +851,380 @@ abstract class GetForcedHomeFeedData implements TrendingEvent {
 }
 
 /// @nodoc
+abstract class _$$GetNewPipeHomeFeedDataImplCopyWith<$Res> {
+  factory _$$GetNewPipeHomeFeedDataImplCopyWith(
+          _$GetNewPipeHomeFeedDataImpl value,
+          $Res Function(_$GetNewPipeHomeFeedDataImpl) then) =
+      __$$GetNewPipeHomeFeedDataImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({List<Subscribe> channels});
+}
+
+/// @nodoc
+class __$$GetNewPipeHomeFeedDataImplCopyWithImpl<$Res>
+    extends _$TrendingEventCopyWithImpl<$Res, _$GetNewPipeHomeFeedDataImpl>
+    implements _$$GetNewPipeHomeFeedDataImplCopyWith<$Res> {
+  __$$GetNewPipeHomeFeedDataImplCopyWithImpl(
+      _$GetNewPipeHomeFeedDataImpl _value,
+      $Res Function(_$GetNewPipeHomeFeedDataImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of TrendingEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? channels = null,
+  }) {
+    return _then(_$GetNewPipeHomeFeedDataImpl(
+      channels: null == channels
+          ? _value._channels
+          : channels // ignore: cast_nullable_to_non_nullable
+              as List<Subscribe>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$GetNewPipeHomeFeedDataImpl implements GetNewPipeHomeFeedData {
+  const _$GetNewPipeHomeFeedDataImpl({required final List<Subscribe> channels})
+      : _channels = channels;
+
+  final List<Subscribe> _channels;
+  @override
+  List<Subscribe> get channels {
+    if (_channels is EqualUnmodifiableListView) return _channels;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_channels);
+  }
+
+  @override
+  String toString() {
+    return 'TrendingEvent.getNewPipeHomeFeedData(channels: $channels)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GetNewPipeHomeFeedDataImpl &&
+            const DeepCollectionEquality().equals(other._channels, _channels));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_channels));
+
+  /// Create a copy of TrendingEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GetNewPipeHomeFeedDataImplCopyWith<_$GetNewPipeHomeFeedDataImpl>
+      get copyWith => __$$GetNewPipeHomeFeedDataImplCopyWithImpl<
+          _$GetNewPipeHomeFeedDataImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String serviceType, String region)
+        getTrendingData,
+    required TResult Function(String serviceType, String region)
+        getForcedTrendingData,
+    required TResult Function(List<Subscribe> channels) getHomeFeedData,
+    required TResult Function(List<Subscribe> channels) getForcedHomeFeedData,
+    required TResult Function(List<Subscribe> channels) getNewPipeHomeFeedData,
+    required TResult Function(List<Subscribe> channels)
+        getForcedNewPipeHomeFeedData,
+  }) {
+    return getNewPipeHomeFeedData(channels);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String serviceType, String region)? getTrendingData,
+    TResult? Function(String serviceType, String region)? getForcedTrendingData,
+    TResult? Function(List<Subscribe> channels)? getHomeFeedData,
+    TResult? Function(List<Subscribe> channels)? getForcedHomeFeedData,
+    TResult? Function(List<Subscribe> channels)? getNewPipeHomeFeedData,
+    TResult? Function(List<Subscribe> channels)? getForcedNewPipeHomeFeedData,
+  }) {
+    return getNewPipeHomeFeedData?.call(channels);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String serviceType, String region)? getTrendingData,
+    TResult Function(String serviceType, String region)? getForcedTrendingData,
+    TResult Function(List<Subscribe> channels)? getHomeFeedData,
+    TResult Function(List<Subscribe> channels)? getForcedHomeFeedData,
+    TResult Function(List<Subscribe> channels)? getNewPipeHomeFeedData,
+    TResult Function(List<Subscribe> channels)? getForcedNewPipeHomeFeedData,
+    required TResult orElse(),
+  }) {
+    if (getNewPipeHomeFeedData != null) {
+      return getNewPipeHomeFeedData(channels);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(GetTrendingData value) getTrendingData,
+    required TResult Function(GetForcedTrendingData value)
+        getForcedTrendingData,
+    required TResult Function(GetHomeFeedData value) getHomeFeedData,
+    required TResult Function(GetForcedHomeFeedData value)
+        getForcedHomeFeedData,
+    required TResult Function(GetNewPipeHomeFeedData value)
+        getNewPipeHomeFeedData,
+    required TResult Function(GetForcedNewPipeHomeFeedData value)
+        getForcedNewPipeHomeFeedData,
+  }) {
+    return getNewPipeHomeFeedData(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(GetTrendingData value)? getTrendingData,
+    TResult? Function(GetForcedTrendingData value)? getForcedTrendingData,
+    TResult? Function(GetHomeFeedData value)? getHomeFeedData,
+    TResult? Function(GetForcedHomeFeedData value)? getForcedHomeFeedData,
+    TResult? Function(GetNewPipeHomeFeedData value)? getNewPipeHomeFeedData,
+    TResult? Function(GetForcedNewPipeHomeFeedData value)?
+        getForcedNewPipeHomeFeedData,
+  }) {
+    return getNewPipeHomeFeedData?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(GetTrendingData value)? getTrendingData,
+    TResult Function(GetForcedTrendingData value)? getForcedTrendingData,
+    TResult Function(GetHomeFeedData value)? getHomeFeedData,
+    TResult Function(GetForcedHomeFeedData value)? getForcedHomeFeedData,
+    TResult Function(GetNewPipeHomeFeedData value)? getNewPipeHomeFeedData,
+    TResult Function(GetForcedNewPipeHomeFeedData value)?
+        getForcedNewPipeHomeFeedData,
+    required TResult orElse(),
+  }) {
+    if (getNewPipeHomeFeedData != null) {
+      return getNewPipeHomeFeedData(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class GetNewPipeHomeFeedData implements TrendingEvent {
+  const factory GetNewPipeHomeFeedData(
+      {required final List<Subscribe> channels}) = _$GetNewPipeHomeFeedDataImpl;
+
+  List<Subscribe> get channels;
+
+  /// Create a copy of TrendingEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$GetNewPipeHomeFeedDataImplCopyWith<_$GetNewPipeHomeFeedDataImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$GetForcedNewPipeHomeFeedDataImplCopyWith<$Res> {
+  factory _$$GetForcedNewPipeHomeFeedDataImplCopyWith(
+          _$GetForcedNewPipeHomeFeedDataImpl value,
+          $Res Function(_$GetForcedNewPipeHomeFeedDataImpl) then) =
+      __$$GetForcedNewPipeHomeFeedDataImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({List<Subscribe> channels});
+}
+
+/// @nodoc
+class __$$GetForcedNewPipeHomeFeedDataImplCopyWithImpl<$Res>
+    extends _$TrendingEventCopyWithImpl<$Res,
+        _$GetForcedNewPipeHomeFeedDataImpl>
+    implements _$$GetForcedNewPipeHomeFeedDataImplCopyWith<$Res> {
+  __$$GetForcedNewPipeHomeFeedDataImplCopyWithImpl(
+      _$GetForcedNewPipeHomeFeedDataImpl _value,
+      $Res Function(_$GetForcedNewPipeHomeFeedDataImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of TrendingEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? channels = null,
+  }) {
+    return _then(_$GetForcedNewPipeHomeFeedDataImpl(
+      channels: null == channels
+          ? _value._channels
+          : channels // ignore: cast_nullable_to_non_nullable
+              as List<Subscribe>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$GetForcedNewPipeHomeFeedDataImpl
+    implements GetForcedNewPipeHomeFeedData {
+  const _$GetForcedNewPipeHomeFeedDataImpl(
+      {required final List<Subscribe> channels})
+      : _channels = channels;
+
+  final List<Subscribe> _channels;
+  @override
+  List<Subscribe> get channels {
+    if (_channels is EqualUnmodifiableListView) return _channels;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_channels);
+  }
+
+  @override
+  String toString() {
+    return 'TrendingEvent.getForcedNewPipeHomeFeedData(channels: $channels)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GetForcedNewPipeHomeFeedDataImpl &&
+            const DeepCollectionEquality().equals(other._channels, _channels));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_channels));
+
+  /// Create a copy of TrendingEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GetForcedNewPipeHomeFeedDataImplCopyWith<
+          _$GetForcedNewPipeHomeFeedDataImpl>
+      get copyWith => __$$GetForcedNewPipeHomeFeedDataImplCopyWithImpl<
+          _$GetForcedNewPipeHomeFeedDataImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String serviceType, String region)
+        getTrendingData,
+    required TResult Function(String serviceType, String region)
+        getForcedTrendingData,
+    required TResult Function(List<Subscribe> channels) getHomeFeedData,
+    required TResult Function(List<Subscribe> channels) getForcedHomeFeedData,
+    required TResult Function(List<Subscribe> channels) getNewPipeHomeFeedData,
+    required TResult Function(List<Subscribe> channels)
+        getForcedNewPipeHomeFeedData,
+  }) {
+    return getForcedNewPipeHomeFeedData(channels);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String serviceType, String region)? getTrendingData,
+    TResult? Function(String serviceType, String region)? getForcedTrendingData,
+    TResult? Function(List<Subscribe> channels)? getHomeFeedData,
+    TResult? Function(List<Subscribe> channels)? getForcedHomeFeedData,
+    TResult? Function(List<Subscribe> channels)? getNewPipeHomeFeedData,
+    TResult? Function(List<Subscribe> channels)? getForcedNewPipeHomeFeedData,
+  }) {
+    return getForcedNewPipeHomeFeedData?.call(channels);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String serviceType, String region)? getTrendingData,
+    TResult Function(String serviceType, String region)? getForcedTrendingData,
+    TResult Function(List<Subscribe> channels)? getHomeFeedData,
+    TResult Function(List<Subscribe> channels)? getForcedHomeFeedData,
+    TResult Function(List<Subscribe> channels)? getNewPipeHomeFeedData,
+    TResult Function(List<Subscribe> channels)? getForcedNewPipeHomeFeedData,
+    required TResult orElse(),
+  }) {
+    if (getForcedNewPipeHomeFeedData != null) {
+      return getForcedNewPipeHomeFeedData(channels);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(GetTrendingData value) getTrendingData,
+    required TResult Function(GetForcedTrendingData value)
+        getForcedTrendingData,
+    required TResult Function(GetHomeFeedData value) getHomeFeedData,
+    required TResult Function(GetForcedHomeFeedData value)
+        getForcedHomeFeedData,
+    required TResult Function(GetNewPipeHomeFeedData value)
+        getNewPipeHomeFeedData,
+    required TResult Function(GetForcedNewPipeHomeFeedData value)
+        getForcedNewPipeHomeFeedData,
+  }) {
+    return getForcedNewPipeHomeFeedData(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(GetTrendingData value)? getTrendingData,
+    TResult? Function(GetForcedTrendingData value)? getForcedTrendingData,
+    TResult? Function(GetHomeFeedData value)? getHomeFeedData,
+    TResult? Function(GetForcedHomeFeedData value)? getForcedHomeFeedData,
+    TResult? Function(GetNewPipeHomeFeedData value)? getNewPipeHomeFeedData,
+    TResult? Function(GetForcedNewPipeHomeFeedData value)?
+        getForcedNewPipeHomeFeedData,
+  }) {
+    return getForcedNewPipeHomeFeedData?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(GetTrendingData value)? getTrendingData,
+    TResult Function(GetForcedTrendingData value)? getForcedTrendingData,
+    TResult Function(GetHomeFeedData value)? getHomeFeedData,
+    TResult Function(GetForcedHomeFeedData value)? getForcedHomeFeedData,
+    TResult Function(GetNewPipeHomeFeedData value)? getNewPipeHomeFeedData,
+    TResult Function(GetForcedNewPipeHomeFeedData value)?
+        getForcedNewPipeHomeFeedData,
+    required TResult orElse(),
+  }) {
+    if (getForcedNewPipeHomeFeedData != null) {
+      return getForcedNewPipeHomeFeedData(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class GetForcedNewPipeHomeFeedData implements TrendingEvent {
+  const factory GetForcedNewPipeHomeFeedData(
+          {required final List<Subscribe> channels}) =
+      _$GetForcedNewPipeHomeFeedDataImpl;
+
+  List<Subscribe> get channels;
+
+  /// Create a copy of TrendingEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$GetForcedNewPipeHomeFeedDataImplCopyWith<
+          _$GetForcedNewPipeHomeFeedDataImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$TrendingState {
   String get lastUsedRegion => throw _privateConstructorUsedError; // PIPED
   List<TrendingResp> get trendingResult => throw _privateConstructorUsedError;
@@ -780,6 +1239,9 @@ mixin _$TrendingState {
   ApiStatus get fetchNewPipeTrendingStatus =>
       throw _privateConstructorUsedError;
   List<NewPipeTrendingResp> get newPipeTrendingResult =>
+      throw _privateConstructorUsedError;
+  ApiStatus get fetchNewPipeFeedStatus => throw _privateConstructorUsedError;
+  List<NewPipeTrendingResp> get newPipeFeedResult =>
       throw _privateConstructorUsedError;
 
   /// Create a copy of TrendingState
@@ -804,7 +1266,9 @@ abstract class $TrendingStateCopyWith<$Res> {
       ApiStatus fetchInvidiousTrendingStatus,
       List<InvidiousTrendingResp> invidiousTrendingResult,
       ApiStatus fetchNewPipeTrendingStatus,
-      List<NewPipeTrendingResp> newPipeTrendingResult});
+      List<NewPipeTrendingResp> newPipeTrendingResult,
+      ApiStatus fetchNewPipeFeedStatus,
+      List<NewPipeTrendingResp> newPipeFeedResult});
 }
 
 /// @nodoc
@@ -831,6 +1295,8 @@ class _$TrendingStateCopyWithImpl<$Res, $Val extends TrendingState>
     Object? invidiousTrendingResult = null,
     Object? fetchNewPipeTrendingStatus = null,
     Object? newPipeTrendingResult = null,
+    Object? fetchNewPipeFeedStatus = null,
+    Object? newPipeFeedResult = null,
   }) {
     return _then(_value.copyWith(
       lastUsedRegion: null == lastUsedRegion
@@ -869,6 +1335,14 @@ class _$TrendingStateCopyWithImpl<$Res, $Val extends TrendingState>
           ? _value.newPipeTrendingResult
           : newPipeTrendingResult // ignore: cast_nullable_to_non_nullable
               as List<NewPipeTrendingResp>,
+      fetchNewPipeFeedStatus: null == fetchNewPipeFeedStatus
+          ? _value.fetchNewPipeFeedStatus
+          : fetchNewPipeFeedStatus // ignore: cast_nullable_to_non_nullable
+              as ApiStatus,
+      newPipeFeedResult: null == newPipeFeedResult
+          ? _value.newPipeFeedResult
+          : newPipeFeedResult // ignore: cast_nullable_to_non_nullable
+              as List<NewPipeTrendingResp>,
     ) as $Val);
   }
 }
@@ -890,7 +1364,9 @@ abstract class _$$InitialImplCopyWith<$Res>
       ApiStatus fetchInvidiousTrendingStatus,
       List<InvidiousTrendingResp> invidiousTrendingResult,
       ApiStatus fetchNewPipeTrendingStatus,
-      List<NewPipeTrendingResp> newPipeTrendingResult});
+      List<NewPipeTrendingResp> newPipeTrendingResult,
+      ApiStatus fetchNewPipeFeedStatus,
+      List<NewPipeTrendingResp> newPipeFeedResult});
 }
 
 /// @nodoc
@@ -915,6 +1391,8 @@ class __$$InitialImplCopyWithImpl<$Res>
     Object? invidiousTrendingResult = null,
     Object? fetchNewPipeTrendingStatus = null,
     Object? newPipeTrendingResult = null,
+    Object? fetchNewPipeFeedStatus = null,
+    Object? newPipeFeedResult = null,
   }) {
     return _then(_$InitialImpl(
       lastUsedRegion: null == lastUsedRegion
@@ -953,6 +1431,14 @@ class __$$InitialImplCopyWithImpl<$Res>
           ? _value._newPipeTrendingResult
           : newPipeTrendingResult // ignore: cast_nullable_to_non_nullable
               as List<NewPipeTrendingResp>,
+      fetchNewPipeFeedStatus: null == fetchNewPipeFeedStatus
+          ? _value.fetchNewPipeFeedStatus
+          : fetchNewPipeFeedStatus // ignore: cast_nullable_to_non_nullable
+              as ApiStatus,
+      newPipeFeedResult: null == newPipeFeedResult
+          ? _value._newPipeFeedResult
+          : newPipeFeedResult // ignore: cast_nullable_to_non_nullable
+              as List<NewPipeTrendingResp>,
     ));
   }
 }
@@ -969,11 +1455,14 @@ class _$InitialImpl implements _Initial {
       required this.fetchInvidiousTrendingStatus,
       required final List<InvidiousTrendingResp> invidiousTrendingResult,
       required this.fetchNewPipeTrendingStatus,
-      required final List<NewPipeTrendingResp> newPipeTrendingResult})
+      required final List<NewPipeTrendingResp> newPipeTrendingResult,
+      required this.fetchNewPipeFeedStatus,
+      required final List<NewPipeTrendingResp> newPipeFeedResult})
       : _trendingResult = trendingResult,
         _feedResult = feedResult,
         _invidiousTrendingResult = invidiousTrendingResult,
-        _newPipeTrendingResult = newPipeTrendingResult;
+        _newPipeTrendingResult = newPipeTrendingResult,
+        _newPipeFeedResult = newPipeFeedResult;
 
   @override
   final String lastUsedRegion;
@@ -1024,8 +1513,19 @@ class _$InitialImpl implements _Initial {
   }
 
   @override
+  final ApiStatus fetchNewPipeFeedStatus;
+  final List<NewPipeTrendingResp> _newPipeFeedResult;
+  @override
+  List<NewPipeTrendingResp> get newPipeFeedResult {
+    if (_newPipeFeedResult is EqualUnmodifiableListView)
+      return _newPipeFeedResult;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_newPipeFeedResult);
+  }
+
+  @override
   String toString() {
-    return 'TrendingState(lastUsedRegion: $lastUsedRegion, trendingResult: $trendingResult, feedResult: $feedResult, fetchTrendingStatus: $fetchTrendingStatus, fetchFeedStatus: $fetchFeedStatus, fetchInvidiousTrendingStatus: $fetchInvidiousTrendingStatus, invidiousTrendingResult: $invidiousTrendingResult, fetchNewPipeTrendingStatus: $fetchNewPipeTrendingStatus, newPipeTrendingResult: $newPipeTrendingResult)';
+    return 'TrendingState(lastUsedRegion: $lastUsedRegion, trendingResult: $trendingResult, feedResult: $feedResult, fetchTrendingStatus: $fetchTrendingStatus, fetchFeedStatus: $fetchFeedStatus, fetchInvidiousTrendingStatus: $fetchInvidiousTrendingStatus, invidiousTrendingResult: $invidiousTrendingResult, fetchNewPipeTrendingStatus: $fetchNewPipeTrendingStatus, newPipeTrendingResult: $newPipeTrendingResult, fetchNewPipeFeedStatus: $fetchNewPipeFeedStatus, newPipeFeedResult: $newPipeFeedResult)';
   }
 
   @override
@@ -1054,7 +1554,11 @@ class _$InitialImpl implements _Initial {
                 other.fetchNewPipeTrendingStatus ==
                     fetchNewPipeTrendingStatus) &&
             const DeepCollectionEquality()
-                .equals(other._newPipeTrendingResult, _newPipeTrendingResult));
+                .equals(other._newPipeTrendingResult, _newPipeTrendingResult) &&
+            (identical(other.fetchNewPipeFeedStatus, fetchNewPipeFeedStatus) ||
+                other.fetchNewPipeFeedStatus == fetchNewPipeFeedStatus) &&
+            const DeepCollectionEquality()
+                .equals(other._newPipeFeedResult, _newPipeFeedResult));
   }
 
   @override
@@ -1068,7 +1572,9 @@ class _$InitialImpl implements _Initial {
       fetchInvidiousTrendingStatus,
       const DeepCollectionEquality().hash(_invidiousTrendingResult),
       fetchNewPipeTrendingStatus,
-      const DeepCollectionEquality().hash(_newPipeTrendingResult));
+      const DeepCollectionEquality().hash(_newPipeTrendingResult),
+      fetchNewPipeFeedStatus,
+      const DeepCollectionEquality().hash(_newPipeFeedResult));
 
   /// Create a copy of TrendingState
   /// with the given fields replaced by the non-null parameter values.
@@ -1089,7 +1595,9 @@ abstract class _Initial implements TrendingState {
           required final ApiStatus fetchInvidiousTrendingStatus,
           required final List<InvidiousTrendingResp> invidiousTrendingResult,
           required final ApiStatus fetchNewPipeTrendingStatus,
-          required final List<NewPipeTrendingResp> newPipeTrendingResult}) =
+          required final List<NewPipeTrendingResp> newPipeTrendingResult,
+          required final ApiStatus fetchNewPipeFeedStatus,
+          required final List<NewPipeTrendingResp> newPipeFeedResult}) =
       _$InitialImpl;
 
   @override
@@ -1110,6 +1618,10 @@ abstract class _Initial implements TrendingState {
   ApiStatus get fetchNewPipeTrendingStatus;
   @override
   List<NewPipeTrendingResp> get newPipeTrendingResult;
+  @override
+  ApiStatus get fetchNewPipeFeedStatus;
+  @override
+  List<NewPipeTrendingResp> get newPipeFeedResult;
 
   /// Create a copy of TrendingState
   /// with the given fields replaced by the non-null parameter values.

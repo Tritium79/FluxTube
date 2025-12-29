@@ -4,6 +4,8 @@ import 'package:fluxtube/application/application.dart';
 import 'package:fluxtube/core/colors.dart';
 import 'package:fluxtube/core/enums.dart';
 import 'package:fluxtube/generated/l10n.dart';
+import 'package:fluxtube/presentation/search/widgets/newpipe/search_result_section.dart';
+import 'package:fluxtube/presentation/search/widgets/newpipe/search_suggestion_section.dart';
 import 'package:fluxtube/widgets/widgets.dart';
 
 import 'widgets/widgets.dart';
@@ -74,6 +76,19 @@ class _ScreenSearchState extends State<ScreenSearch> {
                           const SizedBox(width: 8),
                           _buildFilterChip(locals.filterPlaylists, 'playlist', settingsState.ytService),
                         ]
+                      : settingsState.ytService == YouTubeServices.newpipe.name
+                      ? [
+                          // NewPipe filters (same as Piped)
+                          _buildFilterChip(locals.filterAll, 'all', settingsState.ytService),
+                          const SizedBox(width: 8),
+                          _buildFilterChip(locals.filterVideos, 'videos', settingsState.ytService),
+                          const SizedBox(width: 8),
+                          _buildFilterChip(locals.filterChannels, 'channels', settingsState.ytService),
+                          const SizedBox(width: 8),
+                          _buildFilterChip(locals.filterPlaylists, 'playlists', settingsState.ytService),
+                          const SizedBox(width: 8),
+                          _buildFilterChip(locals.filterMusic, 'music_songs', settingsState.ytService),
+                        ]
                       : [
                           // Piped filters (uses 'filter' parameter)
                           _buildFilterChip(locals.filterAll, 'all', settingsState.ytService),
@@ -95,11 +110,57 @@ class _ScreenSearchState extends State<ScreenSearch> {
                       previous.isSuggestionDisplay != current.isSuggestionDisplay ||
                       previous.fetchSuggestionStatus != current.fetchSuggestionStatus ||
                       previous.fetchSearchResultStatus != current.fetchSearchResultStatus ||
+                      previous.fetchNewPipeSearchResultStatus != current.fetchNewPipeSearchResultStatus ||
+                      previous.fetchNewPipeSuggestionStatus != current.fetchNewPipeSuggestionStatus ||
                       previous.suggestions != current.suggestions ||
-                      previous.result != current.result,
+                      previous.newPipeSuggestionResult != current.newPipeSuggestionResult ||
+                      previous.result != current.result ||
+                      previous.newPipeSearchResult != current.newPipeSearchResult,
                   builder: (context, state) {
+                    // NEWPIPE
+                    if (settingsState.ytService == YouTubeServices.newpipe.name) {
+                      if (state.isSuggestionDisplay == true &&
+                          state.fetchNewPipeSuggestionStatus == ApiStatus.loaded &&
+                          (state.fetchNewPipeSearchResultStatus == ApiStatus.initial ||
+                              state.fetchNewPipeSearchResultStatus == ApiStatus.loading ||
+                              state.fetchNewPipeSearchResultStatus == ApiStatus.loaded) &&
+                          state.newPipeSuggestionResult.isNotEmpty &&
+                          _textEditingController.text.isNotEmpty) {
+                        return NewPipeSearchSuggestionSection(
+                          textEditingController: _textEditingController,
+                          state: state,
+                        );
+                      } else if (state.fetchNewPipeSearchResultStatus == ApiStatus.loading ||
+                          (_textEditingController.text.trim().isNotEmpty &&
+                              state.fetchNewPipeSearchResultStatus == ApiStatus.initial)) {
+                        return cIndicator(context);
+                      } else if (_textEditingController.text.trim().isEmpty &&
+                          state.fetchNewPipeSearchResultStatus == ApiStatus.initial) {
+                        return const SizedBox();
+                      } else if (state.isSuggestionDisplay ||
+                          _textEditingController.text.isEmpty) {
+                        return Container();
+                      } else if (state.fetchNewPipeSearchResultStatus == ApiStatus.error ||
+                          state.newPipeSearchResult == null ||
+                          (state.newPipeSearchResult?.items?.isEmpty ?? true)) {
+                        return ErrorRetryWidget(
+                          lottie: 'assets/cup.zip',
+                          onTap: () => BlocProvider.of<SearchBloc>(context).add(
+                              SearchEvent.getSearchResult(
+                                  query: _textEditingController.text,
+                                  filter: _selectedFilter,
+                                  serviceType: settingsState.ytService)),
+                        );
+                      } else {
+                        return NewPipeSearchResultSection(
+                          locals: locals,
+                          state: state,
+                          searchQuery: _textEditingController.text,
+                        );
+                      }
+                    }
                     // INVIDIOUS
-                    if (settingsState.ytService == YouTubeServices.invidious.name) {
+                    else if (settingsState.ytService == YouTubeServices.invidious.name) {
                       if (state.isSuggestionDisplay == true &&
                           state.fetchSuggestionStatus == ApiStatus.loaded &&
                           (state.fetchSearchResultStatus == ApiStatus.loading ||

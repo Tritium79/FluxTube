@@ -102,4 +102,9 @@ class WatchEvent with _$WatchEvent {
     required String videoId,
     required String repliesPage,
   }) = GetNewPipeCommentReplies;
+
+  factory WatchEvent.getMoreNewPipeCommentReplies({
+    required String videoId,
+    required String? nextPage,
+  }) = GetMoreNewPipeCommentReplies;
 }

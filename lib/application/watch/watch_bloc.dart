@@ -563,6 +563,7 @@ class WatchBloc extends Bloc<WatchEvent, WatchState> {
       emit(state.copyWith(
         newPipeCommentReplies: NewPipeCommentsResp(),
         fetchNewPipeCommentRepliesStatus: ApiStatus.loading,
+        isMoreNewPipeReplyCommentsFetchCompleted: false,
       ));
 
       final result = await watchService.getNewPipeCommentRepliesData(
@@ -578,6 +579,45 @@ class WatchBloc extends Bloc<WatchEvent, WatchState> {
           newPipeCommentReplies: resp,
           fetchNewPipeCommentRepliesStatus: ApiStatus.loaded,
         ),
+      );
+
+      emit(_state);
+    });
+
+    on<GetMoreNewPipeCommentReplies>((event, emit) async {
+      emit(state.copyWith(
+        fetchMoreNewPipeCommentRepliesStatus: ApiStatus.loading,
+        isMoreNewPipeReplyCommentsFetchCompleted: false,
+      ));
+
+      final result = await watchService.getNewPipeCommentRepliesData(
+        videoId: event.videoId,
+        repliesPage: event.nextPage!,
+      );
+
+      final _state = result.fold(
+        (MainFailure failure) => state.copyWith(
+          fetchMoreNewPipeCommentRepliesStatus: ApiStatus.error,
+        ),
+        (NewPipeCommentsResp resp) {
+          if (resp.nextPage == null) {
+            return state.copyWith(
+              fetchMoreNewPipeCommentRepliesStatus: ApiStatus.loaded,
+              isMoreNewPipeReplyCommentsFetchCompleted: true,
+            );
+          } else {
+            final updatedReplies = NewPipeCommentsResp(
+              comments: [...(state.newPipeCommentReplies.comments ?? []), ...(resp.comments ?? [])],
+              nextPage: resp.nextPage,
+              commentCount: state.newPipeCommentReplies.commentCount,
+              isDisabled: state.newPipeCommentReplies.isDisabled,
+            );
+            return state.copyWith(
+              fetchMoreNewPipeCommentRepliesStatus: ApiStatus.loaded,
+              newPipeCommentReplies: updatedReplies,
+            );
+          }
+        },
       );
 
       emit(_state);

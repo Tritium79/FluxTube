@@ -59,6 +59,8 @@ class WatchState with _$WatchState {
     required bool isMoreNewPipeCommentsFetchCompleted,
     required NewPipeCommentsResp newPipeCommentReplies,
     required ApiStatus fetchNewPipeCommentRepliesStatus,
+    required ApiStatus fetchMoreNewPipeCommentRepliesStatus,
+    required bool isMoreNewPipeReplyCommentsFetchCompleted,
 
   }) = _Initial;
 
@@ -119,6 +121,8 @@ class WatchState with _$WatchState {
         isMoreNewPipeCommentsFetchCompleted: false,
         newPipeCommentReplies: NewPipeCommentsResp(),
         fetchNewPipeCommentRepliesStatus: ApiStatus.initial,
+        fetchMoreNewPipeCommentRepliesStatus: ApiStatus.initial,
+        isMoreNewPipeReplyCommentsFetchCompleted: false,
 
       );
 }

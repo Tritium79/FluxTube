@@ -29,6 +29,7 @@ class NewPipeCommentSection extends StatelessWidget {
   final String videoId;
 
   final _scrollController = ScrollController();
+  final _scrollControllerReply = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -157,8 +158,26 @@ class NewPipeCommentSection extends StatelessWidget {
           buildWhen: (previous, current) =>
               previous.fetchNewPipeCommentRepliesStatus !=
                   current.fetchNewPipeCommentRepliesStatus ||
+              previous.fetchMoreNewPipeCommentRepliesStatus !=
+                  current.fetchMoreNewPipeCommentRepliesStatus ||
               previous.newPipeCommentReplies != current.newPipeCommentReplies,
           builder: (context, state) {
+            // Set up scroll listener for pagination
+            _scrollControllerReply.addListener(() {
+              if (_scrollControllerReply.position.pixels ==
+                      _scrollControllerReply.position.maxScrollExtent &&
+                  !(state.fetchMoreNewPipeCommentRepliesStatus == ApiStatus.loading) &&
+                  !state.isMoreNewPipeReplyCommentsFetchCompleted &&
+                  state.newPipeCommentReplies.nextPage != null) {
+                BlocProvider.of<WatchBloc>(context).add(
+                  WatchEvent.getMoreNewPipeCommentReplies(
+                    videoId: videoId,
+                    nextPage: state.newPipeCommentReplies.nextPage,
+                  ),
+                );
+              }
+            });
+
             if (state.fetchNewPipeCommentRepliesStatus == ApiStatus.initial ||
                 state.fetchNewPipeCommentRepliesStatus == ApiStatus.loading) {
               return const ShimmerCommentWidget();
@@ -203,6 +222,7 @@ class NewPipeCommentSection extends StatelessWidget {
                         child: ListView.separated(
                           shrinkWrap: true,
                           scrollDirection: Axis.vertical,
+                          controller: _scrollControllerReply,
                           itemBuilder: (context, index) {
                             if (index < replies.length) {
                               final reply = replies[index];
@@ -226,11 +246,15 @@ class NewPipeCommentSection extends StatelessWidget {
                                 },
                               );
                             } else {
-                              return const SizedBox();
+                              if (state.isMoreNewPipeReplyCommentsFetchCompleted) {
+                                return const SizedBox();
+                              } else {
+                                return cIndicator(context);
+                              }
                             }
                           },
                           separatorBuilder: (context, index) => kHeightBox15,
-                          itemCount: replies.length,
+                          itemCount: replies.length + 1,
                         ),
                       ),
                     ),

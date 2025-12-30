@@ -49,6 +49,8 @@ mixin _$WatchEvent {
         getMoreNewPipeComments,
     required TResult Function(String videoId, String repliesPage)
         getNewPipeCommentReplies,
+    required TResult Function(String videoId, String? nextPage)
+        getMoreNewPipeCommentReplies,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -81,6 +83,8 @@ mixin _$WatchEvent {
     TResult? Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult? Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult? Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -112,6 +116,8 @@ mixin _$WatchEvent {
     TResult Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -153,6 +159,8 @@ mixin _$WatchEvent {
         getMoreNewPipeComments,
     required TResult Function(GetNewPipeCommentReplies value)
         getNewPipeCommentReplies,
+    required TResult Function(GetMoreNewPipeCommentReplies value)
+        getMoreNewPipeCommentReplies,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -185,6 +193,8 @@ mixin _$WatchEvent {
     TResult? Function(GetNewPipeComments value)? getNewPipeComments,
     TResult? Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult? Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult? Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -217,6 +227,8 @@ mixin _$WatchEvent {
     TResult Function(GetNewPipeComments value)? getNewPipeComments,
     TResult Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -342,6 +354,8 @@ class _$GetWatchInfoImpl implements GetWatchInfo {
         getMoreNewPipeComments,
     required TResult Function(String videoId, String repliesPage)
         getNewPipeCommentReplies,
+    required TResult Function(String videoId, String? nextPage)
+        getMoreNewPipeCommentReplies,
   }) {
     return getWatchInfo(id);
   }
@@ -377,6 +391,8 @@ class _$GetWatchInfoImpl implements GetWatchInfo {
     TResult? Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult? Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult? Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getWatchInfo?.call(id);
   }
@@ -411,6 +427,8 @@ class _$GetWatchInfoImpl implements GetWatchInfo {
     TResult Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getWatchInfo != null) {
@@ -458,6 +476,8 @@ class _$GetWatchInfoImpl implements GetWatchInfo {
         getMoreNewPipeComments,
     required TResult Function(GetNewPipeCommentReplies value)
         getNewPipeCommentReplies,
+    required TResult Function(GetMoreNewPipeCommentReplies value)
+        getMoreNewPipeCommentReplies,
   }) {
     return getWatchInfo(this);
   }
@@ -493,6 +513,8 @@ class _$GetWatchInfoImpl implements GetWatchInfo {
     TResult? Function(GetNewPipeComments value)? getNewPipeComments,
     TResult? Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult? Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult? Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getWatchInfo?.call(this);
   }
@@ -528,6 +550,8 @@ class _$GetWatchInfoImpl implements GetWatchInfo {
     TResult Function(GetNewPipeComments value)? getNewPipeComments,
     TResult Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getWatchInfo != null) {
@@ -649,6 +673,8 @@ class _$GetCommentDataImpl implements GetCommentData {
         getMoreNewPipeComments,
     required TResult Function(String videoId, String repliesPage)
         getNewPipeCommentReplies,
+    required TResult Function(String videoId, String? nextPage)
+        getMoreNewPipeCommentReplies,
   }) {
     return getCommentData(id);
   }
@@ -684,6 +710,8 @@ class _$GetCommentDataImpl implements GetCommentData {
     TResult? Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult? Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult? Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getCommentData?.call(id);
   }
@@ -718,6 +746,8 @@ class _$GetCommentDataImpl implements GetCommentData {
     TResult Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getCommentData != null) {
@@ -765,6 +795,8 @@ class _$GetCommentDataImpl implements GetCommentData {
         getMoreNewPipeComments,
     required TResult Function(GetNewPipeCommentReplies value)
         getNewPipeCommentReplies,
+    required TResult Function(GetMoreNewPipeCommentReplies value)
+        getMoreNewPipeCommentReplies,
   }) {
     return getCommentData(this);
   }
@@ -800,6 +832,8 @@ class _$GetCommentDataImpl implements GetCommentData {
     TResult? Function(GetNewPipeComments value)? getNewPipeComments,
     TResult? Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult? Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult? Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getCommentData?.call(this);
   }
@@ -835,6 +869,8 @@ class _$GetCommentDataImpl implements GetCommentData {
     TResult Function(GetNewPipeComments value)? getNewPipeComments,
     TResult Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getCommentData != null) {
@@ -966,6 +1002,8 @@ class _$GetCommentRepliesDataImpl implements GetCommentRepliesData {
         getMoreNewPipeComments,
     required TResult Function(String videoId, String repliesPage)
         getNewPipeCommentReplies,
+    required TResult Function(String videoId, String? nextPage)
+        getMoreNewPipeCommentReplies,
   }) {
     return getCommentRepliesData(id, nextPage);
   }
@@ -1001,6 +1039,8 @@ class _$GetCommentRepliesDataImpl implements GetCommentRepliesData {
     TResult? Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult? Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult? Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getCommentRepliesData?.call(id, nextPage);
   }
@@ -1035,6 +1075,8 @@ class _$GetCommentRepliesDataImpl implements GetCommentRepliesData {
     TResult Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getCommentRepliesData != null) {
@@ -1082,6 +1124,8 @@ class _$GetCommentRepliesDataImpl implements GetCommentRepliesData {
         getMoreNewPipeComments,
     required TResult Function(GetNewPipeCommentReplies value)
         getNewPipeCommentReplies,
+    required TResult Function(GetMoreNewPipeCommentReplies value)
+        getMoreNewPipeCommentReplies,
   }) {
     return getCommentRepliesData(this);
   }
@@ -1117,6 +1161,8 @@ class _$GetCommentRepliesDataImpl implements GetCommentRepliesData {
     TResult? Function(GetNewPipeComments value)? getNewPipeComments,
     TResult? Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult? Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult? Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getCommentRepliesData?.call(this);
   }
@@ -1152,6 +1198,8 @@ class _$GetCommentRepliesDataImpl implements GetCommentRepliesData {
     TResult Function(GetNewPipeComments value)? getNewPipeComments,
     TResult Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getCommentRepliesData != null) {
@@ -1285,6 +1333,8 @@ class _$GetMoreCommentsDataImpl implements GetMoreCommentsData {
         getMoreNewPipeComments,
     required TResult Function(String videoId, String repliesPage)
         getNewPipeCommentReplies,
+    required TResult Function(String videoId, String? nextPage)
+        getMoreNewPipeCommentReplies,
   }) {
     return getMoreCommentsData(id, nextPage);
   }
@@ -1320,6 +1370,8 @@ class _$GetMoreCommentsDataImpl implements GetMoreCommentsData {
     TResult? Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult? Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult? Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getMoreCommentsData?.call(id, nextPage);
   }
@@ -1354,6 +1406,8 @@ class _$GetMoreCommentsDataImpl implements GetMoreCommentsData {
     TResult Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getMoreCommentsData != null) {
@@ -1401,6 +1455,8 @@ class _$GetMoreCommentsDataImpl implements GetMoreCommentsData {
         getMoreNewPipeComments,
     required TResult Function(GetNewPipeCommentReplies value)
         getNewPipeCommentReplies,
+    required TResult Function(GetMoreNewPipeCommentReplies value)
+        getMoreNewPipeCommentReplies,
   }) {
     return getMoreCommentsData(this);
   }
@@ -1436,6 +1492,8 @@ class _$GetMoreCommentsDataImpl implements GetMoreCommentsData {
     TResult? Function(GetNewPipeComments value)? getNewPipeComments,
     TResult? Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult? Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult? Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getMoreCommentsData?.call(this);
   }
@@ -1471,6 +1529,8 @@ class _$GetMoreCommentsDataImpl implements GetMoreCommentsData {
     TResult Function(GetNewPipeComments value)? getNewPipeComments,
     TResult Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getMoreCommentsData != null) {
@@ -1606,6 +1666,8 @@ class _$GetMoreReplyCommentsDataImpl implements GetMoreReplyCommentsData {
         getMoreNewPipeComments,
     required TResult Function(String videoId, String repliesPage)
         getNewPipeCommentReplies,
+    required TResult Function(String videoId, String? nextPage)
+        getMoreNewPipeCommentReplies,
   }) {
     return getMoreReplyCommentsData(id, nextPage);
   }
@@ -1641,6 +1703,8 @@ class _$GetMoreReplyCommentsDataImpl implements GetMoreReplyCommentsData {
     TResult? Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult? Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult? Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getMoreReplyCommentsData?.call(id, nextPage);
   }
@@ -1675,6 +1739,8 @@ class _$GetMoreReplyCommentsDataImpl implements GetMoreReplyCommentsData {
     TResult Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getMoreReplyCommentsData != null) {
@@ -1722,6 +1788,8 @@ class _$GetMoreReplyCommentsDataImpl implements GetMoreReplyCommentsData {
         getMoreNewPipeComments,
     required TResult Function(GetNewPipeCommentReplies value)
         getNewPipeCommentReplies,
+    required TResult Function(GetMoreNewPipeCommentReplies value)
+        getMoreNewPipeCommentReplies,
   }) {
     return getMoreReplyCommentsData(this);
   }
@@ -1757,6 +1825,8 @@ class _$GetMoreReplyCommentsDataImpl implements GetMoreReplyCommentsData {
     TResult? Function(GetNewPipeComments value)? getNewPipeComments,
     TResult? Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult? Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult? Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getMoreReplyCommentsData?.call(this);
   }
@@ -1792,6 +1862,8 @@ class _$GetMoreReplyCommentsDataImpl implements GetMoreReplyCommentsData {
     TResult Function(GetNewPipeComments value)? getNewPipeComments,
     TResult Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getMoreReplyCommentsData != null) {
@@ -1915,6 +1987,8 @@ class _$GetSubtitlesImpl implements GetSubtitles {
         getMoreNewPipeComments,
     required TResult Function(String videoId, String repliesPage)
         getNewPipeCommentReplies,
+    required TResult Function(String videoId, String? nextPage)
+        getMoreNewPipeCommentReplies,
   }) {
     return getSubtitles(id);
   }
@@ -1950,6 +2024,8 @@ class _$GetSubtitlesImpl implements GetSubtitles {
     TResult? Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult? Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult? Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getSubtitles?.call(id);
   }
@@ -1984,6 +2060,8 @@ class _$GetSubtitlesImpl implements GetSubtitles {
     TResult Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getSubtitles != null) {
@@ -2031,6 +2109,8 @@ class _$GetSubtitlesImpl implements GetSubtitles {
         getMoreNewPipeComments,
     required TResult Function(GetNewPipeCommentReplies value)
         getNewPipeCommentReplies,
+    required TResult Function(GetMoreNewPipeCommentReplies value)
+        getMoreNewPipeCommentReplies,
   }) {
     return getSubtitles(this);
   }
@@ -2066,6 +2146,8 @@ class _$GetSubtitlesImpl implements GetSubtitles {
     TResult? Function(GetNewPipeComments value)? getNewPipeComments,
     TResult? Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult? Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult? Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getSubtitles?.call(this);
   }
@@ -2101,6 +2183,8 @@ class _$GetSubtitlesImpl implements GetSubtitles {
     TResult Function(GetNewPipeComments value)? getNewPipeComments,
     TResult Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getSubtitles != null) {
@@ -2194,6 +2278,8 @@ class _$TapDescriptionImpl implements TapDescription {
         getMoreNewPipeComments,
     required TResult Function(String videoId, String repliesPage)
         getNewPipeCommentReplies,
+    required TResult Function(String videoId, String? nextPage)
+        getMoreNewPipeCommentReplies,
   }) {
     return tapDescription();
   }
@@ -2229,6 +2315,8 @@ class _$TapDescriptionImpl implements TapDescription {
     TResult? Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult? Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult? Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
   }) {
     return tapDescription?.call();
   }
@@ -2263,6 +2351,8 @@ class _$TapDescriptionImpl implements TapDescription {
     TResult Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (tapDescription != null) {
@@ -2310,6 +2400,8 @@ class _$TapDescriptionImpl implements TapDescription {
         getMoreNewPipeComments,
     required TResult Function(GetNewPipeCommentReplies value)
         getNewPipeCommentReplies,
+    required TResult Function(GetMoreNewPipeCommentReplies value)
+        getMoreNewPipeCommentReplies,
   }) {
     return tapDescription(this);
   }
@@ -2345,6 +2437,8 @@ class _$TapDescriptionImpl implements TapDescription {
     TResult? Function(GetNewPipeComments value)? getNewPipeComments,
     TResult? Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult? Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult? Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
   }) {
     return tapDescription?.call(this);
   }
@@ -2380,6 +2474,8 @@ class _$TapDescriptionImpl implements TapDescription {
     TResult Function(GetNewPipeComments value)? getNewPipeComments,
     TResult Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (tapDescription != null) {
@@ -2492,6 +2588,8 @@ class _$TogglePipImpl implements TogglePip {
         getMoreNewPipeComments,
     required TResult Function(String videoId, String repliesPage)
         getNewPipeCommentReplies,
+    required TResult Function(String videoId, String? nextPage)
+        getMoreNewPipeCommentReplies,
   }) {
     return togglePip(value);
   }
@@ -2527,6 +2625,8 @@ class _$TogglePipImpl implements TogglePip {
     TResult? Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult? Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult? Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
   }) {
     return togglePip?.call(value);
   }
@@ -2561,6 +2661,8 @@ class _$TogglePipImpl implements TogglePip {
     TResult Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (togglePip != null) {
@@ -2608,6 +2710,8 @@ class _$TogglePipImpl implements TogglePip {
         getMoreNewPipeComments,
     required TResult Function(GetNewPipeCommentReplies value)
         getNewPipeCommentReplies,
+    required TResult Function(GetMoreNewPipeCommentReplies value)
+        getMoreNewPipeCommentReplies,
   }) {
     return togglePip(this);
   }
@@ -2643,6 +2747,8 @@ class _$TogglePipImpl implements TogglePip {
     TResult? Function(GetNewPipeComments value)? getNewPipeComments,
     TResult? Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult? Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult? Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
   }) {
     return togglePip?.call(this);
   }
@@ -2678,6 +2784,8 @@ class _$TogglePipImpl implements TogglePip {
     TResult Function(GetNewPipeComments value)? getNewPipeComments,
     TResult Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (togglePip != null) {
@@ -2798,6 +2906,8 @@ class _$AssignTitleImpl implements AssignTitle {
         getMoreNewPipeComments,
     required TResult Function(String videoId, String repliesPage)
         getNewPipeCommentReplies,
+    required TResult Function(String videoId, String? nextPage)
+        getMoreNewPipeCommentReplies,
   }) {
     return assignTitle(title);
   }
@@ -2833,6 +2943,8 @@ class _$AssignTitleImpl implements AssignTitle {
     TResult? Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult? Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult? Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
   }) {
     return assignTitle?.call(title);
   }
@@ -2867,6 +2979,8 @@ class _$AssignTitleImpl implements AssignTitle {
     TResult Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (assignTitle != null) {
@@ -2914,6 +3028,8 @@ class _$AssignTitleImpl implements AssignTitle {
         getMoreNewPipeComments,
     required TResult Function(GetNewPipeCommentReplies value)
         getNewPipeCommentReplies,
+    required TResult Function(GetMoreNewPipeCommentReplies value)
+        getMoreNewPipeCommentReplies,
   }) {
     return assignTitle(this);
   }
@@ -2949,6 +3065,8 @@ class _$AssignTitleImpl implements AssignTitle {
     TResult? Function(GetNewPipeComments value)? getNewPipeComments,
     TResult? Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult? Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult? Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
   }) {
     return assignTitle?.call(this);
   }
@@ -2984,6 +3102,8 @@ class _$AssignTitleImpl implements AssignTitle {
     TResult Function(GetNewPipeComments value)? getNewPipeComments,
     TResult Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (assignTitle != null) {
@@ -3105,6 +3225,8 @@ class _$GetExplodeWatchInfoImpl implements GetExplodeWatchInfo {
         getMoreNewPipeComments,
     required TResult Function(String videoId, String repliesPage)
         getNewPipeCommentReplies,
+    required TResult Function(String videoId, String? nextPage)
+        getMoreNewPipeCommentReplies,
   }) {
     return getExplodeWatchInfo(id);
   }
@@ -3140,6 +3262,8 @@ class _$GetExplodeWatchInfoImpl implements GetExplodeWatchInfo {
     TResult? Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult? Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult? Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getExplodeWatchInfo?.call(id);
   }
@@ -3174,6 +3298,8 @@ class _$GetExplodeWatchInfoImpl implements GetExplodeWatchInfo {
     TResult Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getExplodeWatchInfo != null) {
@@ -3221,6 +3347,8 @@ class _$GetExplodeWatchInfoImpl implements GetExplodeWatchInfo {
         getMoreNewPipeComments,
     required TResult Function(GetNewPipeCommentReplies value)
         getNewPipeCommentReplies,
+    required TResult Function(GetMoreNewPipeCommentReplies value)
+        getMoreNewPipeCommentReplies,
   }) {
     return getExplodeWatchInfo(this);
   }
@@ -3256,6 +3384,8 @@ class _$GetExplodeWatchInfoImpl implements GetExplodeWatchInfo {
     TResult? Function(GetNewPipeComments value)? getNewPipeComments,
     TResult? Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult? Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult? Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getExplodeWatchInfo?.call(this);
   }
@@ -3291,6 +3421,8 @@ class _$GetExplodeWatchInfoImpl implements GetExplodeWatchInfo {
     TResult Function(GetNewPipeComments value)? getNewPipeComments,
     TResult Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getExplodeWatchInfo != null) {
@@ -3415,6 +3547,8 @@ class _$GetExplodeRelatedVideoInfoImpl implements GetExplodeRelatedVideoInfo {
         getMoreNewPipeComments,
     required TResult Function(String videoId, String repliesPage)
         getNewPipeCommentReplies,
+    required TResult Function(String videoId, String? nextPage)
+        getMoreNewPipeCommentReplies,
   }) {
     return getExplodeRelatedVideoInfo(id);
   }
@@ -3450,6 +3584,8 @@ class _$GetExplodeRelatedVideoInfoImpl implements GetExplodeRelatedVideoInfo {
     TResult? Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult? Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult? Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getExplodeRelatedVideoInfo?.call(id);
   }
@@ -3484,6 +3620,8 @@ class _$GetExplodeRelatedVideoInfoImpl implements GetExplodeRelatedVideoInfo {
     TResult Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getExplodeRelatedVideoInfo != null) {
@@ -3531,6 +3669,8 @@ class _$GetExplodeRelatedVideoInfoImpl implements GetExplodeRelatedVideoInfo {
         getMoreNewPipeComments,
     required TResult Function(GetNewPipeCommentReplies value)
         getNewPipeCommentReplies,
+    required TResult Function(GetMoreNewPipeCommentReplies value)
+        getMoreNewPipeCommentReplies,
   }) {
     return getExplodeRelatedVideoInfo(this);
   }
@@ -3566,6 +3706,8 @@ class _$GetExplodeRelatedVideoInfoImpl implements GetExplodeRelatedVideoInfo {
     TResult? Function(GetNewPipeComments value)? getNewPipeComments,
     TResult? Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult? Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult? Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getExplodeRelatedVideoInfo?.call(this);
   }
@@ -3601,6 +3743,8 @@ class _$GetExplodeRelatedVideoInfoImpl implements GetExplodeRelatedVideoInfo {
     TResult Function(GetNewPipeComments value)? getNewPipeComments,
     TResult Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getExplodeRelatedVideoInfo != null) {
@@ -3725,6 +3869,8 @@ class _$GetExplodeMuxStreamInfoImpl implements GetExplodeMuxStreamInfo {
         getMoreNewPipeComments,
     required TResult Function(String videoId, String repliesPage)
         getNewPipeCommentReplies,
+    required TResult Function(String videoId, String? nextPage)
+        getMoreNewPipeCommentReplies,
   }) {
     return getExplodeMuxStreamInfo(id);
   }
@@ -3760,6 +3906,8 @@ class _$GetExplodeMuxStreamInfoImpl implements GetExplodeMuxStreamInfo {
     TResult? Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult? Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult? Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getExplodeMuxStreamInfo?.call(id);
   }
@@ -3794,6 +3942,8 @@ class _$GetExplodeMuxStreamInfoImpl implements GetExplodeMuxStreamInfo {
     TResult Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getExplodeMuxStreamInfo != null) {
@@ -3841,6 +3991,8 @@ class _$GetExplodeMuxStreamInfoImpl implements GetExplodeMuxStreamInfo {
         getMoreNewPipeComments,
     required TResult Function(GetNewPipeCommentReplies value)
         getNewPipeCommentReplies,
+    required TResult Function(GetMoreNewPipeCommentReplies value)
+        getMoreNewPipeCommentReplies,
   }) {
     return getExplodeMuxStreamInfo(this);
   }
@@ -3876,6 +4028,8 @@ class _$GetExplodeMuxStreamInfoImpl implements GetExplodeMuxStreamInfo {
     TResult? Function(GetNewPipeComments value)? getNewPipeComments,
     TResult? Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult? Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult? Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getExplodeMuxStreamInfo?.call(this);
   }
@@ -3911,6 +4065,8 @@ class _$GetExplodeMuxStreamInfoImpl implements GetExplodeMuxStreamInfo {
     TResult Function(GetNewPipeComments value)? getNewPipeComments,
     TResult Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getExplodeMuxStreamInfo != null) {
@@ -4035,6 +4191,8 @@ class _$GetExplodeLiveVideoInfoImpl implements GetExplodeLiveVideoInfo {
         getMoreNewPipeComments,
     required TResult Function(String videoId, String repliesPage)
         getNewPipeCommentReplies,
+    required TResult Function(String videoId, String? nextPage)
+        getMoreNewPipeCommentReplies,
   }) {
     return getExplodeLiveVideoInfo(id);
   }
@@ -4070,6 +4228,8 @@ class _$GetExplodeLiveVideoInfoImpl implements GetExplodeLiveVideoInfo {
     TResult? Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult? Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult? Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getExplodeLiveVideoInfo?.call(id);
   }
@@ -4104,6 +4264,8 @@ class _$GetExplodeLiveVideoInfoImpl implements GetExplodeLiveVideoInfo {
     TResult Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getExplodeLiveVideoInfo != null) {
@@ -4151,6 +4313,8 @@ class _$GetExplodeLiveVideoInfoImpl implements GetExplodeLiveVideoInfo {
         getMoreNewPipeComments,
     required TResult Function(GetNewPipeCommentReplies value)
         getNewPipeCommentReplies,
+    required TResult Function(GetMoreNewPipeCommentReplies value)
+        getMoreNewPipeCommentReplies,
   }) {
     return getExplodeLiveVideoInfo(this);
   }
@@ -4186,6 +4350,8 @@ class _$GetExplodeLiveVideoInfoImpl implements GetExplodeLiveVideoInfo {
     TResult? Function(GetNewPipeComments value)? getNewPipeComments,
     TResult? Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult? Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult? Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getExplodeLiveVideoInfo?.call(this);
   }
@@ -4221,6 +4387,8 @@ class _$GetExplodeLiveVideoInfoImpl implements GetExplodeLiveVideoInfo {
     TResult Function(GetNewPipeComments value)? getNewPipeComments,
     TResult Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getExplodeLiveVideoInfo != null) {
@@ -4347,6 +4515,8 @@ class _$SetSelectedVideoBasicDetailsImpl
         getMoreNewPipeComments,
     required TResult Function(String videoId, String repliesPage)
         getNewPipeCommentReplies,
+    required TResult Function(String videoId, String? nextPage)
+        getMoreNewPipeCommentReplies,
   }) {
     return setSelectedVideoBasicDetails(details);
   }
@@ -4382,6 +4552,8 @@ class _$SetSelectedVideoBasicDetailsImpl
     TResult? Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult? Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult? Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
   }) {
     return setSelectedVideoBasicDetails?.call(details);
   }
@@ -4416,6 +4588,8 @@ class _$SetSelectedVideoBasicDetailsImpl
     TResult Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (setSelectedVideoBasicDetails != null) {
@@ -4463,6 +4637,8 @@ class _$SetSelectedVideoBasicDetailsImpl
         getMoreNewPipeComments,
     required TResult Function(GetNewPipeCommentReplies value)
         getNewPipeCommentReplies,
+    required TResult Function(GetMoreNewPipeCommentReplies value)
+        getMoreNewPipeCommentReplies,
   }) {
     return setSelectedVideoBasicDetails(this);
   }
@@ -4498,6 +4674,8 @@ class _$SetSelectedVideoBasicDetailsImpl
     TResult? Function(GetNewPipeComments value)? getNewPipeComments,
     TResult? Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult? Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult? Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
   }) {
     return setSelectedVideoBasicDetails?.call(this);
   }
@@ -4533,6 +4711,8 @@ class _$SetSelectedVideoBasicDetailsImpl
     TResult Function(GetNewPipeComments value)? getNewPipeComments,
     TResult Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (setSelectedVideoBasicDetails != null) {
@@ -4658,6 +4838,8 @@ class _$GetInvidiousWatchInfoImpl implements GetInvidiousWatchInfo {
         getMoreNewPipeComments,
     required TResult Function(String videoId, String repliesPage)
         getNewPipeCommentReplies,
+    required TResult Function(String videoId, String? nextPage)
+        getMoreNewPipeCommentReplies,
   }) {
     return getInvidiousWatchInfo(id);
   }
@@ -4693,6 +4875,8 @@ class _$GetInvidiousWatchInfoImpl implements GetInvidiousWatchInfo {
     TResult? Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult? Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult? Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getInvidiousWatchInfo?.call(id);
   }
@@ -4727,6 +4911,8 @@ class _$GetInvidiousWatchInfoImpl implements GetInvidiousWatchInfo {
     TResult Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getInvidiousWatchInfo != null) {
@@ -4774,6 +4960,8 @@ class _$GetInvidiousWatchInfoImpl implements GetInvidiousWatchInfo {
         getMoreNewPipeComments,
     required TResult Function(GetNewPipeCommentReplies value)
         getNewPipeCommentReplies,
+    required TResult Function(GetMoreNewPipeCommentReplies value)
+        getMoreNewPipeCommentReplies,
   }) {
     return getInvidiousWatchInfo(this);
   }
@@ -4809,6 +4997,8 @@ class _$GetInvidiousWatchInfoImpl implements GetInvidiousWatchInfo {
     TResult? Function(GetNewPipeComments value)? getNewPipeComments,
     TResult? Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult? Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult? Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getInvidiousWatchInfo?.call(this);
   }
@@ -4844,6 +5034,8 @@ class _$GetInvidiousWatchInfoImpl implements GetInvidiousWatchInfo {
     TResult Function(GetNewPipeComments value)? getNewPipeComments,
     TResult Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getInvidiousWatchInfo != null) {
@@ -4967,6 +5159,8 @@ class _$GetInvidiousCommentsImpl implements GetInvidiousComments {
         getMoreNewPipeComments,
     required TResult Function(String videoId, String repliesPage)
         getNewPipeCommentReplies,
+    required TResult Function(String videoId, String? nextPage)
+        getMoreNewPipeCommentReplies,
   }) {
     return getInvidiousComments(id);
   }
@@ -5002,6 +5196,8 @@ class _$GetInvidiousCommentsImpl implements GetInvidiousComments {
     TResult? Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult? Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult? Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getInvidiousComments?.call(id);
   }
@@ -5036,6 +5232,8 @@ class _$GetInvidiousCommentsImpl implements GetInvidiousComments {
     TResult Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getInvidiousComments != null) {
@@ -5083,6 +5281,8 @@ class _$GetInvidiousCommentsImpl implements GetInvidiousComments {
         getMoreNewPipeComments,
     required TResult Function(GetNewPipeCommentReplies value)
         getNewPipeCommentReplies,
+    required TResult Function(GetMoreNewPipeCommentReplies value)
+        getMoreNewPipeCommentReplies,
   }) {
     return getInvidiousComments(this);
   }
@@ -5118,6 +5318,8 @@ class _$GetInvidiousCommentsImpl implements GetInvidiousComments {
     TResult? Function(GetNewPipeComments value)? getNewPipeComments,
     TResult? Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult? Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult? Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getInvidiousComments?.call(this);
   }
@@ -5153,6 +5355,8 @@ class _$GetInvidiousCommentsImpl implements GetInvidiousComments {
     TResult Function(GetNewPipeComments value)? getNewPipeComments,
     TResult Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getInvidiousComments != null) {
@@ -5287,6 +5491,8 @@ class _$GetInvidiousCommentRepliesImpl implements GetInvidiousCommentReplies {
         getMoreNewPipeComments,
     required TResult Function(String videoId, String repliesPage)
         getNewPipeCommentReplies,
+    required TResult Function(String videoId, String? nextPage)
+        getMoreNewPipeCommentReplies,
   }) {
     return getInvidiousCommentReplies(id, continuation);
   }
@@ -5322,6 +5528,8 @@ class _$GetInvidiousCommentRepliesImpl implements GetInvidiousCommentReplies {
     TResult? Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult? Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult? Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getInvidiousCommentReplies?.call(id, continuation);
   }
@@ -5356,6 +5564,8 @@ class _$GetInvidiousCommentRepliesImpl implements GetInvidiousCommentReplies {
     TResult Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getInvidiousCommentReplies != null) {
@@ -5403,6 +5613,8 @@ class _$GetInvidiousCommentRepliesImpl implements GetInvidiousCommentReplies {
         getMoreNewPipeComments,
     required TResult Function(GetNewPipeCommentReplies value)
         getNewPipeCommentReplies,
+    required TResult Function(GetMoreNewPipeCommentReplies value)
+        getMoreNewPipeCommentReplies,
   }) {
     return getInvidiousCommentReplies(this);
   }
@@ -5438,6 +5650,8 @@ class _$GetInvidiousCommentRepliesImpl implements GetInvidiousCommentReplies {
     TResult? Function(GetNewPipeComments value)? getNewPipeComments,
     TResult? Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult? Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult? Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getInvidiousCommentReplies?.call(this);
   }
@@ -5473,6 +5687,8 @@ class _$GetInvidiousCommentRepliesImpl implements GetInvidiousCommentReplies {
     TResult Function(GetNewPipeComments value)? getNewPipeComments,
     TResult Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getInvidiousCommentReplies != null) {
@@ -5609,6 +5825,8 @@ class _$GetMoreInvidiousCommentsImpl implements GetMoreInvidiousComments {
         getMoreNewPipeComments,
     required TResult Function(String videoId, String repliesPage)
         getNewPipeCommentReplies,
+    required TResult Function(String videoId, String? nextPage)
+        getMoreNewPipeCommentReplies,
   }) {
     return getMoreInvidiousComments(id, continuation);
   }
@@ -5644,6 +5862,8 @@ class _$GetMoreInvidiousCommentsImpl implements GetMoreInvidiousComments {
     TResult? Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult? Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult? Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getMoreInvidiousComments?.call(id, continuation);
   }
@@ -5678,6 +5898,8 @@ class _$GetMoreInvidiousCommentsImpl implements GetMoreInvidiousComments {
     TResult Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getMoreInvidiousComments != null) {
@@ -5725,6 +5947,8 @@ class _$GetMoreInvidiousCommentsImpl implements GetMoreInvidiousComments {
         getMoreNewPipeComments,
     required TResult Function(GetNewPipeCommentReplies value)
         getNewPipeCommentReplies,
+    required TResult Function(GetMoreNewPipeCommentReplies value)
+        getMoreNewPipeCommentReplies,
   }) {
     return getMoreInvidiousComments(this);
   }
@@ -5760,6 +5984,8 @@ class _$GetMoreInvidiousCommentsImpl implements GetMoreInvidiousComments {
     TResult? Function(GetNewPipeComments value)? getNewPipeComments,
     TResult? Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult? Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult? Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getMoreInvidiousComments?.call(this);
   }
@@ -5795,6 +6021,8 @@ class _$GetMoreInvidiousCommentsImpl implements GetMoreInvidiousComments {
     TResult Function(GetNewPipeComments value)? getNewPipeComments,
     TResult Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getMoreInvidiousComments != null) {
@@ -5933,6 +6161,8 @@ class _$GetMoreInvidiousReplyCommentsImpl
         getMoreNewPipeComments,
     required TResult Function(String videoId, String repliesPage)
         getNewPipeCommentReplies,
+    required TResult Function(String videoId, String? nextPage)
+        getMoreNewPipeCommentReplies,
   }) {
     return getMoreInvidiousReplyComments(id, continuation);
   }
@@ -5968,6 +6198,8 @@ class _$GetMoreInvidiousReplyCommentsImpl
     TResult? Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult? Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult? Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getMoreInvidiousReplyComments?.call(id, continuation);
   }
@@ -6002,6 +6234,8 @@ class _$GetMoreInvidiousReplyCommentsImpl
     TResult Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getMoreInvidiousReplyComments != null) {
@@ -6049,6 +6283,8 @@ class _$GetMoreInvidiousReplyCommentsImpl
         getMoreNewPipeComments,
     required TResult Function(GetNewPipeCommentReplies value)
         getNewPipeCommentReplies,
+    required TResult Function(GetMoreNewPipeCommentReplies value)
+        getMoreNewPipeCommentReplies,
   }) {
     return getMoreInvidiousReplyComments(this);
   }
@@ -6084,6 +6320,8 @@ class _$GetMoreInvidiousReplyCommentsImpl
     TResult? Function(GetNewPipeComments value)? getNewPipeComments,
     TResult? Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult? Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult? Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getMoreInvidiousReplyComments?.call(this);
   }
@@ -6119,6 +6357,8 @@ class _$GetMoreInvidiousReplyCommentsImpl
     TResult Function(GetNewPipeComments value)? getNewPipeComments,
     TResult Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getMoreInvidiousReplyComments != null) {
@@ -6245,6 +6485,8 @@ class _$UpdatePlayBackImpl implements UpdatePlayBack {
         getMoreNewPipeComments,
     required TResult Function(String videoId, String repliesPage)
         getNewPipeCommentReplies,
+    required TResult Function(String videoId, String? nextPage)
+        getMoreNewPipeCommentReplies,
   }) {
     return updatePlayBack(playBack);
   }
@@ -6280,6 +6522,8 @@ class _$UpdatePlayBackImpl implements UpdatePlayBack {
     TResult? Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult? Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult? Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
   }) {
     return updatePlayBack?.call(playBack);
   }
@@ -6314,6 +6558,8 @@ class _$UpdatePlayBackImpl implements UpdatePlayBack {
     TResult Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (updatePlayBack != null) {
@@ -6361,6 +6607,8 @@ class _$UpdatePlayBackImpl implements UpdatePlayBack {
         getMoreNewPipeComments,
     required TResult Function(GetNewPipeCommentReplies value)
         getNewPipeCommentReplies,
+    required TResult Function(GetMoreNewPipeCommentReplies value)
+        getMoreNewPipeCommentReplies,
   }) {
     return updatePlayBack(this);
   }
@@ -6396,6 +6644,8 @@ class _$UpdatePlayBackImpl implements UpdatePlayBack {
     TResult? Function(GetNewPipeComments value)? getNewPipeComments,
     TResult? Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult? Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult? Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
   }) {
     return updatePlayBack?.call(this);
   }
@@ -6431,6 +6681,8 @@ class _$UpdatePlayBackImpl implements UpdatePlayBack {
     TResult Function(GetNewPipeComments value)? getNewPipeComments,
     TResult Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (updatePlayBack != null) {
@@ -6552,6 +6804,8 @@ class _$GetNewPipeWatchInfoImpl implements GetNewPipeWatchInfo {
         getMoreNewPipeComments,
     required TResult Function(String videoId, String repliesPage)
         getNewPipeCommentReplies,
+    required TResult Function(String videoId, String? nextPage)
+        getMoreNewPipeCommentReplies,
   }) {
     return getNewPipeWatchInfo(id);
   }
@@ -6587,6 +6841,8 @@ class _$GetNewPipeWatchInfoImpl implements GetNewPipeWatchInfo {
     TResult? Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult? Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult? Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getNewPipeWatchInfo?.call(id);
   }
@@ -6621,6 +6877,8 @@ class _$GetNewPipeWatchInfoImpl implements GetNewPipeWatchInfo {
     TResult Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getNewPipeWatchInfo != null) {
@@ -6668,6 +6926,8 @@ class _$GetNewPipeWatchInfoImpl implements GetNewPipeWatchInfo {
         getMoreNewPipeComments,
     required TResult Function(GetNewPipeCommentReplies value)
         getNewPipeCommentReplies,
+    required TResult Function(GetMoreNewPipeCommentReplies value)
+        getMoreNewPipeCommentReplies,
   }) {
     return getNewPipeWatchInfo(this);
   }
@@ -6703,6 +6963,8 @@ class _$GetNewPipeWatchInfoImpl implements GetNewPipeWatchInfo {
     TResult? Function(GetNewPipeComments value)? getNewPipeComments,
     TResult? Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult? Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult? Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getNewPipeWatchInfo?.call(this);
   }
@@ -6738,6 +7000,8 @@ class _$GetNewPipeWatchInfoImpl implements GetNewPipeWatchInfo {
     TResult Function(GetNewPipeComments value)? getNewPipeComments,
     TResult Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getNewPipeWatchInfo != null) {
@@ -6860,6 +7124,8 @@ class _$GetNewPipeCommentsImpl implements GetNewPipeComments {
         getMoreNewPipeComments,
     required TResult Function(String videoId, String repliesPage)
         getNewPipeCommentReplies,
+    required TResult Function(String videoId, String? nextPage)
+        getMoreNewPipeCommentReplies,
   }) {
     return getNewPipeComments(id);
   }
@@ -6895,6 +7161,8 @@ class _$GetNewPipeCommentsImpl implements GetNewPipeComments {
     TResult? Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult? Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult? Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getNewPipeComments?.call(id);
   }
@@ -6929,6 +7197,8 @@ class _$GetNewPipeCommentsImpl implements GetNewPipeComments {
     TResult Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getNewPipeComments != null) {
@@ -6976,6 +7246,8 @@ class _$GetNewPipeCommentsImpl implements GetNewPipeComments {
         getMoreNewPipeComments,
     required TResult Function(GetNewPipeCommentReplies value)
         getNewPipeCommentReplies,
+    required TResult Function(GetMoreNewPipeCommentReplies value)
+        getMoreNewPipeCommentReplies,
   }) {
     return getNewPipeComments(this);
   }
@@ -7011,6 +7283,8 @@ class _$GetNewPipeCommentsImpl implements GetNewPipeComments {
     TResult? Function(GetNewPipeComments value)? getNewPipeComments,
     TResult? Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult? Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult? Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getNewPipeComments?.call(this);
   }
@@ -7046,6 +7320,8 @@ class _$GetNewPipeCommentsImpl implements GetNewPipeComments {
     TResult Function(GetNewPipeComments value)? getNewPipeComments,
     TResult Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getNewPipeComments != null) {
@@ -7179,6 +7455,8 @@ class _$GetMoreNewPipeCommentsImpl implements GetMoreNewPipeComments {
         getMoreNewPipeComments,
     required TResult Function(String videoId, String repliesPage)
         getNewPipeCommentReplies,
+    required TResult Function(String videoId, String? nextPage)
+        getMoreNewPipeCommentReplies,
   }) {
     return getMoreNewPipeComments(id, nextPage);
   }
@@ -7214,6 +7492,8 @@ class _$GetMoreNewPipeCommentsImpl implements GetMoreNewPipeComments {
     TResult? Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult? Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult? Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getMoreNewPipeComments?.call(id, nextPage);
   }
@@ -7248,6 +7528,8 @@ class _$GetMoreNewPipeCommentsImpl implements GetMoreNewPipeComments {
     TResult Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getMoreNewPipeComments != null) {
@@ -7295,6 +7577,8 @@ class _$GetMoreNewPipeCommentsImpl implements GetMoreNewPipeComments {
         getMoreNewPipeComments,
     required TResult Function(GetNewPipeCommentReplies value)
         getNewPipeCommentReplies,
+    required TResult Function(GetMoreNewPipeCommentReplies value)
+        getMoreNewPipeCommentReplies,
   }) {
     return getMoreNewPipeComments(this);
   }
@@ -7330,6 +7614,8 @@ class _$GetMoreNewPipeCommentsImpl implements GetMoreNewPipeComments {
     TResult? Function(GetNewPipeComments value)? getNewPipeComments,
     TResult? Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult? Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult? Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getMoreNewPipeComments?.call(this);
   }
@@ -7365,6 +7651,8 @@ class _$GetMoreNewPipeCommentsImpl implements GetMoreNewPipeComments {
     TResult Function(GetNewPipeComments value)? getNewPipeComments,
     TResult Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getMoreNewPipeComments != null) {
@@ -7501,6 +7789,8 @@ class _$GetNewPipeCommentRepliesImpl implements GetNewPipeCommentReplies {
         getMoreNewPipeComments,
     required TResult Function(String videoId, String repliesPage)
         getNewPipeCommentReplies,
+    required TResult Function(String videoId, String? nextPage)
+        getMoreNewPipeCommentReplies,
   }) {
     return getNewPipeCommentReplies(videoId, repliesPage);
   }
@@ -7536,6 +7826,8 @@ class _$GetNewPipeCommentRepliesImpl implements GetNewPipeCommentReplies {
     TResult? Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult? Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult? Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getNewPipeCommentReplies?.call(videoId, repliesPage);
   }
@@ -7570,6 +7862,8 @@ class _$GetNewPipeCommentRepliesImpl implements GetNewPipeCommentReplies {
     TResult Function(String id, String? nextPage)? getMoreNewPipeComments,
     TResult Function(String videoId, String repliesPage)?
         getNewPipeCommentReplies,
+    TResult Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getNewPipeCommentReplies != null) {
@@ -7617,6 +7911,8 @@ class _$GetNewPipeCommentRepliesImpl implements GetNewPipeCommentReplies {
         getMoreNewPipeComments,
     required TResult Function(GetNewPipeCommentReplies value)
         getNewPipeCommentReplies,
+    required TResult Function(GetMoreNewPipeCommentReplies value)
+        getMoreNewPipeCommentReplies,
   }) {
     return getNewPipeCommentReplies(this);
   }
@@ -7652,6 +7948,8 @@ class _$GetNewPipeCommentRepliesImpl implements GetNewPipeCommentReplies {
     TResult? Function(GetNewPipeComments value)? getNewPipeComments,
     TResult? Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult? Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult? Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
   }) {
     return getNewPipeCommentReplies?.call(this);
   }
@@ -7687,6 +7985,8 @@ class _$GetNewPipeCommentRepliesImpl implements GetNewPipeCommentReplies {
     TResult Function(GetNewPipeComments value)? getNewPipeComments,
     TResult Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
     TResult Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
     required TResult orElse(),
   }) {
     if (getNewPipeCommentReplies != null) {
@@ -7708,6 +8008,343 @@ abstract class GetNewPipeCommentReplies implements WatchEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$GetNewPipeCommentRepliesImplCopyWith<_$GetNewPipeCommentRepliesImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$GetMoreNewPipeCommentRepliesImplCopyWith<$Res> {
+  factory _$$GetMoreNewPipeCommentRepliesImplCopyWith(
+          _$GetMoreNewPipeCommentRepliesImpl value,
+          $Res Function(_$GetMoreNewPipeCommentRepliesImpl) then) =
+      __$$GetMoreNewPipeCommentRepliesImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String videoId, String? nextPage});
+}
+
+/// @nodoc
+class __$$GetMoreNewPipeCommentRepliesImplCopyWithImpl<$Res>
+    extends _$WatchEventCopyWithImpl<$Res, _$GetMoreNewPipeCommentRepliesImpl>
+    implements _$$GetMoreNewPipeCommentRepliesImplCopyWith<$Res> {
+  __$$GetMoreNewPipeCommentRepliesImplCopyWithImpl(
+      _$GetMoreNewPipeCommentRepliesImpl _value,
+      $Res Function(_$GetMoreNewPipeCommentRepliesImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of WatchEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? videoId = null,
+    Object? nextPage = freezed,
+  }) {
+    return _then(_$GetMoreNewPipeCommentRepliesImpl(
+      videoId: null == videoId
+          ? _value.videoId
+          : videoId // ignore: cast_nullable_to_non_nullable
+              as String,
+      nextPage: freezed == nextPage
+          ? _value.nextPage
+          : nextPage // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$GetMoreNewPipeCommentRepliesImpl
+    implements GetMoreNewPipeCommentReplies {
+  _$GetMoreNewPipeCommentRepliesImpl(
+      {required this.videoId, required this.nextPage});
+
+  @override
+  final String videoId;
+  @override
+  final String? nextPage;
+
+  @override
+  String toString() {
+    return 'WatchEvent.getMoreNewPipeCommentReplies(videoId: $videoId, nextPage: $nextPage)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GetMoreNewPipeCommentRepliesImpl &&
+            (identical(other.videoId, videoId) || other.videoId == videoId) &&
+            (identical(other.nextPage, nextPage) ||
+                other.nextPage == nextPage));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, videoId, nextPage);
+
+  /// Create a copy of WatchEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GetMoreNewPipeCommentRepliesImplCopyWith<
+          _$GetMoreNewPipeCommentRepliesImpl>
+      get copyWith => __$$GetMoreNewPipeCommentRepliesImplCopyWithImpl<
+          _$GetMoreNewPipeCommentRepliesImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String id) getWatchInfo,
+    required TResult Function(String id) getCommentData,
+    required TResult Function(String id, String nextPage) getCommentRepliesData,
+    required TResult Function(String id, String? nextPage) getMoreCommentsData,
+    required TResult Function(String id, String? nextPage)
+        getMoreReplyCommentsData,
+    required TResult Function(String id) getSubtitles,
+    required TResult Function() tapDescription,
+    required TResult Function(bool value) togglePip,
+    required TResult Function(String title) assignTitle,
+    required TResult Function(String id) getExplodeWatchInfo,
+    required TResult Function(String id) getExplodeRelatedVideoInfo,
+    required TResult Function(String id) getExplodeMuxStreamInfo,
+    required TResult Function(String id) getExplodeLiveVideoInfo,
+    required TResult Function(VideoBasicInfo details)
+        setSelectedVideoBasicDetails,
+    required TResult Function(String id) getInvidiousWatchInfo,
+    required TResult Function(String id) getInvidiousComments,
+    required TResult Function(String id, String continuation)
+        getInvidiousCommentReplies,
+    required TResult Function(String id, String? continuation)
+        getMoreInvidiousComments,
+    required TResult Function(String id, String? continuation)
+        getMoreInvidiousReplyComments,
+    required TResult Function(int? playBack) updatePlayBack,
+    required TResult Function(String id) getNewPipeWatchInfo,
+    required TResult Function(String id) getNewPipeComments,
+    required TResult Function(String id, String? nextPage)
+        getMoreNewPipeComments,
+    required TResult Function(String videoId, String repliesPage)
+        getNewPipeCommentReplies,
+    required TResult Function(String videoId, String? nextPage)
+        getMoreNewPipeCommentReplies,
+  }) {
+    return getMoreNewPipeCommentReplies(videoId, nextPage);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String id)? getWatchInfo,
+    TResult? Function(String id)? getCommentData,
+    TResult? Function(String id, String nextPage)? getCommentRepliesData,
+    TResult? Function(String id, String? nextPage)? getMoreCommentsData,
+    TResult? Function(String id, String? nextPage)? getMoreReplyCommentsData,
+    TResult? Function(String id)? getSubtitles,
+    TResult? Function()? tapDescription,
+    TResult? Function(bool value)? togglePip,
+    TResult? Function(String title)? assignTitle,
+    TResult? Function(String id)? getExplodeWatchInfo,
+    TResult? Function(String id)? getExplodeRelatedVideoInfo,
+    TResult? Function(String id)? getExplodeMuxStreamInfo,
+    TResult? Function(String id)? getExplodeLiveVideoInfo,
+    TResult? Function(VideoBasicInfo details)? setSelectedVideoBasicDetails,
+    TResult? Function(String id)? getInvidiousWatchInfo,
+    TResult? Function(String id)? getInvidiousComments,
+    TResult? Function(String id, String continuation)?
+        getInvidiousCommentReplies,
+    TResult? Function(String id, String? continuation)?
+        getMoreInvidiousComments,
+    TResult? Function(String id, String? continuation)?
+        getMoreInvidiousReplyComments,
+    TResult? Function(int? playBack)? updatePlayBack,
+    TResult? Function(String id)? getNewPipeWatchInfo,
+    TResult? Function(String id)? getNewPipeComments,
+    TResult? Function(String id, String? nextPage)? getMoreNewPipeComments,
+    TResult? Function(String videoId, String repliesPage)?
+        getNewPipeCommentReplies,
+    TResult? Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
+  }) {
+    return getMoreNewPipeCommentReplies?.call(videoId, nextPage);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String id)? getWatchInfo,
+    TResult Function(String id)? getCommentData,
+    TResult Function(String id, String nextPage)? getCommentRepliesData,
+    TResult Function(String id, String? nextPage)? getMoreCommentsData,
+    TResult Function(String id, String? nextPage)? getMoreReplyCommentsData,
+    TResult Function(String id)? getSubtitles,
+    TResult Function()? tapDescription,
+    TResult Function(bool value)? togglePip,
+    TResult Function(String title)? assignTitle,
+    TResult Function(String id)? getExplodeWatchInfo,
+    TResult Function(String id)? getExplodeRelatedVideoInfo,
+    TResult Function(String id)? getExplodeMuxStreamInfo,
+    TResult Function(String id)? getExplodeLiveVideoInfo,
+    TResult Function(VideoBasicInfo details)? setSelectedVideoBasicDetails,
+    TResult Function(String id)? getInvidiousWatchInfo,
+    TResult Function(String id)? getInvidiousComments,
+    TResult Function(String id, String continuation)?
+        getInvidiousCommentReplies,
+    TResult Function(String id, String? continuation)? getMoreInvidiousComments,
+    TResult Function(String id, String? continuation)?
+        getMoreInvidiousReplyComments,
+    TResult Function(int? playBack)? updatePlayBack,
+    TResult Function(String id)? getNewPipeWatchInfo,
+    TResult Function(String id)? getNewPipeComments,
+    TResult Function(String id, String? nextPage)? getMoreNewPipeComments,
+    TResult Function(String videoId, String repliesPage)?
+        getNewPipeCommentReplies,
+    TResult Function(String videoId, String? nextPage)?
+        getMoreNewPipeCommentReplies,
+    required TResult orElse(),
+  }) {
+    if (getMoreNewPipeCommentReplies != null) {
+      return getMoreNewPipeCommentReplies(videoId, nextPage);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(GetWatchInfo value) getWatchInfo,
+    required TResult Function(GetCommentData value) getCommentData,
+    required TResult Function(GetCommentRepliesData value)
+        getCommentRepliesData,
+    required TResult Function(GetMoreCommentsData value) getMoreCommentsData,
+    required TResult Function(GetMoreReplyCommentsData value)
+        getMoreReplyCommentsData,
+    required TResult Function(GetSubtitles value) getSubtitles,
+    required TResult Function(TapDescription value) tapDescription,
+    required TResult Function(TogglePip value) togglePip,
+    required TResult Function(AssignTitle value) assignTitle,
+    required TResult Function(GetExplodeWatchInfo value) getExplodeWatchInfo,
+    required TResult Function(GetExplodeRelatedVideoInfo value)
+        getExplodeRelatedVideoInfo,
+    required TResult Function(GetExplodeMuxStreamInfo value)
+        getExplodeMuxStreamInfo,
+    required TResult Function(GetExplodeLiveVideoInfo value)
+        getExplodeLiveVideoInfo,
+    required TResult Function(SetSelectedVideoBasicDetails value)
+        setSelectedVideoBasicDetails,
+    required TResult Function(GetInvidiousWatchInfo value)
+        getInvidiousWatchInfo,
+    required TResult Function(GetInvidiousComments value) getInvidiousComments,
+    required TResult Function(GetInvidiousCommentReplies value)
+        getInvidiousCommentReplies,
+    required TResult Function(GetMoreInvidiousComments value)
+        getMoreInvidiousComments,
+    required TResult Function(GetMoreInvidiousReplyComments value)
+        getMoreInvidiousReplyComments,
+    required TResult Function(UpdatePlayBack value) updatePlayBack,
+    required TResult Function(GetNewPipeWatchInfo value) getNewPipeWatchInfo,
+    required TResult Function(GetNewPipeComments value) getNewPipeComments,
+    required TResult Function(GetMoreNewPipeComments value)
+        getMoreNewPipeComments,
+    required TResult Function(GetNewPipeCommentReplies value)
+        getNewPipeCommentReplies,
+    required TResult Function(GetMoreNewPipeCommentReplies value)
+        getMoreNewPipeCommentReplies,
+  }) {
+    return getMoreNewPipeCommentReplies(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(GetWatchInfo value)? getWatchInfo,
+    TResult? Function(GetCommentData value)? getCommentData,
+    TResult? Function(GetCommentRepliesData value)? getCommentRepliesData,
+    TResult? Function(GetMoreCommentsData value)? getMoreCommentsData,
+    TResult? Function(GetMoreReplyCommentsData value)? getMoreReplyCommentsData,
+    TResult? Function(GetSubtitles value)? getSubtitles,
+    TResult? Function(TapDescription value)? tapDescription,
+    TResult? Function(TogglePip value)? togglePip,
+    TResult? Function(AssignTitle value)? assignTitle,
+    TResult? Function(GetExplodeWatchInfo value)? getExplodeWatchInfo,
+    TResult? Function(GetExplodeRelatedVideoInfo value)?
+        getExplodeRelatedVideoInfo,
+    TResult? Function(GetExplodeMuxStreamInfo value)? getExplodeMuxStreamInfo,
+    TResult? Function(GetExplodeLiveVideoInfo value)? getExplodeLiveVideoInfo,
+    TResult? Function(SetSelectedVideoBasicDetails value)?
+        setSelectedVideoBasicDetails,
+    TResult? Function(GetInvidiousWatchInfo value)? getInvidiousWatchInfo,
+    TResult? Function(GetInvidiousComments value)? getInvidiousComments,
+    TResult? Function(GetInvidiousCommentReplies value)?
+        getInvidiousCommentReplies,
+    TResult? Function(GetMoreInvidiousComments value)? getMoreInvidiousComments,
+    TResult? Function(GetMoreInvidiousReplyComments value)?
+        getMoreInvidiousReplyComments,
+    TResult? Function(UpdatePlayBack value)? updatePlayBack,
+    TResult? Function(GetNewPipeWatchInfo value)? getNewPipeWatchInfo,
+    TResult? Function(GetNewPipeComments value)? getNewPipeComments,
+    TResult? Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
+    TResult? Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult? Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
+  }) {
+    return getMoreNewPipeCommentReplies?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(GetWatchInfo value)? getWatchInfo,
+    TResult Function(GetCommentData value)? getCommentData,
+    TResult Function(GetCommentRepliesData value)? getCommentRepliesData,
+    TResult Function(GetMoreCommentsData value)? getMoreCommentsData,
+    TResult Function(GetMoreReplyCommentsData value)? getMoreReplyCommentsData,
+    TResult Function(GetSubtitles value)? getSubtitles,
+    TResult Function(TapDescription value)? tapDescription,
+    TResult Function(TogglePip value)? togglePip,
+    TResult Function(AssignTitle value)? assignTitle,
+    TResult Function(GetExplodeWatchInfo value)? getExplodeWatchInfo,
+    TResult Function(GetExplodeRelatedVideoInfo value)?
+        getExplodeRelatedVideoInfo,
+    TResult Function(GetExplodeMuxStreamInfo value)? getExplodeMuxStreamInfo,
+    TResult Function(GetExplodeLiveVideoInfo value)? getExplodeLiveVideoInfo,
+    TResult Function(SetSelectedVideoBasicDetails value)?
+        setSelectedVideoBasicDetails,
+    TResult Function(GetInvidiousWatchInfo value)? getInvidiousWatchInfo,
+    TResult Function(GetInvidiousComments value)? getInvidiousComments,
+    TResult Function(GetInvidiousCommentReplies value)?
+        getInvidiousCommentReplies,
+    TResult Function(GetMoreInvidiousComments value)? getMoreInvidiousComments,
+    TResult Function(GetMoreInvidiousReplyComments value)?
+        getMoreInvidiousReplyComments,
+    TResult Function(UpdatePlayBack value)? updatePlayBack,
+    TResult Function(GetNewPipeWatchInfo value)? getNewPipeWatchInfo,
+    TResult Function(GetNewPipeComments value)? getNewPipeComments,
+    TResult Function(GetMoreNewPipeComments value)? getMoreNewPipeComments,
+    TResult Function(GetNewPipeCommentReplies value)? getNewPipeCommentReplies,
+    TResult Function(GetMoreNewPipeCommentReplies value)?
+        getMoreNewPipeCommentReplies,
+    required TResult orElse(),
+  }) {
+    if (getMoreNewPipeCommentReplies != null) {
+      return getMoreNewPipeCommentReplies(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class GetMoreNewPipeCommentReplies implements WatchEvent {
+  factory GetMoreNewPipeCommentReplies(
+      {required final String videoId,
+      required final String? nextPage}) = _$GetMoreNewPipeCommentRepliesImpl;
+
+  String get videoId;
+  String? get nextPage;
+
+  /// Create a copy of WatchEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$GetMoreNewPipeCommentRepliesImplCopyWith<
+          _$GetMoreNewPipeCommentRepliesImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -7783,6 +8420,10 @@ mixin _$WatchState {
       throw _privateConstructorUsedError;
   ApiStatus get fetchNewPipeCommentRepliesStatus =>
       throw _privateConstructorUsedError;
+  ApiStatus get fetchMoreNewPipeCommentRepliesStatus =>
+      throw _privateConstructorUsedError;
+  bool get isMoreNewPipeReplyCommentsFetchCompleted =>
+      throw _privateConstructorUsedError;
 
   /// Create a copy of WatchState
   /// with the given fields replaced by the non-null parameter values.
@@ -7842,7 +8483,9 @@ abstract class $WatchStateCopyWith<$Res> {
       ApiStatus fetchMoreNewPipeCommentsStatus,
       bool isMoreNewPipeCommentsFetchCompleted,
       NewPipeCommentsResp newPipeCommentReplies,
-      ApiStatus fetchNewPipeCommentRepliesStatus});
+      ApiStatus fetchNewPipeCommentRepliesStatus,
+      ApiStatus fetchMoreNewPipeCommentRepliesStatus,
+      bool isMoreNewPipeReplyCommentsFetchCompleted});
 }
 
 /// @nodoc
@@ -7905,6 +8548,8 @@ class _$WatchStateCopyWithImpl<$Res, $Val extends WatchState>
     Object? isMoreNewPipeCommentsFetchCompleted = null,
     Object? newPipeCommentReplies = null,
     Object? fetchNewPipeCommentRepliesStatus = null,
+    Object? fetchMoreNewPipeCommentRepliesStatus = null,
+    Object? isMoreNewPipeReplyCommentsFetchCompleted = null,
   }) {
     return _then(_value.copyWith(
       oldId: freezed == oldId
@@ -8093,6 +8738,16 @@ class _$WatchStateCopyWithImpl<$Res, $Val extends WatchState>
           ? _value.fetchNewPipeCommentRepliesStatus
           : fetchNewPipeCommentRepliesStatus // ignore: cast_nullable_to_non_nullable
               as ApiStatus,
+      fetchMoreNewPipeCommentRepliesStatus: null ==
+              fetchMoreNewPipeCommentRepliesStatus
+          ? _value.fetchMoreNewPipeCommentRepliesStatus
+          : fetchMoreNewPipeCommentRepliesStatus // ignore: cast_nullable_to_non_nullable
+              as ApiStatus,
+      isMoreNewPipeReplyCommentsFetchCompleted: null ==
+              isMoreNewPipeReplyCommentsFetchCompleted
+          ? _value.isMoreNewPipeReplyCommentsFetchCompleted
+          : isMoreNewPipeReplyCommentsFetchCompleted // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -8150,7 +8805,9 @@ abstract class _$$InitialImplCopyWith<$Res>
       ApiStatus fetchMoreNewPipeCommentsStatus,
       bool isMoreNewPipeCommentsFetchCompleted,
       NewPipeCommentsResp newPipeCommentReplies,
-      ApiStatus fetchNewPipeCommentRepliesStatus});
+      ApiStatus fetchNewPipeCommentRepliesStatus,
+      ApiStatus fetchMoreNewPipeCommentRepliesStatus,
+      bool isMoreNewPipeReplyCommentsFetchCompleted});
 }
 
 /// @nodoc
@@ -8211,6 +8868,8 @@ class __$$InitialImplCopyWithImpl<$Res>
     Object? isMoreNewPipeCommentsFetchCompleted = null,
     Object? newPipeCommentReplies = null,
     Object? fetchNewPipeCommentRepliesStatus = null,
+    Object? fetchMoreNewPipeCommentRepliesStatus = null,
+    Object? isMoreNewPipeReplyCommentsFetchCompleted = null,
   }) {
     return _then(_$InitialImpl(
       oldId: freezed == oldId
@@ -8399,6 +9058,16 @@ class __$$InitialImplCopyWithImpl<$Res>
           ? _value.fetchNewPipeCommentRepliesStatus
           : fetchNewPipeCommentRepliesStatus // ignore: cast_nullable_to_non_nullable
               as ApiStatus,
+      fetchMoreNewPipeCommentRepliesStatus: null ==
+              fetchMoreNewPipeCommentRepliesStatus
+          ? _value.fetchMoreNewPipeCommentRepliesStatus
+          : fetchMoreNewPipeCommentRepliesStatus // ignore: cast_nullable_to_non_nullable
+              as ApiStatus,
+      isMoreNewPipeReplyCommentsFetchCompleted: null ==
+              isMoreNewPipeReplyCommentsFetchCompleted
+          ? _value.isMoreNewPipeReplyCommentsFetchCompleted
+          : isMoreNewPipeReplyCommentsFetchCompleted // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -8451,7 +9120,9 @@ class _$InitialImpl implements _Initial {
       required this.fetchMoreNewPipeCommentsStatus,
       required this.isMoreNewPipeCommentsFetchCompleted,
       required this.newPipeCommentReplies,
-      required this.fetchNewPipeCommentRepliesStatus})
+      required this.fetchNewPipeCommentRepliesStatus,
+      required this.fetchMoreNewPipeCommentRepliesStatus,
+      required this.isMoreNewPipeReplyCommentsFetchCompleted})
       : _subtitles = subtitles,
         _relatedVideos = relatedVideos,
         _muxedStreams = muxedStreams;
@@ -8573,10 +9244,14 @@ class _$InitialImpl implements _Initial {
   final NewPipeCommentsResp newPipeCommentReplies;
   @override
   final ApiStatus fetchNewPipeCommentRepliesStatus;
+  @override
+  final ApiStatus fetchMoreNewPipeCommentRepliesStatus;
+  @override
+  final bool isMoreNewPipeReplyCommentsFetchCompleted;
 
   @override
   String toString() {
-    return 'WatchState(oldId: $oldId, isTapComments: $isTapComments, isDescriptionTapped: $isDescriptionTapped, isPipEnabled: $isPipEnabled, title: $title, playBack: $playBack, selectedVideoBasicDetails: $selectedVideoBasicDetails, watchResp: $watchResp, comments: $comments, commentReplies: $commentReplies, fetchWatchInfoStatus: $fetchWatchInfoStatus, fetchCommentsStatus: $fetchCommentsStatus, fetchCommentRepliesStatus: $fetchCommentRepliesStatus, fetchMoreCommentsStatus: $fetchMoreCommentsStatus, isMoreCommentsFetchCompleted: $isMoreCommentsFetchCompleted, fetchMoreCommentRepliesStatus: $fetchMoreCommentRepliesStatus, isMoreReplyCommentsFetchCompleted: $isMoreReplyCommentsFetchCompleted, explodeWatchResp: $explodeWatchResp, fetchExplodeWatchInfoStatus: $fetchExplodeWatchInfoStatus, fetchSubtitlesStatus: $fetchSubtitlesStatus, subtitles: $subtitles, liveStreamUrl: $liveStreamUrl, fetchExplodeLiveStreamStatus: $fetchExplodeLiveStreamStatus, relatedVideos: $relatedVideos, fetchExplodedRelatedVideosStatus: $fetchExplodedRelatedVideosStatus, muxedStreams: $muxedStreams, fetchExplodeMuxedStreamsStatus: $fetchExplodeMuxedStreamsStatus, invidiousWatchResp: $invidiousWatchResp, fetchInvidiousWatchInfoStatus: $fetchInvidiousWatchInfoStatus, invidiousComments: $invidiousComments, fetchInvidiousCommentsStatus: $fetchInvidiousCommentsStatus, invidiousCommentReplies: $invidiousCommentReplies, fetchInvidiousCommentRepliesStatus: $fetchInvidiousCommentRepliesStatus, fetchMoreInvidiousCommentsStatus: $fetchMoreInvidiousCommentsStatus, isMoreInvidiousCommentsFetchCompleted: $isMoreInvidiousCommentsFetchCompleted, fetchMoreInvidiousCommentRepliesStatus: $fetchMoreInvidiousCommentRepliesStatus, isMoreInvidiousReplyCommentsFetchCompleted: $isMoreInvidiousReplyCommentsFetchCompleted, newPipeWatchResp: $newPipeWatchResp, fetchNewPipeWatchInfoStatus: $fetchNewPipeWatchInfoStatus, newPipeComments: $newPipeComments, fetchNewPipeCommentsStatus: $fetchNewPipeCommentsStatus, fetchMoreNewPipeCommentsStatus: $fetchMoreNewPipeCommentsStatus, isMoreNewPipeCommentsFetchCompleted: $isMoreNewPipeCommentsFetchCompleted, newPipeCommentReplies: $newPipeCommentReplies, fetchNewPipeCommentRepliesStatus: $fetchNewPipeCommentRepliesStatus)';
+    return 'WatchState(oldId: $oldId, isTapComments: $isTapComments, isDescriptionTapped: $isDescriptionTapped, isPipEnabled: $isPipEnabled, title: $title, playBack: $playBack, selectedVideoBasicDetails: $selectedVideoBasicDetails, watchResp: $watchResp, comments: $comments, commentReplies: $commentReplies, fetchWatchInfoStatus: $fetchWatchInfoStatus, fetchCommentsStatus: $fetchCommentsStatus, fetchCommentRepliesStatus: $fetchCommentRepliesStatus, fetchMoreCommentsStatus: $fetchMoreCommentsStatus, isMoreCommentsFetchCompleted: $isMoreCommentsFetchCompleted, fetchMoreCommentRepliesStatus: $fetchMoreCommentRepliesStatus, isMoreReplyCommentsFetchCompleted: $isMoreReplyCommentsFetchCompleted, explodeWatchResp: $explodeWatchResp, fetchExplodeWatchInfoStatus: $fetchExplodeWatchInfoStatus, fetchSubtitlesStatus: $fetchSubtitlesStatus, subtitles: $subtitles, liveStreamUrl: $liveStreamUrl, fetchExplodeLiveStreamStatus: $fetchExplodeLiveStreamStatus, relatedVideos: $relatedVideos, fetchExplodedRelatedVideosStatus: $fetchExplodedRelatedVideosStatus, muxedStreams: $muxedStreams, fetchExplodeMuxedStreamsStatus: $fetchExplodeMuxedStreamsStatus, invidiousWatchResp: $invidiousWatchResp, fetchInvidiousWatchInfoStatus: $fetchInvidiousWatchInfoStatus, invidiousComments: $invidiousComments, fetchInvidiousCommentsStatus: $fetchInvidiousCommentsStatus, invidiousCommentReplies: $invidiousCommentReplies, fetchInvidiousCommentRepliesStatus: $fetchInvidiousCommentRepliesStatus, fetchMoreInvidiousCommentsStatus: $fetchMoreInvidiousCommentsStatus, isMoreInvidiousCommentsFetchCompleted: $isMoreInvidiousCommentsFetchCompleted, fetchMoreInvidiousCommentRepliesStatus: $fetchMoreInvidiousCommentRepliesStatus, isMoreInvidiousReplyCommentsFetchCompleted: $isMoreInvidiousReplyCommentsFetchCompleted, newPipeWatchResp: $newPipeWatchResp, fetchNewPipeWatchInfoStatus: $fetchNewPipeWatchInfoStatus, newPipeComments: $newPipeComments, fetchNewPipeCommentsStatus: $fetchNewPipeCommentsStatus, fetchMoreNewPipeCommentsStatus: $fetchMoreNewPipeCommentsStatus, isMoreNewPipeCommentsFetchCompleted: $isMoreNewPipeCommentsFetchCompleted, newPipeCommentReplies: $newPipeCommentReplies, fetchNewPipeCommentRepliesStatus: $fetchNewPipeCommentRepliesStatus, fetchMoreNewPipeCommentRepliesStatus: $fetchMoreNewPipeCommentRepliesStatus, isMoreNewPipeReplyCommentsFetchCompleted: $isMoreNewPipeReplyCommentsFetchCompleted)';
   }
 
   @override
@@ -8655,7 +9330,9 @@ class _$InitialImpl implements _Initial {
             (identical(other.fetchMoreNewPipeCommentsStatus, fetchMoreNewPipeCommentsStatus) || other.fetchMoreNewPipeCommentsStatus == fetchMoreNewPipeCommentsStatus) &&
             (identical(other.isMoreNewPipeCommentsFetchCompleted, isMoreNewPipeCommentsFetchCompleted) || other.isMoreNewPipeCommentsFetchCompleted == isMoreNewPipeCommentsFetchCompleted) &&
             (identical(other.newPipeCommentReplies, newPipeCommentReplies) || other.newPipeCommentReplies == newPipeCommentReplies) &&
-            (identical(other.fetchNewPipeCommentRepliesStatus, fetchNewPipeCommentRepliesStatus) || other.fetchNewPipeCommentRepliesStatus == fetchNewPipeCommentRepliesStatus));
+            (identical(other.fetchNewPipeCommentRepliesStatus, fetchNewPipeCommentRepliesStatus) || other.fetchNewPipeCommentRepliesStatus == fetchNewPipeCommentRepliesStatus) &&
+            (identical(other.fetchMoreNewPipeCommentRepliesStatus, fetchMoreNewPipeCommentRepliesStatus) || other.fetchMoreNewPipeCommentRepliesStatus == fetchMoreNewPipeCommentRepliesStatus) &&
+            (identical(other.isMoreNewPipeReplyCommentsFetchCompleted, isMoreNewPipeReplyCommentsFetchCompleted) || other.isMoreNewPipeReplyCommentsFetchCompleted == isMoreNewPipeReplyCommentsFetchCompleted));
   }
 
   @override
@@ -8705,7 +9382,9 @@ class _$InitialImpl implements _Initial {
         fetchMoreNewPipeCommentsStatus,
         isMoreNewPipeCommentsFetchCompleted,
         newPipeCommentReplies,
-        fetchNewPipeCommentRepliesStatus
+        fetchNewPipeCommentRepliesStatus,
+        fetchMoreNewPipeCommentRepliesStatus,
+        isMoreNewPipeReplyCommentsFetchCompleted
       ]);
 
   /// Create a copy of WatchState
@@ -8763,7 +9442,9 @@ abstract class _Initial implements WatchState {
           required final ApiStatus fetchMoreNewPipeCommentsStatus,
           required final bool isMoreNewPipeCommentsFetchCompleted,
           required final NewPipeCommentsResp newPipeCommentReplies,
-          required final ApiStatus fetchNewPipeCommentRepliesStatus}) =
+          required final ApiStatus fetchNewPipeCommentRepliesStatus,
+          required final ApiStatus fetchMoreNewPipeCommentRepliesStatus,
+          required final bool isMoreNewPipeReplyCommentsFetchCompleted}) =
       _$InitialImpl;
 
 //
@@ -8857,6 +9538,10 @@ abstract class _Initial implements WatchState {
   NewPipeCommentsResp get newPipeCommentReplies;
   @override
   ApiStatus get fetchNewPipeCommentRepliesStatus;
+  @override
+  ApiStatus get fetchMoreNewPipeCommentRepliesStatus;
+  @override
+  bool get isMoreNewPipeReplyCommentsFetchCompleted;
 
   /// Create a copy of WatchState
   /// with the given fields replaced by the non-null parameter values.

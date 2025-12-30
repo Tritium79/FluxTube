@@ -105,4 +105,10 @@ abstract class WatchService {
     required String id,
     required String nextPage,
   });
+
+  ///[getNewPipeCommentRepliesData] used to fetch comment replies from NewPipe Extractor.
+  Future<Either<MainFailure, NewPipeCommentsResp>> getNewPipeCommentRepliesData({
+    required String videoId,
+    required String repliesPage,
+  });
 }

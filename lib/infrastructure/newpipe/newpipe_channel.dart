@@ -181,4 +181,30 @@ class NewPipeChannel {
       throw Exception('Failed to get more comments: ${e.message}');
     }
   }
+
+  /// Get comment replies
+  static Future<NewPipeCommentsResp> getCommentReplies({
+    required String videoId,
+    required String repliesPage,
+  }) async {
+    try {
+      final result = await _channel.invokeMethod<String>(
+        'getCommentReplies',
+        {
+          'id': videoId,
+          'repliesPage': repliesPage,
+        },
+      );
+      if (result == null) {
+        throw PlatformException(
+          code: 'NULL_RESULT',
+          message: 'No data returned from NewPipe Extractor',
+        );
+      }
+      final json = jsonDecode(result) as Map<String, dynamic>;
+      return NewPipeCommentsResp.fromJson(json);
+    } on PlatformException catch (e) {
+      throw Exception('Failed to get comment replies: ${e.message}');
+    }
+  }
 }

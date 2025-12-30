@@ -57,6 +57,7 @@ class NewPipeMethodHandler : MethodChannel.MethodCallHandler {
             "getChannel" -> handleGetChannel(call, result)
             "getComments" -> handleGetComments(call, result)
             "getMoreComments" -> handleGetMoreComments(call, result)
+            "getCommentReplies" -> handleGetCommentReplies(call, result)
             "getPlaylist" -> handleGetPlaylist(call, result)
             "getRelatedStreams" -> handleGetRelatedStreams(call, result)
             else -> result.notImplemented()
@@ -332,10 +333,10 @@ class NewPipeMethodHandler : MethodChannel.MethodCallHandler {
                             "isPinned" to comment.isPinned,
                             "isHearted" to comment.isHeartedByUploader,
                             "uploadDate" to comment.textualUploadDate,
-                            "repliesPage" to comment.replies?.url
+                            "repliesPage" to serializePage(comment.replies)
                         )
                     },
-                    "nextPage" to commentsInfo.nextPage?.url,
+                    "nextPage" to serializePage(commentsInfo.nextPage),
                     "commentCount" to commentsInfo.commentsCount,
                     "isDisabled" to commentsInfo.isCommentsDisabled
                 )
@@ -355,7 +356,7 @@ class NewPipeMethodHandler : MethodChannel.MethodCallHandler {
             result.error("INVALID_ARGUMENT", "Video ID is required", null)
             return
         }
-        val nextPage = call.argument<String>("nextPage") ?: run {
+        val nextPageJson = call.argument<String>("nextPage") ?: run {
             result.error("INVALID_ARGUMENT", "Next page is required", null)
             return
         }
@@ -363,10 +364,11 @@ class NewPipeMethodHandler : MethodChannel.MethodCallHandler {
         scope.launch {
             try {
                 val url = "https://www.youtube.com/watch?v=$videoId"
+                val page = deserializePage(nextPageJson)
                 val moreComments = CommentsInfo.getMoreItems(
                     ServiceList.YouTube,
                     url,
-                    org.schabi.newpipe.extractor.Page(nextPage)
+                    page
                 )
 
                 val response = mapOf(
@@ -383,15 +385,65 @@ class NewPipeMethodHandler : MethodChannel.MethodCallHandler {
                             "isPinned" to comment.isPinned,
                             "isHearted" to comment.isHeartedByUploader,
                             "uploadDate" to comment.textualUploadDate,
-                            "repliesPage" to comment.replies?.url
+                            "repliesPage" to serializePage(comment.replies)
                         )
                     },
-                    "nextPage" to moreComments.nextPage?.url
+                    "nextPage" to serializePage(moreComments.nextPage)
                 )
 
                 sendSuccess(result, gson.toJson(response))
             } catch (e: Exception) {
                 sendError(result, "EXTRACTION_ERROR", e.message ?: "Failed to get more comments", null)
+            }
+        }
+    }
+
+    /**
+     * Get comment replies
+     */
+    private fun handleGetCommentReplies(call: MethodCall, result: MethodChannel.Result) {
+        val videoId = call.argument<String>("id") ?: run {
+            result.error("INVALID_ARGUMENT", "Video ID is required", null)
+            return
+        }
+        val repliesPageJson = call.argument<String>("repliesPage") ?: run {
+            result.error("INVALID_ARGUMENT", "Replies page is required", null)
+            return
+        }
+
+        scope.launch {
+            try {
+                val url = "https://www.youtube.com/watch?v=$videoId"
+                val page = deserializePage(repliesPageJson)
+                val replies = CommentsInfo.getMoreItems(
+                    ServiceList.YouTube,
+                    url,
+                    page
+                )
+
+                val response = mapOf(
+                    "comments" to replies.items.map { comment ->
+                        mapOf(
+                            "id" to comment.commentId,
+                            "text" to comment.commentText?.content,
+                            "authorName" to comment.uploaderName,
+                            "authorUrl" to comment.uploaderUrl,
+                            "authorAvatarUrl" to comment.uploaderAvatars.firstOrNull()?.url,
+                            "authorVerified" to comment.isUploaderVerified,
+                            "likeCount" to comment.likeCount,
+                            "replyCount" to comment.replyCount,
+                            "isPinned" to comment.isPinned,
+                            "isHearted" to comment.isHeartedByUploader,
+                            "uploadDate" to comment.textualUploadDate,
+                            "repliesPage" to serializePage(comment.replies)
+                        )
+                    },
+                    "nextPage" to serializePage(replies.nextPage)
+                )
+
+                sendSuccess(result, gson.toJson(response))
+            } catch (e: Exception) {
+                sendError(result, "EXTRACTION_ERROR", e.message ?: "Failed to get comment replies", null)
             }
         }
     }
@@ -521,6 +573,43 @@ class NewPipeMethodHandler : MethodChannel.MethodCallHandler {
             // Playlist-specific fields
             "streamCount" to (item as? org.schabi.newpipe.extractor.playlist.PlaylistInfoItem)?.streamCount
         )
+    }
+
+    /**
+     * Serialize a Page object to JSON string for passing through MethodChannel
+     */
+    private fun serializePage(page: org.schabi.newpipe.extractor.Page?): String? {
+        if (page == null) return null
+
+        val pageMap = mapOf(
+            "url" to page.url,
+            "id" to page.id,
+            "ids" to page.ids,
+            "body" to page.body?.let { android.util.Base64.encodeToString(it, android.util.Base64.NO_WRAP) }
+        )
+        return gson.toJson(pageMap)
+    }
+
+    /**
+     * Deserialize a JSON string back to a Page object
+     */
+    private fun deserializePage(json: String): org.schabi.newpipe.extractor.Page {
+        val pageMap = gson.fromJson(json, Map::class.java)
+        val url = pageMap["url"] as? String
+        val id = pageMap["id"] as? String
+        @Suppress("UNCHECKED_CAST")
+        val ids = (pageMap["ids"] as? List<*>)?.filterIsInstance<String>()
+        val bodyBase64 = pageMap["body"] as? String
+        val body = bodyBase64?.let { android.util.Base64.decode(it, android.util.Base64.NO_WRAP) }
+
+        return when {
+            ids != null && body != null -> org.schabi.newpipe.extractor.Page(url, id, ids, null, body)
+            ids != null -> org.schabi.newpipe.extractor.Page(ids)
+            body != null -> org.schabi.newpipe.extractor.Page(url, id, body)
+            id != null -> org.schabi.newpipe.extractor.Page(url, id)
+            url != null -> org.schabi.newpipe.extractor.Page(url)
+            else -> throw IllegalArgumentException("Invalid Page data: no url or ids provided")
+        }
     }
 
     private fun sendSuccess(result: MethodChannel.Result, data: String) {

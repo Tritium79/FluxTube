@@ -6,6 +6,7 @@ import 'package:fluxtube/core/colors.dart';
 import 'package:fluxtube/core/constants.dart';
 import 'package:fluxtube/core/enums.dart';
 import 'package:fluxtube/core/operations/math_operations.dart';
+import 'package:fluxtube/domain/watch/models/newpipe/newpipe_comments_resp.dart';
 import 'package:fluxtube/generated/l10n.dart';
 import 'package:fluxtube/presentation/watch/widgets/shimmer_comment_widgets.dart';
 import 'package:fluxtube/widgets/indicator.dart';
@@ -91,18 +92,24 @@ class NewPipeCommentSection extends StatelessWidget {
                                         }
                                       },
                                     ),
-                                    if (comment.replyCount != null && comment.replyCount! > 0)
+                                    if (comment.replyCount != null &&
+                                        comment.replyCount! > 0 &&
+                                        comment.repliesPage != null)
                                       Padding(
                                         padding: const EdgeInsets.only(right: 70, top: 4),
                                         child: TextButton(
                                           onPressed: () {
-                                            // TODO: Implement replies when NewPipe supports it
-                                            // For now show a message
-                                            ScaffoldMessenger.of(context).showSnackBar(
-                                              SnackBar(
-                                                content: Text(locals.repliesNotSupported),
-                                                duration: const Duration(seconds: 2),
+                                            BlocProvider.of<WatchBloc>(context).add(
+                                              WatchEvent.getNewPipeCommentReplies(
+                                                videoId: videoId,
+                                                repliesPage: comment.repliesPage!,
                                               ),
+                                            );
+                                            _showRepliesBottomSheet(
+                                              context,
+                                              comment,
+                                              height,
+                                              locals,
                                             );
                                           },
                                           child: Text(
@@ -129,6 +136,111 @@ class NewPipeCommentSection extends StatelessWidget {
                             itemCount: (state.newPipeComments.comments?.length ?? 0) + 1,
                           ),
       ),
+    );
+  }
+
+  void _showRepliesBottomSheet(
+    BuildContext context,
+    NewPipeComment selectedComment,
+    double height,
+    S locals,
+  ) {
+    showModalBottomSheet<void>(
+      showDragHandle: true,
+      context: context,
+      barrierColor: kTransparentColor,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
+      ),
+      builder: (BuildContext context) {
+        return BlocBuilder<WatchBloc, WatchState>(
+          buildWhen: (previous, current) =>
+              previous.fetchNewPipeCommentRepliesStatus !=
+                  current.fetchNewPipeCommentRepliesStatus ||
+              previous.newPipeCommentReplies != current.newPipeCommentReplies,
+          builder: (context, state) {
+            if (state.fetchNewPipeCommentRepliesStatus == ApiStatus.initial ||
+                state.fetchNewPipeCommentRepliesStatus == ApiStatus.loading) {
+              return const ShimmerCommentWidget();
+            } else if (state.fetchNewPipeCommentRepliesStatus == ApiStatus.error) {
+              return Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    BlocProvider.of<WatchBloc>(context).add(
+                      WatchEvent.getNewPipeCommentReplies(
+                        videoId: videoId,
+                        repliesPage: selectedComment.repliesPage!,
+                      ),
+                    );
+                  },
+                  child: Text(locals.retry),
+                ),
+              );
+            } else {
+              final replies = state.newPipeCommentReplies.comments ?? [];
+              return SizedBox(
+                height: height * 0.48,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Row(
+                        children: [
+                          Text(
+                            '${formatCount(selectedComment.replyCount.toString())} ${locals.repliesPlural(selectedComment.replyCount ?? 0)}',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    kHeightBox10,
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: ListView.separated(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          itemBuilder: (context, index) {
+                            if (index < replies.length) {
+                              final reply = replies[index];
+                              return NewPipeCommentWidget(
+                                author: reply.authorName ?? locals.commentAuthorNotFound,
+                                text: reply.text ?? '',
+                                likes: reply.likeCount ?? 0,
+                                authorImageUrl: reply.authorAvatarUrl ?? '',
+                                isPinned: false,
+                                isHearted: reply.isHearted ?? false,
+                                onProfileTap: () {
+                                  final channelId = _extractChannelId(reply.authorUrl);
+                                  if (channelId != null) {
+                                    Navigator.pop(context);
+                                    context.pushNamed('channel', pathParameters: {
+                                      'channelId': channelId,
+                                    }, queryParameters: {
+                                      'avatarUrl': reply.authorAvatarUrl,
+                                    });
+                                  }
+                                },
+                              );
+                            } else {
+                              return const SizedBox();
+                            }
+                          },
+                          separatorBuilder: (context, index) => kHeightBox15,
+                          itemCount: replies.length,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }
+          },
+        );
+      },
     );
   }
 
@@ -176,7 +288,7 @@ class NewPipeCommentWidget extends StatelessWidget {
         // Pinned indicator
         if (isPinned)
           Padding(
-            padding: const EdgeInsets.only(left: 60, bottom: 6),
+            padding: const EdgeInsets.only(left: 51, bottom: 6),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [

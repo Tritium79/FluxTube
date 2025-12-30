@@ -474,4 +474,21 @@ class WatchImpl implements WatchService {
       return Left(MainFailure.unknown(message: e.toString()));
     }
   }
+
+  ///[getNewPipeCommentRepliesData] used to fetch comment replies from NewPipe Extractor.
+  @override
+  Future<Either<MainFailure, NewPipeCommentsResp>> getNewPipeCommentRepliesData(
+      {required String videoId, required String repliesPage}) async {
+    try {
+      log('NewPipe: Getting comment replies for $videoId');
+      final result = await NewPipeChannel.getCommentReplies(
+        videoId: videoId,
+        repliesPage: repliesPage,
+      );
+      return Right(result);
+    } catch (e) {
+      log('Err on getNewPipeCommentRepliesData: $e');
+      return Left(MainFailure.unknown(message: e.toString()));
+    }
+  }
 }

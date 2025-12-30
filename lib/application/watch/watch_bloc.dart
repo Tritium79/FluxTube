@@ -558,5 +558,29 @@ class WatchBloc extends Bloc<WatchEvent, WatchState> {
 
       emit(_state);
     });
+
+    on<GetNewPipeCommentReplies>((event, emit) async {
+      emit(state.copyWith(
+        newPipeCommentReplies: NewPipeCommentsResp(),
+        fetchNewPipeCommentRepliesStatus: ApiStatus.loading,
+      ));
+
+      final result = await watchService.getNewPipeCommentRepliesData(
+        videoId: event.videoId,
+        repliesPage: event.repliesPage,
+      );
+
+      final _state = result.fold(
+        (MainFailure failure) => state.copyWith(
+          fetchNewPipeCommentRepliesStatus: ApiStatus.error,
+        ),
+        (NewPipeCommentsResp resp) => state.copyWith(
+          newPipeCommentReplies: resp,
+          fetchNewPipeCommentRepliesStatus: ApiStatus.loaded,
+        ),
+      );
+
+      emit(_state);
+    });
   }
 }

@@ -49,6 +49,8 @@ class SettingsState with _$SettingsState {
     required List<String> profiles,
     // Subtitle size (font size in pixels)
     required double subtitleSize,
+    // Last exported file path (for sharing)
+    required String? lastExportedFilePath,
   }) = _Initial;
 
   factory SettingsState.initialize() => SettingsState(
@@ -89,5 +91,6 @@ class SettingsState with _$SettingsState {
         currentProfile: 'default',
         profiles: ['default'],
         subtitleSize: 18.0,
+        lastExportedFilePath: null,
       );
 }

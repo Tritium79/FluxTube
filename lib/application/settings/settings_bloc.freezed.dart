@@ -10116,7 +10116,9 @@ mixin _$SettingsState {
   String get currentProfile => throw _privateConstructorUsedError;
   List<String> get profiles =>
       throw _privateConstructorUsedError; // Subtitle size (font size in pixels)
-  double get subtitleSize => throw _privateConstructorUsedError;
+  double get subtitleSize =>
+      throw _privateConstructorUsedError; // Last exported file path (for sharing)
+  String? get lastExportedFilePath => throw _privateConstructorUsedError;
 
   /// Create a copy of SettingsState
   /// with the given fields replaced by the non-null parameter values.
@@ -10166,7 +10168,8 @@ abstract class $SettingsStateCopyWith<$Res> {
       bool isAudioFocusEnabled,
       String currentProfile,
       List<String> profiles,
-      double subtitleSize});
+      double subtitleSize,
+      String? lastExportedFilePath});
 }
 
 /// @nodoc
@@ -10219,6 +10222,7 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
     Object? currentProfile = null,
     Object? profiles = null,
     Object? subtitleSize = null,
+    Object? lastExportedFilePath = freezed,
   }) {
     return _then(_value.copyWith(
       defaultLanguage: null == defaultLanguage
@@ -10361,6 +10365,10 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
           ? _value.subtitleSize
           : subtitleSize // ignore: cast_nullable_to_non_nullable
               as double,
+      lastExportedFilePath: freezed == lastExportedFilePath
+          ? _value.lastExportedFilePath
+          : lastExportedFilePath // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -10408,7 +10416,8 @@ abstract class _$$InitialImplCopyWith<$Res>
       bool isAudioFocusEnabled,
       String currentProfile,
       List<String> profiles,
-      double subtitleSize});
+      double subtitleSize,
+      String? lastExportedFilePath});
 }
 
 /// @nodoc
@@ -10459,6 +10468,7 @@ class __$$InitialImplCopyWithImpl<$Res>
     Object? currentProfile = null,
     Object? profiles = null,
     Object? subtitleSize = null,
+    Object? lastExportedFilePath = freezed,
   }) {
     return _then(_$InitialImpl(
       defaultLanguage: null == defaultLanguage
@@ -10601,6 +10611,10 @@ class __$$InitialImplCopyWithImpl<$Res>
           ? _value.subtitleSize
           : subtitleSize // ignore: cast_nullable_to_non_nullable
               as double,
+      lastExportedFilePath: freezed == lastExportedFilePath
+          ? _value.lastExportedFilePath
+          : lastExportedFilePath // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -10643,7 +10657,8 @@ class _$InitialImpl implements _Initial {
       required this.isAudioFocusEnabled,
       required this.currentProfile,
       required final List<String> profiles,
-      required this.subtitleSize})
+      required this.subtitleSize,
+      required this.lastExportedFilePath})
       : _pipedInstances = pipedInstances,
         _invidiousInstances = invidiousInstances,
         _sponsorBlockCategories = sponsorBlockCategories,
@@ -10756,10 +10771,13 @@ class _$InitialImpl implements _Initial {
 // Subtitle size (font size in pixels)
   @override
   final double subtitleSize;
+// Last exported file path (for sharing)
+  @override
+  final String? lastExportedFilePath;
 
   @override
   String toString() {
-    return 'SettingsState(defaultLanguage: $defaultLanguage, defaultQuality: $defaultQuality, defaultRegion: $defaultRegion, themeMode: $themeMode, version: $version, isHistoryVisible: $isHistoryVisible, isDislikeVisible: $isDislikeVisible, isHlsPlayer: $isHlsPlayer, isHideComments: $isHideComments, isHideRelated: $isHideRelated, pipedInstances: $pipedInstances, pipedInstanceStatus: $pipedInstanceStatus, instance: $instance, invidiousInstances: $invidiousInstances, invidiousInstanceStatus: $invidiousInstanceStatus, ytService: $ytService, playerType: $playerType, initialized: $initialized, settingsStatus: $settingsStatus, isPipDisabled: $isPipDisabled, connectingToInstance: $connectingToInstance, isTestingConnection: $isTestingConnection, userInstanceFailed: $userInstanceFailed, failedInstanceName: $failedInstanceName, searchFilter: $searchFilter, videoFitMode: $videoFitMode, skipInterval: $skipInterval, isSponsorBlockEnabled: $isSponsorBlockEnabled, sponsorBlockCategories: $sponsorBlockCategories, openLinksInBrowser: $openLinksInBrowser, homeFeedMode: $homeFeedMode, isAudioFocusEnabled: $isAudioFocusEnabled, currentProfile: $currentProfile, profiles: $profiles, subtitleSize: $subtitleSize)';
+    return 'SettingsState(defaultLanguage: $defaultLanguage, defaultQuality: $defaultQuality, defaultRegion: $defaultRegion, themeMode: $themeMode, version: $version, isHistoryVisible: $isHistoryVisible, isDislikeVisible: $isDislikeVisible, isHlsPlayer: $isHlsPlayer, isHideComments: $isHideComments, isHideRelated: $isHideRelated, pipedInstances: $pipedInstances, pipedInstanceStatus: $pipedInstanceStatus, instance: $instance, invidiousInstances: $invidiousInstances, invidiousInstanceStatus: $invidiousInstanceStatus, ytService: $ytService, playerType: $playerType, initialized: $initialized, settingsStatus: $settingsStatus, isPipDisabled: $isPipDisabled, connectingToInstance: $connectingToInstance, isTestingConnection: $isTestingConnection, userInstanceFailed: $userInstanceFailed, failedInstanceName: $failedInstanceName, searchFilter: $searchFilter, videoFitMode: $videoFitMode, skipInterval: $skipInterval, isSponsorBlockEnabled: $isSponsorBlockEnabled, sponsorBlockCategories: $sponsorBlockCategories, openLinksInBrowser: $openLinksInBrowser, homeFeedMode: $homeFeedMode, isAudioFocusEnabled: $isAudioFocusEnabled, currentProfile: $currentProfile, profiles: $profiles, subtitleSize: $subtitleSize, lastExportedFilePath: $lastExportedFilePath)';
   }
 
   @override
@@ -10835,7 +10853,9 @@ class _$InitialImpl implements _Initial {
                 other.currentProfile == currentProfile) &&
             const DeepCollectionEquality().equals(other._profiles, _profiles) &&
             (identical(other.subtitleSize, subtitleSize) ||
-                other.subtitleSize == subtitleSize));
+                other.subtitleSize == subtitleSize) &&
+            (identical(other.lastExportedFilePath, lastExportedFilePath) ||
+                other.lastExportedFilePath == lastExportedFilePath));
   }
 
   @override
@@ -10875,7 +10895,8 @@ class _$InitialImpl implements _Initial {
         isAudioFocusEnabled,
         currentProfile,
         const DeepCollectionEquality().hash(_profiles),
-        subtitleSize
+        subtitleSize,
+        lastExportedFilePath
       ]);
 
   /// Create a copy of SettingsState
@@ -10923,7 +10944,8 @@ abstract class _Initial implements SettingsState {
       required final bool isAudioFocusEnabled,
       required final String currentProfile,
       required final List<String> profiles,
-      required final double subtitleSize}) = _$InitialImpl;
+      required final double subtitleSize,
+      required final String? lastExportedFilePath}) = _$InitialImpl;
 
   @override
   String get defaultLanguage;
@@ -10996,7 +11018,9 @@ abstract class _Initial implements SettingsState {
   @override
   List<String> get profiles; // Subtitle size (font size in pixels)
   @override
-  double get subtitleSize;
+  double get subtitleSize; // Last exported file path (for sharing)
+  @override
+  String? get lastExportedFilePath;
 
   /// Create a copy of SettingsState
   /// with the given fields replaced by the non-null parameter values.

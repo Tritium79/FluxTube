@@ -9,6 +9,7 @@ import 'package:fluxtube/domain/watch/playback/models/playback_configuration.dar
 import 'package:fluxtube/domain/watch/playback/models/stream_quality_info.dart';
 import 'package:fluxtube/domain/watch/playback/newpipe_playback_resolver.dart';
 import 'package:fluxtube/domain/watch/playback/newpipe_stream_helper.dart';
+import 'package:fluxtube/presentation/watch/widgets/player/player_controls_overlay.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
 
@@ -348,82 +349,28 @@ class _NewPipeMediaKitPlayerState extends State<NewPipeMediaKitPlayer> {
       );
     }
 
-    return Column(
-      children: [
-        AspectRatio(
-          aspectRatio: _getAspectRatio(),
-          child: Video(
-            controller: _videoController,
-            controls: (state) {
-              return _buildCustomControls(state);
-            },
-            fit: _getBoxFit(widget.videoFitMode),
-          ),
-        ),
-        if (_availableQualities != null && _availableQualities!.length > 1)
-          _buildQualitySelector(),
-      ],
+    return AspectRatio(
+      aspectRatio: _getAspectRatio(),
+      child: Video(
+        controller: _videoController,
+        controls: (state) {
+          return _buildCustomControls(state);
+        },
+        fit: _getBoxFit(widget.videoFitMode),
+      ),
     );
   }
 
   Widget _buildCustomControls(VideoState state) {
-    // This will be enhanced with custom controls in the next step
-    // For now, use the default media_kit controls
-    return MaterialVideoControls(state);
-  }
-
-  Widget _buildQualitySelector() {
-    return Container(
-      height: 50,
-      color: Colors.black87,
-      child: Row(
-        children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Text(
-              'Quality:',
-              style: TextStyle(color: Colors.white, fontSize: 14),
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: _availableQualities!.length,
-              itemBuilder: (context, index) {
-                final quality = _availableQualities![index];
-                final isSelected = quality.label == _currentQualityLabel;
-
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4),
-                  child: ChoiceChip(
-                    label: Text(
-                      quality.displayLabel,
-                      style: TextStyle(
-                        color: isSelected ? Colors.white : Colors.white70,
-                        fontSize: 12,
-                      ),
-                    ),
-                    selected: isSelected,
-                    onSelected: (selected) {
-                      if (selected) {
-                        changeQuality(quality.label);
-                      }
-                    },
-                    selectedColor: Colors.indigo,
-                    backgroundColor: Colors.black54,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      side: BorderSide(
-                        color: isSelected ? Colors.indigo : Colors.white24,
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
+    return PlayerControlsOverlay(
+      player: _player,
+      videoState: state,
+      availableQualities: _availableQualities,
+      currentQuality: _currentQualityLabel,
+      onQualityChanged: changeQuality,
+      subtitles: _currentConfig?.subtitles ?? [],
+      skipInterval: widget.skipInterval,
+      isLive: widget.watchInfo.isLive == true,
     );
   }
 

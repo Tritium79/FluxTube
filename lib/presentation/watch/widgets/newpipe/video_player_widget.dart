@@ -58,13 +58,13 @@ class _NewPipeVideoPlayerWidgetState extends State<NewPipeVideoPlayerWidget> {
     // Debug: Log available streams
     _logAvailableStreams();
 
-    // Combine all video streams (muxed + video-only) for quality options
+    // Use only muxed video streams (have audio included)
+    // Video-only streams don't have audio and BetterPlayer can't merge separate audio
     availableVideoTracks = [
       ...(widget.watchInfo.videoStreams ?? []),
-      ...(widget.watchInfo.videoOnlyStreams ?? []),
     ];
 
-    // Select best audio stream for video-only playback
+    // Select best audio stream (kept for future use if player supports it)
     selectedAudioTrack = _selectBestAudioTrack();
 
     // Build resolutions map including both muxed and video-only streams
@@ -123,10 +123,11 @@ class _NewPipeVideoPlayerWidgetState extends State<NewPipeVideoPlayerWidget> {
   void _buildResolutionsMap() {
     resolutions = {};
 
-    // Get all valid tracks
-    final allTracks = availableVideoTracks
-        .where((v) => v.url != null)
-        .toList();
+    // Combine muxed streams and video-only streams
+    final List<NewPipeVideoStream> allTracks = [
+      ...availableVideoTracks.where((v) => v.url != null),
+      ...(widget.watchInfo.videoOnlyStreams ?? []).where((v) => v.url != null),
+    ];
 
     // Sort all tracks by resolution (highest first), then by fps
     allTracks.sort((a, b) {
@@ -140,8 +141,13 @@ class _NewPipeVideoPlayerWidgetState extends State<NewPipeVideoPlayerWidget> {
     });
 
     // Add to map (preserves insertion order)
+    // Note: Video-only streams will have no audio
     for (var stream in allTracks) {
-      final label = _getQualityLabel(stream);
+      String label = _getQualityLabel(stream);
+      // Mark video-only streams so user knows they have no audio
+      if (stream.isVideoOnly == true) {
+        label = '$label (no audio)';
+      }
       // Only add if we don't already have this quality label
       if (!resolutions!.containsKey(label)) {
         resolutions![label] = stream.url!;
@@ -229,30 +235,51 @@ class _NewPipeVideoPlayerWidgetState extends State<NewPipeVideoPlayerWidget> {
 
     final bool isLive = widget.watchInfo.isLive == true;
 
-    // For live streams, prefer HLS
+    debugPrint('=== Stream Selection Debug ===');
+    debugPrint('isLive: $isLive');
+    debugPrint('isHlsPlayer: ${widget.isHlsPlayer}');
+    debugPrint('dashMpdUrl: ${widget.watchInfo.dashMpdUrl}');
+    debugPrint('hlsUrl: ${widget.watchInfo.hlsUrl}');
+    debugPrint('selectedVideoTrack: ${selectedVideoTrack?.url}');
+
+    // Priority: Live HLS > User HLS > Server DASH/HLS > muxed streams
+    // Note: BetterPlayer doesn't support local DASH manifests, so we use muxed streams
+    // with quality selection that includes video-only options (marked as "no audio")
     if (isLive && _isValidUrl(widget.watchInfo.hlsUrl)) {
+      // Live streams: use HLS
       videoUrl = widget.watchInfo.hlsUrl;
       videoFormat = BetterPlayerVideoFormat.hls;
+      debugPrint('Using HLS for live stream');
     } else if (widget.isHlsPlayer && _isValidUrl(widget.watchInfo.hlsUrl)) {
       // User explicitly requested HLS player
       videoUrl = widget.watchInfo.hlsUrl;
       videoFormat = BetterPlayerVideoFormat.hls;
-    } else if (selectedVideoTrack?.url != null && _isValidUrl(selectedVideoTrack!.url)) {
-      // Use direct stream with resolutions map for quality switching
-      videoUrl = selectedVideoTrack!.url;
-      videoFormat = BetterPlayerVideoFormat.other;
+      debugPrint('Using HLS (user requested)');
+    } else if (_isValidUrl(widget.watchInfo.dashMpdUrl)) {
+      // DASH MPD from server - adaptive streaming with audio
+      videoUrl = widget.watchInfo.dashMpdUrl;
+      videoFormat = BetterPlayerVideoFormat.dash;
+      debugPrint('Using server DASH MPD');
     } else if (_isValidUrl(widget.watchInfo.hlsUrl)) {
-      // Fallback to HLS
+      // HLS - adaptive streaming with audio
       videoUrl = widget.watchInfo.hlsUrl;
       videoFormat = BetterPlayerVideoFormat.hls;
+      debugPrint('Using HLS');
+    } else if (selectedVideoTrack?.url != null && _isValidUrl(selectedVideoTrack!.url)) {
+      // Use muxed stream (has audio) - quality options available in resolutions map
+      videoUrl = selectedVideoTrack!.url;
+      videoFormat = BetterPlayerVideoFormat.other;
+      debugPrint('Using muxed stream: ${selectedVideoTrack!.resolution}');
     }
+    debugPrint('Final videoUrl: $videoUrl');
+    debugPrint('Final videoFormat: $videoFormat');
 
     if (videoUrl == null) {
       _showNoVideoAvailableToast();
       return;
     }
 
-    // Only include resolutions for direct streams (non-HLS)
+    // Only include resolutions for direct streams (non-DASH/HLS)
     final shouldIncludeResolutions = videoFormat == BetterPlayerVideoFormat.other &&
         resolutions != null &&
         resolutions!.isNotEmpty;

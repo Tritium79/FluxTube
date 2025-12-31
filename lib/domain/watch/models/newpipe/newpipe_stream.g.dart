@@ -16,6 +16,15 @@ NewPipeAudioStream _$NewPipeAudioStreamFromJson(Map<String, dynamic> json) =>
       quality: json['quality'] as String?,
       id: json['id'] as String?,
       itag: (json['itag'] as num?)?.toInt(),
+      initStart: (json['initStart'] as num?)?.toInt(),
+      initEnd: (json['initEnd'] as num?)?.toInt(),
+      indexStart: (json['indexStart'] as num?)?.toInt(),
+      indexEnd: (json['indexEnd'] as num?)?.toInt(),
+      contentLength: (json['contentLength'] as num?)?.toInt(),
+      bitrate: (json['bitrate'] as num?)?.toInt(),
+      approxDurationMs: (json['approxDurationMs'] as num?)?.toInt(),
+      audioChannels: (json['audioChannels'] as num?)?.toInt(),
+      sampleRate: (json['sampleRate'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$NewPipeAudioStreamToJson(NewPipeAudioStream instance) =>
@@ -28,6 +37,15 @@ Map<String, dynamic> _$NewPipeAudioStreamToJson(NewPipeAudioStream instance) =>
       'quality': instance.quality,
       'id': instance.id,
       'itag': instance.itag,
+      'initStart': instance.initStart,
+      'initEnd': instance.initEnd,
+      'indexStart': instance.indexStart,
+      'indexEnd': instance.indexEnd,
+      'contentLength': instance.contentLength,
+      'bitrate': instance.bitrate,
+      'approxDurationMs': instance.approxDurationMs,
+      'audioChannels': instance.audioChannels,
+      'sampleRate': instance.sampleRate,
     };
 
 NewPipeVideoStream _$NewPipeVideoStreamFromJson(Map<String, dynamic> json) =>
@@ -44,6 +62,13 @@ NewPipeVideoStream _$NewPipeVideoStreamFromJson(Map<String, dynamic> json) =>
       isVideoOnly: json['isVideoOnly'] as bool?,
       id: json['id'] as String?,
       itag: (json['itag'] as num?)?.toInt(),
+      initStart: (json['initStart'] as num?)?.toInt(),
+      initEnd: (json['initEnd'] as num?)?.toInt(),
+      indexStart: (json['indexStart'] as num?)?.toInt(),
+      indexEnd: (json['indexEnd'] as num?)?.toInt(),
+      contentLength: (json['contentLength'] as num?)?.toInt(),
+      bitrate: (json['bitrate'] as num?)?.toInt(),
+      approxDurationMs: (json['approxDurationMs'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$NewPipeVideoStreamToJson(NewPipeVideoStream instance) =>
@@ -60,4 +85,11 @@ Map<String, dynamic> _$NewPipeVideoStreamToJson(NewPipeVideoStream instance) =>
       'isVideoOnly': instance.isVideoOnly,
       'id': instance.id,
       'itag': instance.itag,
+      'initStart': instance.initStart,
+      'initEnd': instance.initEnd,
+      'indexStart': instance.indexStart,
+      'indexEnd': instance.indexEnd,
+      'contentLength': instance.contentLength,
+      'bitrate': instance.bitrate,
+      'approxDurationMs': instance.approxDurationMs,
     };

@@ -12,6 +12,16 @@ class NewPipeAudioStream {
   final String? quality;
   final String? id;
   final int? itag;
+  // DASH manifest fields from ItagItem
+  final int? initStart;
+  final int? initEnd;
+  final int? indexStart;
+  final int? indexEnd;
+  final int? contentLength;
+  final int? bitrate;
+  final int? approxDurationMs;
+  final int? audioChannels;
+  final int? sampleRate;
 
   NewPipeAudioStream({
     this.url,
@@ -22,7 +32,25 @@ class NewPipeAudioStream {
     this.quality,
     this.id,
     this.itag,
+    this.initStart,
+    this.initEnd,
+    this.indexStart,
+    this.indexEnd,
+    this.contentLength,
+    this.bitrate,
+    this.approxDurationMs,
+    this.audioChannels,
+    this.sampleRate,
   });
+
+  /// Check if this stream has valid DASH segment info
+  bool get hasDashInfo =>
+      initStart != null &&
+      initEnd != null &&
+      indexStart != null &&
+      indexEnd != null &&
+      initEnd! >= 0 &&
+      indexEnd! >= 0;
 
   factory NewPipeAudioStream.fromJson(Map<String, dynamic> json) =>
       _$NewPipeAudioStreamFromJson(json);
@@ -44,6 +72,14 @@ class NewPipeVideoStream {
   final bool? isVideoOnly;
   final String? id;
   final int? itag;
+  // DASH manifest fields from ItagItem
+  final int? initStart;
+  final int? initEnd;
+  final int? indexStart;
+  final int? indexEnd;
+  final int? contentLength;
+  final int? bitrate;
+  final int? approxDurationMs;
 
   NewPipeVideoStream({
     this.url,
@@ -58,7 +94,23 @@ class NewPipeVideoStream {
     this.isVideoOnly,
     this.id,
     this.itag,
+    this.initStart,
+    this.initEnd,
+    this.indexStart,
+    this.indexEnd,
+    this.contentLength,
+    this.bitrate,
+    this.approxDurationMs,
   });
+
+  /// Check if this stream has valid DASH segment info
+  bool get hasDashInfo =>
+      initStart != null &&
+      initEnd != null &&
+      indexStart != null &&
+      indexEnd != null &&
+      initEnd! >= 0 &&
+      indexEnd! >= 0;
 
   factory NewPipeVideoStream.fromJson(Map<String, dynamic> json) =>
       _$NewPipeVideoStreamFromJson(json);

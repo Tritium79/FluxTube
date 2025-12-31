@@ -11,6 +11,7 @@ import 'package:fluxtube/core/enums.dart';
 import 'package:fluxtube/domain/watch/models/newpipe/newpipe_stream.dart';
 import 'package:fluxtube/domain/watch/models/newpipe/newpipe_watch_resp.dart';
 import 'package:fluxtube/generated/l10n.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../domain/saved/models/local_store.dart';
 
@@ -40,11 +41,11 @@ class NewPipePipVideoPlayerWidget extends StatefulWidget {
 }
 
 class _NewPipePipVideoPlayerWidgetState
-    extends State<NewPipePipVideoPlayerWidget>
-    with TickerProviderStateMixin {
+    extends State<NewPipePipVideoPlayerWidget> with TickerProviderStateMixin {
   BetterPlayerController? _betterPlayerController;
 
   NewPipeVideoStream? selectedVideoTrack;
+  NewPipeAudioStream? selectedAudioTrack;
   late List<NewPipeVideoStream> availableVideoTracks;
   Map<String, String>? resolutions;
 
@@ -153,10 +154,14 @@ class _NewPipePipVideoPlayerWidgetState
     videoAspectRatio = _selectAspectRatio();
     _fetchSubtitles();
 
+    // Use only muxed video streams (have audio included)
+    // Video-only streams don't have audio and BetterPlayer can't merge separate audio
     availableVideoTracks = [
       ...(widget.watchInfo.videoStreams ?? []),
-      ...(widget.watchInfo.videoOnlyStreams ?? []),
     ];
+
+    // Select best audio stream (kept for future use if player supports it)
+    selectedAudioTrack = _selectBestAudioTrack();
 
     _buildResolutionsMap();
     selectedVideoTrack = _selectVideoTrack();
@@ -351,7 +356,8 @@ class _NewPipePipVideoPlayerWidgetState
         final dragScale = _scaleAnimation.value;
         final glowIntensity = _glowAnimation.value;
 
-        final combinedScale = entryScale * dragScale * (1 - dismissProgress * 0.5);
+        final combinedScale =
+            entryScale * dragScale * (1 - dismissProgress * 0.5);
         final combinedOpacity = entryOpacity * (1 - dismissProgress);
 
         return Positioned(
@@ -433,11 +439,18 @@ class _NewPipePipVideoPlayerWidgetState
 
             // Controls overlay
             if (_showControls) ...[
-              // Close button with pulse animation
+              // Top row: Expand and Close buttons
               Positioned(
                 top: 8,
+                left: 8,
                 right: 8,
-                child: _buildCloseButton(),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _buildExpandButton(),
+                    _buildCloseButton(),
+                  ],
+                ),
               ),
 
               // Play/pause button in center
@@ -490,7 +503,8 @@ class _NewPipePipVideoPlayerWidgetState
       // Wrap BetterPlayer with Navigator to provide proper context
       return Navigator(
         onGenerateRoute: (settings) => MaterialPageRoute(
-          builder: (context) => BetterPlayer(controller: _betterPlayerController!),
+          builder: (context) =>
+              BetterPlayer(controller: _betterPlayerController!),
         ),
       );
     }
@@ -532,6 +546,56 @@ class _NewPipePipVideoPlayerWidgetState
         );
       },
     );
+  }
+
+  Widget _buildExpandButton() {
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0.0, end: 1.0),
+      duration: const Duration(milliseconds: 300),
+      builder: (context, value, child) {
+        return Transform.scale(
+          scale: value,
+          child: Material(
+            color: Colors.black.withValues(alpha: 0.6),
+            borderRadius: BorderRadius.circular(20),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(20),
+              onTap: _expandToWatchScreen,
+              child: const Padding(
+                padding: EdgeInsets.all(8),
+                child: Icon(
+                  CupertinoIcons.arrow_up_left_arrow_down_right,
+                  color: Colors.white,
+                  size: 16,
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _expandToWatchScreen() async {
+    if (_isClosing) return;
+    _isClosing = true;
+
+    _updateVideoHistory();
+
+    // Get the channel ID from uploader URL
+    final channelId = _extractChannelId(widget.watchInfo.uploaderUrl) ?? '';
+
+    // Dispose the player
+    _betterPlayerController?.dispose(forceDispose: true);
+    _watchBloc?.add(WatchEvent.togglePip(value: false));
+
+    // Navigate to the watch screen
+    if (context.mounted) {
+      context.pushNamed('watch', pathParameters: {
+        'videoId': widget.videoId,
+        'channelId': channelId,
+      });
+    }
   }
 
   Widget _buildPlayPauseButton() {
@@ -591,9 +655,9 @@ class _NewPipePipVideoPlayerWidgetState
       }),
       builder: (context, snapshot) {
         final position = snapshot.data ?? Duration.zero;
-        final duration = _betterPlayerController
-                ?.videoPlayerController?.value.duration ??
-            Duration.zero;
+        final duration =
+            _betterPlayerController?.videoPlayerController?.value.duration ??
+                Duration.zero;
 
         final progress = duration.inMilliseconds > 0
             ? position.inMilliseconds / duration.inMilliseconds
@@ -638,8 +702,12 @@ class _NewPipePipVideoPlayerWidgetState
 
   void _buildResolutionsMap() {
     resolutions = {};
-    final allTracks =
-        availableVideoTracks.where((v) => v.url != null).toList();
+
+    // Combine muxed streams and video-only streams
+    final List<NewPipeVideoStream> allTracks = [
+      ...availableVideoTracks.where((v) => v.url != null),
+      ...(widget.watchInfo.videoOnlyStreams ?? []).where((v) => v.url != null),
+    ];
 
     allTracks.sort((a, b) {
       final aRes = int.tryParse(a.resolution?.replaceAll('p', '') ?? '0') ?? 0;
@@ -649,7 +717,11 @@ class _NewPipePipVideoPlayerWidgetState
     });
 
     for (var stream in allTracks) {
-      final label = _getQualityLabel(stream);
+      String label = _getQualityLabel(stream);
+      // Mark video-only streams so user knows they have no audio
+      if (stream.isVideoOnly == true) {
+        label = '$label (no audio)';
+      }
       if (!resolutions!.containsKey(label)) {
         resolutions![label] = stream.url!;
       }
@@ -702,6 +774,26 @@ class _NewPipePipVideoPlayerWidgetState
     return uri != null && uri.hasScheme && uri.host.isNotEmpty;
   }
 
+  /// Select the best audio stream based on format compatibility and bitrate
+  NewPipeAudioStream? _selectBestAudioTrack() {
+    final audioStreams = widget.watchInfo.audioStreams;
+    if (audioStreams == null || audioStreams.isEmpty) return null;
+
+    // Sort by bitrate (higher is better)
+    final sortedStreams = List<NewPipeAudioStream>.from(audioStreams)
+      ..sort((a, b) => (b.averageBitrate ?? 0).compareTo(a.averageBitrate ?? 0));
+
+    // Prefer M4A/AAC for better compatibility, then OPUS/WEBM
+    final m4aStreams = sortedStreams.where((s) =>
+      s.mimeType?.contains('mp4') == true ||
+      s.format?.toLowerCase() == 'm4a').toList();
+
+    if (m4aStreams.isNotEmpty) return m4aStreams.first;
+
+    // Fallback to highest bitrate stream
+    return sortedStreams.first;
+  }
+
   void _setupPlayer(int startPosition) {
     _betterPlayerController?.dispose();
 
@@ -709,19 +801,33 @@ class _NewPipePipVideoPlayerWidgetState
     String? videoUrl;
     BetterPlayerVideoFormat videoFormat = BetterPlayerVideoFormat.other;
 
+    // Priority: Live HLS > User HLS > Server DASH/HLS > muxed streams
     if (isLive && _isValidUrl(widget.watchInfo.hlsUrl)) {
+      // Live streams: use HLS
       videoUrl = widget.watchInfo.hlsUrl;
       videoFormat = BetterPlayerVideoFormat.hls;
+      debugPrint('PiP: Using HLS for live stream');
     } else if (widget.isHlsPlayer && _isValidUrl(widget.watchInfo.hlsUrl)) {
+      // User explicitly requested HLS player
       videoUrl = widget.watchInfo.hlsUrl;
       videoFormat = BetterPlayerVideoFormat.hls;
+      debugPrint('PiP: Using HLS (user requested)');
+    } else if (_isValidUrl(widget.watchInfo.dashMpdUrl)) {
+      // DASH MPD from server - adaptive streaming with audio
+      videoUrl = widget.watchInfo.dashMpdUrl;
+      videoFormat = BetterPlayerVideoFormat.dash;
+      debugPrint('PiP: Using server DASH MPD');
+    } else if (_isValidUrl(widget.watchInfo.hlsUrl)) {
+      // HLS - adaptive streaming with audio
+      videoUrl = widget.watchInfo.hlsUrl;
+      videoFormat = BetterPlayerVideoFormat.hls;
+      debugPrint('PiP: Using HLS');
     } else if (selectedVideoTrack?.url != null &&
         _isValidUrl(selectedVideoTrack!.url)) {
+      // Use muxed stream (has audio)
       videoUrl = selectedVideoTrack!.url;
       videoFormat = BetterPlayerVideoFormat.other;
-    } else if (_isValidUrl(widget.watchInfo.hlsUrl)) {
-      videoUrl = widget.watchInfo.hlsUrl;
-      videoFormat = BetterPlayerVideoFormat.hls;
+      debugPrint('PiP: Using muxed stream: ${selectedVideoTrack!.resolution}');
     }
 
     if (videoUrl == null) {
@@ -736,6 +842,7 @@ class _NewPipePipVideoPlayerWidgetState
       return;
     }
 
+    // Only include resolutions for direct streams (non-DASH/HLS)
     final shouldIncludeResolutions =
         videoFormat == BetterPlayerVideoFormat.other &&
             resolutions != null &&

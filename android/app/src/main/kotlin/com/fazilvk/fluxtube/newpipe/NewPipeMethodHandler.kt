@@ -517,6 +517,7 @@ class NewPipeMethodHandler : MethodChannel.MethodCallHandler {
     // Helper methods
 
     private fun mapAudioStream(stream: AudioStream): Map<String, Any?> {
+        val itagItem = stream.itagItem
         return mapOf(
             "url" to stream.content,
             "averageBitrate" to stream.averageBitrate,
@@ -525,11 +526,22 @@ class NewPipeMethodHandler : MethodChannel.MethodCallHandler {
             "codec" to stream.codec,
             "quality" to stream.quality,
             "id" to stream.id,
-            "itag" to stream.itag
+            "itag" to stream.itag,
+            // DASH manifest fields from ItagItem
+            "initStart" to itagItem?.initStart,
+            "initEnd" to itagItem?.initEnd,
+            "indexStart" to itagItem?.indexStart,
+            "indexEnd" to itagItem?.indexEnd,
+            "contentLength" to itagItem?.contentLength,
+            "bitrate" to itagItem?.bitrate,
+            "approxDurationMs" to itagItem?.approxDurationMs,
+            "audioChannels" to itagItem?.audioChannels,
+            "sampleRate" to itagItem?.sampleRate
         )
     }
 
     private fun mapVideoStream(stream: VideoStream): Map<String, Any?> {
+        val itagItem = stream.itagItem
         return mapOf(
             "url" to stream.content,
             "resolution" to stream.resolution,
@@ -542,7 +554,15 @@ class NewPipeMethodHandler : MethodChannel.MethodCallHandler {
             "fps" to stream.fps,
             "isVideoOnly" to stream.isVideoOnly,
             "id" to stream.id,
-            "itag" to stream.itag
+            "itag" to stream.itag,
+            // DASH manifest fields from ItagItem
+            "initStart" to itagItem?.initStart,
+            "initEnd" to itagItem?.initEnd,
+            "indexStart" to itagItem?.indexStart,
+            "indexEnd" to itagItem?.indexEnd,
+            "contentLength" to itagItem?.contentLength,
+            "bitrate" to itagItem?.bitrate,
+            "approxDurationMs" to itagItem?.approxDurationMs
         )
     }
 

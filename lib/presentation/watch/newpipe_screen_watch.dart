@@ -7,6 +7,7 @@ import 'package:fluxtube/core/colors.dart';
 import 'package:fluxtube/core/constants.dart';
 import 'package:fluxtube/core/enums.dart';
 import 'package:fluxtube/generated/l10n.dart';
+import 'package:fluxtube/presentation/watch/widgets/newpipe/media_kit_video_player.dart';
 import 'package:fluxtube/widgets/widgets.dart';
 
 import 'widgets/newpipe/comment_widgets.dart';
@@ -14,7 +15,6 @@ import 'widgets/newpipe/description_section.dart';
 import 'widgets/newpipe/like_section.dart';
 import 'widgets/newpipe/related_video_section.dart';
 import 'widgets/newpipe/subscribe_section.dart';
-import 'widgets/newpipe/video_player_widget.dart';
 
 class NewPipeScreenWatch extends StatefulWidget {
   const NewPipeScreenWatch({
@@ -84,11 +84,6 @@ class _NewPipeScreenWatchState extends State<NewPipeScreenWatch> {
               builder: (context, savedState) {
                 final watchInfo = state.newPipeWatchResp;
 
-                bool isSaved = (savedState.videoInfo?.id == widget.id &&
-                        savedState.videoInfo?.isSaved == true)
-                    ? true
-                    : false;
-
                 if (state.fetchNewPipeWatchInfoStatus == ApiStatus.error) {
                   return Scaffold(
                     appBar: AppBar(
@@ -100,7 +95,8 @@ class _NewPipeScreenWatchState extends State<NewPipeScreenWatch> {
                           videoId: widget.id,
                           lottie: 'assets/cat-404.zip',
                           onRetry: () => BlocProvider.of<WatchBloc>(context)
-                              .add(WatchEvent.getNewPipeWatchInfo(id: widget.id)),
+                              .add(WatchEvent.getNewPipeWatchInfo(
+                                  id: widget.id)),
                         ),
                       ),
                     ),
@@ -142,19 +138,12 @@ class _NewPipeScreenWatchState extends State<NewPipeScreenWatch> {
                                           child: cIndicator(context),
                                         ),
                                       )
-                                    : NewPipeVideoPlayerWidget(
+                                    : NewPipeMediaKitPlayer(
                                         videoId: widget.id,
                                         watchInfo: state.newPipeWatchResp,
-                                        defaultQuality:
-                                            settingsState.defaultQuality,
                                         playbackPosition: savedState
                                                 .videoInfo?.playbackPosition ??
                                             0,
-                                        isSaved: isSaved,
-                                        isHlsPlayer: settingsState.isHlsPlayer,
-                                        videoFitMode: settingsState.videoFitMode,
-                                        skipInterval: settingsState.skipInterval,
-                                        isAudioFocusEnabled: settingsState.isAudioFocusEnabled,
                                       ),
                                 Padding(
                                   padding: const EdgeInsets.only(
@@ -191,9 +180,7 @@ class _NewPipeScreenWatchState extends State<NewPipeScreenWatch> {
                                                         .chevron_down,
                                               ),
                                             ),
-
                                       kHeightBox5,
-
                                       (state.fetchNewPipeWatchInfoStatus ==
                                                   ApiStatus.initial ||
                                               state.fetchNewPipeWatchInfoStatus ==
@@ -201,11 +188,11 @@ class _NewPipeScreenWatchState extends State<NewPipeScreenWatch> {
                                           ? const SizedBox()
                                           : ViewRowWidget(
                                               views: watchInfo.viewCount,
-                                              uploadedDate: watchInfo.textualUploadDate ?? '',
+                                              uploadedDate:
+                                                  watchInfo.textualUploadDate ??
+                                                      '',
                                             ),
-
                                       kHeightBox10,
-
                                       (state.fetchNewPipeWatchInfoStatus ==
                                                   ApiStatus.initial ||
                                               state.fetchNewPipeWatchInfoStatus ==
@@ -223,11 +210,8 @@ class _NewPipeScreenWatchState extends State<NewPipeScreenWatch> {
                                                 Navigator.pop(context);
                                               },
                                             ),
-
                                       kHeightBox10,
-
                                       const Divider(),
-
                                       (state.fetchNewPipeWatchInfoStatus ==
                                                   ApiStatus.initial ||
                                               state.fetchNewPipeWatchInfoStatus ==
@@ -239,7 +223,6 @@ class _NewPipeScreenWatchState extends State<NewPipeScreenWatch> {
                                               locals: locals),
                                       if (!state.isTapComments) const Divider(),
                                       kHeightBox10,
-
                                       state.isDescriptionTapped
                                           ? NewPipeDescriptionSection(
                                               height: height,

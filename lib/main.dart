@@ -17,11 +17,16 @@ import 'package:fluxtube/infrastructure/settings/setting_impl.dart';
 import 'package:fluxtube/presentation/routes/app_routes.dart';
 import 'package:fluxtube/presentation/routes/bloc_observer.dart';
 import 'package:fluxtube/presentation/watch/widgets/global_pip_overlay.dart';
+import 'package:media_kit/media_kit.dart';
 
 import 'core/di/injectable.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize media_kit
+  MediaKit.ensureInitialized();
+
   Bloc.observer = AppBlocObserver();
   await SettingImpl.initializeDB();
   // Initialize GetIt and register dependencies

@@ -81,7 +81,7 @@ For the best experience:
 | **Recommended**                   | NewPipe Extractor  | Direct extraction, most reliable, no instances needed |
 | **When NewPipe Extractor breaks** | Piped or Invidious | Instance-based, switch if one goes down               |
 
-> **Tip:** Enable "Auto-Check Instances" in settings for automatic failover when an instance becomes unavailable.
+> **Tip:** Click on  "Auto-Check Instances" in settings for automatic failover when an instance becomes unavailable.
 
 ## Todo
 

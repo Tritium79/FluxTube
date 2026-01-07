@@ -26,6 +26,8 @@ NewPipeRelatedStream _$NewPipeRelatedStreamFromJson(
       isVerified: json['isVerified'] as bool?,
       description: json['description'] as String?,
       streamCount: (json['streamCount'] as num?)?.toInt(),
+      playlistUploaderName: json['playlistUploaderName'] as String?,
+      playlistUploaderUrl: json['playlistUploaderUrl'] as String?,
     );
 
 Map<String, dynamic> _$NewPipeRelatedStreamToJson(
@@ -48,4 +50,6 @@ Map<String, dynamic> _$NewPipeRelatedStreamToJson(
       'isVerified': instance.isVerified,
       'description': instance.description,
       'streamCount': instance.streamCount,
+      'playlistUploaderName': instance.playlistUploaderName,
+      'playlistUploaderUrl': instance.playlistUploaderUrl,
     };

@@ -39,10 +39,14 @@ class NewPipeChannelResp {
 class NewPipeChannelTab {
   final String? name;
   final String? url;
+  final String? id;
+  final List<String>? contentFilters;
 
   NewPipeChannelTab({
     this.name,
     this.url,
+    this.id,
+    this.contentFilters,
   });
 
   factory NewPipeChannelTab.fromJson(Map<String, dynamic> json) =>

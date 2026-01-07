@@ -1,6 +1,9 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluxtube/core/enums.dart';
 import 'package:fluxtube/domain/core/failure/main_failure.dart';
+import 'package:fluxtube/domain/sponsorblock/models/sponsor_segment.dart';
+import 'package:fluxtube/domain/sponsorblock/sponsorblock_service.dart';
 import 'package:fluxtube/domain/watch/models/basic_info.dart';
 import 'package:fluxtube/domain/watch/models/invidious/comments/invidious_comments_resp.dart';
 import 'package:fluxtube/domain/watch/models/invidious/video/invidious_watch_resp.dart';
@@ -22,6 +25,7 @@ part 'watch_bloc.freezed.dart';
 class WatchBloc extends Bloc<WatchEvent, WatchState> {
   WatchBloc(
     WatchService watchService,
+    SponsorBlockService sponsorBlockService,
   ) : super(WatchState.initialize()) {
     on<GetWatchInfo>(
       (event, emit) async {
@@ -75,6 +79,28 @@ class WatchBloc extends Bloc<WatchEvent, WatchState> {
       }
     });
 
+    // Force fetch comments without toggle (for shorts)
+    on<ForceFetchCommentData>((event, emit) async {
+      // Clear old comments and set loading
+      emit(state.copyWith(
+        comments: CommentsResp(comments: [], nextpage: null, disabled: false, commentCount: 0),
+        fetchCommentsStatus: ApiStatus.loading,
+        isMoreCommentsFetchCompleted: false,
+      ));
+
+      final _result = await watchService.getCommentsData(id: event.id);
+
+      final _state = _result.fold(
+        (MainFailure failure) => state.copyWith(fetchCommentsStatus: ApiStatus.error),
+        (CommentsResp resp) => state.copyWith(
+          fetchCommentsStatus: ApiStatus.loaded,
+          comments: resp,
+        ),
+      );
+
+      emit(_state);
+    });
+
     //toggle description
     on<TapDescription>((event, emit) async {
       //toggle desctiption update to ui
@@ -87,7 +113,11 @@ class WatchBloc extends Bloc<WatchEvent, WatchState> {
 
     on<GetCommentRepliesData>((event, emit) async {
       //initialte loading, and toggle comments
-      emit(state.copyWith(fetchCommentRepliesStatus: ApiStatus.loading));
+      emit(state.copyWith(
+        fetchCommentRepliesStatus: ApiStatus.loading,
+        fetchMoreCommentRepliesStatus: ApiStatus.initial,
+        isMoreReplyCommentsFetchCompleted: false,
+      ));
 
       //get reply comments list
 
@@ -100,7 +130,9 @@ class WatchBloc extends Bloc<WatchEvent, WatchState> {
               ),
           (CommentsResp resp) => state.copyWith(
               fetchCommentRepliesStatus: ApiStatus.loaded,
-              commentReplies: resp));
+              commentReplies: resp,
+              // Mark as completed if no more pages (null or empty)
+              isMoreReplyCommentsFetchCompleted: resp.nextpage == null || resp.nextpage!.isEmpty));
 
       //update to ui
       emit(_state);
@@ -360,6 +392,29 @@ class WatchBloc extends Bloc<WatchEvent, WatchState> {
       emit(_state);
     });
 
+    // Force fetch Invidious comments without toggle (for shorts)
+    on<ForceFetchInvidiousComments>((event, emit) async {
+      emit(state.copyWith(
+        invidiousComments: InvidiousCommentsResp(),
+        fetchInvidiousCommentsStatus: ApiStatus.loading,
+        isMoreInvidiousCommentsFetchCompleted: false,
+      ));
+
+      final result = await watchService.getInvidiousCommentsData(id: event.id);
+
+      final _state = result.fold(
+        (MainFailure failure) => state.copyWith(
+          fetchInvidiousCommentsStatus: ApiStatus.error,
+        ),
+        (InvidiousCommentsResp resp) => state.copyWith(
+          invidiousComments: resp,
+          fetchInvidiousCommentsStatus: ApiStatus.loaded,
+        ),
+      );
+
+      emit(_state);
+    });
+
     on<GetInvidiousCommentReplies>((event, emit) async {
       emit(state.copyWith(
         invidiousCommentReplies: InvidiousCommentsResp(),
@@ -493,6 +548,66 @@ class WatchBloc extends Bloc<WatchEvent, WatchState> {
       emit(_state);
     });
 
+    // NewPipe video info with parallel SponsorBlock fetch
+    on<GetNewPipeWatchInfoFast>((event, emit) async {
+      emit(state.copyWith(
+        newPipeWatchResp: NewPipeWatchResp(),
+        fetchNewPipeWatchInfoStatus: ApiStatus.loading,
+        fetchSponsorSegmentsStatus: event.sponsorBlockCategories.isNotEmpty
+            ? ApiStatus.loading
+            : ApiStatus.initial,
+        sponsorSegments: [],
+        isTapComments: false,
+        isDescriptionTapped: false,
+      ));
+
+      // Fetch video info and SponsorBlock segments in parallel
+      final List<Future<dynamic>> futures = [
+        watchService.getNewPipeVideoData(id: event.id),
+      ];
+
+      // Only fetch SponsorBlock if categories are provided
+      if (event.sponsorBlockCategories.isNotEmpty) {
+        futures.add(sponsorBlockService.getSegments(
+          videoId: event.id,
+          categories: event.sponsorBlockCategories,
+        ));
+      }
+
+      final results = await Future.wait(futures);
+
+      final videoResult = results[0] as Either<MainFailure, NewPipeWatchResp>;
+
+      // Process video result
+      var newState = videoResult.fold(
+        (MainFailure failure) => state.copyWith(
+          fetchNewPipeWatchInfoStatus: ApiStatus.error,
+        ),
+        (NewPipeWatchResp resp) => state.copyWith(
+          newPipeWatchResp: resp,
+          fetchNewPipeWatchInfoStatus: ApiStatus.loaded,
+          oldId: event.id,
+        ),
+      );
+
+      // Process SponsorBlock result if fetched
+      if (event.sponsorBlockCategories.isNotEmpty && results.length > 1) {
+        final sponsorResult = results[1] as Either<MainFailure, List<SponsorSegment>>;
+        newState = sponsorResult.fold(
+          (MainFailure failure) => newState.copyWith(
+            fetchSponsorSegmentsStatus: ApiStatus.error,
+            sponsorSegments: [],
+          ),
+          (List<SponsorSegment> segments) => newState.copyWith(
+            sponsorSegments: segments,
+            fetchSponsorSegmentsStatus: ApiStatus.loaded,
+          ),
+        );
+      }
+
+      emit(newState);
+    });
+
     on<GetNewPipeComments>((event, emit) async {
       // Toggle comments - store the new value before emit
       final newTapCommentsValue = !state.isTapComments;
@@ -522,6 +637,29 @@ class WatchBloc extends Bloc<WatchEvent, WatchState> {
       } else {
         emit(loadingState.copyWith(fetchNewPipeCommentsStatus: ApiStatus.initial));
       }
+    });
+
+    // Force fetch NewPipe comments without toggle (for shorts)
+    on<ForceFetchNewPipeComments>((event, emit) async {
+      emit(state.copyWith(
+        newPipeComments: NewPipeCommentsResp(),
+        fetchNewPipeCommentsStatus: ApiStatus.loading,
+        isMoreNewPipeCommentsFetchCompleted: false,
+      ));
+
+      final result = await watchService.getNewPipeCommentsData(id: event.id);
+
+      final _state = result.fold(
+        (MainFailure failure) => state.copyWith(
+          fetchNewPipeCommentsStatus: ApiStatus.error,
+        ),
+        (NewPipeCommentsResp resp) => state.copyWith(
+          newPipeComments: resp,
+          fetchNewPipeCommentsStatus: ApiStatus.loaded,
+        ),
+      );
+
+      emit(_state);
     });
 
     on<GetMoreNewPipeComments>((event, emit) async {
@@ -622,6 +760,32 @@ class WatchBloc extends Bloc<WatchEvent, WatchState> {
             );
           }
         },
+      );
+
+      emit(_state);
+    });
+
+    // SPONSORBLOCK
+    on<GetSponsorSegments>((event, emit) async {
+      emit(state.copyWith(
+        fetchSponsorSegmentsStatus: ApiStatus.loading,
+        sponsorSegments: [],
+      ));
+
+      final result = await sponsorBlockService.getSegments(
+        videoId: event.videoId,
+        categories: event.categories,
+      );
+
+      final _state = result.fold(
+        (MainFailure failure) => state.copyWith(
+          fetchSponsorSegmentsStatus: ApiStatus.error,
+          sponsorSegments: [],
+        ),
+        (List<SponsorSegment> segments) => state.copyWith(
+          sponsorSegments: segments,
+          fetchSponsorSegmentsStatus: ApiStatus.loaded,
+        ),
       );
 
       emit(_state);

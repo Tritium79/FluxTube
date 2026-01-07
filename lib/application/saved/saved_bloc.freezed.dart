@@ -16,7 +16,6 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SavedEvent {
-  String get profileName => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(LocalStoreVideoInfo videoInfo, String profileName)
@@ -24,6 +23,10 @@ mixin _$SavedEvent {
     required TResult Function(String id, String profileName) deleteVideoInfo,
     required TResult Function(String profileName) getAllVideoInfoList,
     required TResult Function(String id, String profileName) checkVideoInfo,
+    required TResult Function(String videoId) trackVideoWatch,
+    required TResult Function(String query) trackSearch,
+    required TResult Function(LocalStoreVideoInfo videoInfo, String profileName)
+        updatePlaybackPosition,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -33,6 +36,10 @@ mixin _$SavedEvent {
     TResult? Function(String id, String profileName)? deleteVideoInfo,
     TResult? Function(String profileName)? getAllVideoInfoList,
     TResult? Function(String id, String profileName)? checkVideoInfo,
+    TResult? Function(String videoId)? trackVideoWatch,
+    TResult? Function(String query)? trackSearch,
+    TResult? Function(LocalStoreVideoInfo videoInfo, String profileName)?
+        updatePlaybackPosition,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -42,6 +49,10 @@ mixin _$SavedEvent {
     TResult Function(String id, String profileName)? deleteVideoInfo,
     TResult Function(String profileName)? getAllVideoInfoList,
     TResult Function(String id, String profileName)? checkVideoInfo,
+    TResult Function(String videoId)? trackVideoWatch,
+    TResult Function(String query)? trackSearch,
+    TResult Function(LocalStoreVideoInfo videoInfo, String profileName)?
+        updatePlaybackPosition,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -51,6 +62,10 @@ mixin _$SavedEvent {
     required TResult Function(DeleteVideoInfo value) deleteVideoInfo,
     required TResult Function(GetAllVideoInfoList value) getAllVideoInfoList,
     required TResult Function(CheckVideoInfo value) checkVideoInfo,
+    required TResult Function(TrackVideoWatch value) trackVideoWatch,
+    required TResult Function(TrackSearch value) trackSearch,
+    required TResult Function(UpdatePlaybackPosition value)
+        updatePlaybackPosition,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -59,6 +74,9 @@ mixin _$SavedEvent {
     TResult? Function(DeleteVideoInfo value)? deleteVideoInfo,
     TResult? Function(GetAllVideoInfoList value)? getAllVideoInfoList,
     TResult? Function(CheckVideoInfo value)? checkVideoInfo,
+    TResult? Function(TrackVideoWatch value)? trackVideoWatch,
+    TResult? Function(TrackSearch value)? trackSearch,
+    TResult? Function(UpdatePlaybackPosition value)? updatePlaybackPosition,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -67,14 +85,11 @@ mixin _$SavedEvent {
     TResult Function(DeleteVideoInfo value)? deleteVideoInfo,
     TResult Function(GetAllVideoInfoList value)? getAllVideoInfoList,
     TResult Function(CheckVideoInfo value)? checkVideoInfo,
+    TResult Function(TrackVideoWatch value)? trackVideoWatch,
+    TResult Function(TrackSearch value)? trackSearch,
+    TResult Function(UpdatePlaybackPosition value)? updatePlaybackPosition,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  /// Create a copy of SavedEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $SavedEventCopyWith<SavedEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -83,8 +98,6 @@ abstract class $SavedEventCopyWith<$Res> {
   factory $SavedEventCopyWith(
           SavedEvent value, $Res Function(SavedEvent) then) =
       _$SavedEventCopyWithImpl<$Res, SavedEvent>;
-  @useResult
-  $Res call({String profileName});
 }
 
 /// @nodoc
@@ -99,27 +112,13 @@ class _$SavedEventCopyWithImpl<$Res, $Val extends SavedEvent>
 
   /// Create a copy of SavedEvent
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? profileName = null,
-  }) {
-    return _then(_value.copyWith(
-      profileName: null == profileName
-          ? _value.profileName
-          : profileName // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$AddVideoInfoImplCopyWith<$Res>
-    implements $SavedEventCopyWith<$Res> {
+abstract class _$$AddVideoInfoImplCopyWith<$Res> {
   factory _$$AddVideoInfoImplCopyWith(
           _$AddVideoInfoImpl value, $Res Function(_$AddVideoInfoImpl) then) =
       __$$AddVideoInfoImplCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({LocalStoreVideoInfo videoInfo, String profileName});
 }
@@ -200,6 +199,10 @@ class _$AddVideoInfoImpl implements AddVideoInfo {
     required TResult Function(String id, String profileName) deleteVideoInfo,
     required TResult Function(String profileName) getAllVideoInfoList,
     required TResult Function(String id, String profileName) checkVideoInfo,
+    required TResult Function(String videoId) trackVideoWatch,
+    required TResult Function(String query) trackSearch,
+    required TResult Function(LocalStoreVideoInfo videoInfo, String profileName)
+        updatePlaybackPosition,
   }) {
     return addVideoInfo(videoInfo, profileName);
   }
@@ -212,6 +215,10 @@ class _$AddVideoInfoImpl implements AddVideoInfo {
     TResult? Function(String id, String profileName)? deleteVideoInfo,
     TResult? Function(String profileName)? getAllVideoInfoList,
     TResult? Function(String id, String profileName)? checkVideoInfo,
+    TResult? Function(String videoId)? trackVideoWatch,
+    TResult? Function(String query)? trackSearch,
+    TResult? Function(LocalStoreVideoInfo videoInfo, String profileName)?
+        updatePlaybackPosition,
   }) {
     return addVideoInfo?.call(videoInfo, profileName);
   }
@@ -224,6 +231,10 @@ class _$AddVideoInfoImpl implements AddVideoInfo {
     TResult Function(String id, String profileName)? deleteVideoInfo,
     TResult Function(String profileName)? getAllVideoInfoList,
     TResult Function(String id, String profileName)? checkVideoInfo,
+    TResult Function(String videoId)? trackVideoWatch,
+    TResult Function(String query)? trackSearch,
+    TResult Function(LocalStoreVideoInfo videoInfo, String profileName)?
+        updatePlaybackPosition,
     required TResult orElse(),
   }) {
     if (addVideoInfo != null) {
@@ -239,6 +250,10 @@ class _$AddVideoInfoImpl implements AddVideoInfo {
     required TResult Function(DeleteVideoInfo value) deleteVideoInfo,
     required TResult Function(GetAllVideoInfoList value) getAllVideoInfoList,
     required TResult Function(CheckVideoInfo value) checkVideoInfo,
+    required TResult Function(TrackVideoWatch value) trackVideoWatch,
+    required TResult Function(TrackSearch value) trackSearch,
+    required TResult Function(UpdatePlaybackPosition value)
+        updatePlaybackPosition,
   }) {
     return addVideoInfo(this);
   }
@@ -250,6 +265,9 @@ class _$AddVideoInfoImpl implements AddVideoInfo {
     TResult? Function(DeleteVideoInfo value)? deleteVideoInfo,
     TResult? Function(GetAllVideoInfoList value)? getAllVideoInfoList,
     TResult? Function(CheckVideoInfo value)? checkVideoInfo,
+    TResult? Function(TrackVideoWatch value)? trackVideoWatch,
+    TResult? Function(TrackSearch value)? trackSearch,
+    TResult? Function(UpdatePlaybackPosition value)? updatePlaybackPosition,
   }) {
     return addVideoInfo?.call(this);
   }
@@ -261,6 +279,9 @@ class _$AddVideoInfoImpl implements AddVideoInfo {
     TResult Function(DeleteVideoInfo value)? deleteVideoInfo,
     TResult Function(GetAllVideoInfoList value)? getAllVideoInfoList,
     TResult Function(CheckVideoInfo value)? checkVideoInfo,
+    TResult Function(TrackVideoWatch value)? trackVideoWatch,
+    TResult Function(TrackSearch value)? trackSearch,
+    TResult Function(UpdatePlaybackPosition value)? updatePlaybackPosition,
     required TResult orElse(),
   }) {
     if (addVideoInfo != null) {
@@ -276,24 +297,20 @@ abstract class AddVideoInfo implements SavedEvent {
       final String profileName}) = _$AddVideoInfoImpl;
 
   LocalStoreVideoInfo get videoInfo;
-  @override
   String get profileName;
 
   /// Create a copy of SavedEvent
   /// with the given fields replaced by the non-null parameter values.
-  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AddVideoInfoImplCopyWith<_$AddVideoInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$DeleteVideoInfoImplCopyWith<$Res>
-    implements $SavedEventCopyWith<$Res> {
+abstract class _$$DeleteVideoInfoImplCopyWith<$Res> {
   factory _$$DeleteVideoInfoImplCopyWith(_$DeleteVideoInfoImpl value,
           $Res Function(_$DeleteVideoInfoImpl) then) =
       __$$DeleteVideoInfoImplCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({String id, String profileName});
 }
@@ -373,6 +390,10 @@ class _$DeleteVideoInfoImpl implements DeleteVideoInfo {
     required TResult Function(String id, String profileName) deleteVideoInfo,
     required TResult Function(String profileName) getAllVideoInfoList,
     required TResult Function(String id, String profileName) checkVideoInfo,
+    required TResult Function(String videoId) trackVideoWatch,
+    required TResult Function(String query) trackSearch,
+    required TResult Function(LocalStoreVideoInfo videoInfo, String profileName)
+        updatePlaybackPosition,
   }) {
     return deleteVideoInfo(id, profileName);
   }
@@ -385,6 +406,10 @@ class _$DeleteVideoInfoImpl implements DeleteVideoInfo {
     TResult? Function(String id, String profileName)? deleteVideoInfo,
     TResult? Function(String profileName)? getAllVideoInfoList,
     TResult? Function(String id, String profileName)? checkVideoInfo,
+    TResult? Function(String videoId)? trackVideoWatch,
+    TResult? Function(String query)? trackSearch,
+    TResult? Function(LocalStoreVideoInfo videoInfo, String profileName)?
+        updatePlaybackPosition,
   }) {
     return deleteVideoInfo?.call(id, profileName);
   }
@@ -397,6 +422,10 @@ class _$DeleteVideoInfoImpl implements DeleteVideoInfo {
     TResult Function(String id, String profileName)? deleteVideoInfo,
     TResult Function(String profileName)? getAllVideoInfoList,
     TResult Function(String id, String profileName)? checkVideoInfo,
+    TResult Function(String videoId)? trackVideoWatch,
+    TResult Function(String query)? trackSearch,
+    TResult Function(LocalStoreVideoInfo videoInfo, String profileName)?
+        updatePlaybackPosition,
     required TResult orElse(),
   }) {
     if (deleteVideoInfo != null) {
@@ -412,6 +441,10 @@ class _$DeleteVideoInfoImpl implements DeleteVideoInfo {
     required TResult Function(DeleteVideoInfo value) deleteVideoInfo,
     required TResult Function(GetAllVideoInfoList value) getAllVideoInfoList,
     required TResult Function(CheckVideoInfo value) checkVideoInfo,
+    required TResult Function(TrackVideoWatch value) trackVideoWatch,
+    required TResult Function(TrackSearch value) trackSearch,
+    required TResult Function(UpdatePlaybackPosition value)
+        updatePlaybackPosition,
   }) {
     return deleteVideoInfo(this);
   }
@@ -423,6 +456,9 @@ class _$DeleteVideoInfoImpl implements DeleteVideoInfo {
     TResult? Function(DeleteVideoInfo value)? deleteVideoInfo,
     TResult? Function(GetAllVideoInfoList value)? getAllVideoInfoList,
     TResult? Function(CheckVideoInfo value)? checkVideoInfo,
+    TResult? Function(TrackVideoWatch value)? trackVideoWatch,
+    TResult? Function(TrackSearch value)? trackSearch,
+    TResult? Function(UpdatePlaybackPosition value)? updatePlaybackPosition,
   }) {
     return deleteVideoInfo?.call(this);
   }
@@ -434,6 +470,9 @@ class _$DeleteVideoInfoImpl implements DeleteVideoInfo {
     TResult Function(DeleteVideoInfo value)? deleteVideoInfo,
     TResult Function(GetAllVideoInfoList value)? getAllVideoInfoList,
     TResult Function(CheckVideoInfo value)? checkVideoInfo,
+    TResult Function(TrackVideoWatch value)? trackVideoWatch,
+    TResult Function(TrackSearch value)? trackSearch,
+    TResult Function(UpdatePlaybackPosition value)? updatePlaybackPosition,
     required TResult orElse(),
   }) {
     if (deleteVideoInfo != null) {
@@ -449,24 +488,20 @@ abstract class DeleteVideoInfo implements SavedEvent {
       final String profileName}) = _$DeleteVideoInfoImpl;
 
   String get id;
-  @override
   String get profileName;
 
   /// Create a copy of SavedEvent
   /// with the given fields replaced by the non-null parameter values.
-  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DeleteVideoInfoImplCopyWith<_$DeleteVideoInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$GetAllVideoInfoListImplCopyWith<$Res>
-    implements $SavedEventCopyWith<$Res> {
+abstract class _$$GetAllVideoInfoListImplCopyWith<$Res> {
   factory _$$GetAllVideoInfoListImplCopyWith(_$GetAllVideoInfoListImpl value,
           $Res Function(_$GetAllVideoInfoListImpl) then) =
       __$$GetAllVideoInfoListImplCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({String profileName});
 }
@@ -538,6 +573,10 @@ class _$GetAllVideoInfoListImpl implements GetAllVideoInfoList {
     required TResult Function(String id, String profileName) deleteVideoInfo,
     required TResult Function(String profileName) getAllVideoInfoList,
     required TResult Function(String id, String profileName) checkVideoInfo,
+    required TResult Function(String videoId) trackVideoWatch,
+    required TResult Function(String query) trackSearch,
+    required TResult Function(LocalStoreVideoInfo videoInfo, String profileName)
+        updatePlaybackPosition,
   }) {
     return getAllVideoInfoList(profileName);
   }
@@ -550,6 +589,10 @@ class _$GetAllVideoInfoListImpl implements GetAllVideoInfoList {
     TResult? Function(String id, String profileName)? deleteVideoInfo,
     TResult? Function(String profileName)? getAllVideoInfoList,
     TResult? Function(String id, String profileName)? checkVideoInfo,
+    TResult? Function(String videoId)? trackVideoWatch,
+    TResult? Function(String query)? trackSearch,
+    TResult? Function(LocalStoreVideoInfo videoInfo, String profileName)?
+        updatePlaybackPosition,
   }) {
     return getAllVideoInfoList?.call(profileName);
   }
@@ -562,6 +605,10 @@ class _$GetAllVideoInfoListImpl implements GetAllVideoInfoList {
     TResult Function(String id, String profileName)? deleteVideoInfo,
     TResult Function(String profileName)? getAllVideoInfoList,
     TResult Function(String id, String profileName)? checkVideoInfo,
+    TResult Function(String videoId)? trackVideoWatch,
+    TResult Function(String query)? trackSearch,
+    TResult Function(LocalStoreVideoInfo videoInfo, String profileName)?
+        updatePlaybackPosition,
     required TResult orElse(),
   }) {
     if (getAllVideoInfoList != null) {
@@ -577,6 +624,10 @@ class _$GetAllVideoInfoListImpl implements GetAllVideoInfoList {
     required TResult Function(DeleteVideoInfo value) deleteVideoInfo,
     required TResult Function(GetAllVideoInfoList value) getAllVideoInfoList,
     required TResult Function(CheckVideoInfo value) checkVideoInfo,
+    required TResult Function(TrackVideoWatch value) trackVideoWatch,
+    required TResult Function(TrackSearch value) trackSearch,
+    required TResult Function(UpdatePlaybackPosition value)
+        updatePlaybackPosition,
   }) {
     return getAllVideoInfoList(this);
   }
@@ -588,6 +639,9 @@ class _$GetAllVideoInfoListImpl implements GetAllVideoInfoList {
     TResult? Function(DeleteVideoInfo value)? deleteVideoInfo,
     TResult? Function(GetAllVideoInfoList value)? getAllVideoInfoList,
     TResult? Function(CheckVideoInfo value)? checkVideoInfo,
+    TResult? Function(TrackVideoWatch value)? trackVideoWatch,
+    TResult? Function(TrackSearch value)? trackSearch,
+    TResult? Function(UpdatePlaybackPosition value)? updatePlaybackPosition,
   }) {
     return getAllVideoInfoList?.call(this);
   }
@@ -599,6 +653,9 @@ class _$GetAllVideoInfoListImpl implements GetAllVideoInfoList {
     TResult Function(DeleteVideoInfo value)? deleteVideoInfo,
     TResult Function(GetAllVideoInfoList value)? getAllVideoInfoList,
     TResult Function(CheckVideoInfo value)? checkVideoInfo,
+    TResult Function(TrackVideoWatch value)? trackVideoWatch,
+    TResult Function(TrackSearch value)? trackSearch,
+    TResult Function(UpdatePlaybackPosition value)? updatePlaybackPosition,
     required TResult orElse(),
   }) {
     if (getAllVideoInfoList != null) {
@@ -612,24 +669,20 @@ abstract class GetAllVideoInfoList implements SavedEvent {
   const factory GetAllVideoInfoList({final String profileName}) =
       _$GetAllVideoInfoListImpl;
 
-  @override
   String get profileName;
 
   /// Create a copy of SavedEvent
   /// with the given fields replaced by the non-null parameter values.
-  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$GetAllVideoInfoListImplCopyWith<_$GetAllVideoInfoListImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$CheckVideoInfoImplCopyWith<$Res>
-    implements $SavedEventCopyWith<$Res> {
+abstract class _$$CheckVideoInfoImplCopyWith<$Res> {
   factory _$$CheckVideoInfoImplCopyWith(_$CheckVideoInfoImpl value,
           $Res Function(_$CheckVideoInfoImpl) then) =
       __$$CheckVideoInfoImplCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({String id, String profileName});
 }
@@ -709,6 +762,10 @@ class _$CheckVideoInfoImpl implements CheckVideoInfo {
     required TResult Function(String id, String profileName) deleteVideoInfo,
     required TResult Function(String profileName) getAllVideoInfoList,
     required TResult Function(String id, String profileName) checkVideoInfo,
+    required TResult Function(String videoId) trackVideoWatch,
+    required TResult Function(String query) trackSearch,
+    required TResult Function(LocalStoreVideoInfo videoInfo, String profileName)
+        updatePlaybackPosition,
   }) {
     return checkVideoInfo(id, profileName);
   }
@@ -721,6 +778,10 @@ class _$CheckVideoInfoImpl implements CheckVideoInfo {
     TResult? Function(String id, String profileName)? deleteVideoInfo,
     TResult? Function(String profileName)? getAllVideoInfoList,
     TResult? Function(String id, String profileName)? checkVideoInfo,
+    TResult? Function(String videoId)? trackVideoWatch,
+    TResult? Function(String query)? trackSearch,
+    TResult? Function(LocalStoreVideoInfo videoInfo, String profileName)?
+        updatePlaybackPosition,
   }) {
     return checkVideoInfo?.call(id, profileName);
   }
@@ -733,6 +794,10 @@ class _$CheckVideoInfoImpl implements CheckVideoInfo {
     TResult Function(String id, String profileName)? deleteVideoInfo,
     TResult Function(String profileName)? getAllVideoInfoList,
     TResult Function(String id, String profileName)? checkVideoInfo,
+    TResult Function(String videoId)? trackVideoWatch,
+    TResult Function(String query)? trackSearch,
+    TResult Function(LocalStoreVideoInfo videoInfo, String profileName)?
+        updatePlaybackPosition,
     required TResult orElse(),
   }) {
     if (checkVideoInfo != null) {
@@ -748,6 +813,10 @@ class _$CheckVideoInfoImpl implements CheckVideoInfo {
     required TResult Function(DeleteVideoInfo value) deleteVideoInfo,
     required TResult Function(GetAllVideoInfoList value) getAllVideoInfoList,
     required TResult Function(CheckVideoInfo value) checkVideoInfo,
+    required TResult Function(TrackVideoWatch value) trackVideoWatch,
+    required TResult Function(TrackSearch value) trackSearch,
+    required TResult Function(UpdatePlaybackPosition value)
+        updatePlaybackPosition,
   }) {
     return checkVideoInfo(this);
   }
@@ -759,6 +828,9 @@ class _$CheckVideoInfoImpl implements CheckVideoInfo {
     TResult? Function(DeleteVideoInfo value)? deleteVideoInfo,
     TResult? Function(GetAllVideoInfoList value)? getAllVideoInfoList,
     TResult? Function(CheckVideoInfo value)? checkVideoInfo,
+    TResult? Function(TrackVideoWatch value)? trackVideoWatch,
+    TResult? Function(TrackSearch value)? trackSearch,
+    TResult? Function(UpdatePlaybackPosition value)? updatePlaybackPosition,
   }) {
     return checkVideoInfo?.call(this);
   }
@@ -770,6 +842,9 @@ class _$CheckVideoInfoImpl implements CheckVideoInfo {
     TResult Function(DeleteVideoInfo value)? deleteVideoInfo,
     TResult Function(GetAllVideoInfoList value)? getAllVideoInfoList,
     TResult Function(CheckVideoInfo value)? checkVideoInfo,
+    TResult Function(TrackVideoWatch value)? trackVideoWatch,
+    TResult Function(TrackSearch value)? trackSearch,
+    TResult Function(UpdatePlaybackPosition value)? updatePlaybackPosition,
     required TResult orElse(),
   }) {
     if (checkVideoInfo != null) {
@@ -785,15 +860,564 @@ abstract class CheckVideoInfo implements SavedEvent {
       final String profileName}) = _$CheckVideoInfoImpl;
 
   String get id;
-  @override
   String get profileName;
 
   /// Create a copy of SavedEvent
   /// with the given fields replaced by the non-null parameter values.
-  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CheckVideoInfoImplCopyWith<_$CheckVideoInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$TrackVideoWatchImplCopyWith<$Res> {
+  factory _$$TrackVideoWatchImplCopyWith(_$TrackVideoWatchImpl value,
+          $Res Function(_$TrackVideoWatchImpl) then) =
+      __$$TrackVideoWatchImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String videoId});
+}
+
+/// @nodoc
+class __$$TrackVideoWatchImplCopyWithImpl<$Res>
+    extends _$SavedEventCopyWithImpl<$Res, _$TrackVideoWatchImpl>
+    implements _$$TrackVideoWatchImplCopyWith<$Res> {
+  __$$TrackVideoWatchImplCopyWithImpl(
+      _$TrackVideoWatchImpl _value, $Res Function(_$TrackVideoWatchImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of SavedEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? videoId = null,
+  }) {
+    return _then(_$TrackVideoWatchImpl(
+      videoId: null == videoId
+          ? _value.videoId
+          : videoId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$TrackVideoWatchImpl implements TrackVideoWatch {
+  const _$TrackVideoWatchImpl({required this.videoId});
+
+  @override
+  final String videoId;
+
+  @override
+  String toString() {
+    return 'SavedEvent.trackVideoWatch(videoId: $videoId)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$TrackVideoWatchImpl &&
+            (identical(other.videoId, videoId) || other.videoId == videoId));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, videoId);
+
+  /// Create a copy of SavedEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$TrackVideoWatchImplCopyWith<_$TrackVideoWatchImpl> get copyWith =>
+      __$$TrackVideoWatchImplCopyWithImpl<_$TrackVideoWatchImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(LocalStoreVideoInfo videoInfo, String profileName)
+        addVideoInfo,
+    required TResult Function(String id, String profileName) deleteVideoInfo,
+    required TResult Function(String profileName) getAllVideoInfoList,
+    required TResult Function(String id, String profileName) checkVideoInfo,
+    required TResult Function(String videoId) trackVideoWatch,
+    required TResult Function(String query) trackSearch,
+    required TResult Function(LocalStoreVideoInfo videoInfo, String profileName)
+        updatePlaybackPosition,
+  }) {
+    return trackVideoWatch(videoId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(LocalStoreVideoInfo videoInfo, String profileName)?
+        addVideoInfo,
+    TResult? Function(String id, String profileName)? deleteVideoInfo,
+    TResult? Function(String profileName)? getAllVideoInfoList,
+    TResult? Function(String id, String profileName)? checkVideoInfo,
+    TResult? Function(String videoId)? trackVideoWatch,
+    TResult? Function(String query)? trackSearch,
+    TResult? Function(LocalStoreVideoInfo videoInfo, String profileName)?
+        updatePlaybackPosition,
+  }) {
+    return trackVideoWatch?.call(videoId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(LocalStoreVideoInfo videoInfo, String profileName)?
+        addVideoInfo,
+    TResult Function(String id, String profileName)? deleteVideoInfo,
+    TResult Function(String profileName)? getAllVideoInfoList,
+    TResult Function(String id, String profileName)? checkVideoInfo,
+    TResult Function(String videoId)? trackVideoWatch,
+    TResult Function(String query)? trackSearch,
+    TResult Function(LocalStoreVideoInfo videoInfo, String profileName)?
+        updatePlaybackPosition,
+    required TResult orElse(),
+  }) {
+    if (trackVideoWatch != null) {
+      return trackVideoWatch(videoId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(AddVideoInfo value) addVideoInfo,
+    required TResult Function(DeleteVideoInfo value) deleteVideoInfo,
+    required TResult Function(GetAllVideoInfoList value) getAllVideoInfoList,
+    required TResult Function(CheckVideoInfo value) checkVideoInfo,
+    required TResult Function(TrackVideoWatch value) trackVideoWatch,
+    required TResult Function(TrackSearch value) trackSearch,
+    required TResult Function(UpdatePlaybackPosition value)
+        updatePlaybackPosition,
+  }) {
+    return trackVideoWatch(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(AddVideoInfo value)? addVideoInfo,
+    TResult? Function(DeleteVideoInfo value)? deleteVideoInfo,
+    TResult? Function(GetAllVideoInfoList value)? getAllVideoInfoList,
+    TResult? Function(CheckVideoInfo value)? checkVideoInfo,
+    TResult? Function(TrackVideoWatch value)? trackVideoWatch,
+    TResult? Function(TrackSearch value)? trackSearch,
+    TResult? Function(UpdatePlaybackPosition value)? updatePlaybackPosition,
+  }) {
+    return trackVideoWatch?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(AddVideoInfo value)? addVideoInfo,
+    TResult Function(DeleteVideoInfo value)? deleteVideoInfo,
+    TResult Function(GetAllVideoInfoList value)? getAllVideoInfoList,
+    TResult Function(CheckVideoInfo value)? checkVideoInfo,
+    TResult Function(TrackVideoWatch value)? trackVideoWatch,
+    TResult Function(TrackSearch value)? trackSearch,
+    TResult Function(UpdatePlaybackPosition value)? updatePlaybackPosition,
+    required TResult orElse(),
+  }) {
+    if (trackVideoWatch != null) {
+      return trackVideoWatch(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class TrackVideoWatch implements SavedEvent {
+  const factory TrackVideoWatch({required final String videoId}) =
+      _$TrackVideoWatchImpl;
+
+  String get videoId;
+
+  /// Create a copy of SavedEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$TrackVideoWatchImplCopyWith<_$TrackVideoWatchImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$TrackSearchImplCopyWith<$Res> {
+  factory _$$TrackSearchImplCopyWith(
+          _$TrackSearchImpl value, $Res Function(_$TrackSearchImpl) then) =
+      __$$TrackSearchImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String query});
+}
+
+/// @nodoc
+class __$$TrackSearchImplCopyWithImpl<$Res>
+    extends _$SavedEventCopyWithImpl<$Res, _$TrackSearchImpl>
+    implements _$$TrackSearchImplCopyWith<$Res> {
+  __$$TrackSearchImplCopyWithImpl(
+      _$TrackSearchImpl _value, $Res Function(_$TrackSearchImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of SavedEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? query = null,
+  }) {
+    return _then(_$TrackSearchImpl(
+      query: null == query
+          ? _value.query
+          : query // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$TrackSearchImpl implements TrackSearch {
+  const _$TrackSearchImpl({required this.query});
+
+  @override
+  final String query;
+
+  @override
+  String toString() {
+    return 'SavedEvent.trackSearch(query: $query)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$TrackSearchImpl &&
+            (identical(other.query, query) || other.query == query));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, query);
+
+  /// Create a copy of SavedEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$TrackSearchImplCopyWith<_$TrackSearchImpl> get copyWith =>
+      __$$TrackSearchImplCopyWithImpl<_$TrackSearchImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(LocalStoreVideoInfo videoInfo, String profileName)
+        addVideoInfo,
+    required TResult Function(String id, String profileName) deleteVideoInfo,
+    required TResult Function(String profileName) getAllVideoInfoList,
+    required TResult Function(String id, String profileName) checkVideoInfo,
+    required TResult Function(String videoId) trackVideoWatch,
+    required TResult Function(String query) trackSearch,
+    required TResult Function(LocalStoreVideoInfo videoInfo, String profileName)
+        updatePlaybackPosition,
+  }) {
+    return trackSearch(query);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(LocalStoreVideoInfo videoInfo, String profileName)?
+        addVideoInfo,
+    TResult? Function(String id, String profileName)? deleteVideoInfo,
+    TResult? Function(String profileName)? getAllVideoInfoList,
+    TResult? Function(String id, String profileName)? checkVideoInfo,
+    TResult? Function(String videoId)? trackVideoWatch,
+    TResult? Function(String query)? trackSearch,
+    TResult? Function(LocalStoreVideoInfo videoInfo, String profileName)?
+        updatePlaybackPosition,
+  }) {
+    return trackSearch?.call(query);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(LocalStoreVideoInfo videoInfo, String profileName)?
+        addVideoInfo,
+    TResult Function(String id, String profileName)? deleteVideoInfo,
+    TResult Function(String profileName)? getAllVideoInfoList,
+    TResult Function(String id, String profileName)? checkVideoInfo,
+    TResult Function(String videoId)? trackVideoWatch,
+    TResult Function(String query)? trackSearch,
+    TResult Function(LocalStoreVideoInfo videoInfo, String profileName)?
+        updatePlaybackPosition,
+    required TResult orElse(),
+  }) {
+    if (trackSearch != null) {
+      return trackSearch(query);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(AddVideoInfo value) addVideoInfo,
+    required TResult Function(DeleteVideoInfo value) deleteVideoInfo,
+    required TResult Function(GetAllVideoInfoList value) getAllVideoInfoList,
+    required TResult Function(CheckVideoInfo value) checkVideoInfo,
+    required TResult Function(TrackVideoWatch value) trackVideoWatch,
+    required TResult Function(TrackSearch value) trackSearch,
+    required TResult Function(UpdatePlaybackPosition value)
+        updatePlaybackPosition,
+  }) {
+    return trackSearch(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(AddVideoInfo value)? addVideoInfo,
+    TResult? Function(DeleteVideoInfo value)? deleteVideoInfo,
+    TResult? Function(GetAllVideoInfoList value)? getAllVideoInfoList,
+    TResult? Function(CheckVideoInfo value)? checkVideoInfo,
+    TResult? Function(TrackVideoWatch value)? trackVideoWatch,
+    TResult? Function(TrackSearch value)? trackSearch,
+    TResult? Function(UpdatePlaybackPosition value)? updatePlaybackPosition,
+  }) {
+    return trackSearch?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(AddVideoInfo value)? addVideoInfo,
+    TResult Function(DeleteVideoInfo value)? deleteVideoInfo,
+    TResult Function(GetAllVideoInfoList value)? getAllVideoInfoList,
+    TResult Function(CheckVideoInfo value)? checkVideoInfo,
+    TResult Function(TrackVideoWatch value)? trackVideoWatch,
+    TResult Function(TrackSearch value)? trackSearch,
+    TResult Function(UpdatePlaybackPosition value)? updatePlaybackPosition,
+    required TResult orElse(),
+  }) {
+    if (trackSearch != null) {
+      return trackSearch(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class TrackSearch implements SavedEvent {
+  const factory TrackSearch({required final String query}) = _$TrackSearchImpl;
+
+  String get query;
+
+  /// Create a copy of SavedEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$TrackSearchImplCopyWith<_$TrackSearchImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$UpdatePlaybackPositionImplCopyWith<$Res> {
+  factory _$$UpdatePlaybackPositionImplCopyWith(
+          _$UpdatePlaybackPositionImpl value,
+          $Res Function(_$UpdatePlaybackPositionImpl) then) =
+      __$$UpdatePlaybackPositionImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({LocalStoreVideoInfo videoInfo, String profileName});
+}
+
+/// @nodoc
+class __$$UpdatePlaybackPositionImplCopyWithImpl<$Res>
+    extends _$SavedEventCopyWithImpl<$Res, _$UpdatePlaybackPositionImpl>
+    implements _$$UpdatePlaybackPositionImplCopyWith<$Res> {
+  __$$UpdatePlaybackPositionImplCopyWithImpl(
+      _$UpdatePlaybackPositionImpl _value,
+      $Res Function(_$UpdatePlaybackPositionImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of SavedEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? videoInfo = null,
+    Object? profileName = null,
+  }) {
+    return _then(_$UpdatePlaybackPositionImpl(
+      videoInfo: null == videoInfo
+          ? _value.videoInfo
+          : videoInfo // ignore: cast_nullable_to_non_nullable
+              as LocalStoreVideoInfo,
+      profileName: null == profileName
+          ? _value.profileName
+          : profileName // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$UpdatePlaybackPositionImpl implements UpdatePlaybackPosition {
+  const _$UpdatePlaybackPositionImpl(
+      {required this.videoInfo, this.profileName = 'default'});
+
+  @override
+  final LocalStoreVideoInfo videoInfo;
+  @override
+  @JsonKey()
+  final String profileName;
+
+  @override
+  String toString() {
+    return 'SavedEvent.updatePlaybackPosition(videoInfo: $videoInfo, profileName: $profileName)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UpdatePlaybackPositionImpl &&
+            (identical(other.videoInfo, videoInfo) ||
+                other.videoInfo == videoInfo) &&
+            (identical(other.profileName, profileName) ||
+                other.profileName == profileName));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, videoInfo, profileName);
+
+  /// Create a copy of SavedEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UpdatePlaybackPositionImplCopyWith<_$UpdatePlaybackPositionImpl>
+      get copyWith => __$$UpdatePlaybackPositionImplCopyWithImpl<
+          _$UpdatePlaybackPositionImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(LocalStoreVideoInfo videoInfo, String profileName)
+        addVideoInfo,
+    required TResult Function(String id, String profileName) deleteVideoInfo,
+    required TResult Function(String profileName) getAllVideoInfoList,
+    required TResult Function(String id, String profileName) checkVideoInfo,
+    required TResult Function(String videoId) trackVideoWatch,
+    required TResult Function(String query) trackSearch,
+    required TResult Function(LocalStoreVideoInfo videoInfo, String profileName)
+        updatePlaybackPosition,
+  }) {
+    return updatePlaybackPosition(videoInfo, profileName);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(LocalStoreVideoInfo videoInfo, String profileName)?
+        addVideoInfo,
+    TResult? Function(String id, String profileName)? deleteVideoInfo,
+    TResult? Function(String profileName)? getAllVideoInfoList,
+    TResult? Function(String id, String profileName)? checkVideoInfo,
+    TResult? Function(String videoId)? trackVideoWatch,
+    TResult? Function(String query)? trackSearch,
+    TResult? Function(LocalStoreVideoInfo videoInfo, String profileName)?
+        updatePlaybackPosition,
+  }) {
+    return updatePlaybackPosition?.call(videoInfo, profileName);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(LocalStoreVideoInfo videoInfo, String profileName)?
+        addVideoInfo,
+    TResult Function(String id, String profileName)? deleteVideoInfo,
+    TResult Function(String profileName)? getAllVideoInfoList,
+    TResult Function(String id, String profileName)? checkVideoInfo,
+    TResult Function(String videoId)? trackVideoWatch,
+    TResult Function(String query)? trackSearch,
+    TResult Function(LocalStoreVideoInfo videoInfo, String profileName)?
+        updatePlaybackPosition,
+    required TResult orElse(),
+  }) {
+    if (updatePlaybackPosition != null) {
+      return updatePlaybackPosition(videoInfo, profileName);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(AddVideoInfo value) addVideoInfo,
+    required TResult Function(DeleteVideoInfo value) deleteVideoInfo,
+    required TResult Function(GetAllVideoInfoList value) getAllVideoInfoList,
+    required TResult Function(CheckVideoInfo value) checkVideoInfo,
+    required TResult Function(TrackVideoWatch value) trackVideoWatch,
+    required TResult Function(TrackSearch value) trackSearch,
+    required TResult Function(UpdatePlaybackPosition value)
+        updatePlaybackPosition,
+  }) {
+    return updatePlaybackPosition(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(AddVideoInfo value)? addVideoInfo,
+    TResult? Function(DeleteVideoInfo value)? deleteVideoInfo,
+    TResult? Function(GetAllVideoInfoList value)? getAllVideoInfoList,
+    TResult? Function(CheckVideoInfo value)? checkVideoInfo,
+    TResult? Function(TrackVideoWatch value)? trackVideoWatch,
+    TResult? Function(TrackSearch value)? trackSearch,
+    TResult? Function(UpdatePlaybackPosition value)? updatePlaybackPosition,
+  }) {
+    return updatePlaybackPosition?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(AddVideoInfo value)? addVideoInfo,
+    TResult Function(DeleteVideoInfo value)? deleteVideoInfo,
+    TResult Function(GetAllVideoInfoList value)? getAllVideoInfoList,
+    TResult Function(CheckVideoInfo value)? checkVideoInfo,
+    TResult Function(TrackVideoWatch value)? trackVideoWatch,
+    TResult Function(TrackSearch value)? trackSearch,
+    TResult Function(UpdatePlaybackPosition value)? updatePlaybackPosition,
+    required TResult orElse(),
+  }) {
+    if (updatePlaybackPosition != null) {
+      return updatePlaybackPosition(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class UpdatePlaybackPosition implements SavedEvent {
+  const factory UpdatePlaybackPosition(
+      {required final LocalStoreVideoInfo videoInfo,
+      final String profileName}) = _$UpdatePlaybackPositionImpl;
+
+  LocalStoreVideoInfo get videoInfo;
+  String get profileName;
+
+  /// Create a copy of SavedEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$UpdatePlaybackPositionImplCopyWith<_$UpdatePlaybackPositionImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc

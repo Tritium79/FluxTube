@@ -17,23 +17,28 @@ const SubscribeSchema = CollectionSchema(
   name: r'Subscribe',
   id: -7285259260229226284,
   properties: {
-    r'channelName': PropertySchema(
+    r'avatarUrl': PropertySchema(
       id: 0,
+      name: r'avatarUrl',
+      type: IsarType.string,
+    ),
+    r'channelName': PropertySchema(
+      id: 1,
       name: r'channelName',
       type: IsarType.string,
     ),
     r'id': PropertySchema(
-      id: 1,
+      id: 2,
       name: r'id',
       type: IsarType.string,
     ),
     r'isVerified': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'isVerified',
       type: IsarType.bool,
     ),
     r'profileName': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'profileName',
       type: IsarType.string,
     )
@@ -72,6 +77,12 @@ int _subscribeEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  {
+    final value = object.avatarUrl;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
   bytesCount += 3 + object.channelName.length * 3;
   bytesCount += 3 + object.id.length * 3;
   bytesCount += 3 + object.profileName.length * 3;
@@ -84,10 +95,11 @@ void _subscribeSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeString(offsets[0], object.channelName);
-  writer.writeString(offsets[1], object.id);
-  writer.writeBool(offsets[2], object.isVerified);
-  writer.writeString(offsets[3], object.profileName);
+  writer.writeString(offsets[0], object.avatarUrl);
+  writer.writeString(offsets[1], object.channelName);
+  writer.writeString(offsets[2], object.id);
+  writer.writeBool(offsets[3], object.isVerified);
+  writer.writeString(offsets[4], object.profileName);
 }
 
 Subscribe _subscribeDeserialize(
@@ -97,10 +109,11 @@ Subscribe _subscribeDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = Subscribe(
-    channelName: reader.readString(offsets[0]),
-    id: reader.readString(offsets[1]),
-    isVerified: reader.readBoolOrNull(offsets[2]),
-    profileName: reader.readStringOrNull(offsets[3]) ?? 'default',
+    avatarUrl: reader.readStringOrNull(offsets[0]),
+    channelName: reader.readString(offsets[1]),
+    id: reader.readString(offsets[2]),
+    isVerified: reader.readBoolOrNull(offsets[3]),
+    profileName: reader.readStringOrNull(offsets[4]) ?? 'default',
   );
   return object;
 }
@@ -113,12 +126,14 @@ P _subscribeDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readString(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 1:
       return (reader.readString(offset)) as P;
     case 2:
-      return (reader.readBoolOrNull(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 3:
+      return (reader.readBoolOrNull(offset)) as P;
+    case 4:
       return (reader.readStringOrNull(offset) ?? 'default') as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -263,6 +278,155 @@ extension SubscribeQueryWhere
 
 extension SubscribeQueryFilter
     on QueryBuilder<Subscribe, Subscribe, QFilterCondition> {
+  QueryBuilder<Subscribe, Subscribe, QAfterFilterCondition> avatarUrlIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'avatarUrl',
+      ));
+    });
+  }
+
+  QueryBuilder<Subscribe, Subscribe, QAfterFilterCondition>
+      avatarUrlIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'avatarUrl',
+      ));
+    });
+  }
+
+  QueryBuilder<Subscribe, Subscribe, QAfterFilterCondition> avatarUrlEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'avatarUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Subscribe, Subscribe, QAfterFilterCondition>
+      avatarUrlGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'avatarUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Subscribe, Subscribe, QAfterFilterCondition> avatarUrlLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'avatarUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Subscribe, Subscribe, QAfterFilterCondition> avatarUrlBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'avatarUrl',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Subscribe, Subscribe, QAfterFilterCondition> avatarUrlStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'avatarUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Subscribe, Subscribe, QAfterFilterCondition> avatarUrlEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'avatarUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Subscribe, Subscribe, QAfterFilterCondition> avatarUrlContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'avatarUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Subscribe, Subscribe, QAfterFilterCondition> avatarUrlMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'avatarUrl',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Subscribe, Subscribe, QAfterFilterCondition> avatarUrlIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'avatarUrl',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Subscribe, Subscribe, QAfterFilterCondition>
+      avatarUrlIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'avatarUrl',
+        value: '',
+      ));
+    });
+  }
+
   QueryBuilder<Subscribe, Subscribe, QAfterFilterCondition> channelNameEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -749,6 +913,18 @@ extension SubscribeQueryLinks
     on QueryBuilder<Subscribe, Subscribe, QFilterCondition> {}
 
 extension SubscribeQuerySortBy on QueryBuilder<Subscribe, Subscribe, QSortBy> {
+  QueryBuilder<Subscribe, Subscribe, QAfterSortBy> sortByAvatarUrl() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'avatarUrl', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Subscribe, Subscribe, QAfterSortBy> sortByAvatarUrlDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'avatarUrl', Sort.desc);
+    });
+  }
+
   QueryBuilder<Subscribe, Subscribe, QAfterSortBy> sortByChannelName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'channelName', Sort.asc);
@@ -800,6 +976,18 @@ extension SubscribeQuerySortBy on QueryBuilder<Subscribe, Subscribe, QSortBy> {
 
 extension SubscribeQuerySortThenBy
     on QueryBuilder<Subscribe, Subscribe, QSortThenBy> {
+  QueryBuilder<Subscribe, Subscribe, QAfterSortBy> thenByAvatarUrl() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'avatarUrl', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Subscribe, Subscribe, QAfterSortBy> thenByAvatarUrlDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'avatarUrl', Sort.desc);
+    });
+  }
+
   QueryBuilder<Subscribe, Subscribe, QAfterSortBy> thenByChannelName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'channelName', Sort.asc);
@@ -863,6 +1051,13 @@ extension SubscribeQuerySortThenBy
 
 extension SubscribeQueryWhereDistinct
     on QueryBuilder<Subscribe, Subscribe, QDistinct> {
+  QueryBuilder<Subscribe, Subscribe, QDistinct> distinctByAvatarUrl(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'avatarUrl', caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<Subscribe, Subscribe, QDistinct> distinctByChannelName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -896,6 +1091,12 @@ extension SubscribeQueryProperty
   QueryBuilder<Subscribe, int, QQueryOperations> isarIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isarId');
+    });
+  }
+
+  QueryBuilder<Subscribe, String?, QQueryOperations> avatarUrlProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'avatarUrl');
     });
   }
 

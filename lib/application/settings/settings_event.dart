@@ -22,8 +22,6 @@ class SettingsEvent with _$SettingsEvent {
       SetInstance;
   factory SettingsEvent.setYTService({required YouTubeServices service}) =
       SetYTService;
-  factory SettingsEvent.setPlayerType({required PlayerType playerType}) =
-      SetPlayerType;
   factory SettingsEvent.togglePipPlayer() = TogglePipPlayer;
   // New events for additional features
   factory SettingsEvent.setSearchFilter({required String filter}) =
@@ -52,4 +50,9 @@ class SettingsEvent with _$SettingsEvent {
       ImportSubscriptions;
   // Subtitle size
   factory SettingsEvent.setSubtitleSize({required double size}) = SetSubtitleSize;
+  // Search history privacy
+  factory SettingsEvent.toggleSearchHistoryEnabled() = ToggleSearchHistoryEnabled;
+  factory SettingsEvent.toggleSearchHistoryVisibility() = ToggleSearchHistoryVisibility;
+  // Set last exported file path (for share functionality)
+  factory SettingsEvent.setLastExportedFilePath({required String filePath}) = SetLastExportedFilePath;
 }

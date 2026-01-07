@@ -444,6 +444,21 @@ class WatchImpl implements WatchService {
     }
   }
 
+  ///[getNewPipeVideoDataFast] used to fetch video data quickly from NewPipe Extractor.
+  ///This returns only essential data for playback, excluding related videos.
+  @override
+  Future<Either<MainFailure, NewPipeWatchResp>> getNewPipeVideoDataFast(
+      {required String id}) async {
+    try {
+      log('NewPipe: Getting fast video data for $id');
+      final result = await NewPipeChannel.getStreamInfoFast(id);
+      return Right(result);
+    } catch (e) {
+      log('Err on getNewPipeVideoDataFast: $e');
+      return Left(MainFailure.unknown(message: e.toString()));
+    }
+  }
+
   ///[getNewPipeCommentsData] used to fetch comments data from NewPipe Extractor.
   @override
   Future<Either<MainFailure, NewPipeCommentsResp>> getNewPipeCommentsData(

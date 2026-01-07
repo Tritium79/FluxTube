@@ -16,8 +16,6 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SearchEvent {
-  String get query => throw _privateConstructorUsedError;
-  String get serviceType => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String query, String? filter, String serviceType)
@@ -27,6 +25,11 @@ mixin _$SearchEvent {
         getMoreSearchResult,
     required TResult Function(String query, String serviceType)
         getSearchSuggestion,
+    required TResult Function(String profileName, int limit) getSearchHistory,
+    required TResult Function(String query, String profileName) saveSearchQuery,
+    required TResult Function(String query, String profileName)
+        deleteSearchQuery,
+    required TResult Function(String profileName) clearSearchHistory,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -37,6 +40,10 @@ mixin _$SearchEvent {
             String query, String? filter, String? nextPage, String serviceType)?
         getMoreSearchResult,
     TResult? Function(String query, String serviceType)? getSearchSuggestion,
+    TResult? Function(String profileName, int limit)? getSearchHistory,
+    TResult? Function(String query, String profileName)? saveSearchQuery,
+    TResult? Function(String query, String profileName)? deleteSearchQuery,
+    TResult? Function(String profileName)? clearSearchHistory,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -47,6 +54,10 @@ mixin _$SearchEvent {
             String query, String? filter, String? nextPage, String serviceType)?
         getMoreSearchResult,
     TResult Function(String query, String serviceType)? getSearchSuggestion,
+    TResult Function(String profileName, int limit)? getSearchHistory,
+    TResult Function(String query, String profileName)? saveSearchQuery,
+    TResult Function(String query, String profileName)? deleteSearchQuery,
+    TResult Function(String profileName)? clearSearchHistory,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -55,6 +66,10 @@ mixin _$SearchEvent {
     required TResult Function(GetSearchResult value) getSearchResult,
     required TResult Function(GetMoreSearchResult value) getMoreSearchResult,
     required TResult Function(GetSearchSuggestion value) getSearchSuggestion,
+    required TResult Function(GetSearchHistory value) getSearchHistory,
+    required TResult Function(SaveSearchQuery value) saveSearchQuery,
+    required TResult Function(DeleteSearchQuery value) deleteSearchQuery,
+    required TResult Function(ClearSearchHistory value) clearSearchHistory,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -62,6 +77,10 @@ mixin _$SearchEvent {
     TResult? Function(GetSearchResult value)? getSearchResult,
     TResult? Function(GetMoreSearchResult value)? getMoreSearchResult,
     TResult? Function(GetSearchSuggestion value)? getSearchSuggestion,
+    TResult? Function(GetSearchHistory value)? getSearchHistory,
+    TResult? Function(SaveSearchQuery value)? saveSearchQuery,
+    TResult? Function(DeleteSearchQuery value)? deleteSearchQuery,
+    TResult? Function(ClearSearchHistory value)? clearSearchHistory,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -69,14 +88,12 @@ mixin _$SearchEvent {
     TResult Function(GetSearchResult value)? getSearchResult,
     TResult Function(GetMoreSearchResult value)? getMoreSearchResult,
     TResult Function(GetSearchSuggestion value)? getSearchSuggestion,
+    TResult Function(GetSearchHistory value)? getSearchHistory,
+    TResult Function(SaveSearchQuery value)? saveSearchQuery,
+    TResult Function(DeleteSearchQuery value)? deleteSearchQuery,
+    TResult Function(ClearSearchHistory value)? clearSearchHistory,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  /// Create a copy of SearchEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $SearchEventCopyWith<SearchEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -85,8 +102,6 @@ abstract class $SearchEventCopyWith<$Res> {
   factory $SearchEventCopyWith(
           SearchEvent value, $Res Function(SearchEvent) then) =
       _$SearchEventCopyWithImpl<$Res, SearchEvent>;
-  @useResult
-  $Res call({String query, String serviceType});
 }
 
 /// @nodoc
@@ -101,32 +116,13 @@ class _$SearchEventCopyWithImpl<$Res, $Val extends SearchEvent>
 
   /// Create a copy of SearchEvent
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? query = null,
-    Object? serviceType = null,
-  }) {
-    return _then(_value.copyWith(
-      query: null == query
-          ? _value.query
-          : query // ignore: cast_nullable_to_non_nullable
-              as String,
-      serviceType: null == serviceType
-          ? _value.serviceType
-          : serviceType // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$GetSearchResultImplCopyWith<$Res>
-    implements $SearchEventCopyWith<$Res> {
+abstract class _$$GetSearchResultImplCopyWith<$Res> {
   factory _$$GetSearchResultImplCopyWith(_$GetSearchResultImpl value,
           $Res Function(_$GetSearchResultImpl) then) =
       __$$GetSearchResultImplCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({String query, String? filter, String serviceType});
 }
@@ -216,6 +212,11 @@ class _$GetSearchResultImpl implements GetSearchResult {
         getMoreSearchResult,
     required TResult Function(String query, String serviceType)
         getSearchSuggestion,
+    required TResult Function(String profileName, int limit) getSearchHistory,
+    required TResult Function(String query, String profileName) saveSearchQuery,
+    required TResult Function(String query, String profileName)
+        deleteSearchQuery,
+    required TResult Function(String profileName) clearSearchHistory,
   }) {
     return getSearchResult(query, filter, serviceType);
   }
@@ -229,6 +230,10 @@ class _$GetSearchResultImpl implements GetSearchResult {
             String query, String? filter, String? nextPage, String serviceType)?
         getMoreSearchResult,
     TResult? Function(String query, String serviceType)? getSearchSuggestion,
+    TResult? Function(String profileName, int limit)? getSearchHistory,
+    TResult? Function(String query, String profileName)? saveSearchQuery,
+    TResult? Function(String query, String profileName)? deleteSearchQuery,
+    TResult? Function(String profileName)? clearSearchHistory,
   }) {
     return getSearchResult?.call(query, filter, serviceType);
   }
@@ -242,6 +247,10 @@ class _$GetSearchResultImpl implements GetSearchResult {
             String query, String? filter, String? nextPage, String serviceType)?
         getMoreSearchResult,
     TResult Function(String query, String serviceType)? getSearchSuggestion,
+    TResult Function(String profileName, int limit)? getSearchHistory,
+    TResult Function(String query, String profileName)? saveSearchQuery,
+    TResult Function(String query, String profileName)? deleteSearchQuery,
+    TResult Function(String profileName)? clearSearchHistory,
     required TResult orElse(),
   }) {
     if (getSearchResult != null) {
@@ -256,6 +265,10 @@ class _$GetSearchResultImpl implements GetSearchResult {
     required TResult Function(GetSearchResult value) getSearchResult,
     required TResult Function(GetMoreSearchResult value) getMoreSearchResult,
     required TResult Function(GetSearchSuggestion value) getSearchSuggestion,
+    required TResult Function(GetSearchHistory value) getSearchHistory,
+    required TResult Function(SaveSearchQuery value) saveSearchQuery,
+    required TResult Function(DeleteSearchQuery value) deleteSearchQuery,
+    required TResult Function(ClearSearchHistory value) clearSearchHistory,
   }) {
     return getSearchResult(this);
   }
@@ -266,6 +279,10 @@ class _$GetSearchResultImpl implements GetSearchResult {
     TResult? Function(GetSearchResult value)? getSearchResult,
     TResult? Function(GetMoreSearchResult value)? getMoreSearchResult,
     TResult? Function(GetSearchSuggestion value)? getSearchSuggestion,
+    TResult? Function(GetSearchHistory value)? getSearchHistory,
+    TResult? Function(SaveSearchQuery value)? saveSearchQuery,
+    TResult? Function(DeleteSearchQuery value)? deleteSearchQuery,
+    TResult? Function(ClearSearchHistory value)? clearSearchHistory,
   }) {
     return getSearchResult?.call(this);
   }
@@ -276,6 +293,10 @@ class _$GetSearchResultImpl implements GetSearchResult {
     TResult Function(GetSearchResult value)? getSearchResult,
     TResult Function(GetMoreSearchResult value)? getMoreSearchResult,
     TResult Function(GetSearchSuggestion value)? getSearchSuggestion,
+    TResult Function(GetSearchHistory value)? getSearchHistory,
+    TResult Function(SaveSearchQuery value)? saveSearchQuery,
+    TResult Function(DeleteSearchQuery value)? deleteSearchQuery,
+    TResult Function(ClearSearchHistory value)? clearSearchHistory,
     required TResult orElse(),
   }) {
     if (getSearchResult != null) {
@@ -291,27 +312,22 @@ abstract class GetSearchResult implements SearchEvent {
       required final String? filter,
       required final String serviceType}) = _$GetSearchResultImpl;
 
-  @override
   String get query;
   String? get filter;
-  @override
   String get serviceType;
 
   /// Create a copy of SearchEvent
   /// with the given fields replaced by the non-null parameter values.
-  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$GetSearchResultImplCopyWith<_$GetSearchResultImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$GetMoreSearchResultImplCopyWith<$Res>
-    implements $SearchEventCopyWith<$Res> {
+abstract class _$$GetMoreSearchResultImplCopyWith<$Res> {
   factory _$$GetMoreSearchResultImplCopyWith(_$GetMoreSearchResultImpl value,
           $Res Function(_$GetMoreSearchResultImpl) then) =
       __$$GetMoreSearchResultImplCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call(
       {String query, String? filter, String? nextPage, String serviceType});
@@ -415,6 +431,11 @@ class _$GetMoreSearchResultImpl implements GetMoreSearchResult {
         getMoreSearchResult,
     required TResult Function(String query, String serviceType)
         getSearchSuggestion,
+    required TResult Function(String profileName, int limit) getSearchHistory,
+    required TResult Function(String query, String profileName) saveSearchQuery,
+    required TResult Function(String query, String profileName)
+        deleteSearchQuery,
+    required TResult Function(String profileName) clearSearchHistory,
   }) {
     return getMoreSearchResult(query, filter, nextPage, serviceType);
   }
@@ -428,6 +449,10 @@ class _$GetMoreSearchResultImpl implements GetMoreSearchResult {
             String query, String? filter, String? nextPage, String serviceType)?
         getMoreSearchResult,
     TResult? Function(String query, String serviceType)? getSearchSuggestion,
+    TResult? Function(String profileName, int limit)? getSearchHistory,
+    TResult? Function(String query, String profileName)? saveSearchQuery,
+    TResult? Function(String query, String profileName)? deleteSearchQuery,
+    TResult? Function(String profileName)? clearSearchHistory,
   }) {
     return getMoreSearchResult?.call(query, filter, nextPage, serviceType);
   }
@@ -441,6 +466,10 @@ class _$GetMoreSearchResultImpl implements GetMoreSearchResult {
             String query, String? filter, String? nextPage, String serviceType)?
         getMoreSearchResult,
     TResult Function(String query, String serviceType)? getSearchSuggestion,
+    TResult Function(String profileName, int limit)? getSearchHistory,
+    TResult Function(String query, String profileName)? saveSearchQuery,
+    TResult Function(String query, String profileName)? deleteSearchQuery,
+    TResult Function(String profileName)? clearSearchHistory,
     required TResult orElse(),
   }) {
     if (getMoreSearchResult != null) {
@@ -455,6 +484,10 @@ class _$GetMoreSearchResultImpl implements GetMoreSearchResult {
     required TResult Function(GetSearchResult value) getSearchResult,
     required TResult Function(GetMoreSearchResult value) getMoreSearchResult,
     required TResult Function(GetSearchSuggestion value) getSearchSuggestion,
+    required TResult Function(GetSearchHistory value) getSearchHistory,
+    required TResult Function(SaveSearchQuery value) saveSearchQuery,
+    required TResult Function(DeleteSearchQuery value) deleteSearchQuery,
+    required TResult Function(ClearSearchHistory value) clearSearchHistory,
   }) {
     return getMoreSearchResult(this);
   }
@@ -465,6 +498,10 @@ class _$GetMoreSearchResultImpl implements GetMoreSearchResult {
     TResult? Function(GetSearchResult value)? getSearchResult,
     TResult? Function(GetMoreSearchResult value)? getMoreSearchResult,
     TResult? Function(GetSearchSuggestion value)? getSearchSuggestion,
+    TResult? Function(GetSearchHistory value)? getSearchHistory,
+    TResult? Function(SaveSearchQuery value)? saveSearchQuery,
+    TResult? Function(DeleteSearchQuery value)? deleteSearchQuery,
+    TResult? Function(ClearSearchHistory value)? clearSearchHistory,
   }) {
     return getMoreSearchResult?.call(this);
   }
@@ -475,6 +512,10 @@ class _$GetMoreSearchResultImpl implements GetMoreSearchResult {
     TResult Function(GetSearchResult value)? getSearchResult,
     TResult Function(GetMoreSearchResult value)? getMoreSearchResult,
     TResult Function(GetSearchSuggestion value)? getSearchSuggestion,
+    TResult Function(GetSearchHistory value)? getSearchHistory,
+    TResult Function(SaveSearchQuery value)? saveSearchQuery,
+    TResult Function(DeleteSearchQuery value)? deleteSearchQuery,
+    TResult Function(ClearSearchHistory value)? clearSearchHistory,
     required TResult orElse(),
   }) {
     if (getMoreSearchResult != null) {
@@ -491,28 +532,23 @@ abstract class GetMoreSearchResult implements SearchEvent {
       required final String? nextPage,
       required final String serviceType}) = _$GetMoreSearchResultImpl;
 
-  @override
   String get query;
   String? get filter;
   String? get nextPage;
-  @override
   String get serviceType;
 
   /// Create a copy of SearchEvent
   /// with the given fields replaced by the non-null parameter values.
-  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$GetMoreSearchResultImplCopyWith<_$GetMoreSearchResultImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$GetSearchSuggestionImplCopyWith<$Res>
-    implements $SearchEventCopyWith<$Res> {
+abstract class _$$GetSearchSuggestionImplCopyWith<$Res> {
   factory _$$GetSearchSuggestionImplCopyWith(_$GetSearchSuggestionImpl value,
           $Res Function(_$GetSearchSuggestionImpl) then) =
       __$$GetSearchSuggestionImplCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({String query, String serviceType});
 }
@@ -594,6 +630,11 @@ class _$GetSearchSuggestionImpl implements GetSearchSuggestion {
         getMoreSearchResult,
     required TResult Function(String query, String serviceType)
         getSearchSuggestion,
+    required TResult Function(String profileName, int limit) getSearchHistory,
+    required TResult Function(String query, String profileName) saveSearchQuery,
+    required TResult Function(String query, String profileName)
+        deleteSearchQuery,
+    required TResult Function(String profileName) clearSearchHistory,
   }) {
     return getSearchSuggestion(query, serviceType);
   }
@@ -607,6 +648,10 @@ class _$GetSearchSuggestionImpl implements GetSearchSuggestion {
             String query, String? filter, String? nextPage, String serviceType)?
         getMoreSearchResult,
     TResult? Function(String query, String serviceType)? getSearchSuggestion,
+    TResult? Function(String profileName, int limit)? getSearchHistory,
+    TResult? Function(String query, String profileName)? saveSearchQuery,
+    TResult? Function(String query, String profileName)? deleteSearchQuery,
+    TResult? Function(String profileName)? clearSearchHistory,
   }) {
     return getSearchSuggestion?.call(query, serviceType);
   }
@@ -620,6 +665,10 @@ class _$GetSearchSuggestionImpl implements GetSearchSuggestion {
             String query, String? filter, String? nextPage, String serviceType)?
         getMoreSearchResult,
     TResult Function(String query, String serviceType)? getSearchSuggestion,
+    TResult Function(String profileName, int limit)? getSearchHistory,
+    TResult Function(String query, String profileName)? saveSearchQuery,
+    TResult Function(String query, String profileName)? deleteSearchQuery,
+    TResult Function(String profileName)? clearSearchHistory,
     required TResult orElse(),
   }) {
     if (getSearchSuggestion != null) {
@@ -634,6 +683,10 @@ class _$GetSearchSuggestionImpl implements GetSearchSuggestion {
     required TResult Function(GetSearchResult value) getSearchResult,
     required TResult Function(GetMoreSearchResult value) getMoreSearchResult,
     required TResult Function(GetSearchSuggestion value) getSearchSuggestion,
+    required TResult Function(GetSearchHistory value) getSearchHistory,
+    required TResult Function(SaveSearchQuery value) saveSearchQuery,
+    required TResult Function(DeleteSearchQuery value) deleteSearchQuery,
+    required TResult Function(ClearSearchHistory value) clearSearchHistory,
   }) {
     return getSearchSuggestion(this);
   }
@@ -644,6 +697,10 @@ class _$GetSearchSuggestionImpl implements GetSearchSuggestion {
     TResult? Function(GetSearchResult value)? getSearchResult,
     TResult? Function(GetMoreSearchResult value)? getMoreSearchResult,
     TResult? Function(GetSearchSuggestion value)? getSearchSuggestion,
+    TResult? Function(GetSearchHistory value)? getSearchHistory,
+    TResult? Function(SaveSearchQuery value)? saveSearchQuery,
+    TResult? Function(DeleteSearchQuery value)? deleteSearchQuery,
+    TResult? Function(ClearSearchHistory value)? clearSearchHistory,
   }) {
     return getSearchSuggestion?.call(this);
   }
@@ -654,6 +711,10 @@ class _$GetSearchSuggestionImpl implements GetSearchSuggestion {
     TResult Function(GetSearchResult value)? getSearchResult,
     TResult Function(GetMoreSearchResult value)? getMoreSearchResult,
     TResult Function(GetSearchSuggestion value)? getSearchSuggestion,
+    TResult Function(GetSearchHistory value)? getSearchHistory,
+    TResult Function(SaveSearchQuery value)? saveSearchQuery,
+    TResult Function(DeleteSearchQuery value)? deleteSearchQuery,
+    TResult Function(ClearSearchHistory value)? clearSearchHistory,
     required TResult orElse(),
   }) {
     if (getSearchSuggestion != null) {
@@ -668,16 +729,785 @@ abstract class GetSearchSuggestion implements SearchEvent {
       {required final String query,
       required final String serviceType}) = _$GetSearchSuggestionImpl;
 
-  @override
   String get query;
-  @override
   String get serviceType;
 
   /// Create a copy of SearchEvent
   /// with the given fields replaced by the non-null parameter values.
-  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$GetSearchSuggestionImplCopyWith<_$GetSearchSuggestionImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$GetSearchHistoryImplCopyWith<$Res> {
+  factory _$$GetSearchHistoryImplCopyWith(_$GetSearchHistoryImpl value,
+          $Res Function(_$GetSearchHistoryImpl) then) =
+      __$$GetSearchHistoryImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String profileName, int limit});
+}
+
+/// @nodoc
+class __$$GetSearchHistoryImplCopyWithImpl<$Res>
+    extends _$SearchEventCopyWithImpl<$Res, _$GetSearchHistoryImpl>
+    implements _$$GetSearchHistoryImplCopyWith<$Res> {
+  __$$GetSearchHistoryImplCopyWithImpl(_$GetSearchHistoryImpl _value,
+      $Res Function(_$GetSearchHistoryImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of SearchEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? profileName = null,
+    Object? limit = null,
+  }) {
+    return _then(_$GetSearchHistoryImpl(
+      profileName: null == profileName
+          ? _value.profileName
+          : profileName // ignore: cast_nullable_to_non_nullable
+              as String,
+      limit: null == limit
+          ? _value.limit
+          : limit // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$GetSearchHistoryImpl implements GetSearchHistory {
+  const _$GetSearchHistoryImpl({this.profileName = 'default', this.limit = 20});
+
+  @override
+  @JsonKey()
+  final String profileName;
+  @override
+  @JsonKey()
+  final int limit;
+
+  @override
+  String toString() {
+    return 'SearchEvent.getSearchHistory(profileName: $profileName, limit: $limit)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GetSearchHistoryImpl &&
+            (identical(other.profileName, profileName) ||
+                other.profileName == profileName) &&
+            (identical(other.limit, limit) || other.limit == limit));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, profileName, limit);
+
+  /// Create a copy of SearchEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GetSearchHistoryImplCopyWith<_$GetSearchHistoryImpl> get copyWith =>
+      __$$GetSearchHistoryImplCopyWithImpl<_$GetSearchHistoryImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String query, String? filter, String serviceType)
+        getSearchResult,
+    required TResult Function(
+            String query, String? filter, String? nextPage, String serviceType)
+        getMoreSearchResult,
+    required TResult Function(String query, String serviceType)
+        getSearchSuggestion,
+    required TResult Function(String profileName, int limit) getSearchHistory,
+    required TResult Function(String query, String profileName) saveSearchQuery,
+    required TResult Function(String query, String profileName)
+        deleteSearchQuery,
+    required TResult Function(String profileName) clearSearchHistory,
+  }) {
+    return getSearchHistory(profileName, limit);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String query, String? filter, String serviceType)?
+        getSearchResult,
+    TResult? Function(
+            String query, String? filter, String? nextPage, String serviceType)?
+        getMoreSearchResult,
+    TResult? Function(String query, String serviceType)? getSearchSuggestion,
+    TResult? Function(String profileName, int limit)? getSearchHistory,
+    TResult? Function(String query, String profileName)? saveSearchQuery,
+    TResult? Function(String query, String profileName)? deleteSearchQuery,
+    TResult? Function(String profileName)? clearSearchHistory,
+  }) {
+    return getSearchHistory?.call(profileName, limit);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String query, String? filter, String serviceType)?
+        getSearchResult,
+    TResult Function(
+            String query, String? filter, String? nextPage, String serviceType)?
+        getMoreSearchResult,
+    TResult Function(String query, String serviceType)? getSearchSuggestion,
+    TResult Function(String profileName, int limit)? getSearchHistory,
+    TResult Function(String query, String profileName)? saveSearchQuery,
+    TResult Function(String query, String profileName)? deleteSearchQuery,
+    TResult Function(String profileName)? clearSearchHistory,
+    required TResult orElse(),
+  }) {
+    if (getSearchHistory != null) {
+      return getSearchHistory(profileName, limit);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(GetSearchResult value) getSearchResult,
+    required TResult Function(GetMoreSearchResult value) getMoreSearchResult,
+    required TResult Function(GetSearchSuggestion value) getSearchSuggestion,
+    required TResult Function(GetSearchHistory value) getSearchHistory,
+    required TResult Function(SaveSearchQuery value) saveSearchQuery,
+    required TResult Function(DeleteSearchQuery value) deleteSearchQuery,
+    required TResult Function(ClearSearchHistory value) clearSearchHistory,
+  }) {
+    return getSearchHistory(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(GetSearchResult value)? getSearchResult,
+    TResult? Function(GetMoreSearchResult value)? getMoreSearchResult,
+    TResult? Function(GetSearchSuggestion value)? getSearchSuggestion,
+    TResult? Function(GetSearchHistory value)? getSearchHistory,
+    TResult? Function(SaveSearchQuery value)? saveSearchQuery,
+    TResult? Function(DeleteSearchQuery value)? deleteSearchQuery,
+    TResult? Function(ClearSearchHistory value)? clearSearchHistory,
+  }) {
+    return getSearchHistory?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(GetSearchResult value)? getSearchResult,
+    TResult Function(GetMoreSearchResult value)? getMoreSearchResult,
+    TResult Function(GetSearchSuggestion value)? getSearchSuggestion,
+    TResult Function(GetSearchHistory value)? getSearchHistory,
+    TResult Function(SaveSearchQuery value)? saveSearchQuery,
+    TResult Function(DeleteSearchQuery value)? deleteSearchQuery,
+    TResult Function(ClearSearchHistory value)? clearSearchHistory,
+    required TResult orElse(),
+  }) {
+    if (getSearchHistory != null) {
+      return getSearchHistory(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class GetSearchHistory implements SearchEvent {
+  const factory GetSearchHistory({final String profileName, final int limit}) =
+      _$GetSearchHistoryImpl;
+
+  String get profileName;
+  int get limit;
+
+  /// Create a copy of SearchEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$GetSearchHistoryImplCopyWith<_$GetSearchHistoryImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$SaveSearchQueryImplCopyWith<$Res> {
+  factory _$$SaveSearchQueryImplCopyWith(_$SaveSearchQueryImpl value,
+          $Res Function(_$SaveSearchQueryImpl) then) =
+      __$$SaveSearchQueryImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String query, String profileName});
+}
+
+/// @nodoc
+class __$$SaveSearchQueryImplCopyWithImpl<$Res>
+    extends _$SearchEventCopyWithImpl<$Res, _$SaveSearchQueryImpl>
+    implements _$$SaveSearchQueryImplCopyWith<$Res> {
+  __$$SaveSearchQueryImplCopyWithImpl(
+      _$SaveSearchQueryImpl _value, $Res Function(_$SaveSearchQueryImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of SearchEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? query = null,
+    Object? profileName = null,
+  }) {
+    return _then(_$SaveSearchQueryImpl(
+      query: null == query
+          ? _value.query
+          : query // ignore: cast_nullable_to_non_nullable
+              as String,
+      profileName: null == profileName
+          ? _value.profileName
+          : profileName // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$SaveSearchQueryImpl implements SaveSearchQuery {
+  const _$SaveSearchQueryImpl(
+      {required this.query, this.profileName = 'default'});
+
+  @override
+  final String query;
+  @override
+  @JsonKey()
+  final String profileName;
+
+  @override
+  String toString() {
+    return 'SearchEvent.saveSearchQuery(query: $query, profileName: $profileName)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SaveSearchQueryImpl &&
+            (identical(other.query, query) || other.query == query) &&
+            (identical(other.profileName, profileName) ||
+                other.profileName == profileName));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, query, profileName);
+
+  /// Create a copy of SearchEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SaveSearchQueryImplCopyWith<_$SaveSearchQueryImpl> get copyWith =>
+      __$$SaveSearchQueryImplCopyWithImpl<_$SaveSearchQueryImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String query, String? filter, String serviceType)
+        getSearchResult,
+    required TResult Function(
+            String query, String? filter, String? nextPage, String serviceType)
+        getMoreSearchResult,
+    required TResult Function(String query, String serviceType)
+        getSearchSuggestion,
+    required TResult Function(String profileName, int limit) getSearchHistory,
+    required TResult Function(String query, String profileName) saveSearchQuery,
+    required TResult Function(String query, String profileName)
+        deleteSearchQuery,
+    required TResult Function(String profileName) clearSearchHistory,
+  }) {
+    return saveSearchQuery(query, profileName);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String query, String? filter, String serviceType)?
+        getSearchResult,
+    TResult? Function(
+            String query, String? filter, String? nextPage, String serviceType)?
+        getMoreSearchResult,
+    TResult? Function(String query, String serviceType)? getSearchSuggestion,
+    TResult? Function(String profileName, int limit)? getSearchHistory,
+    TResult? Function(String query, String profileName)? saveSearchQuery,
+    TResult? Function(String query, String profileName)? deleteSearchQuery,
+    TResult? Function(String profileName)? clearSearchHistory,
+  }) {
+    return saveSearchQuery?.call(query, profileName);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String query, String? filter, String serviceType)?
+        getSearchResult,
+    TResult Function(
+            String query, String? filter, String? nextPage, String serviceType)?
+        getMoreSearchResult,
+    TResult Function(String query, String serviceType)? getSearchSuggestion,
+    TResult Function(String profileName, int limit)? getSearchHistory,
+    TResult Function(String query, String profileName)? saveSearchQuery,
+    TResult Function(String query, String profileName)? deleteSearchQuery,
+    TResult Function(String profileName)? clearSearchHistory,
+    required TResult orElse(),
+  }) {
+    if (saveSearchQuery != null) {
+      return saveSearchQuery(query, profileName);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(GetSearchResult value) getSearchResult,
+    required TResult Function(GetMoreSearchResult value) getMoreSearchResult,
+    required TResult Function(GetSearchSuggestion value) getSearchSuggestion,
+    required TResult Function(GetSearchHistory value) getSearchHistory,
+    required TResult Function(SaveSearchQuery value) saveSearchQuery,
+    required TResult Function(DeleteSearchQuery value) deleteSearchQuery,
+    required TResult Function(ClearSearchHistory value) clearSearchHistory,
+  }) {
+    return saveSearchQuery(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(GetSearchResult value)? getSearchResult,
+    TResult? Function(GetMoreSearchResult value)? getMoreSearchResult,
+    TResult? Function(GetSearchSuggestion value)? getSearchSuggestion,
+    TResult? Function(GetSearchHistory value)? getSearchHistory,
+    TResult? Function(SaveSearchQuery value)? saveSearchQuery,
+    TResult? Function(DeleteSearchQuery value)? deleteSearchQuery,
+    TResult? Function(ClearSearchHistory value)? clearSearchHistory,
+  }) {
+    return saveSearchQuery?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(GetSearchResult value)? getSearchResult,
+    TResult Function(GetMoreSearchResult value)? getMoreSearchResult,
+    TResult Function(GetSearchSuggestion value)? getSearchSuggestion,
+    TResult Function(GetSearchHistory value)? getSearchHistory,
+    TResult Function(SaveSearchQuery value)? saveSearchQuery,
+    TResult Function(DeleteSearchQuery value)? deleteSearchQuery,
+    TResult Function(ClearSearchHistory value)? clearSearchHistory,
+    required TResult orElse(),
+  }) {
+    if (saveSearchQuery != null) {
+      return saveSearchQuery(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class SaveSearchQuery implements SearchEvent {
+  const factory SaveSearchQuery(
+      {required final String query,
+      final String profileName}) = _$SaveSearchQueryImpl;
+
+  String get query;
+  String get profileName;
+
+  /// Create a copy of SearchEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$SaveSearchQueryImplCopyWith<_$SaveSearchQueryImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$DeleteSearchQueryImplCopyWith<$Res> {
+  factory _$$DeleteSearchQueryImplCopyWith(_$DeleteSearchQueryImpl value,
+          $Res Function(_$DeleteSearchQueryImpl) then) =
+      __$$DeleteSearchQueryImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String query, String profileName});
+}
+
+/// @nodoc
+class __$$DeleteSearchQueryImplCopyWithImpl<$Res>
+    extends _$SearchEventCopyWithImpl<$Res, _$DeleteSearchQueryImpl>
+    implements _$$DeleteSearchQueryImplCopyWith<$Res> {
+  __$$DeleteSearchQueryImplCopyWithImpl(_$DeleteSearchQueryImpl _value,
+      $Res Function(_$DeleteSearchQueryImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of SearchEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? query = null,
+    Object? profileName = null,
+  }) {
+    return _then(_$DeleteSearchQueryImpl(
+      query: null == query
+          ? _value.query
+          : query // ignore: cast_nullable_to_non_nullable
+              as String,
+      profileName: null == profileName
+          ? _value.profileName
+          : profileName // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$DeleteSearchQueryImpl implements DeleteSearchQuery {
+  const _$DeleteSearchQueryImpl(
+      {required this.query, this.profileName = 'default'});
+
+  @override
+  final String query;
+  @override
+  @JsonKey()
+  final String profileName;
+
+  @override
+  String toString() {
+    return 'SearchEvent.deleteSearchQuery(query: $query, profileName: $profileName)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$DeleteSearchQueryImpl &&
+            (identical(other.query, query) || other.query == query) &&
+            (identical(other.profileName, profileName) ||
+                other.profileName == profileName));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, query, profileName);
+
+  /// Create a copy of SearchEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$DeleteSearchQueryImplCopyWith<_$DeleteSearchQueryImpl> get copyWith =>
+      __$$DeleteSearchQueryImplCopyWithImpl<_$DeleteSearchQueryImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String query, String? filter, String serviceType)
+        getSearchResult,
+    required TResult Function(
+            String query, String? filter, String? nextPage, String serviceType)
+        getMoreSearchResult,
+    required TResult Function(String query, String serviceType)
+        getSearchSuggestion,
+    required TResult Function(String profileName, int limit) getSearchHistory,
+    required TResult Function(String query, String profileName) saveSearchQuery,
+    required TResult Function(String query, String profileName)
+        deleteSearchQuery,
+    required TResult Function(String profileName) clearSearchHistory,
+  }) {
+    return deleteSearchQuery(query, profileName);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String query, String? filter, String serviceType)?
+        getSearchResult,
+    TResult? Function(
+            String query, String? filter, String? nextPage, String serviceType)?
+        getMoreSearchResult,
+    TResult? Function(String query, String serviceType)? getSearchSuggestion,
+    TResult? Function(String profileName, int limit)? getSearchHistory,
+    TResult? Function(String query, String profileName)? saveSearchQuery,
+    TResult? Function(String query, String profileName)? deleteSearchQuery,
+    TResult? Function(String profileName)? clearSearchHistory,
+  }) {
+    return deleteSearchQuery?.call(query, profileName);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String query, String? filter, String serviceType)?
+        getSearchResult,
+    TResult Function(
+            String query, String? filter, String? nextPage, String serviceType)?
+        getMoreSearchResult,
+    TResult Function(String query, String serviceType)? getSearchSuggestion,
+    TResult Function(String profileName, int limit)? getSearchHistory,
+    TResult Function(String query, String profileName)? saveSearchQuery,
+    TResult Function(String query, String profileName)? deleteSearchQuery,
+    TResult Function(String profileName)? clearSearchHistory,
+    required TResult orElse(),
+  }) {
+    if (deleteSearchQuery != null) {
+      return deleteSearchQuery(query, profileName);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(GetSearchResult value) getSearchResult,
+    required TResult Function(GetMoreSearchResult value) getMoreSearchResult,
+    required TResult Function(GetSearchSuggestion value) getSearchSuggestion,
+    required TResult Function(GetSearchHistory value) getSearchHistory,
+    required TResult Function(SaveSearchQuery value) saveSearchQuery,
+    required TResult Function(DeleteSearchQuery value) deleteSearchQuery,
+    required TResult Function(ClearSearchHistory value) clearSearchHistory,
+  }) {
+    return deleteSearchQuery(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(GetSearchResult value)? getSearchResult,
+    TResult? Function(GetMoreSearchResult value)? getMoreSearchResult,
+    TResult? Function(GetSearchSuggestion value)? getSearchSuggestion,
+    TResult? Function(GetSearchHistory value)? getSearchHistory,
+    TResult? Function(SaveSearchQuery value)? saveSearchQuery,
+    TResult? Function(DeleteSearchQuery value)? deleteSearchQuery,
+    TResult? Function(ClearSearchHistory value)? clearSearchHistory,
+  }) {
+    return deleteSearchQuery?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(GetSearchResult value)? getSearchResult,
+    TResult Function(GetMoreSearchResult value)? getMoreSearchResult,
+    TResult Function(GetSearchSuggestion value)? getSearchSuggestion,
+    TResult Function(GetSearchHistory value)? getSearchHistory,
+    TResult Function(SaveSearchQuery value)? saveSearchQuery,
+    TResult Function(DeleteSearchQuery value)? deleteSearchQuery,
+    TResult Function(ClearSearchHistory value)? clearSearchHistory,
+    required TResult orElse(),
+  }) {
+    if (deleteSearchQuery != null) {
+      return deleteSearchQuery(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class DeleteSearchQuery implements SearchEvent {
+  const factory DeleteSearchQuery(
+      {required final String query,
+      final String profileName}) = _$DeleteSearchQueryImpl;
+
+  String get query;
+  String get profileName;
+
+  /// Create a copy of SearchEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$DeleteSearchQueryImplCopyWith<_$DeleteSearchQueryImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$ClearSearchHistoryImplCopyWith<$Res> {
+  factory _$$ClearSearchHistoryImplCopyWith(_$ClearSearchHistoryImpl value,
+          $Res Function(_$ClearSearchHistoryImpl) then) =
+      __$$ClearSearchHistoryImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String profileName});
+}
+
+/// @nodoc
+class __$$ClearSearchHistoryImplCopyWithImpl<$Res>
+    extends _$SearchEventCopyWithImpl<$Res, _$ClearSearchHistoryImpl>
+    implements _$$ClearSearchHistoryImplCopyWith<$Res> {
+  __$$ClearSearchHistoryImplCopyWithImpl(_$ClearSearchHistoryImpl _value,
+      $Res Function(_$ClearSearchHistoryImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of SearchEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? profileName = null,
+  }) {
+    return _then(_$ClearSearchHistoryImpl(
+      profileName: null == profileName
+          ? _value.profileName
+          : profileName // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ClearSearchHistoryImpl implements ClearSearchHistory {
+  const _$ClearSearchHistoryImpl({this.profileName = 'default'});
+
+  @override
+  @JsonKey()
+  final String profileName;
+
+  @override
+  String toString() {
+    return 'SearchEvent.clearSearchHistory(profileName: $profileName)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ClearSearchHistoryImpl &&
+            (identical(other.profileName, profileName) ||
+                other.profileName == profileName));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, profileName);
+
+  /// Create a copy of SearchEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ClearSearchHistoryImplCopyWith<_$ClearSearchHistoryImpl> get copyWith =>
+      __$$ClearSearchHistoryImplCopyWithImpl<_$ClearSearchHistoryImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String query, String? filter, String serviceType)
+        getSearchResult,
+    required TResult Function(
+            String query, String? filter, String? nextPage, String serviceType)
+        getMoreSearchResult,
+    required TResult Function(String query, String serviceType)
+        getSearchSuggestion,
+    required TResult Function(String profileName, int limit) getSearchHistory,
+    required TResult Function(String query, String profileName) saveSearchQuery,
+    required TResult Function(String query, String profileName)
+        deleteSearchQuery,
+    required TResult Function(String profileName) clearSearchHistory,
+  }) {
+    return clearSearchHistory(profileName);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String query, String? filter, String serviceType)?
+        getSearchResult,
+    TResult? Function(
+            String query, String? filter, String? nextPage, String serviceType)?
+        getMoreSearchResult,
+    TResult? Function(String query, String serviceType)? getSearchSuggestion,
+    TResult? Function(String profileName, int limit)? getSearchHistory,
+    TResult? Function(String query, String profileName)? saveSearchQuery,
+    TResult? Function(String query, String profileName)? deleteSearchQuery,
+    TResult? Function(String profileName)? clearSearchHistory,
+  }) {
+    return clearSearchHistory?.call(profileName);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String query, String? filter, String serviceType)?
+        getSearchResult,
+    TResult Function(
+            String query, String? filter, String? nextPage, String serviceType)?
+        getMoreSearchResult,
+    TResult Function(String query, String serviceType)? getSearchSuggestion,
+    TResult Function(String profileName, int limit)? getSearchHistory,
+    TResult Function(String query, String profileName)? saveSearchQuery,
+    TResult Function(String query, String profileName)? deleteSearchQuery,
+    TResult Function(String profileName)? clearSearchHistory,
+    required TResult orElse(),
+  }) {
+    if (clearSearchHistory != null) {
+      return clearSearchHistory(profileName);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(GetSearchResult value) getSearchResult,
+    required TResult Function(GetMoreSearchResult value) getMoreSearchResult,
+    required TResult Function(GetSearchSuggestion value) getSearchSuggestion,
+    required TResult Function(GetSearchHistory value) getSearchHistory,
+    required TResult Function(SaveSearchQuery value) saveSearchQuery,
+    required TResult Function(DeleteSearchQuery value) deleteSearchQuery,
+    required TResult Function(ClearSearchHistory value) clearSearchHistory,
+  }) {
+    return clearSearchHistory(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(GetSearchResult value)? getSearchResult,
+    TResult? Function(GetMoreSearchResult value)? getMoreSearchResult,
+    TResult? Function(GetSearchSuggestion value)? getSearchSuggestion,
+    TResult? Function(GetSearchHistory value)? getSearchHistory,
+    TResult? Function(SaveSearchQuery value)? saveSearchQuery,
+    TResult? Function(DeleteSearchQuery value)? deleteSearchQuery,
+    TResult? Function(ClearSearchHistory value)? clearSearchHistory,
+  }) {
+    return clearSearchHistory?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(GetSearchResult value)? getSearchResult,
+    TResult Function(GetMoreSearchResult value)? getMoreSearchResult,
+    TResult Function(GetSearchSuggestion value)? getSearchSuggestion,
+    TResult Function(GetSearchHistory value)? getSearchHistory,
+    TResult Function(SaveSearchQuery value)? saveSearchQuery,
+    TResult Function(DeleteSearchQuery value)? deleteSearchQuery,
+    TResult Function(ClearSearchHistory value)? clearSearchHistory,
+    required TResult orElse(),
+  }) {
+    if (clearSearchHistory != null) {
+      return clearSearchHistory(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ClearSearchHistory implements SearchEvent {
+  const factory ClearSearchHistory({final String profileName}) =
+      _$ClearSearchHistoryImpl;
+
+  String get profileName;
+
+  /// Create a copy of SearchEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ClearSearchHistoryImplCopyWith<_$ClearSearchHistoryImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -715,7 +1545,11 @@ mixin _$SearchState {
       throw _privateConstructorUsedError;
   ApiStatus get fetchMoreNewPipeSearchResultStatus =>
       throw _privateConstructorUsedError;
-  bool get isMoreNewPipeFetchCompleted => throw _privateConstructorUsedError;
+  bool get isMoreNewPipeFetchCompleted =>
+      throw _privateConstructorUsedError; // SEARCH HISTORY
+  ApiStatus get fetchSearchHistoryStatus => throw _privateConstructorUsedError;
+  List<LocalSearchHistory> get searchHistory =>
+      throw _privateConstructorUsedError;
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.
@@ -750,7 +1584,9 @@ abstract class $SearchStateCopyWith<$Res> {
       ApiStatus fetchNewPipeSuggestionStatus,
       List<dynamic> newPipeSuggestionResult,
       ApiStatus fetchMoreNewPipeSearchResultStatus,
-      bool isMoreNewPipeFetchCompleted});
+      bool isMoreNewPipeFetchCompleted,
+      ApiStatus fetchSearchHistoryStatus,
+      List<LocalSearchHistory> searchHistory});
 }
 
 /// @nodoc
@@ -788,6 +1624,8 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
     Object? newPipeSuggestionResult = null,
     Object? fetchMoreNewPipeSearchResultStatus = null,
     Object? isMoreNewPipeFetchCompleted = null,
+    Object? fetchSearchHistoryStatus = null,
+    Object? searchHistory = null,
   }) {
     return _then(_value.copyWith(
       isSuggestionDisplay: null == isSuggestionDisplay
@@ -872,6 +1710,14 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
           ? _value.isMoreNewPipeFetchCompleted
           : isMoreNewPipeFetchCompleted // ignore: cast_nullable_to_non_nullable
               as bool,
+      fetchSearchHistoryStatus: null == fetchSearchHistoryStatus
+          ? _value.fetchSearchHistoryStatus
+          : fetchSearchHistoryStatus // ignore: cast_nullable_to_non_nullable
+              as ApiStatus,
+      searchHistory: null == searchHistory
+          ? _value.searchHistory
+          : searchHistory // ignore: cast_nullable_to_non_nullable
+              as List<LocalSearchHistory>,
     ) as $Val);
   }
 }
@@ -904,7 +1750,9 @@ abstract class _$$SearchStateImplCopyWith<$Res>
       ApiStatus fetchNewPipeSuggestionStatus,
       List<dynamic> newPipeSuggestionResult,
       ApiStatus fetchMoreNewPipeSearchResultStatus,
-      bool isMoreNewPipeFetchCompleted});
+      bool isMoreNewPipeFetchCompleted,
+      ApiStatus fetchSearchHistoryStatus,
+      List<LocalSearchHistory> searchHistory});
 }
 
 /// @nodoc
@@ -940,6 +1788,8 @@ class __$$SearchStateImplCopyWithImpl<$Res>
     Object? newPipeSuggestionResult = null,
     Object? fetchMoreNewPipeSearchResultStatus = null,
     Object? isMoreNewPipeFetchCompleted = null,
+    Object? fetchSearchHistoryStatus = null,
+    Object? searchHistory = null,
   }) {
     return _then(_$SearchStateImpl(
       isSuggestionDisplay: null == isSuggestionDisplay
@@ -1024,6 +1874,14 @@ class __$$SearchStateImplCopyWithImpl<$Res>
           ? _value.isMoreNewPipeFetchCompleted
           : isMoreNewPipeFetchCompleted // ignore: cast_nullable_to_non_nullable
               as bool,
+      fetchSearchHistoryStatus: null == fetchSearchHistoryStatus
+          ? _value.fetchSearchHistoryStatus
+          : fetchSearchHistoryStatus // ignore: cast_nullable_to_non_nullable
+              as ApiStatus,
+      searchHistory: null == searchHistory
+          ? _value._searchHistory
+          : searchHistory // ignore: cast_nullable_to_non_nullable
+              as List<LocalSearchHistory>,
     ));
   }
 }
@@ -1051,11 +1909,14 @@ class _$SearchStateImpl implements _SearchState {
       required this.fetchNewPipeSuggestionStatus,
       required final List<dynamic> newPipeSuggestionResult,
       required this.fetchMoreNewPipeSearchResultStatus,
-      required this.isMoreNewPipeFetchCompleted})
+      required this.isMoreNewPipeFetchCompleted,
+      required this.fetchSearchHistoryStatus,
+      required final List<LocalSearchHistory> searchHistory})
       : _suggestions = suggestions,
         _invidiousSearchResult = invidiousSearchResult,
         _invidiousSuggestionResult = invidiousSuggestionResult,
-        _newPipeSuggestionResult = newPipeSuggestionResult;
+        _newPipeSuggestionResult = newPipeSuggestionResult,
+        _searchHistory = searchHistory;
 
 //
   @override
@@ -1128,10 +1989,20 @@ class _$SearchStateImpl implements _SearchState {
   final ApiStatus fetchMoreNewPipeSearchResultStatus;
   @override
   final bool isMoreNewPipeFetchCompleted;
+// SEARCH HISTORY
+  @override
+  final ApiStatus fetchSearchHistoryStatus;
+  final List<LocalSearchHistory> _searchHistory;
+  @override
+  List<LocalSearchHistory> get searchHistory {
+    if (_searchHistory is EqualUnmodifiableListView) return _searchHistory;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_searchHistory);
+  }
 
   @override
   String toString() {
-    return 'SearchState(isSuggestionDisplay: $isSuggestionDisplay, fetchSearchResultStatus: $fetchSearchResultStatus, result: $result, fetchSuggestionStatus: $fetchSuggestionStatus, suggestions: $suggestions, fetchMoreSearchResultStatus: $fetchMoreSearchResultStatus, isMoreFetchCompleted: $isMoreFetchCompleted, fetchInvidiousSearchResultStatus: $fetchInvidiousSearchResultStatus, invidiousSearchResult: $invidiousSearchResult, fetchInvidiousSuggestionStatus: $fetchInvidiousSuggestionStatus, invidiousSuggestionResult: $invidiousSuggestionResult, fetchMoreInvidiousSearchResultStatus: $fetchMoreInvidiousSearchResultStatus, isMoreInvidiousFetchCompleted: $isMoreInvidiousFetchCompleted, page: $page, fetchNewPipeSearchResultStatus: $fetchNewPipeSearchResultStatus, newPipeSearchResult: $newPipeSearchResult, fetchNewPipeSuggestionStatus: $fetchNewPipeSuggestionStatus, newPipeSuggestionResult: $newPipeSuggestionResult, fetchMoreNewPipeSearchResultStatus: $fetchMoreNewPipeSearchResultStatus, isMoreNewPipeFetchCompleted: $isMoreNewPipeFetchCompleted)';
+    return 'SearchState(isSuggestionDisplay: $isSuggestionDisplay, fetchSearchResultStatus: $fetchSearchResultStatus, result: $result, fetchSuggestionStatus: $fetchSuggestionStatus, suggestions: $suggestions, fetchMoreSearchResultStatus: $fetchMoreSearchResultStatus, isMoreFetchCompleted: $isMoreFetchCompleted, fetchInvidiousSearchResultStatus: $fetchInvidiousSearchResultStatus, invidiousSearchResult: $invidiousSearchResult, fetchInvidiousSuggestionStatus: $fetchInvidiousSuggestionStatus, invidiousSuggestionResult: $invidiousSuggestionResult, fetchMoreInvidiousSearchResultStatus: $fetchMoreInvidiousSearchResultStatus, isMoreInvidiousFetchCompleted: $isMoreInvidiousFetchCompleted, page: $page, fetchNewPipeSearchResultStatus: $fetchNewPipeSearchResultStatus, newPipeSearchResult: $newPipeSearchResult, fetchNewPipeSuggestionStatus: $fetchNewPipeSuggestionStatus, newPipeSuggestionResult: $newPipeSuggestionResult, fetchMoreNewPipeSearchResultStatus: $fetchMoreNewPipeSearchResultStatus, isMoreNewPipeFetchCompleted: $isMoreNewPipeFetchCompleted, fetchSearchHistoryStatus: $fetchSearchHistoryStatus, searchHistory: $searchHistory)';
   }
 
   @override
@@ -1181,7 +2052,9 @@ class _$SearchStateImpl implements _SearchState {
             const DeepCollectionEquality()
                 .equals(other._newPipeSuggestionResult, _newPipeSuggestionResult) &&
             (identical(other.fetchMoreNewPipeSearchResultStatus, fetchMoreNewPipeSearchResultStatus) || other.fetchMoreNewPipeSearchResultStatus == fetchMoreNewPipeSearchResultStatus) &&
-            (identical(other.isMoreNewPipeFetchCompleted, isMoreNewPipeFetchCompleted) || other.isMoreNewPipeFetchCompleted == isMoreNewPipeFetchCompleted));
+            (identical(other.isMoreNewPipeFetchCompleted, isMoreNewPipeFetchCompleted) || other.isMoreNewPipeFetchCompleted == isMoreNewPipeFetchCompleted) &&
+            (identical(other.fetchSearchHistoryStatus, fetchSearchHistoryStatus) || other.fetchSearchHistoryStatus == fetchSearchHistoryStatus) &&
+            const DeepCollectionEquality().equals(other._searchHistory, _searchHistory));
   }
 
   @override
@@ -1206,7 +2079,9 @@ class _$SearchStateImpl implements _SearchState {
         fetchNewPipeSuggestionStatus,
         const DeepCollectionEquality().hash(_newPipeSuggestionResult),
         fetchMoreNewPipeSearchResultStatus,
-        isMoreNewPipeFetchCompleted
+        isMoreNewPipeFetchCompleted,
+        fetchSearchHistoryStatus,
+        const DeepCollectionEquality().hash(_searchHistory)
       ]);
 
   /// Create a copy of SearchState
@@ -1220,26 +2095,29 @@ class _$SearchStateImpl implements _SearchState {
 
 abstract class _SearchState implements SearchState {
   const factory _SearchState(
-      {required final bool isSuggestionDisplay,
-      required final ApiStatus fetchSearchResultStatus,
-      required final SearchResp? result,
-      required final ApiStatus fetchSuggestionStatus,
-      required final List<dynamic> suggestions,
-      required final ApiStatus fetchMoreSearchResultStatus,
-      required final bool isMoreFetchCompleted,
-      required final ApiStatus fetchInvidiousSearchResultStatus,
-      required final List<InvidiousSearchResp> invidiousSearchResult,
-      required final ApiStatus fetchInvidiousSuggestionStatus,
-      required final List<dynamic> invidiousSuggestionResult,
-      required final ApiStatus fetchMoreInvidiousSearchResultStatus,
-      required final bool isMoreInvidiousFetchCompleted,
-      final int? page,
-      required final ApiStatus fetchNewPipeSearchResultStatus,
-      required final NewPipeSearchResp? newPipeSearchResult,
-      required final ApiStatus fetchNewPipeSuggestionStatus,
-      required final List<dynamic> newPipeSuggestionResult,
-      required final ApiStatus fetchMoreNewPipeSearchResultStatus,
-      required final bool isMoreNewPipeFetchCompleted}) = _$SearchStateImpl;
+          {required final bool isSuggestionDisplay,
+          required final ApiStatus fetchSearchResultStatus,
+          required final SearchResp? result,
+          required final ApiStatus fetchSuggestionStatus,
+          required final List<dynamic> suggestions,
+          required final ApiStatus fetchMoreSearchResultStatus,
+          required final bool isMoreFetchCompleted,
+          required final ApiStatus fetchInvidiousSearchResultStatus,
+          required final List<InvidiousSearchResp> invidiousSearchResult,
+          required final ApiStatus fetchInvidiousSuggestionStatus,
+          required final List<dynamic> invidiousSuggestionResult,
+          required final ApiStatus fetchMoreInvidiousSearchResultStatus,
+          required final bool isMoreInvidiousFetchCompleted,
+          final int? page,
+          required final ApiStatus fetchNewPipeSearchResultStatus,
+          required final NewPipeSearchResp? newPipeSearchResult,
+          required final ApiStatus fetchNewPipeSuggestionStatus,
+          required final List<dynamic> newPipeSuggestionResult,
+          required final ApiStatus fetchMoreNewPipeSearchResultStatus,
+          required final bool isMoreNewPipeFetchCompleted,
+          required final ApiStatus fetchSearchHistoryStatus,
+          required final List<LocalSearchHistory> searchHistory}) =
+      _$SearchStateImpl;
 
 //
   @override
@@ -1281,7 +2159,11 @@ abstract class _SearchState implements SearchState {
   @override
   ApiStatus get fetchMoreNewPipeSearchResultStatus;
   @override
-  bool get isMoreNewPipeFetchCompleted;
+  bool get isMoreNewPipeFetchCompleted; // SEARCH HISTORY
+  @override
+  ApiStatus get fetchSearchHistoryStatus;
+  @override
+  List<LocalSearchHistory> get searchHistory;
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.

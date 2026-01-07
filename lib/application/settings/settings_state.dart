@@ -19,7 +19,6 @@ class SettingsState with _$SettingsState {
     required List<Instance> invidiousInstances,
     required ApiStatus invidiousInstanceStatus,
     required String ytService,
-    required String playerType,
     required bool initialized,
     required ApiStatus settingsStatus,
     required bool isPipDisabled,
@@ -51,6 +50,9 @@ class SettingsState with _$SettingsState {
     required double subtitleSize,
     // Last exported file path (for sharing)
     required String? lastExportedFilePath,
+    // Search history privacy
+    required bool isSearchHistoryEnabled,
+    required bool isSearchHistoryVisible,
   }) = _Initial;
 
   factory SettingsState.initialize() => SettingsState(
@@ -70,8 +72,7 @@ class SettingsState with _$SettingsState {
         instance: BaseUrl.kBaseUrl,
         invidiousInstances: [],
         invidiousInstanceStatus: ApiStatus.initial,
-        ytService: YouTubeServices.iframe.name,
-        playerType: PlayerType.betterPlayer.name,
+        ytService: YouTubeServices.newpipe.name,
         initialized: false,
         settingsStatus: ApiStatus.initial,
         isPipDisabled: false,
@@ -92,5 +93,7 @@ class SettingsState with _$SettingsState {
         profiles: ['default'],
         subtitleSize: 18.0,
         lastExportedFilePath: null,
+        isSearchHistoryEnabled: true,
+        isSearchHistoryVisible: true,
       );
 }

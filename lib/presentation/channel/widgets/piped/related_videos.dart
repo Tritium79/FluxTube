@@ -26,11 +26,40 @@ class ChannelRelatedVideoSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final videos = channelInfo.relatedStreams ?? [];
+
+    // Show empty state if no videos
+    if (videos.isEmpty) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(32),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.video_library_outlined,
+                size: 48,
+                color: Theme.of(context).colorScheme.outline,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                locals.noVideosFound,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  color: Theme.of(context).colorScheme.outline,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
     return NotificationListener<ScrollNotification>(
       onNotification: (scrollInfo) {
         if (scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent &&
             !(state.moreChannelDetailsFetchStatus == ApiStatus.loading) &&
-            !state.isMoreFetchCompleted) {
+            !state.isMoreFetchCompleted &&
+            state.pipedChannelResp?.nextpage != null) {
           BlocProvider.of<ChannelBloc>(context).add(
               ChannelEvent.getMoreChannelVideos(
                   channelId: channelId,
@@ -43,13 +72,15 @@ class ChannelRelatedVideoSection extends StatelessWidget {
         padding: EdgeInsets.zero,
         scrollDirection: Axis.vertical,
         itemBuilder: (context, index) {
-          if (index < state.pipedChannelResp!.relatedStreams!.length) {
-            final RelatedStream videoInfo =
-                channelInfo.relatedStreams![index];
+          if (index < videos.length) {
+            final RelatedStream videoInfo = videos[index];
             final String videoId = videoInfo.url!.split('=').last;
             final String channelId = videoInfo.uploaderUrl!.split("/").last;
 
-            return GestureDetector(
+            return HomeVideoInfoCardWidget(
+              channelId: channelId,
+              subscribeRowVisible: false,
+              cardInfo: videoInfo,
               onTap: () {
                 BlocProvider.of<WatchBloc>(context).add(
                     WatchEvent.setSelectedVideoBasicDetails(
@@ -66,24 +97,19 @@ class ChannelRelatedVideoSection extends StatelessWidget {
                   'channelId': channelId,
                 });
               },
-              child: HomeVideoInfoCardWidget(
-                channelId: channelId,
-                subscribeRowVisible: false,
-                cardInfo: videoInfo,
-              ),
             );
           } else {
+            // Only show loading indicator if there's more to load
             if (state.moreChannelDetailsFetchStatus == ApiStatus.loading) {
               return cIndicator(context);
-            } else if (state.isMoreFetchCompleted) {
-              return const SizedBox();
             } else {
-              return cIndicator(context);
+              return const SizedBox();
             }
           }
         },
         separatorBuilder: (context, index) => kWidthBox10,
-        itemCount: (channelInfo.relatedStreams?.length ?? 0) + 1,
+        // Only add extra item for loading indicator if there's potentially more content
+        itemCount: videos.length + (state.isMoreFetchCompleted || state.pipedChannelResp?.nextpage == null ? 0 : 1),
       ),
     );
   }

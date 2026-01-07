@@ -42,10 +42,16 @@ NewPipeChannelTab _$NewPipeChannelTabFromJson(Map<String, dynamic> json) =>
     NewPipeChannelTab(
       name: json['name'] as String?,
       url: json['url'] as String?,
+      id: json['id'] as String?,
+      contentFilters: (json['contentFilters'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$NewPipeChannelTabToJson(NewPipeChannelTab instance) =>
     <String, dynamic>{
       'name': instance.name,
       'url': instance.url,
+      'id': instance.id,
+      'contentFilters': instance.contentFilters,
     };

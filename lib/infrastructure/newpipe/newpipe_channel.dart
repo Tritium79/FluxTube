@@ -13,6 +13,10 @@ import 'package:fluxtube/domain/watch/models/newpipe/newpipe_watch_resp.dart';
 class NewPipeChannel {
   static const _channel = MethodChannel('com.fazilvk.fluxtube/newpipe');
 
+  // Cache for stream URLs with TTL (5 minutes)
+  static final Map<String, _CachedStreamInfo> _streamCache = {};
+  static const _cacheTtl = Duration(minutes: 5);
+
   /// Check if NewPipe Extractor is available on this platform.
   /// Returns true on Android, false on iOS/other platforms.
   static Future<bool> get isAvailable async {
@@ -43,10 +47,82 @@ class NewPipeChannel {
         );
       }
       final json = jsonDecode(result) as Map<String, dynamic>;
-      return NewPipeWatchResp.fromJson(json);
+      final resp = NewPipeWatchResp.fromJson(json);
+      // Cache the result
+      _streamCache[videoId] = _CachedStreamInfo(resp, DateTime.now());
+      return resp;
     } on PlatformException catch (e) {
       throw Exception('Failed to get stream info: ${e.message}');
     }
+  }
+
+  /// Get video stream info fast (essential data only - no related videos).
+  /// Use this for faster initial playback. Fetches related videos separately.
+  /// Falls back to regular getStreamInfo if fast method is not available.
+  static Future<NewPipeWatchResp> getStreamInfoFast(String videoId) async {
+    // Check cache first
+    final cached = _streamCache[videoId];
+    if (cached != null && !cached.isExpired(_cacheTtl)) {
+      return cached.data;
+    }
+
+    try {
+      final result = await _channel.invokeMethod<String>(
+        'getStreamInfoFast',
+        {'id': videoId},
+      );
+      if (result == null) {
+        throw PlatformException(
+          code: 'NULL_RESULT',
+          message: 'No data returned from NewPipe Extractor',
+        );
+      }
+      final json = jsonDecode(result) as Map<String, dynamic>;
+      final resp = NewPipeWatchResp.fromJson(json);
+      // Cache the result
+      _streamCache[videoId] = _CachedStreamInfo(resp, DateTime.now());
+      return resp;
+    } on MissingPluginException {
+      // Fall back to regular getStreamInfo if fast method is not available
+      // This can happen if native code hasn't been rebuilt
+      return getStreamInfo(videoId);
+    } on PlatformException catch (e) {
+      throw Exception('Failed to get stream info: ${e.message}');
+    }
+  }
+
+  /// Get cached stream info if available and not expired
+  static NewPipeWatchResp? getCachedStreamInfo(String videoId) {
+    final cached = _streamCache[videoId];
+    if (cached != null && !cached.isExpired(_cacheTtl)) {
+      return cached.data;
+    }
+    return null;
+  }
+
+  /// Pre-fetch stream info for a video (e.g., from thumbnails)
+  static Future<void> prefetchStreamInfo(String videoId) async {
+    // Check if already cached
+    final cached = _streamCache[videoId];
+    if (cached != null && !cached.isExpired(_cacheTtl)) {
+      return;
+    }
+
+    try {
+      await getStreamInfoFast(videoId);
+    } catch (_) {
+      // Silently fail for prefetch - it's just an optimization
+    }
+  }
+
+  /// Clear expired cache entries
+  static void clearExpiredCache() {
+    _streamCache.removeWhere((_, cached) => cached.isExpired(_cacheTtl));
+  }
+
+  /// Clear all cache
+  static void clearCache() {
+    _streamCache.clear();
   }
 
   /// Get trending videos for a specific region
@@ -206,5 +282,75 @@ class NewPipeChannel {
     } on PlatformException catch (e) {
       throw Exception('Failed to get comment replies: ${e.message}');
     }
+  }
+
+  /// Get channel tab content (shorts, playlists, etc.) by tab URL
+  static Future<NewPipeChannelResp> getChannelTab(
+    String tabUrl, {
+    String? tabId,
+    List<String>? contentFilters,
+  }) async {
+    try {
+      final result = await _channel.invokeMethod<String>(
+        'getChannelTab',
+        {
+          'url': tabUrl,
+          if (tabId != null) 'id': tabId,
+          if (contentFilters != null) 'contentFilters': contentFilters,
+        },
+      );
+      if (result == null) {
+        throw PlatformException(
+          code: 'NULL_RESULT',
+          message: 'No data returned from NewPipe Extractor',
+        );
+      }
+      final json = jsonDecode(result) as Map<String, dynamic>;
+      return NewPipeChannelResp.fromJson(json);
+    } on PlatformException catch (e) {
+      throw Exception('Failed to get channel tab: ${e.message}');
+    }
+  }
+
+  /// Get more channel tab content (pagination)
+  static Future<NewPipeChannelResp> getChannelTabWithPagination(
+    String tabUrl, {
+    required String nextPage,
+    String? tabId,
+    List<String>? contentFilters,
+  }) async {
+    try {
+      final result = await _channel.invokeMethod<String>(
+        'getChannelTab',
+        {
+          'url': tabUrl,
+          if (tabId != null) 'id': tabId,
+          if (contentFilters != null) 'contentFilters': contentFilters,
+          'nextPage': nextPage,
+        },
+      );
+      if (result == null) {
+        throw PlatformException(
+          code: 'NULL_RESULT',
+          message: 'No data returned from NewPipe Extractor',
+        );
+      }
+      final json = jsonDecode(result) as Map<String, dynamic>;
+      return NewPipeChannelResp.fromJson(json);
+    } on PlatformException catch (e) {
+      throw Exception('Failed to get more channel tab content: ${e.message}');
+    }
+  }
+}
+
+/// Cache entry for stream info with timestamp
+class _CachedStreamInfo {
+  final NewPipeWatchResp data;
+  final DateTime timestamp;
+
+  _CachedStreamInfo(this.data, this.timestamp);
+
+  bool isExpired(Duration ttl) {
+    return DateTime.now().difference(timestamp) > ttl;
   }
 }

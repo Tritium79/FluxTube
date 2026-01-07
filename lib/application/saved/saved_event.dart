@@ -17,4 +17,16 @@ class SavedEvent with _$SavedEvent {
     required String id,
     @Default('default') String profileName,
   }) = CheckVideoInfo;
+  const factory SavedEvent.trackVideoWatch({
+    required String videoId,
+  }) = TrackVideoWatch;
+  const factory SavedEvent.trackSearch({
+    required String query,
+  }) = TrackSearch;
+  /// Update only playback position and history status without affecting isSaved state
+  /// This prevents race condition where history updates overwrite manual save state
+  const factory SavedEvent.updatePlaybackPosition({
+    required LocalStoreVideoInfo videoInfo,
+    @Default('default') String profileName,
+  }) = UpdatePlaybackPosition;
 }

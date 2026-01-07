@@ -23,6 +23,7 @@ class NewPipeSearchSuggestionSection extends StatelessWidget {
           return InkWell(
             onTap: () {
               _textEditingController.text = suggestion;
+              FocusScope.of(context).unfocus();
               onSearch(suggestion);
             },
             child: Padding(

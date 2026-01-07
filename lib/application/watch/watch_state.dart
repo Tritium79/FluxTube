@@ -62,6 +62,10 @@ class WatchState with _$WatchState {
     required ApiStatus fetchMoreNewPipeCommentRepliesStatus,
     required bool isMoreNewPipeReplyCommentsFetchCompleted,
 
+    // SPONSORBLOCK
+    required List<SponsorSegment> sponsorSegments,
+    required ApiStatus fetchSponsorSegmentsStatus,
+
   }) = _Initial;
 
   factory WatchState.initialize() => WatchState(
@@ -123,6 +127,10 @@ class WatchState with _$WatchState {
         fetchNewPipeCommentRepliesStatus: ApiStatus.initial,
         fetchMoreNewPipeCommentRepliesStatus: ApiStatus.initial,
         isMoreNewPipeReplyCommentsFetchCompleted: false,
+
+        // SPONSORBLOCK
+        sponsorSegments: [],
+        fetchSponsorSegmentsStatus: ApiStatus.initial,
 
       );
 }

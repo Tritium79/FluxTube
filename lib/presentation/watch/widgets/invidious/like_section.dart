@@ -8,7 +8,7 @@ import 'package:fluxtube/domain/saved/models/local_store.dart';
 import 'package:fluxtube/domain/watch/models/invidious/video/invidious_watch_resp.dart';
 import 'package:fluxtube/generated/l10n.dart';
 import 'package:fluxtube/presentation/settings/utils/launch_url.dart';
-import 'package:fluxtube/presentation/watch/widgets/like_widgets.dart';
+import 'package:fluxtube/presentation/watch/widgets/redesigned/action_buttons_row.dart';
 import 'package:share_plus/share_plus.dart';
 
 class InvidiousLikeSection extends StatelessWidget {
@@ -31,57 +31,69 @@ class InvidiousLikeSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final S locals = S.of(context);
     return BlocBuilder<SavedBloc, SavedState>(
+      buildWhen: (previous, current) {
+        // Only rebuild if the isSaved state for THIS video actually changed
+        final prevIsSaved = previous.videoInfo?.id == id &&
+            (previous.videoInfo?.isSaved ?? false);
+        final currIsSaved = current.videoInfo?.id == id &&
+            (current.videoInfo?.isSaved ?? false);
+        return prevIsSaved != currIsSaved;
+      },
       builder: (context, savedState) {
         bool isSaved = (savedState.videoInfo?.id == id &&
                 savedState.videoInfo?.isSaved == true)
             ? true
             : false;
         return BlocBuilder<SettingsBloc, SettingsState>(
+          buildWhen: (previous, current) =>
+              previous.isDislikeVisible != current.isDislikeVisible ||
+              previous.isPipDisabled != current.isPipDisabled,
           builder: (context, settingsState) {
-            return LikeRowWidget(
-                like: watchInfo.likeCount ?? 0,
-                dislikes: watchInfo.dislikeCount ?? 0,
-                isDislikeVisible: settingsState.isDislikeVisible,
-                isCommentTapped: state.isTapComments,
-                isPipDesabled: settingsState.isPipDisabled,
-                onTapComment: () {
-                  if (state.isDescriptionTapped) {
-                    BlocProvider.of<WatchBloc>(context)
-                        .add(WatchEvent.tapDescription());
-                  }
-                  log(state.isTapComments.toString());
+            return ActionButtonsRow(
+              likes: watchInfo.likeCount ?? 0,
+              dislikes: watchInfo.dislikeCount ?? 0,
+              showDislike: settingsState.isDislikeVisible,
+              isCommentActive: state.isTapComments,
+              showPip: !settingsState.isPipDisabled,
+              isSaved: isSaved,
+              onTapComment: () {
+                if (state.isDescriptionTapped) {
                   BlocProvider.of<WatchBloc>(context)
-                      .add(WatchEvent.getInvidiousComments(id: id));
-                },
-                onTapShare: () {
-                  alertboxMethod(context, locals);
-                },
-                isSaveTapped: isSaved,
-                onTapSave: () {
-                  BlocProvider.of<SavedBloc>(context).add(
-                    SavedEvent.addVideoInfo(
-                      videoInfo: LocalStoreVideoInfo(
-                          id: id,
-                          title: watchInfo.title,
-                          views: watchInfo.viewCount,
-                          thumbnail: watchInfo.videoThumbnails!.first.url,
-                          uploadedDate: watchInfo.published.toString(),
-                          uploaderAvatar: watchInfo.authorThumbnails!.first.url,
-                          uploaderName: watchInfo.author,
-                          uploaderId: watchInfo.authorId,
-                          uploaderSubscriberCount: watchInfo.subCountText,
-                          duration: watchInfo.lengthSeconds,
-                          playbackPosition:
-                              savedState.videoInfo?.playbackPosition,
-                          uploaderVerified: watchInfo.authorVerified,
-                          isSaved: !isSaved,
-                          isLive: watchInfo.liveNow,
-                          isHistory: savedState.videoInfo?.isHistory),
-                    ),
-                  );
-                },
-                onTapYoutube: () async => await urlLaunchWithSettings(context, '$kYTBaseUrl$id'),
-                pipClicked: pipClicked);
+                      .add(WatchEvent.tapDescription());
+                }
+                log(state.isTapComments.toString());
+                BlocProvider.of<WatchBloc>(context)
+                    .add(WatchEvent.getInvidiousComments(id: id));
+              },
+              onTapShare: () {
+                alertboxMethod(context, locals);
+              },
+              onTapSave: () {
+                BlocProvider.of<SavedBloc>(context).add(
+                  SavedEvent.addVideoInfo(
+                    videoInfo: LocalStoreVideoInfo(
+                        id: id,
+                        title: watchInfo.title,
+                        views: watchInfo.viewCount,
+                        thumbnail: watchInfo.videoThumbnails!.first.url,
+                        uploadedDate: watchInfo.published.toString(),
+                        uploaderAvatar: watchInfo.authorThumbnails!.first.url,
+                        uploaderName: watchInfo.author,
+                        uploaderId: watchInfo.authorId,
+                        uploaderSubscriberCount: watchInfo.subCountText,
+                        duration: watchInfo.lengthSeconds,
+                        playbackPosition:
+                            savedState.videoInfo?.playbackPosition,
+                        uploaderVerified: watchInfo.authorVerified,
+                        isSaved: !isSaved,
+                        isLive: watchInfo.liveNow,
+                        isHistory: savedState.videoInfo?.isHistory),
+                  ),
+                );
+              },
+              onTapYoutube: () async => await urlLaunchWithSettings(context, '$kYTBaseUrl$id'),
+              onTapPip: pipClicked,
+            );
           },
         );
       },

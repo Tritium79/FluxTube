@@ -6,6 +6,8 @@ import 'package:fluxtube/application/application.dart';
 import 'package:fluxtube/core/colors.dart';
 import 'package:fluxtube/core/constants.dart';
 import 'package:fluxtube/core/enums.dart';
+import 'package:fluxtube/core/player/global_player_controller.dart';
+import 'package:fluxtube/domain/watch/models/basic_info.dart';
 import 'package:fluxtube/generated/l10n.dart';
 import 'package:fluxtube/presentation/watch/widgets/newpipe/media_kit_video_player.dart';
 import 'package:fluxtube/widgets/widgets.dart';
@@ -30,21 +32,125 @@ class NewPipeScreenWatch extends StatefulWidget {
   State<NewPipeScreenWatch> createState() => _NewPipeScreenWatchState();
 }
 
-class _NewPipeScreenWatchState extends State<NewPipeScreenWatch> {
+class _NewPipeScreenWatchState extends State<NewPipeScreenWatch>
+    with WidgetsBindingObserver {
+
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    // Defer initialization to avoid calling notifyListeners during build
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        _initializeVideo();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // Disable PIP when watch screen becomes visible (resumed)
+    if (state == AppLifecycleState.resumed) {
+      // Check if this route is currently visible
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          final isCurrent = ModalRoute.of(context)?.isCurrent ?? false;
+          if (isCurrent) {
+            BlocProvider.of<WatchBloc>(context)
+                .add(WatchEvent.togglePip(value: false));
+          }
+        }
+      });
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant NewPipeScreenWatch oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // If the video ID changed (e.g., user clicked a related video), reinitialize
+    if (oldWidget.id != widget.id) {
+      debugPrint(
+          '[NewPipeScreenWatch] Video ID changed from ${oldWidget.id} to ${widget.id}');
+      _initializeVideo();
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Disable PIP when returning to watch screen from another route
+    // This handles the back navigation case
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        final isCurrent = ModalRoute.of(context)?.isCurrent ?? false;
+        if (isCurrent) {
+          final watchBloc = BlocProvider.of<WatchBloc>(context);
+          // Only disable PIP if it's currently enabled
+          if (watchBloc.state.isPipEnabled) {
+            watchBloc.add(WatchEvent.togglePip(value: false));
+          }
+        }
+      }
+    });
+  }
+
+  void _initializeVideo() async {
     final watchBloc = BlocProvider.of<WatchBloc>(context);
     final savedBloc = BlocProvider.of<SavedBloc>(context);
     final subscribeBloc = BlocProvider.of<SubscribeBloc>(context);
-    final currentProfile = BlocProvider.of<SettingsBloc>(context).state.currentProfile;
+    final settingsBloc = BlocProvider.of<SettingsBloc>(context);
+    final settingsState = settingsBloc.state;
+    final currentProfile = settingsState.currentProfile;
+
+    // CRITICAL: Immediately stop any video that's not this one
+    // This is the FIRST thing we do, before any other checks
+    final currentPlayingId = GlobalPlayerController().currentVideoId;
+    if (currentPlayingId != null && currentPlayingId != widget.id) {
+      debugPrint(
+          '[NewPipeScreenWatch] CRITICAL: Stopping wrong video immediately: $currentPlayingId (expected: ${widget.id})');
+      await GlobalPlayerController().stopAndClear();
+      // Wait to ensure stop completes
+      await Future.delayed(const Duration(milliseconds: 150));
+    }
+
+    // STRICT: Validate before starting any video
+    // This ensures no other video is playing before we proceed
+    await GlobalPlayerController().validateBeforePlay(widget.id);
+
+    // Check if returning from PiP with same video already loaded
+    // Important: Only skip loading if both conditions are true:
+    // 1. Player is playing this exact video ID
+    // 2. Watch state already has data for this exact video ID
+    final isReturningFromPip =
+        GlobalPlayerController().currentVideoId == widget.id &&
+            GlobalPlayerController().isPlayingVideo(widget.id) &&
+            watchBloc.state.newPipeWatchResp.id == widget.id;
 
     watchBloc.add(WatchEvent.togglePip(value: false));
-    watchBloc.add(WatchEvent.getNewPipeWatchInfo(id: widget.id));
 
+    // Only fetch data if not returning from PiP with data already loaded
+    if (!isReturningFromPip) {
+      // Use fast loading with parallel SponsorBlock fetch
+      watchBloc.add(WatchEvent.getNewPipeWatchInfoFast(
+        id: widget.id,
+        sponsorBlockCategories: settingsState.isSponsorBlockEnabled
+            ? settingsState.sponsorBlockCategories
+            : [],
+      ));
+    }
+
+    // Saved state and subscription check can run in parallel
     savedBloc.add(SavedEvent.getAllVideoInfoList(profileName: currentProfile));
-    savedBloc.add(SavedEvent.checkVideoInfo(id: widget.id, profileName: currentProfile));
-    subscribeBloc.add(SubscribeEvent.checkSubscribeInfo(id: widget.channelId, profileName: currentProfile));
+    savedBloc.add(
+        SavedEvent.checkVideoInfo(id: widget.id, profileName: currentProfile));
+    subscribeBloc.add(SubscribeEvent.checkSubscribeInfo(
+        id: widget.channelId, profileName: currentProfile));
   }
 
   @override
@@ -52,17 +158,40 @@ class _NewPipeScreenWatchState extends State<NewPipeScreenWatch> {
     final locals = S.of(context);
     final double height = MediaQuery.of(context).size.height;
 
-    return BlocBuilder<SettingsBloc, SettingsState>(
-      buildWhen: (previous, current) =>
-          previous.defaultQuality != current.defaultQuality ||
-          previous.isHlsPlayer != current.isHlsPlayer ||
-          previous.isPipDisabled != current.isPipDisabled ||
-          previous.isHideRelated != current.isHideRelated ||
-          previous.videoFitMode != current.videoFitMode ||
-          previous.skipInterval != current.skipInterval ||
-          previous.subtitleSize != current.subtitleSize,
-      builder: (context, settingsState) {
-        return BlocBuilder<WatchBloc, WatchState>(
+    return BlocListener<WatchBloc, WatchState>(
+      listenWhen: (previous, current) =>
+          previous.fetchNewPipeWatchInfoStatus != current.fetchNewPipeWatchInfoStatus &&
+          current.fetchNewPipeWatchInfoStatus == ApiStatus.loaded,
+      listener: (context, state) {
+        // Set selectedVideoBasicDetails when video info is loaded
+        // This ensures PIP works when navigating from external links
+        final watchInfo = state.newPipeWatchResp;
+        if (watchInfo.id != null && watchInfo.id!.isNotEmpty) {
+          BlocProvider.of<WatchBloc>(context).add(
+            WatchEvent.setSelectedVideoBasicDetails(
+              details: VideoBasicInfo(
+                id: watchInfo.id!,
+                title: watchInfo.title,
+                thumbnailUrl: watchInfo.thumbnailUrl,
+                channelName: watchInfo.uploaderName,
+                channelId: watchInfo.uploaderUrl?.split('/').last,
+                uploaderVerified: watchInfo.uploaderVerified,
+              ),
+            ),
+          );
+        }
+      },
+      child: BlocBuilder<SettingsBloc, SettingsState>(
+        buildWhen: (previous, current) =>
+            previous.defaultQuality != current.defaultQuality ||
+            previous.isHlsPlayer != current.isHlsPlayer ||
+            previous.isPipDisabled != current.isPipDisabled ||
+            previous.isHideRelated != current.isHideRelated ||
+            previous.videoFitMode != current.videoFitMode ||
+            previous.skipInterval != current.skipInterval ||
+            previous.subtitleSize != current.subtitleSize,
+        builder: (context, settingsState) {
+          return BlocBuilder<WatchBloc, WatchState>(
           buildWhen: (previous, current) =>
               previous.fetchNewPipeWatchInfoStatus !=
                   current.fetchNewPipeWatchInfoStatus ||
@@ -75,7 +204,8 @@ class _NewPipeScreenWatchState extends State<NewPipeScreenWatch> {
               previous.fetchMoreNewPipeCommentsStatus !=
                   current.fetchMoreNewPipeCommentsStatus ||
               previous.isMoreNewPipeCommentsFetchCompleted !=
-                  current.isMoreNewPipeCommentsFetchCompleted,
+                  current.isMoreNewPipeCommentsFetchCompleted ||
+              previous.sponsorSegments != current.sponsorSegments,
           builder: (context, state) {
             return BlocBuilder<SavedBloc, SavedState>(
               buildWhen: (previous, current) =>
@@ -108,6 +238,8 @@ class _NewPipeScreenWatchState extends State<NewPipeScreenWatch> {
                     direction: DismissiblePageDismissDirection.down,
                     onDismissed: () {
                       if (!settingsState.isPipDisabled) {
+                        // Use global player controller for PiP - saves playback state
+                        GlobalPlayerController().enterPipMode();
                         BlocProvider.of<WatchBloc>(context)
                             .add(WatchEvent.togglePip(value: true));
                       }
@@ -119,6 +251,8 @@ class _NewPipeScreenWatchState extends State<NewPipeScreenWatch> {
                       canPop: true,
                       onPopInvokedWithResult: (didPop, _) {
                         if (!settingsState.isPipDisabled) {
+                          // Use global player controller for PiP - saves playback state
+                          GlobalPlayerController().enterPipMode();
                           BlocProvider.of<WatchBloc>(context)
                               .add(WatchEvent.togglePip(value: true));
                         }
@@ -132,7 +266,10 @@ class _NewPipeScreenWatchState extends State<NewPipeScreenWatch> {
                                 (state.fetchNewPipeWatchInfoStatus ==
                                             ApiStatus.initial ||
                                         state.fetchNewPipeWatchInfoStatus ==
-                                            ApiStatus.loading)
+                                            ApiStatus.loading ||
+                                        // Also check if watchInfo matches the requested video
+                                        // This prevents using stale data when switching videos
+                                        state.newPipeWatchResp.id != widget.id)
                                     ? Container(
                                         height: 200,
                                         color: kBlackColor,
@@ -143,13 +280,27 @@ class _NewPipeScreenWatchState extends State<NewPipeScreenWatch> {
                                     : NewPipeMediaKitPlayer(
                                         videoId: widget.id,
                                         watchInfo: state.newPipeWatchResp,
-                                        playbackPosition: savedState
-                                                .videoInfo?.playbackPosition ??
-                                            0,
-                                        defaultQuality: settingsState.defaultQuality,
-                                        videoFitMode: settingsState.videoFitMode,
-                                        skipInterval: settingsState.skipInterval,
-                                        subtitleSize: settingsState.subtitleSize,
+                                        // Only use playback position if it's for the current video
+                                        // This prevents using the previous video's position when switching videos
+                                        playbackPosition:
+                                            savedState.videoInfo?.id ==
+                                                    widget.id
+                                                ? (savedState.videoInfo
+                                                        ?.playbackPosition ??
+                                                    0)
+                                                : 0,
+                                        defaultQuality:
+                                            settingsState.defaultQuality,
+                                        videoFitMode:
+                                            settingsState.videoFitMode,
+                                        skipInterval:
+                                            settingsState.skipInterval,
+                                        subtitleSize:
+                                            settingsState.subtitleSize,
+                                        sponsorSegments:
+                                            settingsState.isSponsorBlockEnabled
+                                                ? state.sponsorSegments
+                                                : const [],
                                       ),
                                 Padding(
                                   padding: const EdgeInsets.only(
@@ -209,6 +360,9 @@ class _NewPipeScreenWatchState extends State<NewPipeScreenWatch> {
                                               state: state,
                                               watchInfo: watchInfo,
                                               pipClicked: () {
+                                                // Use global player controller for PiP - saves playback state
+                                                GlobalPlayerController()
+                                                    .enterPipMode();
                                                 BlocProvider.of<WatchBloc>(
                                                         context)
                                                     .add(WatchEvent.togglePip(
@@ -242,23 +396,15 @@ class _NewPipeScreenWatchState extends State<NewPipeScreenWatch> {
                                                                   .initial ||
                                                           state.fetchNewPipeWatchInfoStatus ==
                                                               ApiStatus.loading)
-                                                      ? SizedBox(
-                                                          height: 350,
-                                                          child: ListView
-                                                              .separated(
-                                                                  scrollDirection:
-                                                                      Axis
-                                                                          .horizontal,
-                                                                  itemBuilder:
-                                                                      (context,
-                                                                          index) {
-                                                                    return const ShimmerRelatedVideoWidget();
-                                                                  },
-                                                                  separatorBuilder:
-                                                                      (context,
-                                                                              index) =>
-                                                                          kWidthBox10,
-                                                                  itemCount: 5),
+                                                      ? ListView.builder(
+                                                          shrinkWrap: true,
+                                                          physics:
+                                                              const NeverScrollableScrollPhysics(),
+                                                          itemCount: 3,
+                                                          itemBuilder:
+                                                              (context, index) {
+                                                            return const ShimmerRelatedVideoWidget();
+                                                          },
                                                         )
                                                       : NewPipeRelatedVideoSection(
                                                           locals: locals,
@@ -284,7 +430,8 @@ class _NewPipeScreenWatchState extends State<NewPipeScreenWatch> {
             );
           },
         );
-      },
+        },
+      ),
     );
   }
 }

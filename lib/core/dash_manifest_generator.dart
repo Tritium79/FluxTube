@@ -5,7 +5,7 @@ import 'package:fluxtube/domain/watch/models/newpipe/newpipe_stream.dart';
 
 /// Generates DASH MPD manifests for combining video-only and audio streams.
 /// This enables playback of high-quality video with separate audio tracks
-/// using BetterPlayer's DASH support.
+/// using MediaKit's DASH support.
 class DashManifestGenerator {
   /// Generate a DASH manifest that combines a video-only stream with an audio stream.
   ///

@@ -7,6 +7,7 @@ import 'package:fluxtube/core/colors.dart';
 import 'package:fluxtube/domain/channel/models/piped/related_stream.dart';
 import 'package:fluxtube/domain/channel/models/piped/tab.dart' as piped;
 import 'package:fluxtube/generated/l10n.dart';
+import 'package:fluxtube/presentation/shorts/screen_shorts.dart';
 import 'package:fluxtube/widgets/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:fluxtube/domain/watch/models/basic_info.dart';
@@ -156,7 +157,7 @@ class _ChannelTabContentState extends State<ChannelTabContent>
         }
 
         return GestureDetector(
-          onTap: () => _onVideoTap(context, item),
+          onTap: () => _onShortTap(context, content, index),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: CachedNetworkImage(
@@ -172,6 +173,51 @@ class _ChannelTabContentState extends State<ChannelTabContent>
           ),
         );
       },
+    );
+  }
+
+  void _onShortTap(BuildContext context, List<RelatedStream> content, int index) {
+    // Convert RelatedStream list to ShortItem list
+    final shortItems = content.map((item) {
+      // Extract video ID from URL
+      String videoId = '';
+      if (item.url != null) {
+        if (item.url!.contains('watch?v=')) {
+          videoId = item.url!.split('watch?v=').last.split('&').first;
+        } else if (item.url!.contains('/shorts/')) {
+          videoId = item.url!.split('/shorts/').last.split('?').first;
+        } else if (item.url!.contains('=')) {
+          videoId = item.url!.split('=').last;
+        }
+      }
+
+      // Get thumbnail
+      String? thumbnailUrl = item.thumbnail ?? item.thumbnailUrl;
+      if ((thumbnailUrl == null || thumbnailUrl.isEmpty) && videoId.isNotEmpty) {
+        thumbnailUrl = 'https://i.ytimg.com/vi/$videoId/hqdefault.jpg';
+      }
+
+      return ShortItem(
+        id: videoId,
+        title: item.title ?? item.name,
+        thumbnailUrl: thumbnailUrl,
+        uploaderName: item.uploaderName,
+        uploaderAvatar: item.uploaderAvatar,
+        uploaderId: item.uploaderUrl?.split('/').last,
+        viewCount: item.views,
+        duration: item.duration,
+        uploaderVerified: item.uploaderVerified,
+      );
+    }).toList();
+
+    // Navigate to shorts player
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => ScreenShorts(
+          shorts: shortItems,
+          initialIndex: index,
+        ),
+      ),
     );
   }
 

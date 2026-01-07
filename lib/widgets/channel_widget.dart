@@ -69,7 +69,8 @@ class ChannelWidget extends StatelessWidget {
                       channelInfo: Subscribe(
                           id: _channelId,
                           channelName: _channelName ?? locals.noUploaderName,
-                          isVerified: _isVerified ?? false)));
+                          isVerified: _isVerified ?? false,
+                          avatarUrl: _thumbnail)));
             }
           },
         ),

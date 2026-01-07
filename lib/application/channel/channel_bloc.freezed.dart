@@ -805,7 +805,9 @@ mixin _$ChannelState {
       throw _privateConstructorUsedError; // INVIDIOUS
   InvidiousChannelResp? get invidiousChannelResp =>
       throw _privateConstructorUsedError;
-  int get invidiousPage => throw _privateConstructorUsedError;
+  int get invidiousPage => throw _privateConstructorUsedError; // NEWPIPE
+  NewPipeChannelResp? get newPipeChannelResp =>
+      throw _privateConstructorUsedError;
 
   /// Create a copy of ChannelState
   /// with the given fields replaced by the non-null parameter values.
@@ -833,7 +835,8 @@ abstract class $ChannelStateCopyWith<$Res> {
       ApiStatus playlistsTabFetchStatus,
       TabContent? playlistsTabContent,
       InvidiousChannelResp? invidiousChannelResp,
-      int invidiousPage});
+      int invidiousPage,
+      NewPipeChannelResp? newPipeChannelResp});
 }
 
 /// @nodoc
@@ -864,6 +867,7 @@ class _$ChannelStateCopyWithImpl<$Res, $Val extends ChannelState>
     Object? playlistsTabContent = freezed,
     Object? invidiousChannelResp = freezed,
     Object? invidiousPage = null,
+    Object? newPipeChannelResp = freezed,
   }) {
     return _then(_value.copyWith(
       isMoreFetchCompleted: null == isMoreFetchCompleted
@@ -918,6 +922,10 @@ class _$ChannelStateCopyWithImpl<$Res, $Val extends ChannelState>
           ? _value.invidiousPage
           : invidiousPage // ignore: cast_nullable_to_non_nullable
               as int,
+      newPipeChannelResp: freezed == newPipeChannelResp
+          ? _value.newPipeChannelResp
+          : newPipeChannelResp // ignore: cast_nullable_to_non_nullable
+              as NewPipeChannelResp?,
     ) as $Val);
   }
 }
@@ -943,7 +951,8 @@ abstract class _$$ChannelStateImplCopyWith<$Res>
       ApiStatus playlistsTabFetchStatus,
       TabContent? playlistsTabContent,
       InvidiousChannelResp? invidiousChannelResp,
-      int invidiousPage});
+      int invidiousPage,
+      NewPipeChannelResp? newPipeChannelResp});
 }
 
 /// @nodoc
@@ -972,6 +981,7 @@ class __$$ChannelStateImplCopyWithImpl<$Res>
     Object? playlistsTabContent = freezed,
     Object? invidiousChannelResp = freezed,
     Object? invidiousPage = null,
+    Object? newPipeChannelResp = freezed,
   }) {
     return _then(_$ChannelStateImpl(
       isMoreFetchCompleted: null == isMoreFetchCompleted
@@ -1026,6 +1036,10 @@ class __$$ChannelStateImplCopyWithImpl<$Res>
           ? _value.invidiousPage
           : invidiousPage // ignore: cast_nullable_to_non_nullable
               as int,
+      newPipeChannelResp: freezed == newPipeChannelResp
+          ? _value.newPipeChannelResp
+          : newPipeChannelResp // ignore: cast_nullable_to_non_nullable
+              as NewPipeChannelResp?,
     ));
   }
 }
@@ -1046,7 +1060,8 @@ class _$ChannelStateImpl implements _ChannelState {
       required this.playlistsTabFetchStatus,
       required this.playlistsTabContent,
       required this.invidiousChannelResp,
-      required this.invidiousPage});
+      required this.invidiousPage,
+      required this.newPipeChannelResp});
 
 //
   @override
@@ -1079,10 +1094,13 @@ class _$ChannelStateImpl implements _ChannelState {
   final InvidiousChannelResp? invidiousChannelResp;
   @override
   final int invidiousPage;
+// NEWPIPE
+  @override
+  final NewPipeChannelResp? newPipeChannelResp;
 
   @override
   String toString() {
-    return 'ChannelState(isMoreFetchCompleted: $isMoreFetchCompleted, channelDetailsFetchStatus: $channelDetailsFetchStatus, pipedChannelResp: $pipedChannelResp, moreChannelDetailsFetchStatus: $moreChannelDetailsFetchStatus, selectedTabIndex: $selectedTabIndex, tabContentFetchStatus: $tabContentFetchStatus, selectedTabContent: $selectedTabContent, shortsTabFetchStatus: $shortsTabFetchStatus, shortsTabContent: $shortsTabContent, playlistsTabFetchStatus: $playlistsTabFetchStatus, playlistsTabContent: $playlistsTabContent, invidiousChannelResp: $invidiousChannelResp, invidiousPage: $invidiousPage)';
+    return 'ChannelState(isMoreFetchCompleted: $isMoreFetchCompleted, channelDetailsFetchStatus: $channelDetailsFetchStatus, pipedChannelResp: $pipedChannelResp, moreChannelDetailsFetchStatus: $moreChannelDetailsFetchStatus, selectedTabIndex: $selectedTabIndex, tabContentFetchStatus: $tabContentFetchStatus, selectedTabContent: $selectedTabContent, shortsTabFetchStatus: $shortsTabFetchStatus, shortsTabContent: $shortsTabContent, playlistsTabFetchStatus: $playlistsTabFetchStatus, playlistsTabContent: $playlistsTabContent, invidiousChannelResp: $invidiousChannelResp, invidiousPage: $invidiousPage, newPipeChannelResp: $newPipeChannelResp)';
   }
 
   @override
@@ -1119,7 +1137,9 @@ class _$ChannelStateImpl implements _ChannelState {
             (identical(other.invidiousChannelResp, invidiousChannelResp) ||
                 other.invidiousChannelResp == invidiousChannelResp) &&
             (identical(other.invidiousPage, invidiousPage) ||
-                other.invidiousPage == invidiousPage));
+                other.invidiousPage == invidiousPage) &&
+            (identical(other.newPipeChannelResp, newPipeChannelResp) ||
+                other.newPipeChannelResp == newPipeChannelResp));
   }
 
   @override
@@ -1137,7 +1157,8 @@ class _$ChannelStateImpl implements _ChannelState {
       playlistsTabFetchStatus,
       playlistsTabContent,
       invidiousChannelResp,
-      invidiousPage);
+      invidiousPage,
+      newPipeChannelResp);
 
   /// Create a copy of ChannelState
   /// with the given fields replaced by the non-null parameter values.
@@ -1150,19 +1171,21 @@ class _$ChannelStateImpl implements _ChannelState {
 
 abstract class _ChannelState implements ChannelState {
   factory _ChannelState(
-      {required final bool isMoreFetchCompleted,
-      required final ApiStatus channelDetailsFetchStatus,
-      required final ChannelResp? pipedChannelResp,
-      required final ApiStatus moreChannelDetailsFetchStatus,
-      required final int selectedTabIndex,
-      required final ApiStatus tabContentFetchStatus,
-      required final TabContent? selectedTabContent,
-      required final ApiStatus shortsTabFetchStatus,
-      required final TabContent? shortsTabContent,
-      required final ApiStatus playlistsTabFetchStatus,
-      required final TabContent? playlistsTabContent,
-      required final InvidiousChannelResp? invidiousChannelResp,
-      required final int invidiousPage}) = _$ChannelStateImpl;
+          {required final bool isMoreFetchCompleted,
+          required final ApiStatus channelDetailsFetchStatus,
+          required final ChannelResp? pipedChannelResp,
+          required final ApiStatus moreChannelDetailsFetchStatus,
+          required final int selectedTabIndex,
+          required final ApiStatus tabContentFetchStatus,
+          required final TabContent? selectedTabContent,
+          required final ApiStatus shortsTabFetchStatus,
+          required final TabContent? shortsTabContent,
+          required final ApiStatus playlistsTabFetchStatus,
+          required final TabContent? playlistsTabContent,
+          required final InvidiousChannelResp? invidiousChannelResp,
+          required final int invidiousPage,
+          required final NewPipeChannelResp? newPipeChannelResp}) =
+      _$ChannelStateImpl;
 
 //
   @override
@@ -1191,7 +1214,9 @@ abstract class _ChannelState implements ChannelState {
   @override
   InvidiousChannelResp? get invidiousChannelResp;
   @override
-  int get invidiousPage;
+  int get invidiousPage; // NEWPIPE
+  @override
+  NewPipeChannelResp? get newPipeChannelResp;
 
   /// Create a copy of ChannelState
   /// with the given fields replaced by the non-null parameter values.

@@ -51,9 +51,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       final bool isPipDisabled = settingsMap[pipDisabled] == "true";
 
       final String ytService =
-          settingsMap[youtubeService] ?? YouTubeServices.iframe.name;
-      final String playerTypeValue =
-          settingsMap[playerTypeKey] ?? PlayerType.betterPlayer.name;
+          settingsMap[youtubeService] ?? YouTubeServices.newpipe.name;
 
       final String instanceApi;
       log('YT Service: $ytService');
@@ -71,7 +69,6 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
 
       newState = newState.copyWith(instance: instanceApi);
       newState = newState.copyWith(ytService: ytService);
-      newState = newState.copyWith(playerType: playerTypeValue);
 
       if (defaultLanguage != null) {
         newState = newState.copyWith(defaultLanguage: defaultLanguage);
@@ -84,6 +81,12 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       if (defaultRegion != null) {
         newState = newState.copyWith(defaultRegion: defaultRegion);
       }
+      // Search history settings
+      final bool searchHistoryEnabled =
+          settingsMap[searchHistoryEnabledKey] != "false";
+      final bool searchHistoryVisible =
+          settingsMap[searchHistoryVisibilityKey] != "false";
+
       newState = newState.copyWith(
         version: packageInfo.version,
         themeMode: defaultThemeMode,
@@ -92,6 +95,8 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
         isHlsPlayer: defaultHlsPlayer,
         initialized: true,
         isPipDisabled: isPipDisabled,
+        isSearchHistoryEnabled: searchHistoryEnabled,
+        isSearchHistoryVisible: searchHistoryVisible,
       );
 
       if (ytService == YouTubeServices.invidious.name) {
@@ -427,15 +432,6 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       emit(_state);
     });
 
-    on<SetPlayerType>((event, emit) async {
-      final _result =
-          await settingsService.setPlayerType(playerType: event.playerType);
-      final _state = _result.fold(
-          (MainFailure f) => state.copyWith(playerType: state.playerType),
-          (PlayerType r) => state.copyWith(playerType: r.name));
-      emit(_state);
-    });
-
     on<TogglePipPlayer>((event, emit) async {
       final _result = await settingsService.togglePipPlayer(
           isPipDisabled: !state.isPipDisabled);
@@ -586,6 +582,30 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
           (MainFailure f) => state.copyWith(subtitleSize: state.subtitleSize),
           (double size) => state.copyWith(subtitleSize: size));
       emit(_state);
+    });
+
+    // Search history privacy
+    on<ToggleSearchHistoryEnabled>((event, emit) async {
+      final _result = await settingsService.toggleSearchHistoryEnabled(
+          isEnabled: !state.isSearchHistoryEnabled);
+      final _state = _result.fold(
+          (MainFailure f) => state.copyWith(isSearchHistoryEnabled: state.isSearchHistoryEnabled),
+          (bool isEnabled) => state.copyWith(isSearchHistoryEnabled: isEnabled));
+      emit(_state);
+    });
+
+    on<ToggleSearchHistoryVisibility>((event, emit) async {
+      final _result = await settingsService.toggleSearchHistoryVisibility(
+          isVisible: !state.isSearchHistoryVisible);
+      final _state = _result.fold(
+          (MainFailure f) => state.copyWith(isSearchHistoryVisible: state.isSearchHistoryVisible),
+          (bool isVisible) => state.copyWith(isSearchHistoryVisible: isVisible));
+      emit(_state);
+    });
+
+    // Set last exported file path (for ZIP exports from NewPipeDataService)
+    on<SetLastExportedFilePath>((event, emit) {
+      emit(state.copyWith(lastExportedFilePath: event.filePath));
     });
   }
 }

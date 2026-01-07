@@ -19,6 +19,9 @@ class SubscribeBloc extends Bloc<SubscribeEvent, SubscribeState> {
       : super(SubscribeState.initialize()) {
     // get all subscribed channel list from local storage
     on<GetAllSubscribeList>((event, emit) async {
+      // Store the current oldList before resetting subscribedChannels
+      final previousOldList = state.oldList;
+
       emit(state.copyWith(
           subscribeStatus: ApiStatus.loading, subscribedChannels: []));
 
@@ -28,9 +31,15 @@ class SubscribeBloc extends Bloc<SubscribeEvent, SubscribeState> {
           (MainFailure f) => state.copyWith(subscribeStatus: ApiStatus.error),
           (List<Subscribe> resp) {
         if (state.subscribedChannels != resp) {
+          // When loading subscriptions for a profile, also update oldList
+          // to prevent auto-refresh in home screen when switching profiles.
+          // The home screen's auto-refresh logic compares oldList.length with
+          // subscribedChannels.length. By keeping them in sync during profile
+          // switch, we prevent unnecessary feed refreshes.
           return state.copyWith(
               subscribeStatus: ApiStatus.loaded,
-              subscribedChannels: resp,);
+              subscribedChannels: resp,
+              oldList: resp,);
         } else {
           return state;
         }
@@ -57,7 +66,8 @@ class SubscribeBloc extends Bloc<SubscribeEvent, SubscribeState> {
 
       emit(_state);
       add(CheckSubscribeInfo(id: event.channelInfo.id, profileName: event.profileName));
-      add(GetAllSubscribeList(profileName: event.profileName));
+      // Note: Don't call GetAllSubscribeList here - it's already updated by addSubscriberInfo
+      // and calling it would sync oldList, preventing the home screen from detecting the change
     });
 
     // delete channel data from local storage
@@ -72,8 +82,9 @@ class SubscribeBloc extends Bloc<SubscribeEvent, SubscribeState> {
               subscribeStatus: ApiStatus.loaded, subscribedChannels: resp));
 
       emit(_state);
-      add(GetAllSubscribeList(profileName: event.profileName));
       add(CheckSubscribeInfo(id: event.id, profileName: event.profileName));
+      // Note: Don't call GetAllSubscribeList here - it's already updated by deleteSubscriberInfo
+      // and calling it would sync oldList, preventing the home screen from detecting the change
     });
 
     // check the playing video's channel present in the subscribed list

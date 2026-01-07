@@ -51,60 +51,113 @@ class HomeImpl extends HomeServices {
 
   @override
   Future<Either<MainFailure, List<NewPipeTrendingResp>>> getNewPipeHomeFeedData(
-      {required List<Subscribe> channels}) async {
+      {required List<Subscribe> channels, int videosPerChannel = 10}) async {
     try {
       if (channels.isEmpty) {
         return const Right([]);
       }
 
+      final stopwatch = Stopwatch()..start();
+      log('[HomeImpl] Starting parallel fetch for ${channels.length} channels');
+
+      // OPTIMIZATION: Fetch ALL channels in parallel with batching
+      // Limit concurrent requests to avoid overwhelming the system
+      const int batchSize = 10;
       final List<NewPipeTrendingResp> allVideos = [];
 
-      // Fetch videos from each subscribed channel (limit to 10 channels to avoid long delays)
-      final channelsToFetch = channels.take(10).toList();
+      // Process channels in batches for better performance
+      for (int i = 0; i < channels.length; i += batchSize) {
+        final batch = channels.skip(i).take(batchSize).toList();
 
-      for (final channel in channelsToFetch) {
-        try {
-          final channelInfo = await NewPipeChannel.getChannel(channel.id);
-          if (channelInfo.videos != null) {
-            // Add channel info to each video and take top 5 from each channel
-            final channelVideos = channelInfo.videos!.take(5).map((video) {
-              return NewPipeTrendingResp(
-                url: video.url,
-                name: video.name,
-                thumbnailUrl: video.thumbnailUrl,
-                type: video.type,
-                uploaderName: channelInfo.name ?? channel.channelName,
-                uploaderUrl: 'https://www.youtube.com/channel/${channel.id}',
-                uploaderAvatarUrl: channelInfo.avatarUrl,
-                uploaderVerified: channelInfo.isVerified,
-                duration: video.duration,
-                viewCount: video.viewCount,
-                uploadDate: video.uploadDate,
-                isLive: video.isLive,
-                isShort: video.isShort,
-              );
-            }).toList();
-            allVideos.addAll(channelVideos);
-          }
-        } catch (e) {
-          log('Error fetching channel ${channel.id}: $e');
-          // Continue with other channels even if one fails
-          continue;
+        // Fetch batch in parallel
+        final batchResults = await Future.wait(
+          batch.map((channel) => _fetchChannelVideos(channel, videosPerChannel)),
+          eagerError: false, // Continue even if some fail
+        );
+
+        // Collect results from this batch
+        for (final videos in batchResults) {
+          allVideos.addAll(videos);
         }
       }
 
-      // Sort by upload date (most recent first) - we need to parse dates
-      // For now just return as is since uploadDate might not be parseable
-      // The videos should already be in recent order from each channel
+      stopwatch.stop();
+      log('[HomeImpl] Fetched ${allVideos.length} videos from ${channels.length} channels in ${stopwatch.elapsedMilliseconds}ms');
 
-      // Shuffle to mix videos from different channels, then limit to 30
-      allVideos.shuffle();
-      final limitedVideos = allVideos.take(30).toList();
+      // Sort by recency using smart date parsing
+      _sortByRecency(allVideos);
 
-      return Right(limitedVideos);
+      return Right(allVideos);
     } catch (e) {
       log('Err on getNewPipeHomeFeedData: $e');
       return const Left(MainFailure.clientFailure());
     }
+  }
+
+  /// Fetch videos from a single channel - used for parallel execution
+  Future<List<NewPipeTrendingResp>> _fetchChannelVideos(
+      Subscribe channel, int videosPerChannel) async {
+    try {
+      final channelInfo = await NewPipeChannel.getChannel(channel.id);
+      if (channelInfo.videos == null || channelInfo.videos!.isEmpty) {
+        return [];
+      }
+
+      return channelInfo.videos!.take(videosPerChannel).map((video) {
+        return NewPipeTrendingResp(
+          url: video.url,
+          name: video.name,
+          thumbnailUrl: video.thumbnailUrl,
+          type: video.type,
+          uploaderName: channelInfo.name ?? channel.channelName,
+          uploaderUrl: 'https://www.youtube.com/channel/${channel.id}',
+          uploaderAvatarUrl: channelInfo.avatarUrl,
+          uploaderVerified: channelInfo.isVerified,
+          duration: video.duration,
+          viewCount: video.viewCount,
+          uploadDate: video.uploadDate,
+          isLive: video.isLive,
+          isShort: video.isShort,
+        );
+      }).toList();
+    } catch (e) {
+      log('Error fetching channel ${channel.id}: $e');
+      return []; // Return empty on error, don't block other channels
+    }
+  }
+
+  /// Sort videos by recency using smart date string parsing
+  void _sortByRecency(List<NewPipeTrendingResp> videos) {
+    videos.sort((a, b) {
+      final aScore = _parseUploadDateToScore(a.uploadDate);
+      final bScore = _parseUploadDateToScore(b.uploadDate);
+      return bScore.compareTo(aScore); // Higher score = more recent
+    });
+  }
+
+  /// Parse upload date string to a numeric score for sorting
+  /// Higher score = more recent
+  int _parseUploadDateToScore(String? dateStr) {
+    if (dateStr == null || dateStr.isEmpty) return 0;
+
+    final lower = dateStr.toLowerCase();
+
+    // Live streams get highest priority
+    if (lower.contains('streaming') || lower.contains('live')) return 100000;
+
+    // Parse relative time strings
+    final numMatch = RegExp(r'(\d+)').firstMatch(lower);
+    final num = numMatch != null ? int.tryParse(numMatch.group(1)!) ?? 1 : 1;
+
+    if (lower.contains('second')) return 99999 - num;
+    if (lower.contains('minute')) return 90000 - num;
+    if (lower.contains('hour')) return 80000 - num;
+    if (lower.contains('day')) return 70000 - num;
+    if (lower.contains('week')) return 60000 - (num * 7);
+    if (lower.contains('month')) return 50000 - (num * 30);
+    if (lower.contains('year')) return 40000 - (num * 365);
+
+    // Unknown format
+    return 0;
   }
 }

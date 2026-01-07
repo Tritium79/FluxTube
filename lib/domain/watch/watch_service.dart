@@ -95,6 +95,12 @@ abstract class WatchService {
     required String id,
   });
 
+  ///[getNewPipeVideoDataFast] used to fetch video data quickly from NewPipe Extractor.
+  ///This returns only essential data for playback, excluding related videos.
+  Future<Either<MainFailure, NewPipeWatchResp>> getNewPipeVideoDataFast({
+    required String id,
+  });
+
   ///[getNewPipeCommentsData] used to fetch comments data from NewPipe Extractor.
   Future<Either<MainFailure, NewPipeCommentsResp>> getNewPipeCommentsData({
     required String id,

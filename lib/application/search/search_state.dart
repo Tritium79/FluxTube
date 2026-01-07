@@ -33,6 +33,11 @@ class SearchState with _$SearchState {
     required List newPipeSuggestionResult,
     required ApiStatus fetchMoreNewPipeSearchResultStatus,
     required bool isMoreNewPipeFetchCompleted,
+
+    // SEARCH HISTORY
+
+    required ApiStatus fetchSearchHistoryStatus,
+    required List<LocalSearchHistory> searchHistory,
   }) = _SearchState;
 
   factory SearchState.initialize() => const SearchState(
@@ -66,5 +71,10 @@ class SearchState with _$SearchState {
         newPipeSuggestionResult: [],
         fetchMoreNewPipeSearchResultStatus: ApiStatus.initial,
         isMoreNewPipeFetchCompleted: false,
+
+        // SEARCH HISTORY
+
+        fetchSearchHistoryStatus: ApiStatus.initial,
+        searchHistory: [],
       );
 }

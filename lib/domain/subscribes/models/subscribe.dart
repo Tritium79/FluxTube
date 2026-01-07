@@ -16,12 +16,14 @@ class Subscribe {
   Id get isarId => fastHash('${id}_$profileName');
   late String channelName;
   late bool? isVerified;
+  String? avatarUrl;
   @Index()
   String profileName;
   Subscribe({
     required this.id,
     required this.channelName,
     this.isVerified,
+    this.avatarUrl,
     this.profileName = 'default',
   });
 }

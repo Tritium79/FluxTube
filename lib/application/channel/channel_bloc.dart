@@ -6,6 +6,7 @@ import 'package:fluxtube/core/enums.dart';
 import 'package:fluxtube/domain/channel/channel_services.dart';
 import 'package:fluxtube/domain/channel/models/invidious/invidious_channel_resp.dart';
 import 'package:fluxtube/domain/channel/models/invidious/latest_video.dart';
+import 'package:fluxtube/domain/channel/models/newpipe/newpipe_channel_resp.dart';
 import 'package:fluxtube/domain/channel/models/piped/channel_resp.dart';
 import 'package:fluxtube/domain/channel/models/piped/tab_content.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -27,12 +28,16 @@ class ChannelBloc extends Bloc<ChannelEvent, ChannelState> {
       emit(state.copyWith(
           channelDetailsFetchStatus: ApiStatus.loading,
           pipedChannelResp: null,
-          invidiousChannelResp: null));
+          invidiousChannelResp: null,
+          newPipeChannelResp: null));
 
       // Call the appropriate service method based on the serviceType
       if (event.serviceType == YouTubeServices.invidious.name) {
         log("--------invidious bloc---------");
         await _fetchInvidiousChannelInfo(event, emit);
+      } else if (event.serviceType == YouTubeServices.newpipe.name) {
+        log("--------newpipe bloc---------");
+        await _fetchNewPipeChannelInfo(event, emit);
       } else {
         log("--------piped bloc---------");
         await _fetchPipedChannelInfo(event, emit);
@@ -92,6 +97,19 @@ class ChannelBloc extends Bloc<ChannelEvent, ChannelState> {
       (response) => state.copyWith(
           channelDetailsFetchStatus: ApiStatus.loaded,
           invidiousChannelResp: response),
+    );
+    emit(_state);
+  }
+
+  Future<void> _fetchNewPipeChannelInfo(
+      GetChannelData event, Emitter<ChannelState> emit) async {
+    final result = await channelServices.getNewPipeChannelData(
+        channelId: event.channelId);
+    final _state = result.fold(
+      (failure) => state.copyWith(channelDetailsFetchStatus: ApiStatus.error),
+      (response) => state.copyWith(
+          channelDetailsFetchStatus: ApiStatus.loaded,
+          newPipeChannelResp: response),
     );
     emit(_state);
   }

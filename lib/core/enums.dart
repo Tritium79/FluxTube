@@ -2,14 +2,7 @@ enum YouTubeServices {
   newpipe, // Primary service - direct extraction via NewPipe Extractor (Android only)
   piped,
   explode,
-  iframe,
   invidious,
-  omniPlayer,
-}
-
-enum PlayerType {
-  betterPlayer,
-  omniPlayer,
 }
 
 enum ApiStatus {

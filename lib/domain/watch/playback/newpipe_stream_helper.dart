@@ -23,27 +23,10 @@ class NewPipeStreamHelper {
   static List<StreamQualityInfo> getAvailableQualities(
       NewPipeWatchResp watchResp) {
     final qualities = <StreamQualityInfo>[];
+    final seenLabels = <String>{};
 
-    // Process muxed streams (videoStreams - have audio, ≤360p)
-    for (var videoStream in watchResp.videoStreams ?? []) {
-      if (videoStream.url == null || videoStream.url!.isEmpty) continue;
-
-      final resolution = _parseResolution(videoStream.resolution);
-      if (resolution == null) continue;
-
-      qualities.add(StreamQualityInfo(
-        label: _getQualityLabel(videoStream),
-        resolution: resolution,
-        fps: videoStream.fps,
-        format: videoStream.format,
-        requiresMerging: false, // Muxed streams already have audio
-        isVideoOnly: false,
-        videoStream: videoStream,
-        audioStream: null,
-      ));
-    }
-
-    // Process video-only streams (videoOnlyStreams - need audio, >360p)
+    // Process video-only streams FIRST (videoOnlyStreams - need audio, >360p)
+    // These are higher quality and should be preferred
     final bestAudio = getBestAudioStream(watchResp.audioStreams ?? []);
 
     for (var videoStream in watchResp.videoOnlyStreams ?? []) {
@@ -52,8 +35,14 @@ class NewPipeStreamHelper {
       final resolution = _parseResolution(videoStream.resolution);
       if (resolution == null) continue;
 
+      final label = _getQualityLabel(videoStream);
+
+      // Skip if we already have this quality label
+      if (seenLabels.contains(label)) continue;
+      seenLabels.add(label);
+
       qualities.add(StreamQualityInfo(
-        label: _getQualityLabel(videoStream),
+        label: label,
         resolution: resolution,
         fps: videoStream.fps,
         format: videoStream.format,
@@ -61,6 +50,31 @@ class NewPipeStreamHelper {
         isVideoOnly: videoStream.isVideoOnly ?? true,
         videoStream: videoStream,
         audioStream: bestAudio,
+      ));
+    }
+
+    // Process muxed streams (videoStreams - have audio, ≤360p)
+    for (var videoStream in watchResp.videoStreams ?? []) {
+      if (videoStream.url == null || videoStream.url!.isEmpty) continue;
+
+      final resolution = _parseResolution(videoStream.resolution);
+      if (resolution == null) continue;
+
+      final label = _getQualityLabel(videoStream);
+
+      // Skip if we already have this quality label (prefer video-only + audio)
+      if (seenLabels.contains(label)) continue;
+      seenLabels.add(label);
+
+      qualities.add(StreamQualityInfo(
+        label: label,
+        resolution: resolution,
+        fps: videoStream.fps,
+        format: videoStream.format,
+        requiresMerging: false, // Muxed streams already have audio
+        isVideoOnly: false,
+        videoStream: videoStream,
+        audioStream: null,
       ));
     }
 

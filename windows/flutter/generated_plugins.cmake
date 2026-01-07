@@ -4,7 +4,6 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   app_links
-  flutter_inappwebview_windows
   isar_community_flutter_libs
   media_kit_libs_windows_video
   media_kit_video

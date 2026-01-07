@@ -27,6 +27,10 @@ class ChannelState with _$ChannelState {
 
     required InvidiousChannelResp? invidiousChannelResp,
     required int invidiousPage,
+
+    // NEWPIPE
+
+    required NewPipeChannelResp? newPipeChannelResp,
   }) = _ChannelState;
 
   factory ChannelState.initialize() => ChannelState(
@@ -52,5 +56,9 @@ class ChannelState with _$ChannelState {
         invidiousChannelResp: null,
         moreChannelDetailsFetchStatus: ApiStatus.initial,
         invidiousPage: 1,
+
+        // NEWPIPE
+
+        newPipeChannelResp: null,
       );
 }

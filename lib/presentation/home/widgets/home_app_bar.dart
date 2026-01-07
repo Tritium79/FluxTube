@@ -24,9 +24,21 @@ class HomeAppBar extends StatelessWidget {
       backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
       title: Padding(
         padding: const EdgeInsets.only(left: 10),
-        child: Text(
-          AppInfo.myApp.name,
-          style: const TextStyle(fontFamily: 'Knewave', color: kRedColor),
+        child: ShaderMask(
+          shaderCallback: (bounds) => const LinearGradient(
+            colors: [Color(0xFFFF4444), Color(0xFFCC0000)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ).createShader(bounds),
+          child: const Text(
+            'FluxTube',
+            style: TextStyle(
+              fontWeight: FontWeight.w800,
+              fontSize: 24,
+              letterSpacing: -0.5,
+              color: Colors.white,
+            ),
+          ),
         ),
       ),
       actions: [

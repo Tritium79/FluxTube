@@ -61,7 +61,14 @@ class ScreenTrending extends StatelessWidget {
                         previous.fetchNewPipeTrendingStatus != current.fetchNewPipeTrendingStatus ||
                         previous.trendingResult != current.trendingResult ||
                         previous.invidiousTrendingResult != current.invidiousTrendingResult ||
-                        previous.newPipeTrendingResult != current.newPipeTrendingResult,
+                        previous.newPipeTrendingResult != current.newPipeTrendingResult ||
+                        // Pagination state changes
+                        previous.trendingDisplayCount != current.trendingDisplayCount ||
+                        previous.isLoadingMoreTrending != current.isLoadingMoreTrending ||
+                        previous.newPipeTrendingDisplayCount != current.newPipeTrendingDisplayCount ||
+                        previous.isLoadingMoreNewPipeTrending != current.isLoadingMoreNewPipeTrending ||
+                        previous.invidiousTrendingDisplayCount != current.invidiousTrendingDisplayCount ||
+                        previous.isLoadingMoreInvidiousTrending != current.isLoadingMoreInvidiousTrending,
                     builder: (context, state) {
                       if (settingsState.ytService ==
                           YouTubeServices.newpipe.name) {

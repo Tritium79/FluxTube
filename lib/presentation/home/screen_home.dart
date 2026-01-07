@@ -6,7 +6,7 @@ import 'package:fluxtube/application/application.dart';
 import 'package:fluxtube/core/constants.dart';
 import 'package:fluxtube/core/enums.dart';
 import 'package:fluxtube/generated/l10n.dart';
-import 'package:fluxtube/presentation/home/widgets/newpipe/feed_section.dart';
+import 'package:fluxtube/presentation/home/widgets/personalized_feed_section.dart';
 import 'package:fluxtube/presentation/trending/widgets/invidious/trending_videos_section.dart';
 import 'package:fluxtube/presentation/trending/widgets/newpipe/trending_videos_section.dart';
 import 'package:fluxtube/presentation/trending/widgets/piped/trending_videos_section.dart';
@@ -42,11 +42,9 @@ class ScreenHome extends StatelessWidget {
                     subscribeState.oldList.length !=
                         subscribeState.subscribedChannels.length) {
                   log("oldList: ${subscribeState.oldList.length} & subscribedChannels: ${subscribeState.subscribedChannels.length}");
-                  // Use the appropriate feed based on service type
-                  if (settingsState.ytService == YouTubeServices.newpipe.name) {
-                    trendingBloc.add(GetForcedNewPipeHomeFeedData(
-                        channels: subscribeState.subscribedChannels));
-                  } else {
+                  // For NewPipe, home stays as personalized feed - no refresh needed
+                  // For other services, refresh the subscription feed on home
+                  if (settingsState.ytService != YouTubeServices.newpipe.name) {
                     trendingBloc.add(GetForcedHomeFeedData(
                         channels: subscribeState.subscribedChannels));
                   }
@@ -64,8 +62,41 @@ class ScreenHome extends StatelessWidget {
                         previous.fetchNewPipeTrendingStatus !=
                             current.fetchNewPipeTrendingStatus ||
                         previous.fetchFeedStatus != current.fetchFeedStatus ||
-                        previous.fetchNewPipeFeedStatus != current.fetchNewPipeFeedStatus ||
-                        previous.newPipeFeedResult != current.newPipeFeedResult;
+                        previous.fetchNewPipeFeedStatus !=
+                            current.fetchNewPipeFeedStatus ||
+                        previous.newPipeFeedResult !=
+                            current.newPipeFeedResult ||
+                        // Personalized feed state changes
+                        previous.fetchPersonalizedFeedStatus !=
+                            current.fetchPersonalizedFeedStatus ||
+                        previous.personalizedFeedResult !=
+                            current.personalizedFeedResult ||
+                        previous.personalizedFeedDisplayCount !=
+                            current.personalizedFeedDisplayCount ||
+                        previous.isLoadingMorePersonalizedFeed !=
+                            current.isLoadingMorePersonalizedFeed ||
+                        previous.hasMorePersonalizedContent !=
+                            current.hasMorePersonalizedContent ||
+                        // Pagination state changes
+                        previous.feedDisplayCount != current.feedDisplayCount ||
+                        previous.isLoadingMoreFeed !=
+                            current.isLoadingMoreFeed ||
+                        previous.newPipeFeedDisplayCount !=
+                            current.newPipeFeedDisplayCount ||
+                        previous.isLoadingMoreNewPipeFeed !=
+                            current.isLoadingMoreNewPipeFeed ||
+                        previous.trendingDisplayCount !=
+                            current.trendingDisplayCount ||
+                        previous.isLoadingMoreTrending !=
+                            current.isLoadingMoreTrending ||
+                        previous.newPipeTrendingDisplayCount !=
+                            current.newPipeTrendingDisplayCount ||
+                        previous.isLoadingMoreNewPipeTrending !=
+                            current.isLoadingMoreNewPipeTrending ||
+                        previous.invidiousTrendingDisplayCount !=
+                            current.invidiousTrendingDisplayCount ||
+                        previous.isLoadingMoreInvidiousTrending !=
+                            current.isLoadingMoreInvidiousTrending;
                   },
                   builder: (context, trendingState) {
                     if (settingsState.ytService ==
@@ -190,35 +221,39 @@ class ScreenHome extends StatelessWidget {
     TrendingBloc trendingBloc,
     SettingsState settingsState,
   ) {
-    final homeFeedMode = settingsState.homeFeedMode;
+    // For NewPipe, always use personalized feed on home screen
+    // (Subscription feed is available via subscriptions tab)
 
-    // Always fetch trending data if not available
-    if (trendingState.newPipeTrendingResult.isEmpty &&
-        !(trendingState.fetchNewPipeTrendingStatus == ApiStatus.error)) {
+    // Fetch personalized feed if not already loaded
+    if (trendingState.personalizedFeedResult.isEmpty &&
+        trendingState.fetchPersonalizedFeedStatus == ApiStatus.initial) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        trendingBloc.add(TrendingEvent.getTrendingData(
-            serviceType: settingsState.ytService,
-            region: settingsState.defaultRegion));
+        trendingBloc.add(TrendingEvent.getPersonalizedFeed(
+          profileName: settingsState.currentProfile,
+          serviceType: settingsState.ytService,
+        ));
       });
     }
 
-    // Fetch NewPipe feed if subscriptions exist and feed is empty
-    if (subscribeState.subscribedChannels.isNotEmpty &&
-        trendingState.newPipeFeedResult.isEmpty &&
-        trendingState.fetchNewPipeFeedStatus == ApiStatus.initial) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        trendingBloc.add(TrendingEvent.getNewPipeHomeFeedData(
-            channels: subscribeState.subscribedChannels));
-      });
-    }
-
-    if (trendingState.fetchNewPipeTrendingStatus == ApiStatus.loading ||
-        trendingState.fetchNewPipeTrendingStatus == ApiStatus.initial) {
+    if (trendingState.fetchPersonalizedFeedStatus == ApiStatus.loading ||
+        trendingState.fetchPersonalizedFeedStatus == ApiStatus.initial) {
       return _buildLoadingList();
     }
 
-    // Trending Only mode - always show trending
-    if (homeFeedMode == HomeFeedMode.trendingOnly.name) {
+    // If personalized feed fails or is empty, fall back to trending
+    if (trendingState.fetchPersonalizedFeedStatus == ApiStatus.error ||
+        (trendingState.personalizedFeedResult.isEmpty &&
+            trendingState.fetchPersonalizedFeedStatus == ApiStatus.loaded)) {
+      log("Personalized feed error/empty - falling back to trending");
+      // Fetch trending as fallback
+      if (trendingState.newPipeTrendingResult.isEmpty &&
+          trendingState.fetchNewPipeTrendingStatus != ApiStatus.loading) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          trendingBloc.add(TrendingEvent.getTrendingData(
+              serviceType: settingsState.ytService,
+              region: settingsState.defaultRegion));
+        });
+      }
       return _buildErrorOrTrendingSection(
         context,
         trendingState,
@@ -227,43 +262,19 @@ class ScreenHome extends StatelessWidget {
       );
     }
 
-    // Feed Only mode - show feed or empty state
-    if (homeFeedMode == HomeFeedMode.feedOnly.name) {
-      if (trendingState.fetchNewPipeFeedStatus == ApiStatus.loading) {
-        return _buildLoadingList();
-      }
-      if (trendingState.newPipeFeedResult.isEmpty) {
-        return _buildEmptySubscriptionState(context, locals);
-      }
-      return _buildNewPipeFeedSection(
-        trendingState,
-        locals,
-        subscribeState,
-        trendingBloc,
-      );
-    }
-
-    // Auto mode (feedOrTrending) - show feed if available, otherwise trending
-    if (trendingState.fetchNewPipeFeedStatus == ApiStatus.loading) {
-      return _buildLoadingList();
-    }
-
-    if (trendingState.newPipeFeedResult.isEmpty ||
-        trendingState.fetchNewPipeFeedStatus == ApiStatus.error) {
-      log("NewPipe Feed Error or empty - showing NewPipe trending");
-      return _buildErrorOrTrendingSection(
-        context,
-        trendingState,
-        locals,
-        settingsState,
-      );
-    }
-
-    return _buildNewPipeFeedSection(
-      trendingState,
-      locals,
-      subscribeState,
-      trendingBloc,
+    // Show personalized feed
+    return RefreshIndicator(
+      onRefresh: () async {
+        trendingBloc.add(TrendingEvent.getForcedPersonalizedFeed(
+          profileName: settingsState.currentProfile,
+          serviceType: settingsState.ytService,
+        ));
+      },
+      child: PersonalizedFeedSection(
+        trendingState: trendingState,
+        locals: locals,
+        settingsState: settingsState,
+      ),
     );
   }
 
@@ -435,26 +446,6 @@ class ScreenHome extends StatelessWidget {
     );
   }
 
-  Widget _buildNewPipeFeedSection(
-    TrendingState trendingState,
-    S locals,
-    SubscribeState subscribeState,
-    TrendingBloc trendingBloc,
-  ) {
-    return RefreshIndicator(
-      onRefresh: () async {
-        trendingBloc.add(TrendingEvent.getForcedNewPipeHomeFeedData(
-          channels: subscribeState.subscribedChannels,
-        ));
-      },
-      child: NewPipeFeedVideoSection(
-        trendingState: trendingState,
-        locals: locals,
-        subscribeState: subscribeState,
-      ),
-    );
-  }
-
   Widget _buildEmptySubscriptionState(BuildContext context, S locals) {
     return Center(
       child: Padding(
@@ -465,7 +456,10 @@ class ScreenHome extends StatelessWidget {
             Icon(
               Icons.subscriptions_outlined,
               size: 64,
-              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5),
+              color: Theme.of(context)
+                  .colorScheme
+                  .onSurface
+                  .withValues(alpha: 0.5),
             ),
             kHeightBox20,
             Text(
@@ -477,7 +471,10 @@ class ScreenHome extends StatelessWidget {
             Text(
               locals.noSubscriptionsHint,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withValues(alpha: 0.6),
                   ),
               textAlign: TextAlign.center,
             ),

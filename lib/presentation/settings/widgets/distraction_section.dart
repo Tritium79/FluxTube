@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluxtube/application/settings/settings_bloc.dart';
 import 'package:fluxtube/core/constants.dart';
-import 'package:fluxtube/core/enums.dart';
 import 'package:fluxtube/generated/l10n.dart';
 
 class DistractionFreeSettingsSection extends StatelessWidget {
@@ -15,8 +14,7 @@ class DistractionFreeSettingsSection extends StatelessWidget {
     return BlocBuilder<SettingsBloc, SettingsState>(
       buildWhen: (previous, current) =>
           previous.isHideComments != current.isHideComments ||
-          previous.isHideRelated != current.isHideRelated ||
-          previous.homeFeedMode != current.homeFeedMode,
+          previous.isHideRelated != current.isHideRelated,
       builder: (context, state) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,49 +53,10 @@ class DistractionFreeSettingsSection extends StatelessWidget {
                 },
               ),
             ),
-            ListTile(
-              title: Text(locals.homeFeedMode,
-                  style: Theme.of(context).textTheme.titleMedium),
-              subtitle: Text(_getHomeFeedModeDescription(state.homeFeedMode, locals)),
-              leading: const Icon(Icons.home_outlined),
-              trailing: DropdownButton<String>(
-                value: state.homeFeedMode,
-                underline: const SizedBox(),
-                items: [
-                  DropdownMenuItem(
-                    value: HomeFeedMode.feedOrTrending.name,
-                    child: Text(locals.homeFeedModeAuto),
-                  ),
-                  DropdownMenuItem(
-                    value: HomeFeedMode.feedOnly.name,
-                    child: Text(locals.homeFeedModeFeedOnly),
-                  ),
-                  DropdownMenuItem(
-                    value: HomeFeedMode.trendingOnly.name,
-                    child: Text(locals.homeFeedModeTrendingOnly),
-                  ),
-                ],
-                onChanged: (mode) {
-                  if (mode != null) {
-                    BlocProvider.of<SettingsBloc>(context)
-                        .add(SettingsEvent.setHomeFeedMode(mode: mode));
-                  }
-                },
-              ),
-            ),
           ],
         );
       },
     );
-  }
-
-  String _getHomeFeedModeDescription(String mode, S locals) {
-    if (mode == HomeFeedMode.feedOnly.name) {
-      return locals.homeFeedModeFeedOnlyHint;
-    } else if (mode == HomeFeedMode.trendingOnly.name) {
-      return locals.homeFeedModeTrendingOnlyHint;
-    }
-    return locals.homeFeedModeAutoHint;
   }
 }
 

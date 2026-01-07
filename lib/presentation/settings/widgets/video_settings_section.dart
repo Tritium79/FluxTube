@@ -49,18 +49,11 @@ List<DropdownMenuItem<YouTubeServices>> _getServices(S locals) {
   services.addAll([
     DropdownMenuItem(value: YouTubeServices.piped, child: Text(locals.servicePiped)),
     DropdownMenuItem(value: YouTubeServices.explode, child: Text(locals.serviceExplode)),
-    DropdownMenuItem(value: YouTubeServices.iframe, child: Text(locals.serviceIFrame)),
     DropdownMenuItem(value: YouTubeServices.invidious, child: Text(locals.serviceInvidious)),
-    DropdownMenuItem(value: YouTubeServices.omniPlayer, child: Text(locals.serviceOmniPlayer)),
   ]);
 
   return services;
 }
-
-List<DropdownMenuItem<PlayerType>> _getPlayerTypes(S locals) => [
-  DropdownMenuItem(value: PlayerType.betterPlayer, child: Text(locals.playerBetterPlayer)),
-  DropdownMenuItem(value: PlayerType.omniPlayer, child: Text(locals.playerOmniPlayer)),
-];
 
 List<DropdownMenuItem<String>> _getVideoFitModes(S locals) => [
   DropdownMenuItem(value: "contain", child: Text(locals.videoFitContain)),
@@ -149,23 +142,6 @@ class VideoSettingsSection extends StatelessWidget {
                         ),
                       );
                     }
-                  }),
-            ),
-            // Player Type dropdown - available for all YouTube services
-            ListTile(
-              title: Text(locals.playerType,
-                  style: Theme.of(context).textTheme.titleMedium),
-              subtitle: Text(locals.playerTypeDescription),
-              leading: const Icon(CupertinoIcons.play_rectangle),
-              trailing: DropdownButton(
-                  value: PlayerType.values.firstWhere(
-                      (e) => e.name == state.playerType,
-                      orElse: () => PlayerType.betterPlayer),
-                  items: _getPlayerTypes(locals),
-                  onChanged: (playerType) {
-                    if (playerType == null) return;
-                    BlocProvider.of<SettingsBloc>(context)
-                        .add(SettingsEvent.setPlayerType(playerType: playerType));
                   }),
             ),
             // Video Fit Mode
@@ -263,6 +239,35 @@ class VideoSettingsSection extends StatelessWidget {
                 },
               ),
             ),
+            const Divider(),
+            // Search History Privacy Settings
+            ListTile(
+              title: Text(locals.searchHistoryEnabled,
+                  style: Theme.of(context).textTheme.titleMedium),
+              subtitle: Text(locals.searchHistoryEnabledDescription),
+              leading: const Icon(CupertinoIcons.doc_text_search),
+              trailing: Switch(
+                value: state.isSearchHistoryEnabled,
+                onChanged: (_) {
+                  BlocProvider.of<SettingsBloc>(context)
+                      .add(SettingsEvent.toggleSearchHistoryEnabled());
+                },
+              ),
+            ),
+            if (state.isSearchHistoryEnabled)
+              ListTile(
+                title: Text(locals.showSearchHistory,
+                    style: Theme.of(context).textTheme.titleMedium),
+                subtitle: Text(locals.showSearchHistoryDescription),
+                leading: const Icon(CupertinoIcons.eye),
+                trailing: Switch(
+                  value: state.isSearchHistoryVisible,
+                  onChanged: (_) {
+                    BlocProvider.of<SettingsBloc>(context)
+                        .add(SettingsEvent.toggleSearchHistoryVisibility());
+                  },
+                ),
+              ),
           ],
         );
       },

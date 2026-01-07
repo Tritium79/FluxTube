@@ -23,6 +23,8 @@ class NewPipeRelatedStream {
   final String? description;
   // Playlist-specific fields
   final int? streamCount;
+  final String? playlistUploaderName;
+  final String? playlistUploaderUrl;
 
   NewPipeRelatedStream({
     this.url,
@@ -42,6 +44,8 @@ class NewPipeRelatedStream {
     this.isVerified,
     this.description,
     this.streamCount,
+    this.playlistUploaderName,
+    this.playlistUploaderUrl,
   });
 
   factory NewPipeRelatedStream.fromJson(Map<String, dynamic> json) =>

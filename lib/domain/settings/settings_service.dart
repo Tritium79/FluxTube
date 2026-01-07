@@ -27,8 +27,6 @@ abstract class SettingsService {
       {required String instanceApi});
   Future<Either<MainFailure, YouTubeServices>> setTYService(
       {required YouTubeServices service});
-  Future<Either<MainFailure, PlayerType>> setPlayerType(
-      {required PlayerType playerType});
   Future<Either<MainFailure, bool>> togglePipPlayer(
       {required bool isPipDisabled});
   Future<Either<MainFailure, String>> findWorkingPipedInstance({
@@ -65,4 +63,7 @@ abstract class SettingsService {
   Future<Either<MainFailure, int>> importSubscriptions({required String filePath, String profileName = 'default'});
   // Subtitle size
   Future<Either<MainFailure, double>> setSubtitleSize({required double size});
+  // Search history privacy
+  Future<Either<MainFailure, bool>> toggleSearchHistoryEnabled({required bool isEnabled});
+  Future<Either<MainFailure, bool>> toggleSearchHistoryVisibility({required bool isVisible});
 }

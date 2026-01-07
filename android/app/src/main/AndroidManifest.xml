@@ -5,6 +5,10 @@
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon"
         android:enableOnBackInvokedCallback="true">
+        <!-- Enable Impeller for smoother animations and 120Hz support -->
+        <meta-data
+            android:name="io.flutter.embedding.android.EnableImpeller"
+            android:value="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

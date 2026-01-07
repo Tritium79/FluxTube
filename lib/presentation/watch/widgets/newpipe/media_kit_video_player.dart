@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fluxtube/application/application.dart';
+import 'package:fluxtube/core/player/global_player_controller.dart';
 import 'package:fluxtube/domain/saved/models/local_store.dart';
+import 'package:fluxtube/domain/sponsorblock/models/sponsor_segment.dart';
 import 'package:fluxtube/domain/watch/models/newpipe/newpipe_stream.dart';
 import 'package:fluxtube/domain/watch/models/newpipe/newpipe_watch_resp.dart';
 import 'package:fluxtube/domain/watch/playback/models/playback_configuration.dart';
@@ -25,6 +29,7 @@ class NewPipeMediaKitPlayer extends StatefulWidget {
     this.skipInterval = 10,
     this.isAudioFocusEnabled = true,
     this.subtitleSize = 18.0,
+    this.sponsorSegments = const [],
   });
 
   final NewPipeWatchResp watchInfo;
@@ -36,18 +41,31 @@ class NewPipeMediaKitPlayer extends StatefulWidget {
   final int skipInterval;
   final bool isAudioFocusEnabled;
   final double subtitleSize;
+  final List<SponsorSegment> sponsorSegments;
 
   @override
   State<NewPipeMediaKitPlayer> createState() => _NewPipeMediaKitPlayerState();
 }
 
 class _NewPipeMediaKitPlayerState extends State<NewPipeMediaKitPlayer> {
-  late Player _player;
-  late VideoController _videoController;
+  // Use global player controller for persistence across navigation
+  final GlobalPlayerController _globalPlayer = GlobalPlayerController();
+
+  // Local references for convenience
+  Player get _player => _globalPlayer.player;
+  VideoController get _videoController => _globalPlayer.videoController;
+
   PlaybackConfiguration? _currentConfig;
   List<StreamQualityInfo>? _availableQualities;
   String? _currentQualityLabel;
   bool _isInitialized = false;
+  bool _isRestoringFromPip = false;
+  bool _isChangingQuality = false;
+  late BoxFit _currentFitMode;
+
+  // SponsorBlock
+  StreamSubscription<Duration>? _sponsorBlockSubscription;
+  final Set<String> _skippedSegments = {};
 
   late final SavedBloc _savedBloc;
   late final WatchBloc _watchBloc;
@@ -60,16 +78,99 @@ class _NewPipeMediaKitPlayerState extends State<NewPipeMediaKitPlayer> {
     _savedBloc = BlocProvider.of<SavedBloc>(context);
     _watchBloc = BlocProvider.of<WatchBloc>(context);
     _resolver = NewPipePlaybackResolver();
+    _currentFitMode = _getBoxFit(widget.videoFitMode);
 
-    _player = Player();
-    _videoController = VideoController(_player);
+    // Defer initialization to next frame to handle async operations properly
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        _initializeAsync();
+      }
+    });
+  }
 
-    _initializePlayback();
+  /// Async initialization - matches pattern used by other player widgets
+  Future<void> _initializeAsync() async {
+    // Check if we're returning from PiP for the same video
+    // Only restore if the player is actually in a stable playing state for this video
+    _isRestoringFromPip = _globalPlayer.isPlayingVideo(widget.videoId);
+
+    if (_isRestoringFromPip) {
+      // Restore from PiP - set initialized immediately since player is already active
+      debugPrint('[NewPipePlayer] Restoring from PiP for video ${widget.videoId}');
+      _restoreFromPipSync();
+    } else {
+      // New video - initialize fresh
+      debugPrint('[NewPipePlayer] Starting fresh initialization for video ${widget.videoId}');
+      _initializePlayback();
+    }
     _setupHistoryListener();
+    _setupSponsorBlockListener();
+  }
+
+  @override
+  void didUpdateWidget(covariant NewPipeMediaKitPlayer oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // If the video ID changed, reinitialize playback
+    if (oldWidget.videoId != widget.videoId) {
+      debugPrint('[NewPipePlayer] CRITICAL: Video ID changed from ${oldWidget.videoId} to ${widget.videoId}');
+      debugPrint('[NewPipePlayer] IMMEDIATELY stopping old video');
+
+      // CRITICAL: Stop both local and global player immediately
+      _player.stop();
+      _globalPlayer.stopAndClear();
+
+      // Cancel old sponsor block subscription
+      _sponsorBlockSubscription?.cancel();
+      _skippedSegments.clear();
+      // Reset state
+      setState(() {
+        _isInitialized = false;
+        _isRestoringFromPip = false;
+      });
+      // Initialize new video
+      _initializePlayback();
+      _setupSponsorBlockListener();
+    }
+  }
+
+  /// Synchronous restore from PiP - no loading state needed since player is already playing
+  void _restoreFromPipSync() {
+    // Get available qualities for UI
+    _availableQualities =
+        NewPipeStreamHelper.getAvailableQualities(widget.watchInfo);
+    _currentQualityLabel = widget.defaultQuality;
+
+    // Resolve config for UI controls
+    _currentConfig = _resolver.resolve(
+      watchResp: widget.watchInfo,
+      preferredQuality: widget.defaultQuality,
+      preferHighQuality: true,
+    );
+
+    // Mark as initialized immediately - player is already playing
+    _isInitialized = true;
+
+    // Exit PiP mode in background (don't await)
+    _globalPlayer.exitPipMode();
+
+    debugPrint('[NewPipePlayer] Restored from PiP successfully (sync)');
   }
 
   Future<void> _initializePlayback() async {
     try {
+      // If global player was playing a different video (e.g., in PiP), stop it first
+      if (_globalPlayer.hasActivePlayer && _globalPlayer.currentVideoId != widget.videoId) {
+        debugPrint('[NewPipePlayer] Stopping previous video ${_globalPlayer.currentVideoId} to play ${widget.videoId}');
+        await _globalPlayer.stopAndClear();
+      }
+
+      // Ensure global player is initialized before use
+      await _globalPlayer.ensureInitialized();
+
+      // STRICT: Enforce that we're about to play the correct video
+      // This is a critical safety check to prevent video mismatches
+      await _globalPlayer.enforceVideoId(widget.videoId);
+
       // Get available qualities
       _availableQualities =
           NewPipeStreamHelper.getAvailableQualities(widget.watchInfo);
@@ -110,12 +211,20 @@ class _NewPipeMediaKitPlayerState extends State<NewPipeMediaKitPlayer> {
       // Setup media source
       await _setupMediaSource(_currentConfig!);
 
-      setState(() {
-        _isInitialized = true;
-      });
+      // Update global player controller state for PiP support
+      _globalPlayer.setCurrentVideoId(widget.videoId);
+
+      // Check if widget is still mounted before calling setState
+      if (mounted) {
+        setState(() {
+          _isInitialized = true;
+        });
+      }
     } catch (e) {
       debugPrint('Error initializing playback: $e');
-      _showError('Failed to initialize video playback');
+      if (mounted) {
+        _showError('Failed to initialize video playback');
+      }
     }
   }
 
@@ -317,8 +426,41 @@ class _NewPipeMediaKitPlayerState extends State<NewPipeMediaKitPlayer> {
     });
   }
 
+  void _setupSponsorBlockListener() {
+    if (widget.sponsorSegments.isEmpty) return;
+
+    _sponsorBlockSubscription = _player.stream.position.listen((position) {
+      final currentSeconds = position.inSeconds.toDouble() +
+          (position.inMilliseconds % 1000) / 1000.0;
+
+      for (final segment in widget.sponsorSegments) {
+        // Check if we're within this segment and haven't skipped it yet
+        if (segment.containsPosition(currentSeconds) &&
+            !_skippedSegments.contains(segment.uuid)) {
+          _skippedSegments.add(segment.uuid);
+
+          // Seek to end of segment
+          final seekPosition = Duration(
+            milliseconds: (segment.endTime * 1000).round(),
+          );
+          _player.seek(seekPosition);
+
+          // Show toast notification
+          _showToast('Skipped ${segment.categoryDisplayName}');
+          debugPrint(
+              '[SponsorBlock] Skipped ${segment.category} segment: ${segment.startTime}s - ${segment.endTime}s');
+          break;
+        }
+      }
+    });
+  }
+
   Future<void> changeQuality(String newQualityLabel) async {
     if (_currentQualityLabel == newQualityLabel) return;
+
+    setState(() {
+      _isChangingQuality = true;
+    });
 
     try {
       final currentPosition = _player.state.position;
@@ -333,6 +475,9 @@ class _NewPipeMediaKitPlayerState extends State<NewPipeMediaKitPlayer> {
 
       if (!newConfig.isValid) {
         _showError('Quality not available');
+        setState(() {
+          _isChangingQuality = false;
+        });
         return;
       }
 
@@ -354,6 +499,7 @@ class _NewPipeMediaKitPlayerState extends State<NewPipeMediaKitPlayer> {
       setState(() {
         _currentConfig = newConfig;
         _currentQualityLabel = newQualityLabel;
+        _isChangingQuality = false;
       });
 
       _showToast('Quality changed to $newQualityLabel');
@@ -361,19 +507,44 @@ class _NewPipeMediaKitPlayerState extends State<NewPipeMediaKitPlayer> {
     } catch (e) {
       debugPrint('Error changing quality: $e');
       _showError('Failed to change quality');
+      setState(() {
+        _isChangingQuality = false;
+      });
     }
   }
 
   @override
   void dispose() {
+    _sponsorBlockSubscription?.cancel();
     _updateVideoHistory();
-    _player.dispose();
+    // Don't dispose the global player - save state for PiP transition
+    // The player will persist and can be restored when returning from PiP
+    _globalPlayer.savePlaybackState();
+    debugPrint('[NewPipePlayer] Dispose called - saving state for potential PiP');
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (!_isInitialized || _currentConfig == null) {
+    // Show loading only for fresh initialization, not when restoring from PiP
+    // Check if player is already active (has video) to skip loading state
+    final bool playerHasVideo = _globalPlayer.hasActivePlayer &&
+        _globalPlayer.currentVideoId == widget.videoId;
+
+    if (!_isInitialized && !playerHasVideo) {
+      return AspectRatio(
+        aspectRatio: 16 / 9,
+        child: Container(
+          color: Colors.black,
+          child: const Center(
+            child: CircularProgressIndicator(color: Colors.white),
+          ),
+        ),
+      );
+    }
+
+    // For controls, we need config - but we can still show video without it
+    if (_currentConfig == null && !playerHasVideo) {
       return AspectRatio(
         aspectRatio: 16 / 9,
         child: Container(
@@ -395,7 +566,7 @@ class _NewPipeMediaKitPlayerState extends State<NewPipeMediaKitPlayer> {
             controls: (state) {
               return _buildCustomControls(state);
             },
-            fit: _getBoxFit(widget.videoFitMode),
+            fit: _currentFitMode,
             subtitleViewConfiguration: SubtitleViewConfiguration(
               style: TextStyle(
                 fontSize: widget.subtitleSize,
@@ -413,13 +584,29 @@ class _NewPipeMediaKitPlayerState extends State<NewPipeMediaKitPlayer> {
             initialData: false,
             builder: (context, snapshot) {
               final isBuffering = snapshot.data ?? false;
-              if (!isBuffering) return const SizedBox.shrink();
+              // Show loading for buffering OR quality change
+              if (!isBuffering && !_isChangingQuality) return const SizedBox.shrink();
               return Container(
                 color: Colors.black.withValues(alpha: 0.3),
-                child: const Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.white,
-                    strokeWidth: 3,
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const CircularProgressIndicator(
+                        color: Colors.white,
+                        strokeWidth: 3,
+                      ),
+                      if (_isChangingQuality) ...[
+                        const SizedBox(height: 12),
+                        const Text(
+                          'Changing quality...',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ],
                   ),
                 ),
               );
@@ -440,7 +627,15 @@ class _NewPipeMediaKitPlayerState extends State<NewPipeMediaKitPlayer> {
       subtitles: _currentConfig?.subtitles ?? [],
       skipInterval: widget.skipInterval,
       isLive: widget.watchInfo.isLive == true,
+      currentFitMode: _currentFitMode,
+      onFitModeChanged: _onFitModeChanged,
     );
+  }
+
+  void _onFitModeChanged(BoxFit newFitMode) {
+    setState(() {
+      _currentFitMode = newFitMode;
+    });
   }
 
   double _getAspectRatio() {
@@ -491,11 +686,13 @@ class _NewPipeMediaKitPlayerState extends State<NewPipeMediaKitPlayer> {
         uploaderVerified: widget.watchInfo.uploaderVerified,
         isHistory: true,
         isLive: widget.watchInfo.isLive,
-        isSaved: widget.isSaved,
+        // isSaved will be preserved by updatePlaybackPosition event
+        isSaved: false,
         playbackPosition: currentPosition.inSeconds,
       );
 
-      _savedBloc.add(SavedEvent.addVideoInfo(videoInfo: videoInfo));
+      // Use updatePlaybackPosition instead of addVideoInfo to preserve isSaved state
+      _savedBloc.add(SavedEvent.updatePlaybackPosition(videoInfo: videoInfo));
     }
   }
 

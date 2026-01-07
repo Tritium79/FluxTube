@@ -27,6 +27,34 @@ class InvidiousChannelRelatedVideoSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final videos = channelInfo.latestVideos ?? [];
+
+    // Show empty state if no videos
+    if (videos.isEmpty) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(32),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.video_library_outlined,
+                size: 48,
+                color: Theme.of(context).colorScheme.outline,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                locals.noVideosFound,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  color: Theme.of(context).colorScheme.outline,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
     return NotificationListener<ScrollNotification>(
       onNotification: (scrollInfo) {
         if (scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent &&
@@ -44,8 +72,8 @@ class InvidiousChannelRelatedVideoSection extends StatelessWidget {
         padding: EdgeInsets.zero,
         scrollDirection: Axis.vertical,
         itemBuilder: (context, index) {
-          if (index < state.invidiousChannelResp!.latestVideos!.length) {
-            final LatestVideo videoInfo = channelInfo.latestVideos![index];
+          if (index < videos.length) {
+            final LatestVideo videoInfo = videos[index];
             final String videoId = videoInfo.videoId!;
             final String channelId = videoInfo.authorId!;
 
@@ -76,17 +104,17 @@ class InvidiousChannelRelatedVideoSection extends StatelessWidget {
               ),
             );
           } else {
+            // Only show loading indicator if there's more to load
             if (state.moreChannelDetailsFetchStatus == ApiStatus.loading) {
               return cIndicator(context);
-            } else if (state.isMoreFetchCompleted) {
-              return const SizedBox();
             } else {
-              return cIndicator(context);
+              return const SizedBox();
             }
           }
         },
         separatorBuilder: (context, index) => kWidthBox10,
-        itemCount: (channelInfo.latestVideos?.length ?? 0) + 1,
+        // Only add extra item for loading indicator if not completed
+        itemCount: videos.length + (state.isMoreFetchCompleted ? 0 : 1),
       ),
     );
   }

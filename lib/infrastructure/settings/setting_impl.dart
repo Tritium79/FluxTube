@@ -8,10 +8,12 @@ import 'package:fluxtube/core/enums.dart';
 import 'package:fluxtube/core/strings.dart';
 import 'package:fluxtube/domain/core/failure/main_failure.dart';
 import 'package:fluxtube/domain/saved/models/local_store.dart';
+import 'package:fluxtube/domain/search/models/search_history.dart';
 import 'package:fluxtube/domain/settings/models/instance.dart';
 import 'package:fluxtube/domain/settings/models/settings_db.dart';
 import 'package:fluxtube/domain/settings/settings_service.dart';
 import 'package:fluxtube/domain/subscribes/models/subscribe.dart';
+import 'package:fluxtube/domain/user_preferences/models/user_preferences.dart';
 import 'package:injectable/injectable.dart';
 import 'package:isar_community/isar.dart';
 import 'package:path_provider/path_provider.dart';
@@ -25,9 +27,14 @@ class SettingImpl implements SettingsService {
   // Initialize the database
   static Future<void> initializeDB() async {
     final dir = await getApplicationCacheDirectory();
-    isar = await Isar.open(
-        [SettingsDBValueSchema, LocalStoreVideoInfoSchema, SubscribeSchema],
-        directory: dir.path);
+    isar = await Isar.open([
+      SettingsDBValueSchema,
+      LocalStoreVideoInfoSchema,
+      SubscribeSchema,
+      LocalSearchHistorySchema,
+      UserInteractionSchema,
+      UserTopicPreferenceSchema,
+    ], directory: dir.path);
   }
 
   // Common setting fetch code
@@ -99,8 +106,12 @@ class SettingImpl implements SettingsService {
       {"name": commentsVisibility, "default": "false"},
       {"name": relatedVideoVisibility, "default": "false"},
       {"name": instanceApiUrl, "default": BaseUrl.kBaseUrl},
-      {"name": youtubeService, "default": Platform.isAndroid ? YouTubeServices.newpipe.name : YouTubeServices.piped.name},
-      {"name": playerTypeKey, "default": PlayerType.betterPlayer.name},
+      {
+        "name": youtubeService,
+        "default": Platform.isAndroid
+            ? YouTubeServices.newpipe.name
+            : YouTubeServices.piped.name
+      },
       {"name": pipDisabled, "default": "false"},
       {"name": homeFeedModeKey, "default": HomeFeedMode.feedOrTrending.name},
       {"name": videoFitModeKey, "default": "contain"},
@@ -236,9 +247,10 @@ class SettingImpl implements SettingsService {
             continue;
           }
           instances.add(Instance(
-              name: split[0].trim(),
-              api: '${split[1].trim()}/',
-              locations: split[2].trim(),));
+            name: split[0].trim(),
+            api: '${split[1].trim()}/',
+            locations: split[2].trim(),
+          ));
         }
       }
       return Right(instances);
@@ -268,16 +280,6 @@ class SettingImpl implements SettingsService {
   }
 
   @override
-  Future<Either<MainFailure, PlayerType>> setPlayerType(
-      {required PlayerType playerType}) async {
-    return _setSetting(
-      settingName: playerTypeKey,
-      value: playerType,
-      toStringValue: (v) => v.name,
-    );
-  }
-
-  @override
   Future<Either<MainFailure, List<Instance>>> fetchInvidiousInstances() async {
     try {
       final dio = Dio();
@@ -294,7 +296,8 @@ class SettingImpl implements SettingsService {
 
         if (isHttps) {
           instances.add(Instance(
-            name: '${instanceData[0] as String}${apiEnabled ? '' : ' (API disabled)'}',
+            name:
+                '${instanceData[0] as String}${apiEnabled ? '' : ' (API disabled)'}',
             api: instanceInfo['uri'] as String,
             locations: instanceInfo['region'] as String? ?? 'Unknown',
           ));
@@ -308,7 +311,8 @@ class SettingImpl implements SettingsService {
   }
 
   @override
-  Future<Either<MainFailure, bool>> togglePipPlayer({required bool isPipDisabled}) async {
+  Future<Either<MainFailure, bool>> togglePipPlayer(
+      {required bool isPipDisabled}) async {
     return _setSetting(
       settingName: pipDisabled,
       value: isPipDisabled,
@@ -326,7 +330,8 @@ class SettingImpl implements SettingsService {
     if (preferredInstanceApi != null && preferredInstanceApi.isNotEmpty) {
       final preferredInstance = instances.firstWhere(
         (i) => i.api == preferredInstanceApi,
-        orElse: () => Instance(name: 'Preferred', api: preferredInstanceApi, locations: ''),
+        orElse: () => Instance(
+            name: 'Preferred', api: preferredInstanceApi, locations: ''),
       );
 
       onTestingInstance?.call(preferredInstance.name);
@@ -389,20 +394,26 @@ class SettingImpl implements SettingsService {
     if (preferredInstanceApi != null && preferredInstanceApi.isNotEmpty) {
       final preferredInstance = instances.firstWhere(
         (i) => i.api == preferredInstanceApi,
-        orElse: () => Instance(name: 'Preferred', api: preferredInstanceApi, locations: ''),
+        orElse: () => Instance(
+            name: 'Preferred', api: preferredInstanceApi, locations: ''),
       );
 
       onTestingInstance?.call(preferredInstance.name);
-      final isWorking = await testInvidiousInstanceConnection(preferredInstanceApi);
+      final isWorking =
+          await testInvidiousInstanceConnection(preferredInstanceApi);
       if (isWorking) {
         return Right(preferredInstanceApi);
       }
     }
 
     // Filter to only test instances without "(API disabled)" in name
-    final apiEnabledInstances = instances.where(
-      (i) => !i.name.contains('(API disabled)') && i.api != preferredInstanceApi,
-    ).toList();
+    final apiEnabledInstances = instances
+        .where(
+          (i) =>
+              !i.name.contains('(API disabled)') &&
+              i.api != preferredInstanceApi,
+        )
+        .toList();
 
     // Test API-enabled instances first
     for (final instance in apiEnabledInstances) {
@@ -448,7 +459,8 @@ class SettingImpl implements SettingsService {
   // New methods for additional features
 
   @override
-  Future<Either<MainFailure, String>> setSearchFilter({required String filter}) async {
+  Future<Either<MainFailure, String>> setSearchFilter(
+      {required String filter}) async {
     return _setSetting(
       settingName: searchFilterKey,
       value: filter,
@@ -457,7 +469,8 @@ class SettingImpl implements SettingsService {
   }
 
   @override
-  Future<Either<MainFailure, String>> setVideoFitMode({required String fitMode}) async {
+  Future<Either<MainFailure, String>> setVideoFitMode(
+      {required String fitMode}) async {
     return _setSetting(
       settingName: videoFitModeKey,
       value: fitMode,
@@ -466,7 +479,8 @@ class SettingImpl implements SettingsService {
   }
 
   @override
-  Future<Either<MainFailure, int>> setSkipInterval({required int seconds}) async {
+  Future<Either<MainFailure, int>> setSkipInterval(
+      {required int seconds}) async {
     return _setSetting(
       settingName: skipIntervalKey,
       value: seconds,
@@ -475,7 +489,8 @@ class SettingImpl implements SettingsService {
   }
 
   @override
-  Future<Either<MainFailure, bool>> toggleSponsorBlock({required bool isEnabled}) async {
+  Future<Either<MainFailure, bool>> toggleSponsorBlock(
+      {required bool isEnabled}) async {
     return _setSetting(
       settingName: sponsorBlockEnabledKey,
       value: isEnabled,
@@ -504,7 +519,8 @@ class SettingImpl implements SettingsService {
   }
 
   @override
-  Future<Either<MainFailure, String>> setHomeFeedMode({required String mode}) async {
+  Future<Either<MainFailure, String>> setHomeFeedMode(
+      {required String mode}) async {
     return _setSetting(
       settingName: homeFeedModeKey,
       value: mode,
@@ -513,7 +529,8 @@ class SettingImpl implements SettingsService {
   }
 
   @override
-  Future<Either<MainFailure, bool>> toggleAudioFocus({required bool isEnabled}) async {
+  Future<Either<MainFailure, bool>> toggleAudioFocus(
+      {required bool isEnabled}) async {
     return _setSetting(
       settingName: audioFocusEnabledKey,
       value: isEnabled,
@@ -540,7 +557,8 @@ class SettingImpl implements SettingsService {
   }
 
   @override
-  Future<Either<MainFailure, List<String>>> addProfile({required String profileName}) async {
+  Future<Either<MainFailure, List<String>>> addProfile(
+      {required String profileName}) async {
     try {
       final currentProfiles = await getProfiles();
       return currentProfiles.fold(
@@ -564,10 +582,12 @@ class SettingImpl implements SettingsService {
   }
 
   @override
-  Future<Either<MainFailure, List<String>>> deleteProfile({required String profileName}) async {
+  Future<Either<MainFailure, List<String>>> deleteProfile(
+      {required String profileName}) async {
     try {
       if (profileName == 'default') {
-        return const Left(MainFailure.serverFailure()); // Cannot delete default profile
+        return const Left(
+            MainFailure.serverFailure()); // Cannot delete default profile
       }
       final currentProfiles = await getProfiles();
       return currentProfiles.fold(
@@ -591,7 +611,8 @@ class SettingImpl implements SettingsService {
   }
 
   @override
-  Future<Either<MainFailure, String>> switchProfile({required String profileName}) async {
+  Future<Either<MainFailure, String>> switchProfile(
+      {required String profileName}) async {
     return _setSetting(
       settingName: currentProfileKey,
       value: profileName,
@@ -600,10 +621,12 @@ class SettingImpl implements SettingsService {
   }
 
   @override
-  Future<Either<MainFailure, List<String>>> renameProfile({required String oldName, required String newName}) async {
+  Future<Either<MainFailure, List<String>>> renameProfile(
+      {required String oldName, required String newName}) async {
     try {
       if (oldName == 'default') {
-        return const Left(MainFailure.serverFailure()); // Cannot rename default profile
+        return const Left(
+            MainFailure.serverFailure()); // Cannot rename default profile
       }
       if (oldName == newName) {
         final profiles = await getProfiles();
@@ -619,7 +642,8 @@ class SettingImpl implements SettingsService {
           if (profiles.contains(newName)) {
             return Right(profiles); // New name already exists
           }
-          final newProfiles = profiles.map((p) => p == oldName ? newName : p).toList();
+          final newProfiles =
+              profiles.map((p) => p == oldName ? newName : p).toList();
           await _setSetting(
             settingName: profilesListKey,
             value: newProfiles,
@@ -635,7 +659,8 @@ class SettingImpl implements SettingsService {
 
   // Import/Export methods
   @override
-  Future<Either<MainFailure, String>> exportSubscriptions({String profileName = 'default'}) async {
+  Future<Either<MainFailure, String>> exportSubscriptions(
+      {String profileName = 'default'}) async {
     try {
       // Get subscriptions only for the specified profile
       final subscriptions = await isar.subscribes
@@ -662,7 +687,8 @@ class SettingImpl implements SettingsService {
       final dir = await getApplicationDocumentsDirectory();
       final timestamp = DateTime.now().millisecondsSinceEpoch;
       final profileSuffix = profileName == 'default' ? '' : '_$profileName';
-      final file = File('${dir.path}/fluxtube_subscriptions${profileSuffix}_$timestamp.json');
+      final file = File(
+          '${dir.path}/fluxtube_subscriptions${profileSuffix}_$timestamp.json');
       await file.writeAsString(jsonEncode(exportData));
 
       return Right(file.path);
@@ -672,7 +698,8 @@ class SettingImpl implements SettingsService {
   }
 
   @override
-  Future<Either<MainFailure, int>> importSubscriptions({required String filePath, String profileName = 'default'}) async {
+  Future<Either<MainFailure, int>> importSubscriptions(
+      {required String filePath, String profileName = 'default'}) async {
     try {
       final file = File(filePath);
       if (!await file.exists()) {
@@ -732,10 +759,31 @@ class SettingImpl implements SettingsService {
   }
 
   @override
-  Future<Either<MainFailure, double>> setSubtitleSize({required double size}) async {
+  Future<Either<MainFailure, double>> setSubtitleSize(
+      {required double size}) async {
     return _setSetting(
       settingName: subtitleSizeKey,
       value: size,
+      toStringValue: (v) => v.toString(),
+    );
+  }
+
+  @override
+  Future<Either<MainFailure, bool>> toggleSearchHistoryEnabled(
+      {required bool isEnabled}) async {
+    return _setSetting(
+      settingName: searchHistoryEnabledKey,
+      value: isEnabled,
+      toStringValue: (v) => v.toString(),
+    );
+  }
+
+  @override
+  Future<Either<MainFailure, bool>> toggleSearchHistoryVisibility(
+      {required bool isVisible}) async {
+    return _setSetting(
+      settingName: searchHistoryVisibilityKey,
+      value: isVisible,
       toStringValue: (v) => v.toString(),
     );
   }

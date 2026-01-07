@@ -4,6 +4,8 @@ import 'package:fluxtube/domain/core/failure/main_failure.dart';
 import 'package:fluxtube/domain/search/models/invidious/invidious_search_resp.dart';
 import 'package:fluxtube/domain/search/models/newpipe/newpipe_search_resp.dart';
 import 'package:fluxtube/domain/search/models/piped/search_resp.dart';
+import 'package:fluxtube/domain/search/models/search_history.dart';
+import 'package:fluxtube/domain/search/search_history_service.dart';
 import 'package:fluxtube/domain/search/search_service.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -15,8 +17,10 @@ part 'search_bloc.freezed.dart';
 @injectable
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
   final SearchService searchService;
+  final SearchHistoryService searchHistoryService;
   SearchBloc(
     this.searchService,
+    this.searchHistoryService,
   ) : super(SearchState.initialize()) {
     on<GetSearchResult>((event, emit) async {
       emit(state.copyWith(isSuggestionDisplay: false));
@@ -52,6 +56,65 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       } else {
         await _fetchMorePipedSearchResult(event, emit);
       }
+    });
+
+    // SEARCH HISTORY EVENTS
+    on<GetSearchHistory>((event, emit) async {
+      emit(state.copyWith(fetchSearchHistoryStatus: ApiStatus.loading));
+
+      final result = await searchHistoryService.getSearchHistory(
+        profileName: event.profileName,
+        limit: event.limit,
+      );
+
+      final newState = result.fold(
+        (failure) => state.copyWith(
+          fetchSearchHistoryStatus: ApiStatus.error,
+          searchHistory: [],
+        ),
+        (history) => state.copyWith(
+          fetchSearchHistoryStatus: ApiStatus.loaded,
+          searchHistory: history,
+        ),
+      );
+
+      emit(newState);
+    });
+
+    on<SaveSearchQuery>((event, emit) async {
+      final result = await searchHistoryService.addSearchQuery(
+        query: event.query,
+        profileName: event.profileName,
+      );
+
+      // Reload search history after saving
+      result.fold(
+        (failure) => null,
+        (saved) async {
+          add(GetSearchHistory(profileName: event.profileName));
+        },
+      );
+    });
+
+    on<DeleteSearchQuery>((event, emit) async {
+      await searchHistoryService.deleteSearchQuery(
+        query: event.query,
+        profileName: event.profileName,
+      );
+
+      // Reload search history after deletion
+      add(GetSearchHistory(profileName: event.profileName));
+    });
+
+    on<ClearSearchHistory>((event, emit) async {
+      await searchHistoryService.clearAllSearchHistory(
+        profileName: event.profileName,
+      );
+
+      emit(state.copyWith(
+        searchHistory: [],
+        fetchSearchHistoryStatus: ApiStatus.loaded,
+      ));
     });
   }
 

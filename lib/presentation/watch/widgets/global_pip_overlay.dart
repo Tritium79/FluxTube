@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluxtube/application/application.dart';
-import 'package:fluxtube/presentation/watch/widgets/explode/pip_video_player.dart';
-import 'package:fluxtube/presentation/watch/widgets/iFrame/pip_video_player.dart';
-import 'package:fluxtube/presentation/watch/widgets/invidious/pip_video_player.dart';
-import 'package:fluxtube/presentation/watch/widgets/newpipe/pip_video_player.dart';
-import 'package:fluxtube/presentation/watch/widgets/pip_video_player.dart';
+import 'package:fluxtube/core/player/global_player_controller.dart';
+import 'package:fluxtube/presentation/watch/widgets/pip_video_widget.dart';
+
+/// Global key for the PiP widget to maintain its state across route changes
+final GlobalKey<State<PipVideoWidget>> _pipWidgetKey = GlobalKey<State<PipVideoWidget>>();
 
 /// Global PiP overlay that shows the PiP player above all routes
 /// This ensures PiP works regardless of which screen the user navigates to
-class GlobalPipOverlay extends StatelessWidget {
+class GlobalPipOverlay extends StatefulWidget {
   final Widget child;
 
   const GlobalPipOverlay({
@@ -18,24 +18,53 @@ class GlobalPipOverlay extends StatelessWidget {
   });
 
   @override
+  State<GlobalPipOverlay> createState() => _GlobalPipOverlayState();
+}
+
+class _GlobalPipOverlayState extends State<GlobalPipOverlay> {
+  final GlobalPlayerController _globalPlayer = GlobalPlayerController();
+
+  @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SavedBloc, SavedState>(
-      builder: (context, savedState) {
-        return BlocBuilder<SettingsBloc, SettingsState>(
-          builder: (context, settingsState) {
-            return BlocBuilder<WatchBloc, WatchState>(
-              builder: (context, watchState) {
+    return BlocBuilder<SettingsBloc, SettingsState>(
+      buildWhen: (previous, current) =>
+          previous.isPipDisabled != current.isPipDisabled,
+      builder: (context, settingsState) {
+        return BlocBuilder<WatchBloc, WatchState>(
+          buildWhen: (previous, current) =>
+              previous.isPipEnabled != current.isPipEnabled ||
+              previous.selectedVideoBasicDetails != current.selectedVideoBasicDetails,
+          builder: (context, watchState) {
+            // Listen to global player controller for state changes
+            return ListenableBuilder(
+              listenable: _globalPlayer,
+              builder: (context, _) {
+                final shouldShowPip = watchState.isPipEnabled &&
+                    !settingsState.isPipDisabled &&
+                    watchState.selectedVideoBasicDetails != null &&
+                    _globalPlayer.hasActivePlayer;
+
+                // Keep PiP widget in tree when we have video data to maintain state
+                // This prevents widget recreation during navigation which would lose
+                // position state and potentially cause visual glitches
+                final hasPipData = watchState.selectedVideoBasicDetails != null &&
+                    _globalPlayer.hasActivePlayer;
+
                 return Stack(
                   children: [
                     // Main app content
-                    child,
+                    widget.child,
 
-                    // PiP overlays based on service type
-                    if (_shouldShowPip(watchState, settingsState))
-                      _buildPipPlayer(
-                        watchState: watchState,
-                        settingsState: settingsState,
-                        savedState: savedState,
+                    // PiP overlay - always in tree when data is available
+                    // Visibility is controlled by isVisible parameter to maintain state
+                    if (hasPipData)
+                      PipVideoWidget(
+                        key: _pipWidgetKey,
+                        videoId: watchState.selectedVideoBasicDetails!.id,
+                        channelId: watchState.selectedVideoBasicDetails!.channelId ?? '',
+                        title: watchState.selectedVideoBasicDetails!.title ?? '',
+                        thumbnailUrl: watchState.selectedVideoBasicDetails!.thumbnailUrl,
+                        isVisible: shouldShowPip,
                       ),
                   ],
                 );
@@ -45,95 +74,5 @@ class GlobalPipOverlay extends StatelessWidget {
         );
       },
     );
-  }
-
-  bool _shouldShowPip(WatchState watchState, SettingsState settingsState) {
-    return watchState.isPipEnabled &&
-        watchState.selectedVideoBasicDetails?.id != null &&
-        !settingsState.isPipDisabled;
-  }
-
-  Widget _buildPipPlayer({
-    required WatchState watchState,
-    required SettingsState settingsState,
-    required SavedState savedState,
-  }) {
-    final isSaved = savedState.videoInfo?.id ==
-            watchState.selectedVideoBasicDetails?.id &&
-        savedState.videoInfo?.isSaved == true;
-
-    switch (settingsState.ytService) {
-      case 'invidious':
-        return Positioned(
-          child: InvidiousPipVideoPlayerWidget(
-            key: ValueKey('pip_${watchState.selectedVideoBasicDetails!.id}'),
-            watchInfo: watchState.invidiousWatchResp,
-            videoId: watchState.selectedVideoBasicDetails!.id,
-            playbackPosition: watchState.playBack,
-            isSaved: isSaved,
-            isHlsPlayer: settingsState.isHlsPlayer,
-            subtitles: watchState.subtitles,
-            watchState: watchState,
-          ),
-        );
-
-      case 'piped':
-        return Positioned(
-          child: PipVideoPlayerWidget(
-            key: ValueKey('pip_${watchState.selectedVideoBasicDetails!.id}'),
-            watchInfo: watchState.watchResp,
-            videoId: watchState.selectedVideoBasicDetails!.id,
-            playbackPosition: watchState.playBack,
-            isSaved: isSaved,
-            isHlsPlayer: settingsState.isHlsPlayer,
-            subtitles: watchState.subtitles,
-            watchState: watchState,
-          ),
-        );
-
-      case 'iframe':
-        return Align(
-          child: IFramePipVideoPlayer(
-            key: ValueKey('pip_${watchState.selectedVideoBasicDetails!.id}'),
-            id: watchState.selectedVideoBasicDetails!.id,
-            isLive: watchState.explodeWatchResp.isLive,
-            channelId: watchState.selectedVideoBasicDetails!.channelId!,
-            settingsState: settingsState,
-            watchState: watchState,
-            isSaved: isSaved,
-            savedState: savedState,
-            watchInfo: watchState.explodeWatchResp,
-            playBack: watchState.playBack,
-          ),
-        );
-
-      case 'explode':
-        return Positioned(
-          child: ExplodePipVideoPlayerWidget(
-            key: ValueKey('pip_${watchState.selectedVideoBasicDetails!.id}'),
-            watchInfo: watchState.explodeWatchResp,
-            videoId: watchState.selectedVideoBasicDetails!.id,
-            playbackPosition: watchState.playBack,
-            isSaved: isSaved,
-            liveUrl: watchState.liveStreamUrl,
-            availableVideoTracks: watchState.muxedStreams ?? [],
-            subtitles: watchState.subtitles,
-            watchState: watchState,
-          ),
-        );
-
-      case 'newpipe':
-        return NewPipePipVideoPlayerWidget(
-          key: ValueKey('pip_${watchState.selectedVideoBasicDetails!.id}'),
-          watchInfo: watchState.newPipeWatchResp,
-          videoId: watchState.selectedVideoBasicDetails!.id,
-          playbackPosition: watchState.playBack,
-          isSaved: isSaved,
-          watchState: watchState,
-        );
-
-      default:
-        return const SizedBox.shrink();
-    }
   }
 }

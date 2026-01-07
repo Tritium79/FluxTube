@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluxtube/application/application.dart';
 import 'package:fluxtube/core/constants.dart';
@@ -8,7 +9,7 @@ import 'package:fluxtube/generated/l10n.dart';
 import 'package:fluxtube/presentation/trending/widgets/newpipe/home_video_info_card_widget.dart';
 import 'package:go_router/go_router.dart';
 
-class NewPipeFeedVideoSection extends StatelessWidget {
+class NewPipeFeedVideoSection extends StatefulWidget {
   const NewPipeFeedVideoSection({
     super.key,
     required this.locals,
@@ -21,11 +22,58 @@ class NewPipeFeedVideoSection extends StatelessWidget {
   final SubscribeState subscribeState;
 
   @override
+  State<NewPipeFeedVideoSection> createState() =>
+      _NewPipeFeedVideoSectionState();
+}
+
+class _NewPipeFeedVideoSectionState extends State<NewPipeFeedVideoSection> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (_isBottom) {
+      context.read<TrendingBloc>().add(const TrendingEvent.loadMoreNewPipeFeed());
+    }
+  }
+
+  bool get _isBottom {
+    if (!_scrollController.hasClients) return false;
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    final currentScroll = _scrollController.offset;
+    return currentScroll >= (maxScroll - 200);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final displayCount = widget.trendingState.newPipeFeedDisplayCount;
+    final totalCount = widget.trendingState.newPipeFeedResult.length;
+    final itemCount = displayCount.clamp(0, totalCount);
+    final hasMore = displayCount < totalCount;
+    final isLoading = widget.trendingState.isLoadingMoreNewPipeFeed;
+
     return ListView.separated(
+      controller: _scrollController,
+      cacheExtent: 500,
       separatorBuilder: (context, index) => kHeightBox10,
       itemBuilder: (context, index) {
-        final feed = trendingState.newPipeFeedResult[index];
+        // Show loading indicator at the end
+        if (index >= itemCount) {
+          return _buildLoadingIndicator(hasMore, isLoading);
+        }
+
+        final feed = widget.trendingState.newPipeFeedResult[index];
         final String? videoId = feed.videoId;
 
         if (videoId == null) {
@@ -33,10 +81,11 @@ class NewPipeFeedVideoSection extends StatelessWidget {
         }
 
         final String channelId = feed.uploaderUrl?.split("/").last ?? '';
-        final bool isSubscribed = subscribeState.subscribedChannels
+        final bool isSubscribed = widget.subscribeState.subscribedChannels
             .where((channel) => channel.id == channelId)
             .isNotEmpty;
         return GestureDetector(
+          key: ValueKey('feed_$videoId'),
           onTap: () {
             BlocProvider.of<WatchBloc>(context).add(
                 WatchEvent.setSelectedVideoBasicDetails(
@@ -58,11 +107,29 @@ class NewPipeFeedVideoSection extends StatelessWidget {
             cardInfo: feed,
             isSubscribed: isSubscribed,
             onSubscribeTap: () => _onSubscribeTapped(
-                context, isSubscribed, channelId, feed, locals),
+                context, isSubscribed, channelId, feed, widget.locals),
           ),
         );
       },
-      itemCount: trendingState.newPipeFeedResult.length,
+      itemCount: hasMore ? itemCount + 1 : itemCount,
+    );
+  }
+
+  Widget _buildLoadingIndicator(bool hasMore, bool isLoading) {
+    if (!hasMore) {
+      return const SizedBox.shrink();
+    }
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      child: Center(
+        child: isLoading
+            ? const SizedBox(
+                width: 24,
+                height: 24,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              )
+            : const SizedBox.shrink(),
+      ),
     );
   }
 }

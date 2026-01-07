@@ -22,6 +22,9 @@ class PlayerControlsOverlay extends StatefulWidget {
     required this.subtitles,
     required this.skipInterval,
     required this.isLive,
+    this.enableBrightnessVolumeGestures = true,
+    this.currentFitMode = BoxFit.contain,
+    this.onFitModeChanged,
   });
 
   final Player player;
@@ -32,6 +35,9 @@ class PlayerControlsOverlay extends StatefulWidget {
   final List<NewPipeSubtitle> subtitles;
   final int skipInterval;
   final bool isLive;
+  final bool enableBrightnessVolumeGestures;
+  final BoxFit currentFitMode;
+  final Function(BoxFit)? onFitModeChanged;
 
   @override
   State<PlayerControlsOverlay> createState() => _PlayerControlsOverlayState();
@@ -73,6 +79,9 @@ class _PlayerControlsOverlayState extends State<PlayerControlsOverlay>
 
   // Available playback speeds
   static const List<double> _speeds = [0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0];
+
+  // Available video fit modes for fullscreen
+  static const List<BoxFit> _fitModes = [BoxFit.contain, BoxFit.cover, BoxFit.fill];
 
   @override
   void initState() {
@@ -263,6 +272,40 @@ class _PlayerControlsOverlayState extends State<PlayerControlsOverlay>
     toggleFullscreen(context);
   }
 
+  void _cycleFitMode() {
+    if (widget.onFitModeChanged == null) return;
+    final currentIndex = _fitModes.indexOf(widget.currentFitMode);
+    final nextIndex = (currentIndex + 1) % _fitModes.length;
+    widget.onFitModeChanged!(_fitModes[nextIndex]);
+    _startHideTimer();
+  }
+
+  IconData _getFitModeIcon(BoxFit fitMode) {
+    switch (fitMode) {
+      case BoxFit.contain:
+        return CupertinoIcons.rectangle;
+      case BoxFit.cover:
+        return CupertinoIcons.rectangle_fill;
+      case BoxFit.fill:
+        return CupertinoIcons.rectangle_expand_vertical;
+      default:
+        return CupertinoIcons.rectangle;
+    }
+  }
+
+  String _getFitModeLabel(BoxFit fitMode) {
+    switch (fitMode) {
+      case BoxFit.contain:
+        return 'Fit';
+      case BoxFit.cover:
+        return 'Crop';
+      case BoxFit.fill:
+        return 'Stretch';
+      default:
+        return 'Fit';
+    }
+  }
+
   // Vertical drag for brightness/volume
   void _onVerticalDragStart(DragStartDetails details, bool isLeftSide) {
     _hideTimer?.cancel();
@@ -447,6 +490,10 @@ class _PlayerControlsOverlayState extends State<PlayerControlsOverlay>
 
   @override
   Widget build(BuildContext context) {
+    // Enable brightness/volume gestures only in fullscreen mode
+    final isCurrentlyFullscreen = isFullscreen(context);
+    final enableGestures = widget.enableBrightnessVolumeGestures && isCurrentlyFullscreen;
+
     return LayoutBuilder(
       builder: (context, constraints) {
         final height = constraints.maxHeight;
@@ -460,7 +507,7 @@ class _PlayerControlsOverlayState extends State<PlayerControlsOverlay>
           behavior: HitTestBehavior.opaque,
           child: Stack(
             children: [
-              // Left side - brightness gesture zone
+              // Left side - brightness gesture zone (only in fullscreen) / double tap zone
               Positioned(
                 left: 0,
                 top: 0,
@@ -468,15 +515,21 @@ class _PlayerControlsOverlayState extends State<PlayerControlsOverlay>
                 width: width / 2,
                 child: GestureDetector(
                   onDoubleTap: _onDoubleTapLeft,
-                  onVerticalDragStart: (details) => _onVerticalDragStart(details, true),
-                  onVerticalDragUpdate: (details) => _onVerticalDragUpdate(details, height),
-                  onVerticalDragEnd: (_) => _onVerticalDragEnd(),
+                  onVerticalDragStart: enableGestures
+                      ? (details) => _onVerticalDragStart(details, true)
+                      : null,
+                  onVerticalDragUpdate: enableGestures
+                      ? (details) => _onVerticalDragUpdate(details, height)
+                      : null,
+                  onVerticalDragEnd: enableGestures
+                      ? (_) => _onVerticalDragEnd()
+                      : null,
                   behavior: HitTestBehavior.translucent,
                   child: const SizedBox.expand(),
                 ),
               ),
 
-              // Right side - volume gesture zone
+              // Right side - volume gesture zone (only in fullscreen) / double tap zone
               Positioned(
                 right: 0,
                 top: 0,
@@ -484,9 +537,15 @@ class _PlayerControlsOverlayState extends State<PlayerControlsOverlay>
                 width: width / 2,
                 child: GestureDetector(
                   onDoubleTap: _onDoubleTapRight,
-                  onVerticalDragStart: (details) => _onVerticalDragStart(details, false),
-                  onVerticalDragUpdate: (details) => _onVerticalDragUpdate(details, height),
-                  onVerticalDragEnd: (_) => _onVerticalDragEnd(),
+                  onVerticalDragStart: enableGestures
+                      ? (details) => _onVerticalDragStart(details, false)
+                      : null,
+                  onVerticalDragUpdate: enableGestures
+                      ? (details) => _onVerticalDragUpdate(details, height)
+                      : null,
+                  onVerticalDragEnd: enableGestures
+                      ? (_) => _onVerticalDragEnd()
+                      : null,
                   behavior: HitTestBehavior.translucent,
                   child: const SizedBox.expand(),
                 ),
@@ -737,6 +796,8 @@ class _PlayerControlsOverlayState extends State<PlayerControlsOverlay>
   }
 
   Widget _buildTopBar() {
+    final isCurrentlyFullscreen = isFullscreen(context);
+
     return Positioned(
       top: 0,
       left: 0,
@@ -747,6 +808,39 @@ class _PlayerControlsOverlayState extends State<PlayerControlsOverlay>
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
+              // Fit mode button (only in fullscreen)
+              if (isCurrentlyFullscreen && widget.onFitModeChanged != null)
+                GestureDetector(
+                  onTap: _cycleFitMode,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    margin: const EdgeInsets.only(right: 4),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withValues(alpha: 0.5),
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          _getFitModeIcon(widget.currentFitMode),
+                          color: Colors.white,
+                          size: 18,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          _getFitModeLabel(widget.currentFitMode),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
               // Captions button (if available) - opens directly to captions
               if (widget.subtitles.isNotEmpty)
                 _buildIconButton(

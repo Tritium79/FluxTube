@@ -9,7 +9,6 @@ const commentsVisibility = 'comments-visibility';
 const relatedVideoVisibility = 'related-video-visibility';
 const instanceApiUrl = 'instance-api';
 const youtubeService = 'yt-service';
-const playerTypeKey = 'player-type';
 const pipDisabled = 'pip-disabled';
 
 // Search filters
@@ -44,3 +43,7 @@ const profilesListKey = 'profiles-list';
 // Sync
 const syncEnabledKey = 'sync-enabled';
 const lastSyncedKey = 'last-synced';
+
+// Search history privacy
+const searchHistoryEnabledKey = 'search-history-enabled';
+const searchHistoryVisibilityKey = 'search-history-visibility';

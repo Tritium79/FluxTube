@@ -9,5 +9,5 @@ abstract class HomeServices {
       {required List<Subscribe> channels});
 
   Future<Either<MainFailure, List<NewPipeTrendingResp>>> getNewPipeHomeFeedData(
-      {required List<Subscribe> channels});
+      {required List<Subscribe> channels, int videosPerChannel = 10});
 }

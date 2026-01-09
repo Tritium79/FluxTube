@@ -262,8 +262,8 @@ class _NewPipeMediaKitPlayerState extends State<NewPipeMediaKitPlayer> {
             play: false,
           );
 
-          // Wait a bit for video to be loaded before setting audio track
-          await Future.delayed(const Duration(milliseconds: 100));
+          // Wait for the player to be ready (duration > 0) before setting audio
+          await _waitForPlayerReady();
 
           if (audioUrl != null) {
             // Set audio track after video is opened and ready
@@ -271,6 +271,8 @@ class _NewPipeMediaKitPlayerState extends State<NewPipeMediaKitPlayer> {
               await _player.setAudioTrack(
                 AudioTrack.uri(audioUrl),
               );
+              // Give time for audio track to sync
+              await Future.delayed(const Duration(milliseconds: 150));
               debugPrint('Opened video + audio (${config.qualityLabel})');
               debugPrint('Video: ${config.videoUrl?.substring(0, 80)}...');
               debugPrint('Audio: ${audioUrl.substring(0, 80)}...');
@@ -312,9 +314,17 @@ class _NewPipeMediaKitPlayerState extends State<NewPipeMediaKitPlayer> {
         }
       }
 
+      // Wait for player to be ready before seeking/playing (for non-merging types)
+      // Merging type already waits in its own branch
+      if (config.sourceType != MediaSourceType.merging) {
+        await _waitForPlayerReady();
+      }
+
       // Seek to start position
       if (widget.playbackPosition > 0 && !config.isLive) {
         await _player.seek(Duration(seconds: widget.playbackPosition));
+        // Wait for seek to complete
+        await Future.delayed(const Duration(milliseconds: 100));
         debugPrint('Seeked to position: ${widget.playbackPosition}s');
       }
 
@@ -391,6 +401,21 @@ class _NewPipeMediaKitPlayerState extends State<NewPipeMediaKitPlayer> {
     debugPrint(
         'Selected audio: ${selectedAudio?.quality ?? "Unknown"} | Bitrate: ${selectedAudio?.averageBitrate ?? 0}kbps | Format: ${selectedAudio?.format ?? "Unknown"} | TrackType: ${selectedAudio?.audioTrackType ?? "null"} | isOriginal: ${selectedAudio?.isOriginal} | isDubbed: ${selectedAudio?.isDubbed} | Locale: ${selectedAudio?.audioLocale ?? "N/A"}');
     return selectedAudio?.url;
+  }
+
+  /// Wait for the player to be ready (duration > 0) with timeout
+  Future<void> _waitForPlayerReady({Duration timeout = const Duration(seconds: 5)}) async {
+    final startTime = DateTime.now();
+
+    while (_player.state.duration == Duration.zero) {
+      if (DateTime.now().difference(startTime) > timeout) {
+        debugPrint('[Player] Timeout waiting for player ready, proceeding anyway');
+        break;
+      }
+      await Future.delayed(const Duration(milliseconds: 50));
+    }
+
+    debugPrint('[Player] Player ready, duration: ${_player.state.duration}');
   }
 
   String _findClosestQuality(String targetQuality) {

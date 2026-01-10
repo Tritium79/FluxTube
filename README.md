@@ -19,6 +19,9 @@ An ad-free YouTube client built with Flutter. Watch YouTube videos without ads, 
 - **No Login Needed**: Use the app without any login requirements.
 - **Ad-Free Experience**: Enjoy YouTube videos without interruptions.
 - **Multiple YouTube Services**: Switch between NewPipe Extractor, Piped, Invidious, or Explode backends.
+- **Download Videos**: Download videos and audio in multiple qualities with FFmpeg merging support.
+- **Background Playback**: Continue listening with notification controls (play/pause/seek).
+- **Picture-in-Picture**: System PiP mode - auto-enters when pressing home while playing.
 - **SponsorBlock**: Auto-skip sponsored segments, intros, outros, and more.
 - **Multiple Profiles**: Separate subscriptions, history, and saved videos per profile.
 - **Channel Subscriptions**: Subscribe to your favorite channels.
@@ -33,7 +36,6 @@ An ad-free YouTube client built with Flutter. Watch YouTube videos without ads, 
 - **Video Fit Modes**: Contain, cover, fill, fit-width, fit-height.
 - **Customizable Skip Interval**: Double-tap to skip 5-60 seconds.
 - **Watch Videos up to 4K Quality**: Enjoy videos in high quality up to 4K resolution.
-- **Picture-in-Picture**: Continue watching going through other screens.
 - **Distraction-Free Mode**: Hide comments and related videos.
 
 ###### Note:
@@ -51,9 +53,17 @@ Some features are only available when using the NewPipe Extractor service.
 
 ## Download
 
-`<a href='https://github.com/mu-fazil-vk/FluxTube/releases'><img alt='Get it on GitHub' src='doc/get-it-on-gb.png' width="200"/>``</a><br>`
+<p>
+  <a href="https://github.com/mu-fazil-vk/FluxTube/releases">
+    <img alt="Get it on GitHub" src="doc/get-it-on-gb.png" width="200">
+  </a>
+</p>
 
-`<a href='https://apt.izzysoft.de/packages/com.fazilvk.fluxtube'><img alt='Get it on GitHub' src='https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png' width="200"/>``</a><br>`
+<p>
+  <a href="https://apt.izzysoft.de/packages/com.fazilvk.fluxtube">
+    <img alt="Get it on IzzyOnDroid" src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" width="200">
+  </a>
+</p>
 
 You can download the latest version of the app from the [releases page](https://github.com/mu-fazil-vk/FluxTube/releases).
 
@@ -68,7 +78,9 @@ If you select "NewPipe Extractor" as your YouTube service in FluxTube, it uses t
 | **Fallback Options**  | Switch service if one breaks                       | Wait for app update           |
 | **SponsorBlock**      | Built-in                                           | Requires fork (e.g., Tubular) |
 | **Multiple Profiles** | Yes                                                | No                            |
-| **Download**          | Yes                                                | Yes                           |
+| **Download**          | Yes (all services, with FFmpeg merging)            | Yes                           |
+| **Background Play**   | Yes (with notification controls)                   | Yes                           |
+| **System PiP**        | Yes (auto-enter on home press)                     | Yes                           |
 
 **TL;DR:** FluxTube gives you options. If NewPipe Extractor stops working tomorrow, you can switch to Piped or Invidious and keep watching. NewPipe app is more feature-complete for downloading, but you're stuck with one backend. The UIs are different too.
 
@@ -95,8 +107,11 @@ For the best experience:
 - [X] NewPipe-Compatible Backup/Restore
 - [X] Deep Linking / Share Intent
 - [X] Search History
-- [X] Download Videos
-- [X] Background Playback Notification Controls
+- [X] Download Videos (all services)
+- [X] Background Playback with Notification Controls
+- [X] Android System Picture-in-Picture
+- [X] Save Downloads to Public Storage
+- [X] Database Migration (Isar → Drift)
 
 ## Translations
 

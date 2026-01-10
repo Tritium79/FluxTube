@@ -4,6 +4,22 @@
 
 ###### New Features
 
+- **Download System**: Full video/audio download support with quality selection, progress tracking, and notification updates.
+  - Download videos in multiple qualities (up to 4K)
+  - Download audio-only (MP3/AAC)
+  - FFmpeg merging for high-quality video+audio streams
+  - Download notifications with thumbnails and progress
+  - "Save to Device" option to copy downloads to public storage (Movies/Music folders)
+  - **All YouTube services supported** (NewPipe Extractor, Piped, Invidious, Explode)
+- **Background Playback**: Continue listening when app is minimized with full notification controls.
+  - Play/pause, seek forward/backward from notification
+  - Media session integration for headphone/car controls
+  - Track metadata and thumbnail in notification
+- **Android System Picture-in-Picture**: Native PiP support.
+  - Auto-enters PiP when pressing home while video is playing
+  - Shows only video player in PiP window (no app UI)
+  - Configurable in settings (enable/disable auto-PiP)
+- **Database Migration**: Migrated from Isar to Drift (SQLite) for better reliability and performance.
 - **SponsorBlock Integration**: Automatically skip sponsored segments, intros, outros, and more. Configurable categories in settings.
 - **Multiple User Profiles**: Create separate profiles with isolated subscriptions, history, and saved videos. Switch instantly between profiles.
 - **NewPipe-Compatible Backup/Restore**: Export and import data as NewPipe-compatible ZIP files. Selective import options for subscriptions, history, and saved videos.
@@ -30,6 +46,7 @@
 - **Home Feed Mode**: Choose between Auto, Subscriptions Only, or Trending Only.
 - **Search History Privacy**: Enable/disable search history saving and visibility.
 - **Disable PiP Option**: Turn off picture-in-picture if not needed.
+- **Auto-PiP Setting**: Enable/disable automatic PiP when leaving app.
 
 ###### Library & Saved Videos
 
@@ -37,6 +54,7 @@
 - **Bulk Selection**: Select multiple videos for batch deletion.
 - **Sorting Options**: Sort by date added, title, or duration.
 - **Search Within Library**: Find saved videos quickly.
+- **Downloads Screen**: View and manage all downloads with type badges (Video/Audio/Video+Audio).
 
 ###### Improvements
 
@@ -47,6 +65,7 @@
 - **12 Language Updates**: Updated translations with 80+ new strings.
 - **Performance Optimizations**: Faster loading, reduced memory usage.
 - **Animation System**: New smooth animations for lists and transitions.
+- **Multi-threaded Downloads**: Faster download speeds with CPN parameter optimization.
 
 ###### Bug Fixes
 
@@ -55,18 +74,30 @@
 - Fixed shorts thumbnail aspect ratios.
 - Fixed channel navigation issues.
 - Fixed comments loading states.
+- Fixed video loading lag.
+- Fixed player readiness checks and audio track synchronization.
+- Fixed multiple shorts playing simultaneously when scrolling.
+- Fixed "Like"/"Dislike" showing "-1" when counts unavailable.
+- Fixed FlutterJNI crash on app exit.
+- Fixed audio as primary source for merging streams.
 
 ###### Technical Changes
 
+- Migrated database from Isar to Drift (SQLite).
+- Added audio_service for background playback.
+- Added native Android PiP via method channel.
+- Created stream helpers for all YouTube services (Piped, Invidious, Explode).
 - Removed legacy OmniPlayer and iframe player implementations.
 - Removed redundant PiP player variants.
+- Removed unused code and files (dash_manifest_generator, settings_db).
 - Added user preferences tracking infrastructure.
-- Updated dependencies (media_kit, isar, freezed, etc.).
+- Updated dependencies (media_kit, drift, freezed, etc.).
 - Added Kotlin NewPipe handler for native stream extraction.
 
 ###### Note
 
 - Some legacy settings may need to be reconfigured after update.
+- Downloads require storage permission on Android.
 
 ### v0.8.3
 

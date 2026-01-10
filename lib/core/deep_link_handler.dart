@@ -103,8 +103,12 @@ class DeepLinkHandler {
         );
         break;
       case YouTubeLinkType.playlist:
-        // TODO: Handle playlist deep links when playlist screen is available
-        debugPrint('Playlist deep link: ${result.id}');
+        _context!.goNamed(
+          'playlist',
+          pathParameters: {
+            'playlistId': result.id,
+          },
+        );
         break;
     }
   }

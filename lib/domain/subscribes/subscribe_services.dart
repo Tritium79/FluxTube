@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:fluxtube/domain/core/failure/main_failure.dart';
 import 'package:fluxtube/domain/subscribes/models/subscribe.dart';
-import 'package:isar_community/isar.dart';
 
 abstract class SubscribeServices {
   Future<Either<MainFailure, List<Subscribe>>> addSubscriberInfo(

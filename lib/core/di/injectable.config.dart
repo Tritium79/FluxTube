@@ -11,6 +11,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:fluxtube/application/application.dart' as _i1030;
 import 'package:fluxtube/application/channel/channel_bloc.dart' as _i20;
+import 'package:fluxtube/application/download/download_bloc.dart' as _i751;
 import 'package:fluxtube/application/playlist/playlist_bloc.dart' as _i611;
 import 'package:fluxtube/application/saved/saved_bloc.dart' as _i7;
 import 'package:fluxtube/application/search/search_bloc.dart' as _i799;
@@ -19,6 +20,7 @@ import 'package:fluxtube/application/subscribe/subscribe_bloc.dart' as _i187;
 import 'package:fluxtube/application/trending/trending_bloc.dart' as _i11;
 import 'package:fluxtube/application/watch/watch_bloc.dart' as _i771;
 import 'package:fluxtube/domain/channel/channel_services.dart' as _i914;
+import 'package:fluxtube/domain/download/download_service.dart' as _i1053;
 import 'package:fluxtube/domain/home/home_services.dart' as _i811;
 import 'package:fluxtube/domain/home_recommendation/home_recommendation_service.dart'
     as _i72;
@@ -35,6 +37,7 @@ import 'package:fluxtube/domain/user_preferences/user_preferences_service.dart'
     as _i543;
 import 'package:fluxtube/domain/watch/watch_service.dart' as _i719;
 import 'package:fluxtube/infrastructure/channel/channel_impl.dart' as _i112;
+import 'package:fluxtube/infrastructure/download/download_impl.dart' as _i167;
 import 'package:fluxtube/infrastructure/home/home_impl.dart' as _i764;
 import 'package:fluxtube/infrastructure/home_recommendation/home_recommendation_impl.dart'
     as _i921;
@@ -89,6 +92,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i722.SavedServices>(() => _i979.SavedImpl());
     gh.lazySingleton<_i816.SettingsService>(() => _i290.SettingImpl());
     gh.lazySingleton<_i811.HomeServices>(() => _i764.HomeImpl());
+    gh.lazySingleton<_i1053.DownloadService>(() => _i167.DownloadImpl());
     gh.lazySingleton<_i119.SponsorBlockService>(() => _i959.SponsorBlockImpl());
     gh.lazySingleton<_i190.SearchHistoryService>(
         () => _i183.SearchHistoryImpl());
@@ -98,6 +102,8 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i112.SettingsBloc>(
         () => _i112.SettingsBloc(gh<_i816.SettingsService>()));
+    gh.factory<_i751.DownloadBloc>(
+        () => _i751.DownloadBloc(gh<_i1053.DownloadService>()));
     gh.factory<_i20.ChannelBloc>(
         () => _i20.ChannelBloc(gh<_i914.ChannelServices>()));
     gh.factory<_i771.WatchBloc>(() => _i771.WatchBloc(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:fluxtube/application/channel/channel_bloc.dart';
+import 'package:fluxtube/application/download/download_bloc.dart';
 import 'package:fluxtube/application/playlist/playlist_bloc.dart';
 import 'package:fluxtube/generated/l10n.dart';
 import 'package:fluxtube/application/saved/saved_bloc.dart';
@@ -13,6 +14,7 @@ import 'package:fluxtube/application/watch/watch_bloc.dart';
 import 'package:fluxtube/core/app_info.dart';
 import 'package:fluxtube/core/app_theme.dart';
 import 'package:fluxtube/core/locals.dart';
+import 'package:fluxtube/infrastructure/download/download_notification_service.dart';
 import 'package:fluxtube/infrastructure/settings/setting_impl.dart';
 import 'package:fluxtube/presentation/routes/app_routes.dart';
 import 'package:fluxtube/presentation/routes/bloc_observer.dart';
@@ -31,11 +33,27 @@ void main() async {
   await SettingImpl.initializeDB();
   // Initialize GetIt and register dependencies
   configureInjection();
+
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    // Initialize notification service after the first frame
+    // This ensures the Activity is fully attached and can show permission dialogs
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      DownloadNotificationService().initialize();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +67,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => getIt<SubscribeBloc>()),
         BlocProvider(create: (context) => getIt<ChannelBloc>()),
         BlocProvider(create: (context) => getIt<PlaylistBloc>()),
+        BlocProvider(create: (context) => getIt<DownloadBloc>()),
       ],
       child: BlocBuilder<SettingsBloc, SettingsState>(
         buildWhen: (previous, current) =>

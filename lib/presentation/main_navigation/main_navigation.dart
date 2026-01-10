@@ -8,6 +8,7 @@ import 'package:fluxtube/core/deep_link_handler.dart';
 import 'package:fluxtube/core/enums.dart';
 import 'package:fluxtube/generated/l10n.dart';
 
+import '../download/screen_downloads.dart';
 import '../home/screen_home.dart';
 import '../saved/screen_saved.dart';
 import '../settings/screen_settings.dart';
@@ -15,6 +16,43 @@ import '../subscriptions/screen_subscriptions.dart';
 import '../trending/screen_trending.dart';
 
 ValueNotifier<int> indexChangeNotifier = ValueNotifier(0);
+
+/// Notifier for downloads screen tab selection
+/// 0 = Downloading, 1 = Completed, 2 = All
+ValueNotifier<int?> downloadsTabNotifier = ValueNotifier(null);
+
+/// Pending navigation info
+String? _pendingNavigation;
+int? _pendingDownloadsTab;
+
+/// Navigate to the Downloads tab
+/// [downloadsTabIndex] - optional tab index within Downloads screen (0=Downloading, 1=Completed, 2=All)
+void navigateToDownloadsTab({int? downloadsTabIndex}) {
+  _pendingNavigation = 'downloads';
+  _pendingDownloadsTab = downloadsTabIndex;
+  // Set the downloads tab notifier if specified
+  if (downloadsTabIndex != null) {
+    downloadsTabNotifier.value = downloadsTabIndex;
+  }
+  // Set index to a known downloads position (will be adjusted by MainNavigation if needed)
+  // Downloads is at index 4 with trending, index 3 without
+  // Use index 4, the MainNavigation will handle pending navigation and find correct index
+  indexChangeNotifier.value = 4;
+}
+
+/// Get and clear pending navigation target
+String? consumePendingNavigation() {
+  final target = _pendingNavigation;
+  _pendingNavigation = null;
+  return target;
+}
+
+/// Get and clear pending downloads tab index
+int? consumePendingDownloadsTab() {
+  final tab = _pendingDownloadsTab;
+  _pendingDownloadsTab = null;
+  return tab;
+}
 
 class MainNavigation extends StatefulWidget {
   const MainNavigation({super.key});
@@ -35,6 +73,7 @@ class MainNavigationState extends State<MainNavigation> {
         ScreenTrending(),
         ScreenSubscriptions(),
         ScreenSaved(),
+        ScreenDownloads(),
         ScreenSettings(),
       ];
     } else {
@@ -42,6 +81,7 @@ class MainNavigationState extends State<MainNavigation> {
         ScreenHome(),
         ScreenSubscriptions(),
         ScreenSaved(),
+        ScreenDownloads(),
         ScreenSettings(),
       ];
     }
@@ -54,6 +94,7 @@ class MainNavigationState extends State<MainNavigation> {
         TabItem(icon: CupertinoIcons.flame_fill, title: locals.trending, key: "trending"),
         TabItem(icon: CupertinoIcons.person_2_fill, title: locals.subscriptions, key: "subscriptions"),
         TabItem(icon: CupertinoIcons.bookmark_fill, title: locals.saved, key: "saved"),
+        TabItem(icon: CupertinoIcons.arrow_down_circle_fill, title: locals.downloads, key: "downloads"),
         TabItem(icon: CupertinoIcons.settings, title: locals.settings, key: "settings"),
       ];
     } else {
@@ -61,6 +102,7 @@ class MainNavigationState extends State<MainNavigation> {
         TabItem(icon: CupertinoIcons.house_fill, title: locals.home, key: "home"),
         TabItem(icon: CupertinoIcons.person_2_fill, title: locals.subscriptions, key: "subscriptions"),
         TabItem(icon: CupertinoIcons.bookmark_fill, title: locals.saved, key: "saved"),
+        TabItem(icon: CupertinoIcons.arrow_down_circle_fill, title: locals.downloads, key: "downloads"),
         TabItem(icon: CupertinoIcons.settings, title: locals.settings, key: "settings"),
       ];
     }
@@ -157,6 +199,24 @@ class MainNavigationState extends State<MainNavigation> {
           child: ValueListenableBuilder(
             valueListenable: indexChangeNotifier,
             builder: (BuildContext context, int index, Widget? _) {
+              // Check for pending navigation from notification tap
+              final pendingNav = consumePendingNavigation();
+              if (pendingNav == 'downloads') {
+                // Find downloads tab index by key
+                final downloadsIndex = items.indexWhere((item) => item.key == 'downloads');
+                if (downloadsIndex >= 0) {
+                  // Get the pending downloads tab before navigating
+                  final pendingDownloadsTab = consumePendingDownloadsTab();
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    indexChangeNotifier.value = downloadsIndex;
+                    // Set the downloads tab after navigation
+                    if (pendingDownloadsTab != null) {
+                      downloadsTabNotifier.value = pendingDownloadsTab;
+                    }
+                  });
+                }
+              }
+
               // Ensure index is within bounds
               final safeIndex = index.clamp(0, maxIndex);
               // Update the notifier if index was out of bounds (e.g., when trending tab is removed)

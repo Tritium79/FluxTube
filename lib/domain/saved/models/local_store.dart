@@ -1,21 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // FOR STORE SAVED VIDEOS & HISTORY
 
-import 'package:isar_community/isar.dart';
-
-import '../../../core/operations/math_operations.dart';
-
-part 'local_store.g.dart';
-
 //--------LOCAL STORAGE MODEL--------//
-// `flutter pub run build_runner build` to generate file
+// Domain model for saved videos and history
 
-@Collection()
 class LocalStoreVideoInfo {
   String id;
-  // Use composite key: id + profileName for unique identification per profile
-  @Index(unique: true, composite: [CompositeIndex('profileName')])
-  Id get isarId => fastHash('${id}_$profileName');
   String? title;
   int? views;
   String? thumbnail;
@@ -31,8 +21,8 @@ class LocalStoreVideoInfo {
   bool? isLive;
   int? playbackPosition;
   DateTime? time;
-  @Index()
   String profileName;
+
   LocalStoreVideoInfo({
     required this.id,
     this.title,
@@ -52,6 +42,7 @@ class LocalStoreVideoInfo {
     this.time,
     this.profileName = 'default',
   });
+
   LocalStoreVideoInfo.init({
     this.id = '',
     this.title = '',

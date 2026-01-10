@@ -1,38 +1,65 @@
 import 'package:dartz/dartz.dart';
-import 'package:fluxtube/core/operations/math_operations.dart';
+import 'package:drift/drift.dart';
 import 'package:fluxtube/domain/core/failure/main_failure.dart';
 import 'package:fluxtube/domain/saved/models/local_store.dart';
 import 'package:fluxtube/domain/saved/saved_services.dart';
-import 'package:fluxtube/infrastructure/settings/setting_impl.dart';
+import 'package:fluxtube/infrastructure/database/database.dart';
 import 'package:injectable/injectable.dart';
-import 'package:isar_community/isar.dart';
 
 @LazySingleton(as: SavedServices)
 class SavedImpl extends SavedServices {
-  Isar isar = SettingImpl.isar;
+  AppDatabase get db => AppDatabase.instance;
 
-  // add new video info to local database
-  Future<void> _addVideoInformations(LocalStoreVideoInfo videoInfo) async {
-    videoInfo.time = DateTime.now();
-    await isar.writeTxn(() async {
-      await isar.localStoreVideoInfos.put(videoInfo);
-    });
+  // Convert Drift LocalStoreVideo to domain LocalStoreVideoInfo
+  LocalStoreVideoInfo _toDomain(LocalStoreVideo video) {
+    return LocalStoreVideoInfo(
+      id: video.videoId,
+      title: video.title,
+      views: video.views,
+      thumbnail: video.thumbnail,
+      uploadedDate: video.uploadedDate,
+      uploaderName: video.uploaderName,
+      uploaderId: video.uploaderId,
+      uploaderAvatar: video.uploaderAvatar,
+      uploaderSubscriberCount: video.uploaderSubscriberCount,
+      duration: video.duration,
+      uploaderVerified: video.uploaderVerified,
+      isSaved: video.isSaved,
+      isHistory: video.isHistory,
+      isLive: video.isLive,
+      playbackPosition: video.playbackPosition,
+      time: video.time,
+      profileName: video.profileName,
+    );
+  }
+
+  // Convert domain LocalStoreVideoInfo to Drift companion
+  LocalStoreVideosCompanion _toCompanion(LocalStoreVideoInfo videoInfo) {
+    return LocalStoreVideosCompanion.insert(
+      videoId: videoInfo.id,
+      profileName: videoInfo.profileName,
+      title: Value(videoInfo.title),
+      views: Value(videoInfo.views),
+      thumbnail: Value(videoInfo.thumbnail),
+      uploadedDate: Value(videoInfo.uploadedDate),
+      uploaderName: Value(videoInfo.uploaderName),
+      uploaderId: Value(videoInfo.uploaderId),
+      uploaderAvatar: Value(videoInfo.uploaderAvatar),
+      uploaderSubscriberCount: Value(videoInfo.uploaderSubscriberCount),
+      duration: Value(videoInfo.duration),
+      uploaderVerified: Value(videoInfo.uploaderVerified ?? false),
+      isSaved: Value(videoInfo.isSaved ?? false),
+      isHistory: Value(videoInfo.isHistory ?? false),
+      isLive: Value(videoInfo.isLive ?? false),
+      playbackPosition: Value(videoInfo.playbackPosition),
+      time: Value(videoInfo.time ?? DateTime.now()),
+    );
   }
 
   // get all stored video infos for a specific profile
   Future<List<LocalStoreVideoInfo>> _getVideoInformations(String profileName) async {
-    return await isar.localStoreVideoInfos
-        .filter()
-        .profileNameEqualTo(profileName)
-        .findAll();
-  }
-
-  // delete a video info from local database
-  Future<void> _deleteVideoInformations(String id, String profileName) async {
-    final isarId = fastHash('${id}_$profileName');
-    await isar.writeTxn(() async {
-      await isar.localStoreVideoInfos.delete(isarId);
-    });
+    final videos = await db.getAllVideos(profileName);
+    return videos.map(_toDomain).toList();
   }
 
   // add video info implement
@@ -42,7 +69,8 @@ class SavedImpl extends SavedServices {
     try {
       // Ensure profileName is set
       videoInfo.profileName = profileName;
-      await _addVideoInformations(videoInfo);
+      videoInfo.time = DateTime.now();
+      await db.upsertVideo(_toCompanion(videoInfo));
       List<LocalStoreVideoInfo> videoInfoListAfter =
           await _getVideoInformations(profileName);
       return Right(videoInfoListAfter);
@@ -56,7 +84,7 @@ class SavedImpl extends SavedServices {
   Future<Either<MainFailure, List<LocalStoreVideoInfo>>> deleteVideoInfo(
       {required String id, String profileName = 'default'}) async {
     try {
-      await _deleteVideoInformations(id, profileName);
+      await db.deleteVideo(id, profileName);
       List<LocalStoreVideoInfo> videoInfoList = await _getVideoInformations(profileName);
       return Right(videoInfoList);
     } catch (e) {
@@ -81,12 +109,11 @@ class SavedImpl extends SavedServices {
   Future<Either<MainFailure, LocalStoreVideoInfo>> checkVideoInfo(
       {required String id, String profileName = 'default'}) async {
     try {
-      List<LocalStoreVideoInfo> videoInfoList = await _getVideoInformations(profileName);
-      // Find the video with the specified ID
-      LocalStoreVideoInfo foundVideo =
-          videoInfoList.firstWhere((video) => video.id == id);
-
-      return Right(foundVideo);
+      final video = await db.getVideoById(id, profileName);
+      if (video == null) {
+        return const Left(MainFailure.clientFailure());
+      }
+      return Right(_toDomain(video));
     } catch (e) {
       // Handle the case where the video is not found
       return const Left(MainFailure.clientFailure());

@@ -346,5 +346,139 @@
   "dislike": "Dislike",
   "@dislike": {
     "description": "Dislike button label when count is unavailable"
+  },
+  "download": "Download",
+  "@download": {
+    "description": "Download button label"
+  },
+  "downloads": "Downloads",
+  "@downloads": {
+    "description": "Downloads screen title"
+  },
+  "downloading": "Downloading",
+  "@downloading": {
+    "description": "Downloading status label"
+  },
+  "completed": "Completed",
+  "@completed": {
+    "description": "Completed status label"
+  },
+  "pending": "Pending",
+  "@pending": {
+    "description": "Pending status label"
+  },
+  "paused": "Paused",
+  "@paused": {
+    "description": "Paused status label"
+  },
+  "failed": "Failed",
+  "@failed": {
+    "description": "Failed status label"
+  },
+  "cancelled": "Cancelled",
+  "@cancelled": {
+    "description": "Cancelled status label"
+  },
+  "merging": "Merging",
+  "@merging": {
+    "description": "Merging audio and video status"
+  },
+  "downloadingVideo": "Downloading video",
+  "@downloadingVideo": {
+    "description": "Phase indicator when downloading video track"
+  },
+  "downloadingAudio": "Downloading audio",
+  "@downloadingAudio": {
+    "description": "Phase indicator when downloading audio track"
+  },
+  "noDownloads": "No Downloads",
+  "@noDownloads": {
+    "description": "Empty downloads state title"
+  },
+  "noDownloadsHint": "Downloaded videos will appear here",
+  "@noDownloadsHint": {
+    "description": "Empty downloads state hint"
+  },
+  "downloadType": "Download Type",
+  "@downloadType": {
+    "description": "Download type selector label"
+  },
+  "videoWithAudio": "Video + Audio",
+  "@videoWithAudio": {
+    "description": "Video with audio download type"
+  },
+  "videoOnly": "Video Only",
+  "@videoOnly": {
+    "description": "Video only download type"
+  },
+  "audioOnly": "Audio Only",
+  "@audioOnly": {
+    "description": "Audio only download type"
+  },
+  "audio": "Audio",
+  "@audio": {
+    "description": "Audio badge label"
+  },
+  "videoAudio": "Video+Audio",
+  "@videoAudio": {
+    "description": "Video with audio badge label"
+  },
+  "videoQuality": "Video Quality",
+  "@videoQuality": {
+    "description": "Video quality selector label"
+  },
+  "audioQuality": "Audio Quality",
+  "@audioQuality": {
+    "description": "Audio quality selector label"
+  },
+  "startDownload": "Start Download",
+  "@startDownload": {
+    "description": "Start download button label"
+  },
+  "downloadStarted": "Download started",
+  "@downloadStarted": {
+    "description": "Download started snackbar message"
+  },
+  "deleteDownload": "Delete Download",
+  "@deleteDownload": {
+    "description": "Delete download dialog title"
+  },
+  "deleteDownloadConfirm": "Are you sure you want to delete this download?",
+  "@deleteDownloadConfirm": {
+    "description": "Delete download confirmation message"
+  },
+  "pause": "Pause",
+  "@pause": {
+    "description": "Pause button label"
+  },
+  "resume": "Resume",
+  "@resume": {
+    "description": "Resume button label"
+  },
+  "all": "All",
+  "@all": {
+    "description": "All tab label"
+  },
+  "unknownError": "An unknown error occurred",
+  "@unknownError": {
+    "description": "Unknown error message"
+  },
+  "failedToOpenFile": "Failed to open file",
+  "@failedToOpenFile": {
+    "description": "Error message when file cannot be opened"
+  },
+  "fileNotFound": "File not found",
+  "@fileNotFound": {
+    "description": "Error message when downloaded file is missing"
+  },
+  "downloadFailed": "Download failed: {title}",
+  "@downloadFailed": {
+    "description": "Error message when download fails",
+    "placeholders": {
+      "title": {
+        "type": "String",
+        "example": "Video Title"
+      }
+    }
   }
 }

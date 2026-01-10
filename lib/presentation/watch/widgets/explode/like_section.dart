@@ -4,6 +4,7 @@ import 'package:fluxtube/application/application.dart';
 import 'package:fluxtube/core/strings.dart';
 import 'package:fluxtube/domain/saved/models/local_store.dart';
 import 'package:fluxtube/domain/watch/models/explode/explode_watch.dart';
+import 'package:fluxtube/presentation/download/widgets/download_options_sheet.dart';
 import 'package:fluxtube/presentation/settings/utils/launch_url.dart';
 import 'package:fluxtube/presentation/watch/widgets/redesigned/action_buttons_row.dart';
 import 'package:fluxtube/presentation/watch/widgets/redesigned/share_bottom_sheet.dart';
@@ -50,6 +51,7 @@ class ExplodeLikeSection extends StatelessWidget {
               isCommentActive: state.isTapComments,
               showPip: !settingsState.isPipDisabled,
               isSaved: isSaved,
+              isLive: watchInfo.isLive,
               onTapComment: () {
                 if (state.isDescriptionTapped) {
                   BlocProvider.of<WatchBloc>(context)
@@ -87,6 +89,17 @@ class ExplodeLikeSection extends StatelessWidget {
                         isLive: watchInfo.isLive,
                         isHistory: savedState.videoInfo?.isHistory),
                   ),
+                );
+              },
+              onTapDownload: () {
+                DownloadOptionsSheet.show(
+                  context,
+                  videoId: id,
+                  title: watchInfo.title,
+                  channelName: watchInfo.author,
+                  thumbnailUrl: watchInfo.thumbnailUrl,
+                  duration: watchInfo.duration.inSeconds,
+                  serviceType: settingsState.ytService,
                 );
               },
               onTapYoutube: () async => await urlLaunchWithSettings(context, '$kYTBaseUrl$id'),

@@ -1,16 +1,14 @@
-import 'package:isar_community/isar.dart';
-
-part 'settings_db.g.dart';
-
 //--------SETTINGS MODEL--------//
-// `flutter pub run build_runner build` to generate file
+// Simple key-value settings model (Drift handles DB operations)
 
-@Collection()
 class SettingsDBValue {
-  Id id = Isar.autoIncrement;
-
-  @Index(unique: true, replace: true)
+  int? id;
   late String name;
-
   String? value;
+
+  SettingsDBValue({
+    this.id,
+    required this.name,
+    this.value,
+  });
 }

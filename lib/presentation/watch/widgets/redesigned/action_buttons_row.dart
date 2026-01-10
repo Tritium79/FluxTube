@@ -21,14 +21,17 @@ class ActionButtonsRow extends StatelessWidget {
     this.onTapSave,
     this.onTapComment,
     this.onTapShare,
+    this.onTapDownload,
     this.onTapYoutube,
     this.onTapPip,
     this.isLiked = false,
     this.isDisliked = false,
     this.isSaved = false,
     this.isCommentActive = false,
+    this.isDownloaded = false,
     this.showDislike = false,
     this.showPip = true,
+    this.isLive = false,
   });
 
   final int likes;
@@ -38,14 +41,17 @@ class ActionButtonsRow extends StatelessWidget {
   final VoidCallback? onTapSave;
   final VoidCallback? onTapComment;
   final VoidCallback? onTapShare;
+  final VoidCallback? onTapDownload;
   final VoidCallback? onTapYoutube;
   final VoidCallback? onTapPip;
   final bool isLiked;
   final bool isDisliked;
   final bool isSaved;
   final bool isCommentActive;
+  final bool isDownloaded;
   final bool showDislike;
   final bool showPip;
+  final bool isLive;
 
   @override
   Widget build(BuildContext context) {
@@ -121,10 +127,23 @@ class ActionButtonsRow extends StatelessWidget {
               onTap: onTapShare,
             ),
 
+            // Download button (hidden for live videos)
+            if (!isLive)
+              _ActionButton(
+                index: showDislike ? 5 : 4,
+                icon: isDownloaded
+                    ? CupertinoIcons.arrow_down_circle_fill
+                    : CupertinoIcons.arrow_down_circle,
+                label: locals.download,
+                onTap: onTapDownload,
+                isActive: isDownloaded,
+                activeColor: AppColors.success,
+              ),
+
             // PiP button (optional)
             if (showPip)
               _ActionButton(
-                index: showDislike ? 5 : 4,
+                index: showDislike ? 6 : 5,
                 icon: Icons.picture_in_picture_outlined,
                 label: 'PiP',
                 onTap: onTapPip,
@@ -132,7 +151,7 @@ class ActionButtonsRow extends StatelessWidget {
 
             // YouTube button
             _YouTubeActionButton(
-              index: showDislike ? 6 : 5,
+              index: showDislike ? 7 : 6,
               onTap: onTapYoutube,
             ),
 

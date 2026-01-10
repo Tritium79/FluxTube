@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluxtube/application/subscribe/subscribe_bloc.dart';
 import 'package:fluxtube/core/colors.dart';
 import 'package:fluxtube/domain/channel/models/newpipe/newpipe_channel_resp.dart';
 import 'package:fluxtube/domain/watch/models/newpipe/newpipe_related.dart';
@@ -371,29 +373,40 @@ class _NewPipeChannelTabContentState extends State<NewPipeChannelTabContent> {
   }
 
   Widget _buildChannelsList(BuildContext context, List<NewPipeRelatedStream> content) {
-    return ListView.builder(
-      controller: _scrollController,
-      itemCount: content.length + (_isLoadingMore ? 1 : 0),
-      itemBuilder: (context, index) {
-        if (index < content.length) {
-          final item = content[index];
-          final channelId = item.url?.split('/').last ?? '';
+    return BlocBuilder<SubscribeBloc, SubscribeState>(
+      buildWhen: (previous, current) =>
+          previous.subscribedChannels != current.subscribedChannels,
+      builder: (context, subscribeState) {
+        return ListView.builder(
+          controller: _scrollController,
+          itemCount: content.length + (_isLoadingMore ? 1 : 0),
+          itemBuilder: (context, index) {
+            if (index < content.length) {
+              final item = content[index];
+              final channelId = item.url?.split('/').last ?? '';
 
-          return ChannelWidget(
-            channelName: item.name,
-            isVerified: item.isVerified,
-            subscriberCount: item.subscriberCount,
-            thumbnail: item.thumbnailUrl,
-            isSubscribed: false, // TODO: Check subscription status
-            channelId: channelId,
-            locals: widget.locals,
-          );
-        } else {
-          return const Padding(
-            padding: EdgeInsets.all(16),
-            child: Center(child: CircularProgressIndicator()),
-          );
-        }
+              // Check if channel is subscribed
+              final isSubscribed = subscribeState.subscribedChannels
+                  .where((channel) => channel.id == channelId)
+                  .isNotEmpty;
+
+              return ChannelWidget(
+                channelName: item.name,
+                isVerified: item.isVerified,
+                subscriberCount: item.subscriberCount,
+                thumbnail: item.thumbnailUrl,
+                isSubscribed: isSubscribed,
+                channelId: channelId,
+                locals: widget.locals,
+              );
+            } else {
+              return const Padding(
+                padding: EdgeInsets.all(16),
+                child: Center(child: CircularProgressIndicator()),
+              );
+            }
+          },
+        );
       },
     );
   }

@@ -6,6 +6,7 @@ import 'package:fluxtube/application/application.dart';
 import 'package:fluxtube/core/strings.dart';
 import 'package:fluxtube/domain/saved/models/local_store.dart';
 import 'package:fluxtube/domain/watch/models/invidious/video/invidious_watch_resp.dart';
+import 'package:fluxtube/presentation/download/widgets/download_options_sheet.dart';
 import 'package:fluxtube/presentation/settings/utils/launch_url.dart';
 import 'package:fluxtube/presentation/watch/widgets/redesigned/action_buttons_row.dart';
 import 'package:fluxtube/presentation/watch/widgets/redesigned/share_bottom_sheet.dart';
@@ -52,6 +53,7 @@ class InvidiousLikeSection extends StatelessWidget {
               isCommentActive: state.isTapComments,
               showPip: !settingsState.isPipDisabled,
               isSaved: isSaved,
+              isLive: watchInfo.liveNow ?? false,
               onTapComment: () {
                 if (state.isDescriptionTapped) {
                   BlocProvider.of<WatchBloc>(context)
@@ -90,6 +92,17 @@ class InvidiousLikeSection extends StatelessWidget {
                         isLive: watchInfo.liveNow,
                         isHistory: savedState.videoInfo?.isHistory),
                   ),
+                );
+              },
+              onTapDownload: () {
+                DownloadOptionsSheet.show(
+                  context,
+                  videoId: id,
+                  title: watchInfo.title ?? '',
+                  channelName: watchInfo.author ?? '',
+                  thumbnailUrl: watchInfo.videoThumbnails?.first.url,
+                  duration: watchInfo.lengthSeconds,
+                  serviceType: settingsState.ytService,
                 );
               },
               onTapYoutube: () async => await urlLaunchWithSettings(context, '$kYTBaseUrl$id'),

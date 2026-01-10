@@ -3,13 +3,13 @@ import 'dart:io';
 
 import 'package:archive/archive.dart';
 import 'package:dartz/dartz.dart';
+import 'package:drift/drift.dart';
 import 'package:fluxtube/domain/core/failure/main_failure.dart';
 import 'package:fluxtube/domain/saved/models/local_store.dart';
 import 'package:fluxtube/domain/search/models/search_history.dart';
 import 'package:fluxtube/domain/subscribes/models/subscribe.dart';
-import 'package:fluxtube/infrastructure/settings/setting_impl.dart';
+import 'package:fluxtube/infrastructure/database/database.dart';
 import 'package:injectable/injectable.dart';
-import 'package:isar_community/isar.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -17,7 +17,7 @@ import 'package:sqflite/sqflite.dart';
 /// Creates/reads ZIP files with newpipe.db, newpipe.settings, and preferences.json
 @lazySingleton
 class NewPipeDataService {
-  Isar get isar => SettingImpl.isar;
+  AppDatabase get db => AppDatabase.instance;
 
   /// Export data as NewPipe-compatible ZIP file
   /// Contains: newpipe.db (SQLite), newpipe.settings (Java serialized), preferences.json
@@ -183,12 +183,12 @@ class NewPipeDataService {
     }
 
     // Open SQLite database
-    final db = await openDatabase(dbPath, version: 1, onCreate: (db, version) async {
+    final newPipeDb = await openDatabase(dbPath, version: 1, onCreate: (newPipeDb, version) async {
       // Create NewPipe schema
-      await db.execute('''
+      await newPipeDb.execute('''
         CREATE TABLE IF NOT EXISTS android_metadata (locale TEXT)
       ''');
-      await db.execute('''
+      await newPipeDb.execute('''
         CREATE TABLE subscriptions (
           uid INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
           service_id INTEGER NOT NULL,
@@ -200,11 +200,11 @@ class NewPipeDataService {
           notification_mode INTEGER NOT NULL DEFAULT 0
         )
       ''');
-      await db.execute('''
+      await newPipeDb.execute('''
         CREATE UNIQUE INDEX index_subscriptions_service_id_url
         ON subscriptions (service_id, url)
       ''');
-      await db.execute('''
+      await newPipeDb.execute('''
         CREATE TABLE search_history (
           creation_date INTEGER,
           service_id INTEGER NOT NULL,
@@ -212,10 +212,10 @@ class NewPipeDataService {
           id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL
         )
       ''');
-      await db.execute('''
+      await newPipeDb.execute('''
         CREATE INDEX index_search_history_search ON search_history (search)
       ''');
-      await db.execute('''
+      await newPipeDb.execute('''
         CREATE TABLE streams (
           uid INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
           service_id INTEGER NOT NULL,
@@ -232,10 +232,10 @@ class NewPipeDataService {
           is_upload_date_approximation INTEGER
         )
       ''');
-      await db.execute('''
+      await newPipeDb.execute('''
         CREATE UNIQUE INDEX index_streams_service_id_url ON streams (service_id, url)
       ''');
-      await db.execute('''
+      await newPipeDb.execute('''
         CREATE TABLE stream_history (
           stream_id INTEGER NOT NULL,
           access_date INTEGER NOT NULL,
@@ -244,10 +244,10 @@ class NewPipeDataService {
           FOREIGN KEY(stream_id) REFERENCES streams(uid) ON UPDATE CASCADE ON DELETE CASCADE
         )
       ''');
-      await db.execute('''
+      await newPipeDb.execute('''
         CREATE INDEX index_stream_history_stream_id ON stream_history (stream_id)
       ''');
-      await db.execute('''
+      await newPipeDb.execute('''
         CREATE TABLE stream_state (
           stream_id INTEGER NOT NULL,
           progress_time INTEGER NOT NULL,
@@ -255,7 +255,7 @@ class NewPipeDataService {
           FOREIGN KEY(stream_id) REFERENCES streams(uid) ON UPDATE CASCADE ON DELETE CASCADE
         )
       ''');
-      await db.execute('''
+      await newPipeDb.execute('''
         CREATE TABLE playlists (
           uid INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
           name TEXT,
@@ -264,7 +264,7 @@ class NewPipeDataService {
           display_index INTEGER NOT NULL DEFAULT 0
         )
       ''');
-      await db.execute('''
+      await newPipeDb.execute('''
         CREATE TABLE playlist_stream_join (
           playlist_id INTEGER NOT NULL,
           stream_id INTEGER NOT NULL,
@@ -274,25 +274,22 @@ class NewPipeDataService {
           FOREIGN KEY(stream_id) REFERENCES streams(uid) ON UPDATE CASCADE ON DELETE CASCADE
         )
       ''');
-      await db.execute('''
+      await newPipeDb.execute('''
         CREATE TABLE room_master_table (id INTEGER PRIMARY KEY, identity_hash TEXT)
       ''');
-      await db.insert('room_master_table', {
+      await newPipeDb.insert('room_master_table', {
         'id': 42,
         'identity_hash': 'fluxtube_export',
       });
     });
 
-    // Export subscriptions
-    final subscriptions = await isar.subscribes
-        .filter()
-        .profileNameEqualTo(profileName)
-        .findAll();
+    // Export subscriptions from Drift DB
+    final subscriptions = await db.getAllSubscriptions(profileName);
 
     for (final sub in subscriptions) {
-      await db.insert('subscriptions', {
+      await newPipeDb.insert('subscriptions', {
         'service_id': 0, // 0 = YouTube
-        'url': 'https://www.youtube.com/channel/${sub.id}',
+        'url': 'https://www.youtube.com/channel/${sub.channelId}',
         'name': sub.channelName,
         'avatar_url': sub.avatarUrl,
         'subscriber_count': null,
@@ -301,33 +298,25 @@ class NewPipeDataService {
       });
     }
 
-    // Export search history
-    final searchHistory = await isar.localSearchHistorys
-        .filter()
-        .profileNameEqualTo(profileName)
-        .findAll();
+    // Export search history from Drift DB
+    final searchHistory = await db.getSearchHistory(profileName);
 
     for (final search in searchHistory) {
-      await db.insert('search_history', {
-        'creation_date': search.searchedAt?.millisecondsSinceEpoch ??
-            DateTime.now().millisecondsSinceEpoch,
+      await newPipeDb.insert('search_history', {
+        'creation_date': search.searchedAt.millisecondsSinceEpoch,
         'service_id': 0,
         'search': search.query,
       });
     }
 
-    // Export watch history (as streams + stream_history)
-    final watchHistory = await isar.localStoreVideoInfos
-        .filter()
-        .profileNameEqualTo(profileName)
-        .isHistoryEqualTo(true)
-        .findAll();
+    // Export watch history (as streams + stream_history) from Drift DB
+    final watchHistory = await db.getHistoryVideos(profileName);
 
     for (final video in watchHistory) {
       // Insert into streams table
-      final streamId = await db.insert('streams', {
+      final streamId = await newPipeDb.insert('streams', {
         'service_id': 0,
-        'url': 'https://www.youtube.com/watch?v=${video.id}',
+        'url': 'https://www.youtube.com/watch?v=${video.videoId}',
         'title': video.title ?? '',
         'stream_type': video.isLive == true ? 'LIVE_STREAM' : 'VIDEO_STREAM',
         'duration': video.duration ?? 0,
@@ -343,7 +332,7 @@ class NewPipeDataService {
       });
 
       // Insert into stream_history
-      await db.insert('stream_history', {
+      await newPipeDb.insert('stream_history', {
         'stream_id': streamId,
         'access_date': video.time?.millisecondsSinceEpoch ??
             DateTime.now().millisecondsSinceEpoch,
@@ -352,7 +341,7 @@ class NewPipeDataService {
 
       // Insert playback position into stream_state if available
       if (video.playbackPosition != null && video.playbackPosition! > 0) {
-        await db.insert('stream_state', {
+        await newPipeDb.insert('stream_state', {
           'stream_id': streamId,
           'progress_time': video.playbackPosition! * 1000, // Convert to ms
         });
@@ -360,14 +349,10 @@ class NewPipeDataService {
     }
 
     // Export saved videos as a playlist named "FluxTube Saved"
-    final savedVideos = await isar.localStoreVideoInfos
-        .filter()
-        .profileNameEqualTo(profileName)
-        .isSavedEqualTo(true)
-        .findAll();
+    final savedVideos = await db.getSavedVideos(profileName);
 
     if (savedVideos.isNotEmpty) {
-      final playlistId = await db.insert('playlists', {
+      final playlistId = await newPipeDb.insert('playlists', {
         'name': 'FluxTube Saved',
         'is_thumbnail_permanent': 0,
         'thumbnail_stream_id': -1,
@@ -377,17 +362,17 @@ class NewPipeDataService {
       int joinIndex = 0;
       for (final video in savedVideos) {
         // First, ensure stream exists
-        final existingStream = await db.query(
+        final existingStream = await newPipeDb.query(
           'streams',
           where: 'url = ?',
-          whereArgs: ['https://www.youtube.com/watch?v=${video.id}'],
+          whereArgs: ['https://www.youtube.com/watch?v=${video.videoId}'],
         );
 
         int streamId;
         if (existingStream.isEmpty) {
-          streamId = await db.insert('streams', {
+          streamId = await newPipeDb.insert('streams', {
             'service_id': 0,
-            'url': 'https://www.youtube.com/watch?v=${video.id}',
+            'url': 'https://www.youtube.com/watch?v=${video.videoId}',
             'title': video.title ?? '',
             'stream_type': video.isLive == true ? 'LIVE_STREAM' : 'VIDEO_STREAM',
             'duration': video.duration ?? 0,
@@ -405,7 +390,7 @@ class NewPipeDataService {
           streamId = existingStream.first['uid'] as int;
         }
 
-        await db.insert('playlist_stream_join', {
+        await newPipeDb.insert('playlist_stream_join', {
           'playlist_id': playlistId,
           'stream_id': streamId,
           'join_index': joinIndex++,
@@ -413,7 +398,7 @@ class NewPipeDataService {
       }
     }
 
-    await db.close();
+    await newPipeDb.close();
   }
 
   /// Create preferences.json (FluxTube settings + NewPipe compatible format)
@@ -478,7 +463,7 @@ class NewPipeDataService {
     required bool importPlaylists,
   }) async {
     try {
-      final db = await openDatabase(dbPath, readOnly: true);
+      final newPipeDb = await openDatabase(dbPath, readOnly: true);
       int subscriptionsCount = 0;
       int searchHistoryCount = 0;
       int watchHistoryCount = 0;
@@ -487,40 +472,33 @@ class NewPipeDataService {
       // Import subscriptions
       if (importSubscriptions) {
         try {
-          final subs = await db.query('subscriptions');
-          await isar.writeTxn(() async {
-            for (final sub in subs) {
-              final url = sub['url'] as String? ?? '';
-              final name = sub['name'] as String? ?? '';
-              final avatarUrl = sub['avatar_url'] as String?;
+          final subs = await newPipeDb.query('subscriptions');
+          for (final sub in subs) {
+            final url = sub['url'] as String? ?? '';
+            final name = sub['name'] as String? ?? '';
+            final avatarUrl = sub['avatar_url'] as String?;
 
-              // Extract channel ID from URL
-              String? channelId;
-              if (url.contains('/channel/')) {
-                channelId = url.split('/channel/').last.split('/').first.split('?').first;
-              }
+            // Extract channel ID from URL
+            String? channelId;
+            if (url.contains('/channel/')) {
+              channelId = url.split('/channel/').last.split('/').first.split('?').first;
+            }
 
-              if (channelId != null && channelId.isNotEmpty) {
-                // Check if already exists
-                final existing = await isar.subscribes
-                    .filter()
-                    .idEqualTo(channelId)
-                    .profileNameEqualTo(profileName)
-                    .findFirst();
+            if (channelId != null && channelId.isNotEmpty) {
+              // Check if already exists
+              final existing = await db.getSubscription(channelId, profileName);
 
-                if (existing == null) {
-                  final newSub = Subscribe(
-                    id: channelId,
-                    channelName: name,
-                    avatarUrl: avatarUrl,
-                    profileName: profileName,
-                  );
-                  await isar.subscribes.put(newSub);
-                  subscriptionsCount++;
-                }
+              if (existing == null) {
+                await db.upsertSubscription(SubscriptionsCompanion.insert(
+                  channelId: channelId,
+                  profileName: profileName,
+                  channelName: name,
+                  avatarUrl: Value(avatarUrl),
+                ));
+                subscriptionsCount++;
               }
             }
-          });
+          }
         } catch (_) {
           // Table might not exist
         }
@@ -529,34 +507,27 @@ class NewPipeDataService {
       // Import search history
       if (importSearchHistory) {
         try {
-          final searches = await db.query('search_history');
-          await isar.writeTxn(() async {
-            for (final search in searches) {
-              final query = search['search'] as String? ?? '';
-              final creationDate = search['creation_date'] as int?;
+          final searches = await newPipeDb.query('search_history');
+          for (final search in searches) {
+            final query = search['search'] as String? ?? '';
+            final creationDate = search['creation_date'] as int?;
 
-              if (query.isNotEmpty) {
-                // Check if already exists
-                final existing = await isar.localSearchHistorys
-                    .filter()
-                    .queryEqualTo(query)
-                    .profileNameEqualTo(profileName)
-                    .findFirst();
+            if (query.isNotEmpty) {
+              // Check if already exists
+              final existing = await db.getSearchEntry(query, profileName);
 
-                if (existing == null) {
-                  final newSearch = LocalSearchHistory(
-                    query: query,
-                    searchedAt: creationDate != null
-                        ? DateTime.fromMillisecondsSinceEpoch(creationDate)
-                        : DateTime.now(),
-                    profileName: profileName,
-                  );
-                  await isar.localSearchHistorys.put(newSearch);
-                  searchHistoryCount++;
-                }
+              if (existing == null) {
+                await db.upsertSearchHistory(SearchHistoryEntriesCompanion.insert(
+                  query: query,
+                  profileName: profileName,
+                  searchedAt: creationDate != null
+                      ? DateTime.fromMillisecondsSinceEpoch(creationDate)
+                      : DateTime.now(),
+                ));
+                searchHistoryCount++;
               }
             }
-          });
+          }
         } catch (_) {
           // Table might not exist
         }
@@ -566,9 +537,9 @@ class NewPipeDataService {
       if (importWatchHistory) {
         try {
           // First get streams, then match with stream_history
-          final streams = await db.query('streams');
-          final streamHistory = await db.query('stream_history');
-          final streamStates = await db.query('stream_state');
+          final streams = await newPipeDb.query('streams');
+          final streamHistory = await newPipeDb.query('stream_history');
+          final streamStates = await newPipeDb.query('stream_state');
 
           // Create lookup maps
           final historyByStreamId = <int, Map<String, dynamic>>{};
@@ -580,58 +551,51 @@ class NewPipeDataService {
             stateByStreamId[s['stream_id'] as int] = s;
           }
 
-          await isar.writeTxn(() async {
-            for (final stream in streams) {
-              final uid = stream['uid'] as int;
-              final url = stream['url'] as String? ?? '';
-              final history = historyByStreamId[uid];
-              final state = stateByStreamId[uid];
+          for (final stream in streams) {
+            final uid = stream['uid'] as int;
+            final url = stream['url'] as String? ?? '';
+            final history = historyByStreamId[uid];
+            final state = stateByStreamId[uid];
 
-              // Only import if it has history (was watched)
-              if (history == null) continue;
+            // Only import if it has history (was watched)
+            if (history == null) continue;
 
-              // Extract video ID from URL
-              String? videoId;
-              if (url.contains('watch?v=')) {
-                videoId = url.split('watch?v=').last.split('&').first;
-              }
+            // Extract video ID from URL
+            String? videoId;
+            if (url.contains('watch?v=')) {
+              videoId = url.split('watch?v=').last.split('&').first;
+            }
 
-              if (videoId != null && videoId.isNotEmpty) {
-                // Check if already exists
-                final existing = await isar.localStoreVideoInfos
-                    .filter()
-                    .idEqualTo(videoId)
-                    .profileNameEqualTo(profileName)
-                    .findFirst();
+            if (videoId != null && videoId.isNotEmpty) {
+              // Check if already exists
+              final existing = await db.getVideoById(videoId, profileName);
 
-                if (existing == null) {
-                  final accessDate = history['access_date'] as int?;
-                  final progressTime = state?['progress_time'] as int?;
+              if (existing == null) {
+                final accessDate = history['access_date'] as int?;
+                final progressTime = state?['progress_time'] as int?;
 
-                  final newVideo = LocalStoreVideoInfo(
-                    id: videoId,
-                    title: stream['title'] as String?,
-                    views: stream['view_count'] as int?,
-                    thumbnail: stream['thumbnail_url'] as String?,
-                    uploadedDate: stream['textual_upload_date'] as String?,
-                    uploaderName: stream['uploader'] as String?,
-                    uploaderId: _extractChannelId(stream['uploader_url'] as String?),
-                    duration: stream['duration'] as int?,
-                    isHistory: true,
-                    isSaved: false,
-                    isLive: stream['stream_type'] == 'LIVE_STREAM',
-                    playbackPosition: progressTime != null ? progressTime ~/ 1000 : null,
-                    time: accessDate != null
-                        ? DateTime.fromMillisecondsSinceEpoch(accessDate)
-                        : DateTime.now(),
-                    profileName: profileName,
-                  );
-                  await isar.localStoreVideoInfos.put(newVideo);
-                  watchHistoryCount++;
-                }
+                await db.upsertVideo(LocalStoreVideosCompanion.insert(
+                  videoId: videoId,
+                  profileName: profileName,
+                  title: Value(stream['title'] as String?),
+                  views: Value(stream['view_count'] as int?),
+                  thumbnail: Value(stream['thumbnail_url'] as String?),
+                  uploadedDate: Value(stream['textual_upload_date'] as String?),
+                  uploaderName: Value(stream['uploader'] as String?),
+                  uploaderId: Value(_extractChannelId(stream['uploader_url'] as String?)),
+                  duration: Value(stream['duration'] as int?),
+                  isHistory: const Value(true),
+                  isSaved: const Value(false),
+                  isLive: Value(stream['stream_type'] == 'LIVE_STREAM'),
+                  playbackPosition: Value(progressTime != null ? progressTime ~/ 1000 : null),
+                  time: Value(accessDate != null
+                      ? DateTime.fromMillisecondsSinceEpoch(accessDate)
+                      : DateTime.now()),
+                ));
+                watchHistoryCount++;
               }
             }
-          });
+          }
         } catch (_) {
           // Tables might not exist
         }
@@ -640,8 +604,8 @@ class NewPipeDataService {
       // Import playlists (as saved videos for now)
       if (importPlaylists) {
         try {
-          final playlistJoins = await db.query('playlist_stream_join');
-          final streams = await db.query('streams');
+          final playlistJoins = await newPipeDb.query('playlist_stream_join');
+          final streams = await newPipeDb.query('streams');
 
           // Create stream lookup
           final streamById = <int, Map<String, dynamic>>{};
@@ -649,68 +613,55 @@ class NewPipeDataService {
             streamById[s['uid'] as int] = s;
           }
 
-          await isar.writeTxn(() async {
-            for (final join in playlistJoins) {
-              final streamId = join['stream_id'] as int;
-              final stream = streamById[streamId];
-              if (stream == null) continue;
+          for (final join in playlistJoins) {
+            final streamId = join['stream_id'] as int;
+            final stream = streamById[streamId];
+            if (stream == null) continue;
 
-              final url = stream['url'] as String? ?? '';
-              String? videoId;
-              if (url.contains('watch?v=')) {
-                videoId = url.split('watch?v=').last.split('&').first;
-              }
+            final url = stream['url'] as String? ?? '';
+            String? videoId;
+            if (url.contains('watch?v=')) {
+              videoId = url.split('watch?v=').last.split('&').first;
+            }
 
-              if (videoId != null && videoId.isNotEmpty) {
-                // Check if already saved
-                final existing = await isar.localStoreVideoInfos
-                    .filter()
-                    .idEqualTo(videoId)
-                    .profileNameEqualTo(profileName)
-                    .isSavedEqualTo(true)
-                    .findFirst();
+            if (videoId != null && videoId.isNotEmpty) {
+              // Check if already exists
+              final existing = await db.getVideoById(videoId, profileName);
 
-                if (existing == null) {
-                  // Check if exists as history
-                  final historyEntry = await isar.localStoreVideoInfos
-                      .filter()
-                      .idEqualTo(videoId)
-                      .profileNameEqualTo(profileName)
-                      .findFirst();
-
-                  if (historyEntry != null) {
-                    // Update existing to also be saved
-                    historyEntry.isSaved = true;
-                    await isar.localStoreVideoInfos.put(historyEntry);
-                  } else {
-                    // Create new saved entry
-                    final newVideo = LocalStoreVideoInfo(
-                      id: videoId,
-                      title: stream['title'] as String?,
-                      views: stream['view_count'] as int?,
-                      thumbnail: stream['thumbnail_url'] as String?,
-                      uploadedDate: stream['textual_upload_date'] as String?,
-                      uploaderName: stream['uploader'] as String?,
-                      uploaderId: _extractChannelId(stream['uploader_url'] as String?),
-                      duration: stream['duration'] as int?,
-                      isHistory: false,
-                      isSaved: true,
-                      isLive: stream['stream_type'] == 'LIVE_STREAM',
-                      profileName: profileName,
-                    );
-                    await isar.localStoreVideoInfos.put(newVideo);
-                  }
-                  playlistsCount++;
-                }
+              if (existing == null) {
+                // Create new saved entry
+                await db.upsertVideo(LocalStoreVideosCompanion.insert(
+                  videoId: videoId,
+                  profileName: profileName,
+                  title: Value(stream['title'] as String?),
+                  views: Value(stream['view_count'] as int?),
+                  thumbnail: Value(stream['thumbnail_url'] as String?),
+                  uploadedDate: Value(stream['textual_upload_date'] as String?),
+                  uploaderName: Value(stream['uploader'] as String?),
+                  uploaderId: Value(_extractChannelId(stream['uploader_url'] as String?)),
+                  duration: Value(stream['duration'] as int?),
+                  isHistory: const Value(false),
+                  isSaved: const Value(true),
+                  isLive: Value(stream['stream_type'] == 'LIVE_STREAM'),
+                ));
+                playlistsCount++;
+              } else if (!existing.isSaved) {
+                // Update existing to also be saved
+                await db.upsertVideo(LocalStoreVideosCompanion(
+                  videoId: Value(videoId),
+                  profileName: Value(profileName),
+                  isSaved: const Value(true),
+                ));
+                playlistsCount++;
               }
             }
-          });
+          }
         } catch (_) {
           // Tables might not exist
         }
       }
 
-      await db.close();
+      await newPipeDb.close();
 
       return Right({
         'subscriptions': subscriptionsCount,

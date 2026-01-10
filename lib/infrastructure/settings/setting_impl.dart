@@ -4,57 +4,40 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:drift/drift.dart';
 import 'package:fluxtube/core/enums.dart';
 import 'package:fluxtube/core/strings.dart';
 import 'package:fluxtube/domain/core/failure/main_failure.dart';
-import 'package:fluxtube/domain/saved/models/local_store.dart';
-import 'package:fluxtube/domain/search/models/search_history.dart';
 import 'package:fluxtube/domain/settings/models/instance.dart';
-import 'package:fluxtube/domain/settings/models/settings_db.dart';
 import 'package:fluxtube/domain/settings/settings_service.dart';
 import 'package:fluxtube/domain/subscribes/models/subscribe.dart';
-import 'package:fluxtube/domain/user_preferences/models/user_preferences.dart';
+import 'package:fluxtube/infrastructure/database/database.dart';
 import 'package:injectable/injectable.dart';
-import 'package:isar_community/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../../core/settings.dart';
 
 @LazySingleton(as: SettingsService)
 class SettingImpl implements SettingsService {
-  static late Isar isar;
+  static AppDatabase get db => AppDatabase.instance;
 
   // Initialize the database
   static Future<void> initializeDB() async {
-    final dir = await getApplicationCacheDirectory();
-    isar = await Isar.open([
-      SettingsDBValueSchema,
-      LocalStoreVideoInfoSchema,
-      SubscribeSchema,
-      LocalSearchHistorySchema,
-      UserInteractionSchema,
-      UserTopicPreferenceSchema,
-    ], directory: dir.path);
+    // Drift database is automatically initialized via the singleton
+    // Just ensure it's accessed to trigger initialization
+    final _ = AppDatabase.instance;
   }
 
   // Common setting fetch code
   Future<Map<String, String>> _getOrDefault(
       String settingName, String defaultValue) async {
-    final setting = await isar.settingsDBValues
-        .filter()
-        .nameEqualTo(settingName)
-        .findFirst();
+    final setting = await db.getSetting(settingName);
 
     if (setting == null) {
-      final newSetting = SettingsDBValue()
-        ..name = settingName
-        ..value = defaultValue;
-      await isar.writeTxn(() async {
-        await isar.settingsDBValues.put(newSetting);
-      });
+      await db.setSetting(settingName, defaultValue);
       return {settingName: defaultValue};
     } else {
-      return {settingName: setting.value ?? defaultValue};
+      return {settingName: setting};
     }
   }
 
@@ -66,25 +49,8 @@ class SettingImpl implements SettingsService {
     required String Function(T) toStringValue,
   }) async {
     try {
-      await isar.writeTxn(() async {
-        final existingSetting = await isar.settingsDBValues
-            .filter()
-            .nameEqualTo(settingName)
-            .findFirst();
-
-        final stringValue = toStringValue(value);
-
-        if (existingSetting == null) {
-          final newSetting = SettingsDBValue()
-            ..name = settingName
-            ..value = stringValue;
-          await isar.settingsDBValues.put(newSetting);
-        } else {
-          existingSetting.value = stringValue;
-          await isar.settingsDBValues.put(existingSetting);
-        }
-      });
-
+      final stringValue = toStringValue(value);
+      await db.setSetting(settingName, stringValue);
       return Right(value);
     } catch (e) {
       return const Left(MainFailure.serverFailure());
@@ -542,15 +508,12 @@ class SettingImpl implements SettingsService {
   @override
   Future<Either<MainFailure, List<String>>> getProfiles() async {
     try {
-      final setting = await isar.settingsDBValues
-          .filter()
-          .nameEqualTo(profilesListKey)
-          .findFirst();
+      final setting = await db.getSetting(profilesListKey);
 
-      if (setting == null || setting.value == null || setting.value!.isEmpty) {
+      if (setting == null || setting.isEmpty) {
         return const Right(['default']);
       }
-      return Right(setting.value!.split(','));
+      return Right(setting.split(','));
     } catch (e) {
       return const Left(MainFailure.serverFailure());
     }
@@ -663,17 +626,14 @@ class SettingImpl implements SettingsService {
       {String profileName = 'default'}) async {
     try {
       // Get subscriptions only for the specified profile
-      final subscriptions = await isar.subscribes
-          .filter()
-          .profileNameEqualTo(profileName)
-          .findAll();
+      final subscriptions = await db.getAllSubscriptions(profileName);
 
       // Create NewPipe compatible format
       final subscriptionsList = subscriptions.map((sub) {
         return {
           'service_id': 0, // YouTube
-          'url': 'https://www.youtube.com/channel/${sub.id}',
-          'name': sub.channelName ?? '',
+          'url': 'https://www.youtube.com/channel/${sub.channelId}',
+          'name': sub.channelName,
         };
       }).toList();
 
@@ -715,41 +675,34 @@ class SettingImpl implements SettingsService {
       if (data.containsKey('subscriptions')) {
         final subscriptions = data['subscriptions'] as List<dynamic>;
 
-        await isar.writeTxn(() async {
-          for (final sub in subscriptions) {
-            final subMap = sub as Map<String, dynamic>;
-            final url = subMap['url'] as String? ?? '';
-            final name = subMap['name'] as String? ?? '';
+        for (final sub in subscriptions) {
+          final subMap = sub as Map<String, dynamic>;
+          final url = subMap['url'] as String? ?? '';
+          final name = subMap['name'] as String? ?? '';
 
-            // Extract channel ID from URL
-            String? channelId;
-            if (url.contains('/channel/')) {
-              channelId = url.split('/channel/').last.split('/').first;
-            } else if (url.contains('/c/') || url.contains('/@')) {
-              // Handle custom URLs - would need API lookup in production
-              continue;
-            }
+          // Extract channel ID from URL
+          String? channelId;
+          if (url.contains('/channel/')) {
+            channelId = url.split('/channel/').last.split('/').first;
+          } else if (url.contains('/c/') || url.contains('/@')) {
+            // Handle custom URLs - would need API lookup in production
+            continue;
+          }
 
-            if (channelId != null && channelId.isNotEmpty) {
-              // Check if already subscribed in this profile
-              final existing = await isar.subscribes
-                  .filter()
-                  .idEqualTo(channelId)
-                  .profileNameEqualTo(profileName)
-                  .findFirst();
+          if (channelId != null && channelId.isNotEmpty) {
+            // Check if already subscribed in this profile
+            final existing = await db.getSubscription(channelId, profileName);
 
-              if (existing == null) {
-                final newSub = Subscribe(
-                  id: channelId,
-                  channelName: name,
-                  profileName: profileName,
-                );
-                await isar.subscribes.put(newSub);
-                importedCount++;
-              }
+            if (existing == null) {
+              await db.upsertSubscription(SubscriptionsCompanion.insert(
+                channelId: channelId,
+                profileName: profileName,
+                channelName: name,
+              ));
+              importedCount++;
             }
           }
-        });
+        }
       }
 
       return Right(importedCount);

@@ -1,15 +1,17 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'package:dartz/dartz.dart';
+import 'package:drift/drift.dart';
 import 'package:fluxtube/domain/core/failure/main_failure.dart';
-import 'package:fluxtube/domain/user_preferences/models/user_preferences.dart';
+import 'package:fluxtube/domain/user_preferences/models/user_preferences.dart'
+    as domain;
 import 'package:fluxtube/domain/user_preferences/user_preferences_service.dart';
-import 'package:fluxtube/infrastructure/settings/setting_impl.dart';
+import 'package:fluxtube/infrastructure/database/database.dart';
 import 'package:injectable/injectable.dart';
-import 'package:isar_community/isar.dart';
 
 @LazySingleton(as: UserPreferencesService)
 class UserPreferencesImpl implements UserPreferencesService {
-  Isar get isar => SettingImpl.isar;
+  AppDatabase get db => AppDatabase.instance;
 
   // Stop words to filter out from keyword extraction
   static const _stopWords = {
@@ -25,10 +27,37 @@ class UserPreferencesImpl implements UserPreferencesService {
     '4k', '1080p', '720p', 'episode', 'part', 'ep', 'vs', 'ft', 'feat',
   };
 
+  // Convert Drift UserInteraction to domain
+  domain.UserInteraction _interactionToDomain(UserInteraction interaction) {
+    return domain.UserInteraction(
+      entityId: interaction.entityId,
+      type: domain.InteractionType.values[interaction.interactionType],
+      timestamp: interaction.timestamp,
+      weight: interaction.weight.toInt(),
+      profileName: interaction.profileName,
+      title: interaction.title,
+      channelName: interaction.channelName,
+      category: interaction.category,
+      tags: interaction.tags != null
+          ? (jsonDecode(interaction.tags!) as List).cast<String>()
+          : [],
+    );
+  }
+
+  // Convert Drift UserTopicPreference to domain
+  domain.UserTopicPreference _topicToDomain(UserTopicPreference pref) {
+    return domain.UserTopicPreference(
+      topic: pref.topic,
+      relevanceScore: pref.relevanceScore,
+      lastUpdated: pref.lastUpdated,
+      profileName: pref.profileName,
+    );
+  }
+
   @override
   Future<Either<MainFailure, Unit>> trackInteraction({
     required String entityId,
-    required InteractionType type,
+    required domain.InteractionType type,
     int weight = 1,
     String profileName = 'default',
     String? title,
@@ -40,26 +69,22 @@ class UserPreferencesImpl implements UserPreferencesService {
       // Extract tags from title if not provided
       final extractedTags = tags.isNotEmpty ? tags : _extractKeywords(title);
 
-      final interaction = UserInteraction(
+      await db.upsertInteraction(UserInteractionsCompanion.insert(
         entityId: entityId,
-        type: type,
-        timestamp: DateTime.now(),
-        weight: weight,
+        interactionType: type.index,
         profileName: profileName,
-        title: title,
-        channelName: channelName,
-        category: category,
-        tags: extractedTags,
-      );
-
-      await isar.writeTxn(() async {
-        await isar.userInteractions.put(interaction);
-      });
+        timestamp: DateTime.now(),
+        weight: Value(weight.toDouble()),
+        title: Value(title),
+        channelName: Value(channelName),
+        category: Value(category),
+        tags: Value(jsonEncode(extractedTags)),
+      ));
 
       // Update topic preferences after certain interactions
-      if (type == InteractionType.videoWatch ||
-          type == InteractionType.videoComplete ||
-          type == InteractionType.search) {
+      if (type == domain.InteractionType.videoWatch ||
+          type == domain.InteractionType.videoComplete ||
+          type == domain.InteractionType.search) {
         await updateTopicPreferences(profileName: profileName);
       }
 
@@ -89,19 +114,13 @@ class UserPreferencesImpl implements UserPreferencesService {
   }
 
   @override
-  Future<Either<MainFailure, List<UserTopicPreference>>> getTopTopics({
+  Future<Either<MainFailure, List<domain.UserTopicPreference>>> getTopTopics({
     required String profileName,
     int limit = 10,
   }) async {
     try {
-      final topics = await isar.userTopicPreferences
-          .filter()
-          .profileNameEqualTo(profileName)
-          .sortByRelevanceScoreDesc()
-          .limit(limit)
-          .findAll();
-
-      return Right(topics);
+      final topics = await db.getTopicPreferences(profileName, limit: limit);
+      return Right(topics.map(_topicToDomain).toList());
     } catch (e) {
       log('Error getting top topics: $e');
       return const Left(MainFailure.clientFailure());
@@ -119,13 +138,11 @@ class UserPreferencesImpl implements UserPreferencesService {
 
       // 1. Get recent search interactions (50% of queries)
       final searchLimit = (limit * 0.5).ceil();
-      final searchInteractions = await isar.userInteractions
-          .filter()
-          .profileNameEqualTo(profileName)
-          .typeEqualTo(InteractionType.search)
-          .sortByTimestampDesc()
-          .limit(searchLimit * 2)
-          .findAll();
+      final searchInteractions = await db.getInteractionsByType(
+        profileName,
+        domain.InteractionType.search.index,
+        limit: searchLimit * 2,
+      );
 
       for (final interaction in searchInteractions) {
         if (!seen.contains(interaction.entityId.toLowerCase()) &&
@@ -175,7 +192,7 @@ class UserPreferencesImpl implements UserPreferencesService {
 
       // 4. Fill remaining with default topics
       if (queries.length < limit) {
-        for (final defaultTopic in DefaultTopic.defaultTopics) {
+        for (final defaultTopic in domain.DefaultTopic.defaultTopics) {
           if (queries.length >= limit) break;
           if (!seen.contains(defaultTopic.keyword.toLowerCase())) {
             queries.add(defaultTopic.keyword);
@@ -199,13 +216,7 @@ class UserPreferencesImpl implements UserPreferencesService {
   }) async {
     try {
       // Get interactions with channel names
-      final interactions = await isar.userInteractions
-          .filter()
-          .profileNameEqualTo(profileName)
-          .channelNameIsNotNull()
-          .sortByTimestampDesc()
-          .limit(100)
-          .findAll();
+      final interactions = await db.getInteractions(profileName, limit: 100);
 
       // Count channel occurrences with recency weighting
       final channelScores = <String, double>{};
@@ -220,9 +231,9 @@ class UserPreferencesImpl implements UserPreferencesService {
         final recencyMultiplier = 1.0 / (1 + daysSince / 30.0);
 
         double typeMultiplier = 1.0;
-        if (interaction.type == InteractionType.videoComplete) {
+        if (interaction.interactionType == domain.InteractionType.videoComplete.index) {
           typeMultiplier = 2.0;
-        } else if (interaction.type == InteractionType.videoSave) {
+        } else if (interaction.interactionType == domain.InteractionType.videoSave.index) {
           typeMultiplier = 1.5;
         }
 
@@ -243,23 +254,21 @@ class UserPreferencesImpl implements UserPreferencesService {
   }
 
   @override
-  Future<Either<MainFailure, List<UserInteraction>>> getRecentInteractions({
+  Future<Either<MainFailure, List<domain.UserInteraction>>> getRecentInteractions({
     required String profileName,
-    InteractionType? type,
+    domain.InteractionType? type,
     int limit = 50,
   }) async {
     try {
-      var query =
-          isar.userInteractions.filter().profileNameEqualTo(profileName);
+      List<UserInteraction> interactions;
 
       if (type != null) {
-        query = query.typeEqualTo(type);
+        interactions = await db.getInteractionsByType(profileName, type.index, limit: limit);
+      } else {
+        interactions = await db.getInteractions(profileName, limit: limit);
       }
 
-      final interactions =
-          await query.sortByTimestampDesc().limit(limit).findAll();
-
-      return Right(interactions);
+      return Right(interactions.map(_interactionToDomain).toList());
     } catch (e) {
       log('Error getting recent interactions: $e');
       return const Left(MainFailure.clientFailure());
@@ -272,12 +281,7 @@ class UserPreferencesImpl implements UserPreferencesService {
   }) async {
     try {
       // Get recent interactions
-      final recentInteractions = await isar.userInteractions
-          .filter()
-          .profileNameEqualTo(profileName)
-          .sortByTimestampDesc()
-          .limit(200) // Increased for better analysis
-          .findAll();
+      final recentInteractions = await db.getInteractions(profileName, limit: 200);
 
       // Extract topics from all interactions with smart weighting
       final topicScores = <String, double>{};
@@ -290,23 +294,24 @@ class UserPreferencesImpl implements UserPreferencesService {
 
         // Base weight multiplier by interaction type
         double typeMultiplier;
-        switch (interaction.type) {
-          case InteractionType.videoComplete:
+        final interactionType = domain.InteractionType.values[interaction.interactionType];
+        switch (interactionType) {
+          case domain.InteractionType.videoComplete:
             typeMultiplier = 2.0; // Highest - user watched most of video
-          case InteractionType.videoWatch:
+          case domain.InteractionType.videoWatch:
             typeMultiplier = 1.0; // Standard
-          case InteractionType.videoSave:
+          case domain.InteractionType.videoSave:
             typeMultiplier = 1.5; // User explicitly saved
-          case InteractionType.search:
+          case domain.InteractionType.search:
             typeMultiplier = 0.8; // Active interest signal
-          case InteractionType.channelView:
+          case domain.InteractionType.channelView:
             typeMultiplier = 0.5; // Channel exploration
         }
 
         final baseScore = recencyMultiplier * typeMultiplier * interaction.weight;
 
         // Extract keywords from search queries
-        if (interaction.type == InteractionType.search) {
+        if (interactionType == domain.InteractionType.search) {
           final keywords = _extractKeywords(interaction.entityId);
           for (final keyword in keywords) {
             topicScores[keyword] = (topicScores[keyword] ?? 0.0) + baseScore;
@@ -322,10 +327,13 @@ class UserPreferencesImpl implements UserPreferencesService {
         }
 
         // Use pre-extracted tags if available (even better - already processed)
-        for (final tag in interaction.tags) {
-          if (tag.length > 2 && !_stopWords.contains(tag.toLowerCase())) {
-            topicScores[tag.toLowerCase()] =
-                (topicScores[tag.toLowerCase()] ?? 0.0) + baseScore * 1.2;
+        if (interaction.tags != null && interaction.tags!.isNotEmpty) {
+          final tags = (jsonDecode(interaction.tags!) as List).cast<String>();
+          for (final tag in tags) {
+            if (tag.length > 2 && !_stopWords.contains(tag.toLowerCase())) {
+              topicScores[tag.toLowerCase()] =
+                  (topicScores[tag.toLowerCase()] ?? 0.0) + baseScore * 1.2;
+            }
           }
         }
 
@@ -345,27 +353,18 @@ class UserPreferencesImpl implements UserPreferencesService {
         }
       }
 
-      // Save top topics (increased threshold for quality)
-      await isar.writeTxn(() async {
-        // Clear old preferences first to avoid stale data
-        await isar.userTopicPreferences
-            .filter()
-            .profileNameEqualTo(profileName)
-            .deleteAll();
-
-        for (final entry in topicScores.entries) {
-          if (entry.value > 0.05) {
-            // Lower threshold but filter by score
-            final topic = UserTopicPreference(
-              topic: entry.key,
-              relevanceScore: entry.value,
-              lastUpdated: now,
-              profileName: profileName,
-            );
-            await isar.userTopicPreferences.put(topic);
-          }
+      // Save top topics
+      for (final entry in topicScores.entries) {
+        if (entry.value > 0.05) {
+          // Lower threshold but filter by score
+          await db.upsertTopicPreference(UserTopicPreferencesCompanion.insert(
+            topic: entry.key,
+            profileName: profileName,
+            relevanceScore: Value(entry.value),
+            lastUpdated: now,
+          ));
         }
-      });
+      }
 
       log('[UserPreferences] Updated ${topicScores.length} topic preferences for $profileName');
       return const Right(unit);
@@ -382,21 +381,7 @@ class UserPreferencesImpl implements UserPreferencesService {
   }) async {
     try {
       final cutoffDate = DateTime.now().subtract(olderThan);
-
-      await isar.writeTxn(() async {
-        await isar.userInteractions
-            .filter()
-            .profileNameEqualTo(profileName)
-            .timestampLessThan(cutoffDate)
-            .deleteAll();
-
-        await isar.userTopicPreferences
-            .filter()
-            .profileNameEqualTo(profileName)
-            .lastUpdatedLessThan(cutoffDate)
-            .deleteAll();
-      });
-
+      await db.deleteOldInteractions(profileName, cutoffDate);
       return const Right(unit);
     } catch (e) {
       log('Error clearing old interactions: $e');

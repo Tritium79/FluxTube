@@ -1,25 +1,14 @@
 // ignore_for_file: public_member_api_docs
-import 'package:isar_community/isar.dart';
-import '../../../core/operations/math_operations.dart';
 
-part 'user_preferences.g.dart';
+//--------USER PREFERENCES MODELS--------//
+// Domain models for user interactions and topic preferences
 
 /// Tracks user interactions for personalized recommendations
-@Collection()
 class UserInteraction {
-  @Index(unique: true, composite: [CompositeIndex('profileName')])
-  Id get isarId => fastHash('${type.index}_${entityId}_$profileName');
-
   late String entityId; // video ID, channel ID, or search query
-
-  @Enumerated(EnumType.ordinal)
   late InteractionType type;
-
   late DateTime timestamp;
-  late int
-      weight; // Higher weight = more important (watch time, recent searches, etc.)
-
-  @Index()
+  late int weight; // Higher weight = more important (watch time, recent searches, etc.)
   String profileName;
 
   // Enhanced metadata for better recommendations
@@ -50,16 +39,10 @@ enum InteractionType {
 }
 
 /// Stores extracted keywords/topics from user interactions
-@Collection()
 class UserTopicPreference {
-  @Index(unique: true, composite: [CompositeIndex('profileName')])
-  Id get isarId => fastHash('${topic}_$profileName');
-
   late String topic; // Extracted keyword or category
   late double relevanceScore; // How relevant is this topic (0.0 - 1.0)
   late DateTime lastUpdated;
-
-  @Index()
   String profileName;
 
   UserTopicPreference({

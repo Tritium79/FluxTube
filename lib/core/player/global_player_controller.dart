@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
+import 'package:fluxtube/core/services/pip_service.dart';
 
 /// Global player controller singleton that persists across navigation
 /// This prevents the player from being recreated/disposed when navigating
@@ -14,18 +15,36 @@ class GlobalPlayerController extends ChangeNotifier {
   GlobalPlayerController._internal() {
     // Eagerly initialize player and video controller
     _initializePlayer();
+    // Setup PiP service listener
+    _setupPipListener();
   }
 
   Player? _player;
   VideoController? _videoController;
   String? _currentVideoId;
   bool _isPipMode = false;
+  bool _isSystemPipMode = false; // Native Android PiP mode
   Duration _lastPosition = Duration.zero;
   bool _wasPlaying = false;
   bool _isInitialized = false;
 
+  // PiP service for native Android PiP
+  final PipService _pipService = PipService();
+
   // Stream source info to avoid re-resolving
   String? _currentVideoUrl;
+
+  /// Setup listener for native PiP mode changes
+  void _setupPipListener() {
+    _pipService.addPipModeListener(_onSystemPipModeChanged);
+  }
+
+  /// Handle system PiP mode changes from Android
+  void _onSystemPipModeChanged(bool isInPipMode) {
+    _isSystemPipMode = isInPipMode;
+    log('[GlobalPlayer] System PiP mode changed: $isInPipMode');
+    notifyListeners();
+  }
 
   /// Initialize player eagerly to avoid first-play issues
   void _initializePlayer() {
@@ -61,8 +80,10 @@ class GlobalPlayerController extends ChangeNotifier {
 
   String? get currentVideoId => _currentVideoId;
   bool get isPipMode => _isPipMode;
+  bool get isSystemPipMode => _isSystemPipMode;
   Duration get lastPosition => _lastPosition;
   bool get hasActivePlayer => _player != null && _currentVideoId != null;
+  PipService get pipService => _pipService;
 
   /// Set the current video ID - called by media player when playback starts
   void setCurrentVideoId(String videoId) {
@@ -194,6 +215,37 @@ class GlobalPlayerController extends ChangeNotifier {
     log('[GlobalPlayer] Exited PiP mode');
   }
 
+  /// Enter system (Android native) PiP mode
+  /// This creates a floating window that persists when app is minimized
+  Future<bool> enterSystemPipMode({int aspectRatioWidth = 16, int aspectRatioHeight = 9}) async {
+    if (_currentVideoId == null) {
+      log('[GlobalPlayer] Cannot enter system PiP - no video playing');
+      return false;
+    }
+
+    final success = await _pipService.enterPipMode(
+      aspectRatioWidth: aspectRatioWidth,
+      aspectRatioHeight: aspectRatioHeight,
+    );
+
+    if (success) {
+      log('[GlobalPlayer] Entered system PiP mode');
+    }
+    return success;
+  }
+
+  /// Enable auto-PiP (enters PiP when user presses home button while video is playing)
+  Future<void> enableAutoPip(bool enabled) async {
+    await _pipService.enableAutoPip(enabled);
+    log('[GlobalPlayer] Auto-PiP enabled: $enabled');
+  }
+
+  /// Update native side about playback state (for auto-PiP)
+  Future<void> updatePlaybackStateForPip() async {
+    final isPlaying = _player?.state.playing ?? false;
+    await _pipService.setVideoPlaying(isPlaying);
+  }
+
   /// Initialize player for a new video
   /// If already playing this video, just restore state
   Future<bool> initializeForVideo({
@@ -261,6 +313,9 @@ class GlobalPlayerController extends ChangeNotifier {
       _isPipMode = false;
       _lastPosition = Duration.zero;
       _wasPlaying = true;
+
+      // Notify native side that video is playing (for auto-PiP)
+      await _pipService.setVideoPlaying(true);
 
       notifyListeners();
       log('[GlobalPlayer] Initialized video $videoId');
@@ -344,6 +399,9 @@ class GlobalPlayerController extends ChangeNotifier {
     _isPipMode = false;
     _lastPosition = Duration.zero;
     _wasPlaying = false;
+
+    // Notify native side that video stopped (for auto-PiP)
+    await _pipService.setVideoPlaying(false);
 
     log('[GlobalPlayer] IMMEDIATELY cleared video ID: $stoppingVideoId');
     notifyListeners();

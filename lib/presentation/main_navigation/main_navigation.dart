@@ -1,11 +1,13 @@
 import 'package:awesome_bottom_bar/awesome_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluxtube/application/application.dart';
 import 'package:fluxtube/core/colors.dart';
 import 'package:fluxtube/core/deep_link_handler.dart';
 import 'package:fluxtube/core/enums.dart';
+import 'package:fluxtube/core/player/global_player_controller.dart';
 import 'package:fluxtube/generated/l10n.dart';
 
 import '../download/screen_downloads.dart';
@@ -225,31 +227,46 @@ class MainNavigationState extends State<MainNavigation> {
                   indexChangeNotifier.value = safeIndex;
                 });
               }
-              return Scaffold(
-                body: SafeArea(
-                  child: pages[safeIndex],
-                ),
-                bottomNavigationBar: BottomBarSalomon(
-                  items: items,
-                  top: 25,
-                  bottom: 25,
-                  iconSize: 26,
-                  heightItem: 50,
-                  backgroundColor: kTransparentColor,
-                  color: kGreyColor!,
-                  colorSelected: kRedColor,
-                  backgroundSelected: kGreyOpacityColor!,
-                  indexSelected: safeIndex,
-                  titleStyle: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                    overflow: TextOverflow.ellipsis,
+              return PopScope(
+                canPop: false,
+                onPopInvokedWithResult: (didPop, _) async {
+                  if (didPop) return;
+                  // Stop the player before exiting to prevent FlutterJNI crash
+                  final globalPlayer = GlobalPlayerController();
+                  if (globalPlayer.hasActivePlayer) {
+                    globalPlayer.disposePlayer();
+                    // Small delay to ensure player is fully stopped
+                    await Future.delayed(const Duration(milliseconds: 100));
+                  }
+                  // Exit the app
+                  SystemNavigator.pop();
+                },
+                child: Scaffold(
+                  body: SafeArea(
+                    child: pages[safeIndex],
                   ),
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
+                  bottomNavigationBar: BottomBarSalomon(
+                    items: items,
+                    top: 25,
+                    bottom: 25,
+                    iconSize: 26,
+                    heightItem: 50,
+                    backgroundColor: kTransparentColor,
+                    color: kGreyColor!,
+                    colorSelected: kRedColor,
+                    backgroundSelected: kGreyOpacityColor!,
+                    indexSelected: safeIndex,
+                    titleStyle: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                    onTap: (int index) => indexChangeNotifier.value = index,
                   ),
-                  onTap: (int index) => indexChangeNotifier.value = index,
                 ),
               );
             },

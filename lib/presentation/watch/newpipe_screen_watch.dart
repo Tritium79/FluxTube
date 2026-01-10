@@ -216,7 +216,8 @@ class _NewPipeScreenWatchState extends State<NewPipeScreenWatch>
             previous.isHideRelated != current.isHideRelated ||
             previous.videoFitMode != current.videoFitMode ||
             previous.skipInterval != current.skipInterval ||
-            previous.subtitleSize != current.subtitleSize,
+            previous.subtitleSize != current.subtitleSize ||
+            previous.isAutoPipEnabled != current.isAutoPipEnabled,
         builder: (context, settingsState) {
           return BlocBuilder<WatchBloc, WatchState>(
           buildWhen: (previous, current) =>
@@ -345,6 +346,8 @@ class _NewPipeScreenWatchState extends State<NewPipeScreenWatch>
                                             settingsState.isSponsorBlockEnabled
                                                 ? state.sponsorSegments
                                                 : const [],
+                                        isAutoPipEnabled:
+                                            settingsState.isAutoPipEnabled,
                                       )
                                         : Container(
                                             height: 200,

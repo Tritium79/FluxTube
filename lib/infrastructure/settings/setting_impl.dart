@@ -86,6 +86,7 @@ class SettingImpl implements SettingsService {
       {"name": audioFocusEnabledKey, "default": "true"},
       {"name": sponsorBlockEnabledKey, "default": "false"},
       {"name": subtitleSizeKey, "default": "18.0"},
+      {"name": autoPipEnabledKey, "default": "true"},
     ];
 
     // Initialize settings list
@@ -737,6 +738,16 @@ class SettingImpl implements SettingsService {
     return _setSetting(
       settingName: searchHistoryVisibilityKey,
       value: isVisible,
+      toStringValue: (v) => v.toString(),
+    );
+  }
+
+  @override
+  Future<Either<MainFailure, bool>> toggleAutoPip(
+      {required bool isEnabled}) async {
+    return _setSetting(
+      settingName: autoPipEnabledKey,
+      value: isEnabled,
       toStringValue: (v) => v.toString(),
     );
   }

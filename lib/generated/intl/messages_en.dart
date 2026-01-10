@@ -43,6 +43,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "audioOnly": MessageLookupByLibrary.simpleMessage("Audio Only"),
     "audioQuality": MessageLookupByLibrary.simpleMessage("Audio Quality"),
+    "autoPip": MessageLookupByLibrary.simpleMessage("Auto Picture-in-Picture"),
+    "autoPipDescription": MessageLookupByLibrary.simpleMessage(
+      "Automatically enter PiP mode when pressing home button while video is playing",
+    ),
     "backupRestore": MessageLookupByLibrary.simpleMessage("Backup & Restore"),
     "backupRestoreDescription": MessageLookupByLibrary.simpleMessage(
       "Export or import your subscriptions",

@@ -87,6 +87,10 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       final bool searchHistoryVisible =
           settingsMap[searchHistoryVisibilityKey] != "false";
 
+      // Auto PiP setting (default true)
+      final bool autoPipEnabled =
+          settingsMap[autoPipEnabledKey] != "false";
+
       newState = newState.copyWith(
         version: packageInfo.version,
         themeMode: defaultThemeMode,
@@ -97,6 +101,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
         isPipDisabled: isPipDisabled,
         isSearchHistoryEnabled: searchHistoryEnabled,
         isSearchHistoryVisible: searchHistoryVisible,
+        isAutoPipEnabled: autoPipEnabled,
       );
 
       if (ytService == YouTubeServices.invidious.name) {
@@ -606,6 +611,16 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     // Set last exported file path (for ZIP exports from NewPipeDataService)
     on<SetLastExportedFilePath>((event, emit) {
       emit(state.copyWith(lastExportedFilePath: event.filePath));
+    });
+
+    // Toggle auto PiP (enter PiP when pressing home while video is playing)
+    on<ToggleAutoPip>((event, emit) async {
+      final newValue = !state.isAutoPipEnabled;
+      final _result = await settingsService.toggleAutoPip(isEnabled: newValue);
+      final _state = _result.fold(
+          (MainFailure f) => state.copyWith(isAutoPipEnabled: state.isAutoPipEnabled),
+          (bool isEnabled) => state.copyWith(isAutoPipEnabled: isEnabled));
+      emit(_state);
     });
   }
 }

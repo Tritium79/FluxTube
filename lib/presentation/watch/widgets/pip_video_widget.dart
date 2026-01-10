@@ -51,12 +51,20 @@ class _PipVideoWidgetState extends State<PipVideoWidget> {
 
     final screenSize = MediaQuery.of(context).size;
 
+    // Don't render if screen is too small (e.g., in system PiP mode)
+    // The in-app PiP doesn't make sense when the whole app is already in a tiny window
+    if (screenSize.width < pipWidth + 50 || screenSize.height < pipHeight + 150) {
+      return const SizedBox.shrink();
+    }
+
     // Clamp position to screen bounds
-    final clampedX = _position.dx.clamp(0.0, screenSize.width - pipWidth);
-    final clampedY = _position.dy.clamp(
-      MediaQuery.of(context).padding.top,
-      screenSize.height - pipHeight - MediaQuery.of(context).padding.bottom - 80,
-    );
+    final maxX = (screenSize.width - pipWidth).clamp(0.0, double.infinity);
+    final minY = MediaQuery.of(context).padding.top;
+    final maxY = (screenSize.height - pipHeight - MediaQuery.of(context).padding.bottom - 80)
+        .clamp(minY, double.infinity);
+
+    final clampedX = _position.dx.clamp(0.0, maxX);
+    final clampedY = _position.dy.clamp(minY, maxY);
 
     return Positioned(
       left: clampedX.toDouble(),

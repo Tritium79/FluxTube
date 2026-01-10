@@ -47,3 +47,6 @@ const lastSyncedKey = 'last-synced';
 // Search history privacy
 const searchHistoryEnabledKey = 'search-history-enabled';
 const searchHistoryVisibilityKey = 'search-history-visibility';
+
+// Auto PiP (enter PiP when pressing home button while video is playing)
+const autoPipEnabledKey = 'auto-pip-enabled';

@@ -14,6 +14,7 @@ import 'package:fluxtube/application/watch/watch_bloc.dart';
 import 'package:fluxtube/core/app_info.dart';
 import 'package:fluxtube/core/app_theme.dart';
 import 'package:fluxtube/core/locals.dart';
+import 'package:fluxtube/core/player/global_player_controller.dart';
 import 'package:fluxtube/infrastructure/download/download_notification_service.dart';
 import 'package:fluxtube/infrastructure/settings/setting_impl.dart';
 import 'package:fluxtube/presentation/routes/app_routes.dart';
@@ -44,15 +45,33 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     // Initialize notification service after the first frame
     // This ensures the Activity is fully attached and can show permission dialogs
     WidgetsBinding.instance.addPostFrameCallback((_) {
       DownloadNotificationService().initialize();
     });
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    // Dispose the global player when app is closing
+    GlobalPlayerController().disposePlayer();
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    // When app is detached (being destroyed), stop the player to prevent crash
+    if (state == AppLifecycleState.detached) {
+      GlobalPlayerController().disposePlayer();
+    }
   }
 
   @override

@@ -55,4 +55,6 @@ class SettingsEvent with _$SettingsEvent {
   factory SettingsEvent.toggleSearchHistoryVisibility() = ToggleSearchHistoryVisibility;
   // Set last exported file path (for share functionality)
   factory SettingsEvent.setLastExportedFilePath({required String filePath}) = SetLastExportedFilePath;
+  // Auto PiP toggle
+  factory SettingsEvent.toggleAutoPip() = ToggleAutoPip;
 }

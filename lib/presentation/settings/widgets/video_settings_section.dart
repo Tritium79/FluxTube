@@ -245,6 +245,21 @@ class VideoSettingsSection extends StatelessWidget {
                 },
               ),
             ),
+            // Auto PiP - only available on Android
+            if (Platform.isAndroid && !state.isPipDisabled)
+              ListTile(
+                title: Text(locals.autoPip,
+                    style: Theme.of(context).textTheme.titleMedium),
+                subtitle: Text(locals.autoPipDescription),
+                leading: const Icon(Icons.home),
+                trailing: Switch(
+                  value: state.isAutoPipEnabled,
+                  onChanged: (_) {
+                    BlocProvider.of<SettingsBloc>(context)
+                        .add(SettingsEvent.toggleAutoPip());
+                  },
+                ),
+              ),
             const Divider(),
             // Search History Privacy Settings
             ListTile(

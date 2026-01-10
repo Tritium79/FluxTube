@@ -53,6 +53,7 @@ mixin _$SettingsEvent {
     required TResult Function() toggleSearchHistoryEnabled,
     required TResult Function() toggleSearchHistoryVisibility,
     required TResult Function(String filePath) setLastExportedFilePath,
+    required TResult Function() toggleAutoPip,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -90,6 +91,7 @@ mixin _$SettingsEvent {
     TResult? Function()? toggleSearchHistoryEnabled,
     TResult? Function()? toggleSearchHistoryVisibility,
     TResult? Function(String filePath)? setLastExportedFilePath,
+    TResult? Function()? toggleAutoPip,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -127,6 +129,7 @@ mixin _$SettingsEvent {
     TResult Function()? toggleSearchHistoryEnabled,
     TResult Function()? toggleSearchHistoryVisibility,
     TResult Function(String filePath)? setLastExportedFilePath,
+    TResult Function()? toggleAutoPip,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -175,6 +178,7 @@ mixin _$SettingsEvent {
         toggleSearchHistoryVisibility,
     required TResult Function(SetLastExportedFilePath value)
         setLastExportedFilePath,
+    required TResult Function(ToggleAutoPip value) toggleAutoPip,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -216,6 +220,7 @@ mixin _$SettingsEvent {
     TResult? Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult? Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult? Function(ToggleAutoPip value)? toggleAutoPip,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -257,6 +262,7 @@ mixin _$SettingsEvent {
     TResult Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult Function(ToggleAutoPip value)? toggleAutoPip,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -359,6 +365,7 @@ class _$InitializeSettingsImpl implements InitializeSettings {
     required TResult Function() toggleSearchHistoryEnabled,
     required TResult Function() toggleSearchHistoryVisibility,
     required TResult Function(String filePath) setLastExportedFilePath,
+    required TResult Function() toggleAutoPip,
   }) {
     return initializeSettings();
   }
@@ -399,6 +406,7 @@ class _$InitializeSettingsImpl implements InitializeSettings {
     TResult? Function()? toggleSearchHistoryEnabled,
     TResult? Function()? toggleSearchHistoryVisibility,
     TResult? Function(String filePath)? setLastExportedFilePath,
+    TResult? Function()? toggleAutoPip,
   }) {
     return initializeSettings?.call();
   }
@@ -439,6 +447,7 @@ class _$InitializeSettingsImpl implements InitializeSettings {
     TResult Function()? toggleSearchHistoryEnabled,
     TResult Function()? toggleSearchHistoryVisibility,
     TResult Function(String filePath)? setLastExportedFilePath,
+    TResult Function()? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (initializeSettings != null) {
@@ -493,6 +502,7 @@ class _$InitializeSettingsImpl implements InitializeSettings {
         toggleSearchHistoryVisibility,
     required TResult Function(SetLastExportedFilePath value)
         setLastExportedFilePath,
+    required TResult Function(ToggleAutoPip value) toggleAutoPip,
   }) {
     return initializeSettings(this);
   }
@@ -537,6 +547,7 @@ class _$InitializeSettingsImpl implements InitializeSettings {
     TResult? Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult? Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult? Function(ToggleAutoPip value)? toggleAutoPip,
   }) {
     return initializeSettings?.call(this);
   }
@@ -581,6 +592,7 @@ class _$InitializeSettingsImpl implements InitializeSettings {
     TResult Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult Function(ToggleAutoPip value)? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (initializeSettings != null) {
@@ -699,6 +711,7 @@ class _$GetDefaultLanguageImpl implements GetDefaultLanguage {
     required TResult Function() toggleSearchHistoryEnabled,
     required TResult Function() toggleSearchHistoryVisibility,
     required TResult Function(String filePath) setLastExportedFilePath,
+    required TResult Function() toggleAutoPip,
   }) {
     return getDefaultLanguage(language);
   }
@@ -739,6 +752,7 @@ class _$GetDefaultLanguageImpl implements GetDefaultLanguage {
     TResult? Function()? toggleSearchHistoryEnabled,
     TResult? Function()? toggleSearchHistoryVisibility,
     TResult? Function(String filePath)? setLastExportedFilePath,
+    TResult? Function()? toggleAutoPip,
   }) {
     return getDefaultLanguage?.call(language);
   }
@@ -779,6 +793,7 @@ class _$GetDefaultLanguageImpl implements GetDefaultLanguage {
     TResult Function()? toggleSearchHistoryEnabled,
     TResult Function()? toggleSearchHistoryVisibility,
     TResult Function(String filePath)? setLastExportedFilePath,
+    TResult Function()? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (getDefaultLanguage != null) {
@@ -833,6 +848,7 @@ class _$GetDefaultLanguageImpl implements GetDefaultLanguage {
         toggleSearchHistoryVisibility,
     required TResult Function(SetLastExportedFilePath value)
         setLastExportedFilePath,
+    required TResult Function(ToggleAutoPip value) toggleAutoPip,
   }) {
     return getDefaultLanguage(this);
   }
@@ -877,6 +893,7 @@ class _$GetDefaultLanguageImpl implements GetDefaultLanguage {
     TResult? Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult? Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult? Function(ToggleAutoPip value)? toggleAutoPip,
   }) {
     return getDefaultLanguage?.call(this);
   }
@@ -921,6 +938,7 @@ class _$GetDefaultLanguageImpl implements GetDefaultLanguage {
     TResult Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult Function(ToggleAutoPip value)? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (getDefaultLanguage != null) {
@@ -1047,6 +1065,7 @@ class _$GetDefaultQualityImpl implements GetDefaultQuality {
     required TResult Function() toggleSearchHistoryEnabled,
     required TResult Function() toggleSearchHistoryVisibility,
     required TResult Function(String filePath) setLastExportedFilePath,
+    required TResult Function() toggleAutoPip,
   }) {
     return getDefaultQuality(quality);
   }
@@ -1087,6 +1106,7 @@ class _$GetDefaultQualityImpl implements GetDefaultQuality {
     TResult? Function()? toggleSearchHistoryEnabled,
     TResult? Function()? toggleSearchHistoryVisibility,
     TResult? Function(String filePath)? setLastExportedFilePath,
+    TResult? Function()? toggleAutoPip,
   }) {
     return getDefaultQuality?.call(quality);
   }
@@ -1127,6 +1147,7 @@ class _$GetDefaultQualityImpl implements GetDefaultQuality {
     TResult Function()? toggleSearchHistoryEnabled,
     TResult Function()? toggleSearchHistoryVisibility,
     TResult Function(String filePath)? setLastExportedFilePath,
+    TResult Function()? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (getDefaultQuality != null) {
@@ -1181,6 +1202,7 @@ class _$GetDefaultQualityImpl implements GetDefaultQuality {
         toggleSearchHistoryVisibility,
     required TResult Function(SetLastExportedFilePath value)
         setLastExportedFilePath,
+    required TResult Function(ToggleAutoPip value) toggleAutoPip,
   }) {
     return getDefaultQuality(this);
   }
@@ -1225,6 +1247,7 @@ class _$GetDefaultQualityImpl implements GetDefaultQuality {
     TResult? Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult? Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult? Function(ToggleAutoPip value)? toggleAutoPip,
   }) {
     return getDefaultQuality?.call(this);
   }
@@ -1269,6 +1292,7 @@ class _$GetDefaultQualityImpl implements GetDefaultQuality {
     TResult Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult Function(ToggleAutoPip value)? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (getDefaultQuality != null) {
@@ -1395,6 +1419,7 @@ class _$GetDefaultRegionImpl implements GetDefaultRegion {
     required TResult Function() toggleSearchHistoryEnabled,
     required TResult Function() toggleSearchHistoryVisibility,
     required TResult Function(String filePath) setLastExportedFilePath,
+    required TResult Function() toggleAutoPip,
   }) {
     return getDefaultRegion(region);
   }
@@ -1435,6 +1460,7 @@ class _$GetDefaultRegionImpl implements GetDefaultRegion {
     TResult? Function()? toggleSearchHistoryEnabled,
     TResult? Function()? toggleSearchHistoryVisibility,
     TResult? Function(String filePath)? setLastExportedFilePath,
+    TResult? Function()? toggleAutoPip,
   }) {
     return getDefaultRegion?.call(region);
   }
@@ -1475,6 +1501,7 @@ class _$GetDefaultRegionImpl implements GetDefaultRegion {
     TResult Function()? toggleSearchHistoryEnabled,
     TResult Function()? toggleSearchHistoryVisibility,
     TResult Function(String filePath)? setLastExportedFilePath,
+    TResult Function()? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (getDefaultRegion != null) {
@@ -1529,6 +1556,7 @@ class _$GetDefaultRegionImpl implements GetDefaultRegion {
         toggleSearchHistoryVisibility,
     required TResult Function(SetLastExportedFilePath value)
         setLastExportedFilePath,
+    required TResult Function(ToggleAutoPip value) toggleAutoPip,
   }) {
     return getDefaultRegion(this);
   }
@@ -1573,6 +1601,7 @@ class _$GetDefaultRegionImpl implements GetDefaultRegion {
     TResult? Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult? Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult? Function(ToggleAutoPip value)? toggleAutoPip,
   }) {
     return getDefaultRegion?.call(this);
   }
@@ -1617,6 +1646,7 @@ class _$GetDefaultRegionImpl implements GetDefaultRegion {
     TResult Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult Function(ToggleAutoPip value)? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (getDefaultRegion != null) {
@@ -1743,6 +1773,7 @@ class _$ChangeThemeImpl implements ChangeTheme {
     required TResult Function() toggleSearchHistoryEnabled,
     required TResult Function() toggleSearchHistoryVisibility,
     required TResult Function(String filePath) setLastExportedFilePath,
+    required TResult Function() toggleAutoPip,
   }) {
     return changeTheme(themeMode);
   }
@@ -1783,6 +1814,7 @@ class _$ChangeThemeImpl implements ChangeTheme {
     TResult? Function()? toggleSearchHistoryEnabled,
     TResult? Function()? toggleSearchHistoryVisibility,
     TResult? Function(String filePath)? setLastExportedFilePath,
+    TResult? Function()? toggleAutoPip,
   }) {
     return changeTheme?.call(themeMode);
   }
@@ -1823,6 +1855,7 @@ class _$ChangeThemeImpl implements ChangeTheme {
     TResult Function()? toggleSearchHistoryEnabled,
     TResult Function()? toggleSearchHistoryVisibility,
     TResult Function(String filePath)? setLastExportedFilePath,
+    TResult Function()? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (changeTheme != null) {
@@ -1877,6 +1910,7 @@ class _$ChangeThemeImpl implements ChangeTheme {
         toggleSearchHistoryVisibility,
     required TResult Function(SetLastExportedFilePath value)
         setLastExportedFilePath,
+    required TResult Function(ToggleAutoPip value) toggleAutoPip,
   }) {
     return changeTheme(this);
   }
@@ -1921,6 +1955,7 @@ class _$ChangeThemeImpl implements ChangeTheme {
     TResult? Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult? Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult? Function(ToggleAutoPip value)? toggleAutoPip,
   }) {
     return changeTheme?.call(this);
   }
@@ -1965,6 +2000,7 @@ class _$ChangeThemeImpl implements ChangeTheme {
     TResult Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult Function(ToggleAutoPip value)? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (changeTheme != null) {
@@ -2065,6 +2101,7 @@ class _$ToggleHistoryVisibilityImpl implements ToggleHistoryVisibility {
     required TResult Function() toggleSearchHistoryEnabled,
     required TResult Function() toggleSearchHistoryVisibility,
     required TResult Function(String filePath) setLastExportedFilePath,
+    required TResult Function() toggleAutoPip,
   }) {
     return toggleHistoryVisibility();
   }
@@ -2105,6 +2142,7 @@ class _$ToggleHistoryVisibilityImpl implements ToggleHistoryVisibility {
     TResult? Function()? toggleSearchHistoryEnabled,
     TResult? Function()? toggleSearchHistoryVisibility,
     TResult? Function(String filePath)? setLastExportedFilePath,
+    TResult? Function()? toggleAutoPip,
   }) {
     return toggleHistoryVisibility?.call();
   }
@@ -2145,6 +2183,7 @@ class _$ToggleHistoryVisibilityImpl implements ToggleHistoryVisibility {
     TResult Function()? toggleSearchHistoryEnabled,
     TResult Function()? toggleSearchHistoryVisibility,
     TResult Function(String filePath)? setLastExportedFilePath,
+    TResult Function()? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (toggleHistoryVisibility != null) {
@@ -2199,6 +2238,7 @@ class _$ToggleHistoryVisibilityImpl implements ToggleHistoryVisibility {
         toggleSearchHistoryVisibility,
     required TResult Function(SetLastExportedFilePath value)
         setLastExportedFilePath,
+    required TResult Function(ToggleAutoPip value) toggleAutoPip,
   }) {
     return toggleHistoryVisibility(this);
   }
@@ -2243,6 +2283,7 @@ class _$ToggleHistoryVisibilityImpl implements ToggleHistoryVisibility {
     TResult? Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult? Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult? Function(ToggleAutoPip value)? toggleAutoPip,
   }) {
     return toggleHistoryVisibility?.call(this);
   }
@@ -2287,6 +2328,7 @@ class _$ToggleHistoryVisibilityImpl implements ToggleHistoryVisibility {
     TResult Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult Function(ToggleAutoPip value)? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (toggleHistoryVisibility != null) {
@@ -2379,6 +2421,7 @@ class _$ToggleDislikeVisibilityImpl implements ToggleDislikeVisibility {
     required TResult Function() toggleSearchHistoryEnabled,
     required TResult Function() toggleSearchHistoryVisibility,
     required TResult Function(String filePath) setLastExportedFilePath,
+    required TResult Function() toggleAutoPip,
   }) {
     return toggleDislikeVisibility();
   }
@@ -2419,6 +2462,7 @@ class _$ToggleDislikeVisibilityImpl implements ToggleDislikeVisibility {
     TResult? Function()? toggleSearchHistoryEnabled,
     TResult? Function()? toggleSearchHistoryVisibility,
     TResult? Function(String filePath)? setLastExportedFilePath,
+    TResult? Function()? toggleAutoPip,
   }) {
     return toggleDislikeVisibility?.call();
   }
@@ -2459,6 +2503,7 @@ class _$ToggleDislikeVisibilityImpl implements ToggleDislikeVisibility {
     TResult Function()? toggleSearchHistoryEnabled,
     TResult Function()? toggleSearchHistoryVisibility,
     TResult Function(String filePath)? setLastExportedFilePath,
+    TResult Function()? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (toggleDislikeVisibility != null) {
@@ -2513,6 +2558,7 @@ class _$ToggleDislikeVisibilityImpl implements ToggleDislikeVisibility {
         toggleSearchHistoryVisibility,
     required TResult Function(SetLastExportedFilePath value)
         setLastExportedFilePath,
+    required TResult Function(ToggleAutoPip value) toggleAutoPip,
   }) {
     return toggleDislikeVisibility(this);
   }
@@ -2557,6 +2603,7 @@ class _$ToggleDislikeVisibilityImpl implements ToggleDislikeVisibility {
     TResult? Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult? Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult? Function(ToggleAutoPip value)? toggleAutoPip,
   }) {
     return toggleDislikeVisibility?.call(this);
   }
@@ -2601,6 +2648,7 @@ class _$ToggleDislikeVisibilityImpl implements ToggleDislikeVisibility {
     TResult Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult Function(ToggleAutoPip value)? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (toggleDislikeVisibility != null) {
@@ -2690,6 +2738,7 @@ class _$ToggleHlsPlayerImpl implements ToggleHlsPlayer {
     required TResult Function() toggleSearchHistoryEnabled,
     required TResult Function() toggleSearchHistoryVisibility,
     required TResult Function(String filePath) setLastExportedFilePath,
+    required TResult Function() toggleAutoPip,
   }) {
     return toggleHlsPlayer();
   }
@@ -2730,6 +2779,7 @@ class _$ToggleHlsPlayerImpl implements ToggleHlsPlayer {
     TResult? Function()? toggleSearchHistoryEnabled,
     TResult? Function()? toggleSearchHistoryVisibility,
     TResult? Function(String filePath)? setLastExportedFilePath,
+    TResult? Function()? toggleAutoPip,
   }) {
     return toggleHlsPlayer?.call();
   }
@@ -2770,6 +2820,7 @@ class _$ToggleHlsPlayerImpl implements ToggleHlsPlayer {
     TResult Function()? toggleSearchHistoryEnabled,
     TResult Function()? toggleSearchHistoryVisibility,
     TResult Function(String filePath)? setLastExportedFilePath,
+    TResult Function()? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (toggleHlsPlayer != null) {
@@ -2824,6 +2875,7 @@ class _$ToggleHlsPlayerImpl implements ToggleHlsPlayer {
         toggleSearchHistoryVisibility,
     required TResult Function(SetLastExportedFilePath value)
         setLastExportedFilePath,
+    required TResult Function(ToggleAutoPip value) toggleAutoPip,
   }) {
     return toggleHlsPlayer(this);
   }
@@ -2868,6 +2920,7 @@ class _$ToggleHlsPlayerImpl implements ToggleHlsPlayer {
     TResult? Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult? Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult? Function(ToggleAutoPip value)? toggleAutoPip,
   }) {
     return toggleHlsPlayer?.call(this);
   }
@@ -2912,6 +2965,7 @@ class _$ToggleHlsPlayerImpl implements ToggleHlsPlayer {
     TResult Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult Function(ToggleAutoPip value)? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (toggleHlsPlayer != null) {
@@ -3004,6 +3058,7 @@ class _$ToggleCommentVisibilityImpl implements ToggleCommentVisibility {
     required TResult Function() toggleSearchHistoryEnabled,
     required TResult Function() toggleSearchHistoryVisibility,
     required TResult Function(String filePath) setLastExportedFilePath,
+    required TResult Function() toggleAutoPip,
   }) {
     return toggleCommentVisibility();
   }
@@ -3044,6 +3099,7 @@ class _$ToggleCommentVisibilityImpl implements ToggleCommentVisibility {
     TResult? Function()? toggleSearchHistoryEnabled,
     TResult? Function()? toggleSearchHistoryVisibility,
     TResult? Function(String filePath)? setLastExportedFilePath,
+    TResult? Function()? toggleAutoPip,
   }) {
     return toggleCommentVisibility?.call();
   }
@@ -3084,6 +3140,7 @@ class _$ToggleCommentVisibilityImpl implements ToggleCommentVisibility {
     TResult Function()? toggleSearchHistoryEnabled,
     TResult Function()? toggleSearchHistoryVisibility,
     TResult Function(String filePath)? setLastExportedFilePath,
+    TResult Function()? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (toggleCommentVisibility != null) {
@@ -3138,6 +3195,7 @@ class _$ToggleCommentVisibilityImpl implements ToggleCommentVisibility {
         toggleSearchHistoryVisibility,
     required TResult Function(SetLastExportedFilePath value)
         setLastExportedFilePath,
+    required TResult Function(ToggleAutoPip value) toggleAutoPip,
   }) {
     return toggleCommentVisibility(this);
   }
@@ -3182,6 +3240,7 @@ class _$ToggleCommentVisibilityImpl implements ToggleCommentVisibility {
     TResult? Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult? Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult? Function(ToggleAutoPip value)? toggleAutoPip,
   }) {
     return toggleCommentVisibility?.call(this);
   }
@@ -3226,6 +3285,7 @@ class _$ToggleCommentVisibilityImpl implements ToggleCommentVisibility {
     TResult Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult Function(ToggleAutoPip value)? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (toggleCommentVisibility != null) {
@@ -3320,6 +3380,7 @@ class _$ToggleRelatedVideoVisibilityImpl
     required TResult Function() toggleSearchHistoryEnabled,
     required TResult Function() toggleSearchHistoryVisibility,
     required TResult Function(String filePath) setLastExportedFilePath,
+    required TResult Function() toggleAutoPip,
   }) {
     return toggleRelatedVideoVisibility();
   }
@@ -3360,6 +3421,7 @@ class _$ToggleRelatedVideoVisibilityImpl
     TResult? Function()? toggleSearchHistoryEnabled,
     TResult? Function()? toggleSearchHistoryVisibility,
     TResult? Function(String filePath)? setLastExportedFilePath,
+    TResult? Function()? toggleAutoPip,
   }) {
     return toggleRelatedVideoVisibility?.call();
   }
@@ -3400,6 +3462,7 @@ class _$ToggleRelatedVideoVisibilityImpl
     TResult Function()? toggleSearchHistoryEnabled,
     TResult Function()? toggleSearchHistoryVisibility,
     TResult Function(String filePath)? setLastExportedFilePath,
+    TResult Function()? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (toggleRelatedVideoVisibility != null) {
@@ -3454,6 +3517,7 @@ class _$ToggleRelatedVideoVisibilityImpl
         toggleSearchHistoryVisibility,
     required TResult Function(SetLastExportedFilePath value)
         setLastExportedFilePath,
+    required TResult Function(ToggleAutoPip value) toggleAutoPip,
   }) {
     return toggleRelatedVideoVisibility(this);
   }
@@ -3498,6 +3562,7 @@ class _$ToggleRelatedVideoVisibilityImpl
     TResult? Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult? Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult? Function(ToggleAutoPip value)? toggleAutoPip,
   }) {
     return toggleRelatedVideoVisibility?.call(this);
   }
@@ -3542,6 +3607,7 @@ class _$ToggleRelatedVideoVisibilityImpl
     TResult Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult Function(ToggleAutoPip value)? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (toggleRelatedVideoVisibility != null) {
@@ -3661,6 +3727,7 @@ class _$FetchPipedInstancesImpl implements FetchPipedInstances {
     required TResult Function() toggleSearchHistoryEnabled,
     required TResult Function() toggleSearchHistoryVisibility,
     required TResult Function(String filePath) setLastExportedFilePath,
+    required TResult Function() toggleAutoPip,
   }) {
     return fetchPipedInstances(forceRefresh);
   }
@@ -3701,6 +3768,7 @@ class _$FetchPipedInstancesImpl implements FetchPipedInstances {
     TResult? Function()? toggleSearchHistoryEnabled,
     TResult? Function()? toggleSearchHistoryVisibility,
     TResult? Function(String filePath)? setLastExportedFilePath,
+    TResult? Function()? toggleAutoPip,
   }) {
     return fetchPipedInstances?.call(forceRefresh);
   }
@@ -3741,6 +3809,7 @@ class _$FetchPipedInstancesImpl implements FetchPipedInstances {
     TResult Function()? toggleSearchHistoryEnabled,
     TResult Function()? toggleSearchHistoryVisibility,
     TResult Function(String filePath)? setLastExportedFilePath,
+    TResult Function()? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (fetchPipedInstances != null) {
@@ -3795,6 +3864,7 @@ class _$FetchPipedInstancesImpl implements FetchPipedInstances {
         toggleSearchHistoryVisibility,
     required TResult Function(SetLastExportedFilePath value)
         setLastExportedFilePath,
+    required TResult Function(ToggleAutoPip value) toggleAutoPip,
   }) {
     return fetchPipedInstances(this);
   }
@@ -3839,6 +3909,7 @@ class _$FetchPipedInstancesImpl implements FetchPipedInstances {
     TResult? Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult? Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult? Function(ToggleAutoPip value)? toggleAutoPip,
   }) {
     return fetchPipedInstances?.call(this);
   }
@@ -3883,6 +3954,7 @@ class _$FetchPipedInstancesImpl implements FetchPipedInstances {
     TResult Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult Function(ToggleAutoPip value)? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (fetchPipedInstances != null) {
@@ -4013,6 +4085,7 @@ class _$FetchInvidiousInstancesImpl implements FetchInvidiousInstances {
     required TResult Function() toggleSearchHistoryEnabled,
     required TResult Function() toggleSearchHistoryVisibility,
     required TResult Function(String filePath) setLastExportedFilePath,
+    required TResult Function() toggleAutoPip,
   }) {
     return fetchInvidiousInstances(forceRefresh);
   }
@@ -4053,6 +4126,7 @@ class _$FetchInvidiousInstancesImpl implements FetchInvidiousInstances {
     TResult? Function()? toggleSearchHistoryEnabled,
     TResult? Function()? toggleSearchHistoryVisibility,
     TResult? Function(String filePath)? setLastExportedFilePath,
+    TResult? Function()? toggleAutoPip,
   }) {
     return fetchInvidiousInstances?.call(forceRefresh);
   }
@@ -4093,6 +4167,7 @@ class _$FetchInvidiousInstancesImpl implements FetchInvidiousInstances {
     TResult Function()? toggleSearchHistoryEnabled,
     TResult Function()? toggleSearchHistoryVisibility,
     TResult Function(String filePath)? setLastExportedFilePath,
+    TResult Function()? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (fetchInvidiousInstances != null) {
@@ -4147,6 +4222,7 @@ class _$FetchInvidiousInstancesImpl implements FetchInvidiousInstances {
         toggleSearchHistoryVisibility,
     required TResult Function(SetLastExportedFilePath value)
         setLastExportedFilePath,
+    required TResult Function(ToggleAutoPip value) toggleAutoPip,
   }) {
     return fetchInvidiousInstances(this);
   }
@@ -4191,6 +4267,7 @@ class _$FetchInvidiousInstancesImpl implements FetchInvidiousInstances {
     TResult? Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult? Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult? Function(ToggleAutoPip value)? toggleAutoPip,
   }) {
     return fetchInvidiousInstances?.call(this);
   }
@@ -4235,6 +4312,7 @@ class _$FetchInvidiousInstancesImpl implements FetchInvidiousInstances {
     TResult Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult Function(ToggleAutoPip value)? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (fetchInvidiousInstances != null) {
@@ -4361,6 +4439,7 @@ class _$SetInstanceImpl implements SetInstance {
     required TResult Function() toggleSearchHistoryEnabled,
     required TResult Function() toggleSearchHistoryVisibility,
     required TResult Function(String filePath) setLastExportedFilePath,
+    required TResult Function() toggleAutoPip,
   }) {
     return setInstance(instanceApi);
   }
@@ -4401,6 +4480,7 @@ class _$SetInstanceImpl implements SetInstance {
     TResult? Function()? toggleSearchHistoryEnabled,
     TResult? Function()? toggleSearchHistoryVisibility,
     TResult? Function(String filePath)? setLastExportedFilePath,
+    TResult? Function()? toggleAutoPip,
   }) {
     return setInstance?.call(instanceApi);
   }
@@ -4441,6 +4521,7 @@ class _$SetInstanceImpl implements SetInstance {
     TResult Function()? toggleSearchHistoryEnabled,
     TResult Function()? toggleSearchHistoryVisibility,
     TResult Function(String filePath)? setLastExportedFilePath,
+    TResult Function()? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (setInstance != null) {
@@ -4495,6 +4576,7 @@ class _$SetInstanceImpl implements SetInstance {
         toggleSearchHistoryVisibility,
     required TResult Function(SetLastExportedFilePath value)
         setLastExportedFilePath,
+    required TResult Function(ToggleAutoPip value) toggleAutoPip,
   }) {
     return setInstance(this);
   }
@@ -4539,6 +4621,7 @@ class _$SetInstanceImpl implements SetInstance {
     TResult? Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult? Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult? Function(ToggleAutoPip value)? toggleAutoPip,
   }) {
     return setInstance?.call(this);
   }
@@ -4583,6 +4666,7 @@ class _$SetInstanceImpl implements SetInstance {
     TResult Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult Function(ToggleAutoPip value)? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (setInstance != null) {
@@ -4707,6 +4791,7 @@ class _$SetYTServiceImpl implements SetYTService {
     required TResult Function() toggleSearchHistoryEnabled,
     required TResult Function() toggleSearchHistoryVisibility,
     required TResult Function(String filePath) setLastExportedFilePath,
+    required TResult Function() toggleAutoPip,
   }) {
     return setYTService(service);
   }
@@ -4747,6 +4832,7 @@ class _$SetYTServiceImpl implements SetYTService {
     TResult? Function()? toggleSearchHistoryEnabled,
     TResult? Function()? toggleSearchHistoryVisibility,
     TResult? Function(String filePath)? setLastExportedFilePath,
+    TResult? Function()? toggleAutoPip,
   }) {
     return setYTService?.call(service);
   }
@@ -4787,6 +4873,7 @@ class _$SetYTServiceImpl implements SetYTService {
     TResult Function()? toggleSearchHistoryEnabled,
     TResult Function()? toggleSearchHistoryVisibility,
     TResult Function(String filePath)? setLastExportedFilePath,
+    TResult Function()? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (setYTService != null) {
@@ -4841,6 +4928,7 @@ class _$SetYTServiceImpl implements SetYTService {
         toggleSearchHistoryVisibility,
     required TResult Function(SetLastExportedFilePath value)
         setLastExportedFilePath,
+    required TResult Function(ToggleAutoPip value) toggleAutoPip,
   }) {
     return setYTService(this);
   }
@@ -4885,6 +4973,7 @@ class _$SetYTServiceImpl implements SetYTService {
     TResult? Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult? Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult? Function(ToggleAutoPip value)? toggleAutoPip,
   }) {
     return setYTService?.call(this);
   }
@@ -4929,6 +5018,7 @@ class _$SetYTServiceImpl implements SetYTService {
     TResult Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult Function(ToggleAutoPip value)? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (setYTService != null) {
@@ -5027,6 +5117,7 @@ class _$TogglePipPlayerImpl implements TogglePipPlayer {
     required TResult Function() toggleSearchHistoryEnabled,
     required TResult Function() toggleSearchHistoryVisibility,
     required TResult Function(String filePath) setLastExportedFilePath,
+    required TResult Function() toggleAutoPip,
   }) {
     return togglePipPlayer();
   }
@@ -5067,6 +5158,7 @@ class _$TogglePipPlayerImpl implements TogglePipPlayer {
     TResult? Function()? toggleSearchHistoryEnabled,
     TResult? Function()? toggleSearchHistoryVisibility,
     TResult? Function(String filePath)? setLastExportedFilePath,
+    TResult? Function()? toggleAutoPip,
   }) {
     return togglePipPlayer?.call();
   }
@@ -5107,6 +5199,7 @@ class _$TogglePipPlayerImpl implements TogglePipPlayer {
     TResult Function()? toggleSearchHistoryEnabled,
     TResult Function()? toggleSearchHistoryVisibility,
     TResult Function(String filePath)? setLastExportedFilePath,
+    TResult Function()? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (togglePipPlayer != null) {
@@ -5161,6 +5254,7 @@ class _$TogglePipPlayerImpl implements TogglePipPlayer {
         toggleSearchHistoryVisibility,
     required TResult Function(SetLastExportedFilePath value)
         setLastExportedFilePath,
+    required TResult Function(ToggleAutoPip value) toggleAutoPip,
   }) {
     return togglePipPlayer(this);
   }
@@ -5205,6 +5299,7 @@ class _$TogglePipPlayerImpl implements TogglePipPlayer {
     TResult? Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult? Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult? Function(ToggleAutoPip value)? toggleAutoPip,
   }) {
     return togglePipPlayer?.call(this);
   }
@@ -5249,6 +5344,7 @@ class _$TogglePipPlayerImpl implements TogglePipPlayer {
     TResult Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult Function(ToggleAutoPip value)? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (togglePipPlayer != null) {
@@ -5366,6 +5462,7 @@ class _$SetSearchFilterImpl implements SetSearchFilter {
     required TResult Function() toggleSearchHistoryEnabled,
     required TResult Function() toggleSearchHistoryVisibility,
     required TResult Function(String filePath) setLastExportedFilePath,
+    required TResult Function() toggleAutoPip,
   }) {
     return setSearchFilter(filter);
   }
@@ -5406,6 +5503,7 @@ class _$SetSearchFilterImpl implements SetSearchFilter {
     TResult? Function()? toggleSearchHistoryEnabled,
     TResult? Function()? toggleSearchHistoryVisibility,
     TResult? Function(String filePath)? setLastExportedFilePath,
+    TResult? Function()? toggleAutoPip,
   }) {
     return setSearchFilter?.call(filter);
   }
@@ -5446,6 +5544,7 @@ class _$SetSearchFilterImpl implements SetSearchFilter {
     TResult Function()? toggleSearchHistoryEnabled,
     TResult Function()? toggleSearchHistoryVisibility,
     TResult Function(String filePath)? setLastExportedFilePath,
+    TResult Function()? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (setSearchFilter != null) {
@@ -5500,6 +5599,7 @@ class _$SetSearchFilterImpl implements SetSearchFilter {
         toggleSearchHistoryVisibility,
     required TResult Function(SetLastExportedFilePath value)
         setLastExportedFilePath,
+    required TResult Function(ToggleAutoPip value) toggleAutoPip,
   }) {
     return setSearchFilter(this);
   }
@@ -5544,6 +5644,7 @@ class _$SetSearchFilterImpl implements SetSearchFilter {
     TResult? Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult? Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult? Function(ToggleAutoPip value)? toggleAutoPip,
   }) {
     return setSearchFilter?.call(this);
   }
@@ -5588,6 +5689,7 @@ class _$SetSearchFilterImpl implements SetSearchFilter {
     TResult Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult Function(ToggleAutoPip value)? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (setSearchFilter != null) {
@@ -5714,6 +5816,7 @@ class _$SetVideoFitModeImpl implements SetVideoFitMode {
     required TResult Function() toggleSearchHistoryEnabled,
     required TResult Function() toggleSearchHistoryVisibility,
     required TResult Function(String filePath) setLastExportedFilePath,
+    required TResult Function() toggleAutoPip,
   }) {
     return setVideoFitMode(fitMode);
   }
@@ -5754,6 +5857,7 @@ class _$SetVideoFitModeImpl implements SetVideoFitMode {
     TResult? Function()? toggleSearchHistoryEnabled,
     TResult? Function()? toggleSearchHistoryVisibility,
     TResult? Function(String filePath)? setLastExportedFilePath,
+    TResult? Function()? toggleAutoPip,
   }) {
     return setVideoFitMode?.call(fitMode);
   }
@@ -5794,6 +5898,7 @@ class _$SetVideoFitModeImpl implements SetVideoFitMode {
     TResult Function()? toggleSearchHistoryEnabled,
     TResult Function()? toggleSearchHistoryVisibility,
     TResult Function(String filePath)? setLastExportedFilePath,
+    TResult Function()? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (setVideoFitMode != null) {
@@ -5848,6 +5953,7 @@ class _$SetVideoFitModeImpl implements SetVideoFitMode {
         toggleSearchHistoryVisibility,
     required TResult Function(SetLastExportedFilePath value)
         setLastExportedFilePath,
+    required TResult Function(ToggleAutoPip value) toggleAutoPip,
   }) {
     return setVideoFitMode(this);
   }
@@ -5892,6 +5998,7 @@ class _$SetVideoFitModeImpl implements SetVideoFitMode {
     TResult? Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult? Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult? Function(ToggleAutoPip value)? toggleAutoPip,
   }) {
     return setVideoFitMode?.call(this);
   }
@@ -5936,6 +6043,7 @@ class _$SetVideoFitModeImpl implements SetVideoFitMode {
     TResult Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult Function(ToggleAutoPip value)? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (setVideoFitMode != null) {
@@ -6062,6 +6170,7 @@ class _$SetSkipIntervalImpl implements SetSkipInterval {
     required TResult Function() toggleSearchHistoryEnabled,
     required TResult Function() toggleSearchHistoryVisibility,
     required TResult Function(String filePath) setLastExportedFilePath,
+    required TResult Function() toggleAutoPip,
   }) {
     return setSkipInterval(seconds);
   }
@@ -6102,6 +6211,7 @@ class _$SetSkipIntervalImpl implements SetSkipInterval {
     TResult? Function()? toggleSearchHistoryEnabled,
     TResult? Function()? toggleSearchHistoryVisibility,
     TResult? Function(String filePath)? setLastExportedFilePath,
+    TResult? Function()? toggleAutoPip,
   }) {
     return setSkipInterval?.call(seconds);
   }
@@ -6142,6 +6252,7 @@ class _$SetSkipIntervalImpl implements SetSkipInterval {
     TResult Function()? toggleSearchHistoryEnabled,
     TResult Function()? toggleSearchHistoryVisibility,
     TResult Function(String filePath)? setLastExportedFilePath,
+    TResult Function()? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (setSkipInterval != null) {
@@ -6196,6 +6307,7 @@ class _$SetSkipIntervalImpl implements SetSkipInterval {
         toggleSearchHistoryVisibility,
     required TResult Function(SetLastExportedFilePath value)
         setLastExportedFilePath,
+    required TResult Function(ToggleAutoPip value) toggleAutoPip,
   }) {
     return setSkipInterval(this);
   }
@@ -6240,6 +6352,7 @@ class _$SetSkipIntervalImpl implements SetSkipInterval {
     TResult? Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult? Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult? Function(ToggleAutoPip value)? toggleAutoPip,
   }) {
     return setSkipInterval?.call(this);
   }
@@ -6284,6 +6397,7 @@ class _$SetSkipIntervalImpl implements SetSkipInterval {
     TResult Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult Function(ToggleAutoPip value)? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (setSkipInterval != null) {
@@ -6381,6 +6495,7 @@ class _$ToggleSponsorBlockImpl implements ToggleSponsorBlock {
     required TResult Function() toggleSearchHistoryEnabled,
     required TResult Function() toggleSearchHistoryVisibility,
     required TResult Function(String filePath) setLastExportedFilePath,
+    required TResult Function() toggleAutoPip,
   }) {
     return toggleSponsorBlock();
   }
@@ -6421,6 +6536,7 @@ class _$ToggleSponsorBlockImpl implements ToggleSponsorBlock {
     TResult? Function()? toggleSearchHistoryEnabled,
     TResult? Function()? toggleSearchHistoryVisibility,
     TResult? Function(String filePath)? setLastExportedFilePath,
+    TResult? Function()? toggleAutoPip,
   }) {
     return toggleSponsorBlock?.call();
   }
@@ -6461,6 +6577,7 @@ class _$ToggleSponsorBlockImpl implements ToggleSponsorBlock {
     TResult Function()? toggleSearchHistoryEnabled,
     TResult Function()? toggleSearchHistoryVisibility,
     TResult Function(String filePath)? setLastExportedFilePath,
+    TResult Function()? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (toggleSponsorBlock != null) {
@@ -6515,6 +6632,7 @@ class _$ToggleSponsorBlockImpl implements ToggleSponsorBlock {
         toggleSearchHistoryVisibility,
     required TResult Function(SetLastExportedFilePath value)
         setLastExportedFilePath,
+    required TResult Function(ToggleAutoPip value) toggleAutoPip,
   }) {
     return toggleSponsorBlock(this);
   }
@@ -6559,6 +6677,7 @@ class _$ToggleSponsorBlockImpl implements ToggleSponsorBlock {
     TResult? Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult? Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult? Function(ToggleAutoPip value)? toggleAutoPip,
   }) {
     return toggleSponsorBlock?.call(this);
   }
@@ -6603,6 +6722,7 @@ class _$ToggleSponsorBlockImpl implements ToggleSponsorBlock {
     TResult Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult Function(ToggleAutoPip value)? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (toggleSponsorBlock != null) {
@@ -6730,6 +6850,7 @@ class _$SetSponsorBlockCategoriesImpl implements SetSponsorBlockCategories {
     required TResult Function() toggleSearchHistoryEnabled,
     required TResult Function() toggleSearchHistoryVisibility,
     required TResult Function(String filePath) setLastExportedFilePath,
+    required TResult Function() toggleAutoPip,
   }) {
     return setSponsorBlockCategories(categories);
   }
@@ -6770,6 +6891,7 @@ class _$SetSponsorBlockCategoriesImpl implements SetSponsorBlockCategories {
     TResult? Function()? toggleSearchHistoryEnabled,
     TResult? Function()? toggleSearchHistoryVisibility,
     TResult? Function(String filePath)? setLastExportedFilePath,
+    TResult? Function()? toggleAutoPip,
   }) {
     return setSponsorBlockCategories?.call(categories);
   }
@@ -6810,6 +6932,7 @@ class _$SetSponsorBlockCategoriesImpl implements SetSponsorBlockCategories {
     TResult Function()? toggleSearchHistoryEnabled,
     TResult Function()? toggleSearchHistoryVisibility,
     TResult Function(String filePath)? setLastExportedFilePath,
+    TResult Function()? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (setSponsorBlockCategories != null) {
@@ -6864,6 +6987,7 @@ class _$SetSponsorBlockCategoriesImpl implements SetSponsorBlockCategories {
         toggleSearchHistoryVisibility,
     required TResult Function(SetLastExportedFilePath value)
         setLastExportedFilePath,
+    required TResult Function(ToggleAutoPip value) toggleAutoPip,
   }) {
     return setSponsorBlockCategories(this);
   }
@@ -6908,6 +7032,7 @@ class _$SetSponsorBlockCategoriesImpl implements SetSponsorBlockCategories {
     TResult? Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult? Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult? Function(ToggleAutoPip value)? toggleAutoPip,
   }) {
     return setSponsorBlockCategories?.call(this);
   }
@@ -6952,6 +7077,7 @@ class _$SetSponsorBlockCategoriesImpl implements SetSponsorBlockCategories {
     TResult Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult Function(ToggleAutoPip value)? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (setSponsorBlockCategories != null) {
@@ -7053,6 +7179,7 @@ class _$ToggleOpenLinksInBrowserImpl implements ToggleOpenLinksInBrowser {
     required TResult Function() toggleSearchHistoryEnabled,
     required TResult Function() toggleSearchHistoryVisibility,
     required TResult Function(String filePath) setLastExportedFilePath,
+    required TResult Function() toggleAutoPip,
   }) {
     return toggleOpenLinksInBrowser();
   }
@@ -7093,6 +7220,7 @@ class _$ToggleOpenLinksInBrowserImpl implements ToggleOpenLinksInBrowser {
     TResult? Function()? toggleSearchHistoryEnabled,
     TResult? Function()? toggleSearchHistoryVisibility,
     TResult? Function(String filePath)? setLastExportedFilePath,
+    TResult? Function()? toggleAutoPip,
   }) {
     return toggleOpenLinksInBrowser?.call();
   }
@@ -7133,6 +7261,7 @@ class _$ToggleOpenLinksInBrowserImpl implements ToggleOpenLinksInBrowser {
     TResult Function()? toggleSearchHistoryEnabled,
     TResult Function()? toggleSearchHistoryVisibility,
     TResult Function(String filePath)? setLastExportedFilePath,
+    TResult Function()? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (toggleOpenLinksInBrowser != null) {
@@ -7187,6 +7316,7 @@ class _$ToggleOpenLinksInBrowserImpl implements ToggleOpenLinksInBrowser {
         toggleSearchHistoryVisibility,
     required TResult Function(SetLastExportedFilePath value)
         setLastExportedFilePath,
+    required TResult Function(ToggleAutoPip value) toggleAutoPip,
   }) {
     return toggleOpenLinksInBrowser(this);
   }
@@ -7231,6 +7361,7 @@ class _$ToggleOpenLinksInBrowserImpl implements ToggleOpenLinksInBrowser {
     TResult? Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult? Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult? Function(ToggleAutoPip value)? toggleAutoPip,
   }) {
     return toggleOpenLinksInBrowser?.call(this);
   }
@@ -7275,6 +7406,7 @@ class _$ToggleOpenLinksInBrowserImpl implements ToggleOpenLinksInBrowser {
     TResult Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult Function(ToggleAutoPip value)? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (toggleOpenLinksInBrowser != null) {
@@ -7392,6 +7524,7 @@ class _$SetHomeFeedModeImpl implements SetHomeFeedMode {
     required TResult Function() toggleSearchHistoryEnabled,
     required TResult Function() toggleSearchHistoryVisibility,
     required TResult Function(String filePath) setLastExportedFilePath,
+    required TResult Function() toggleAutoPip,
   }) {
     return setHomeFeedMode(mode);
   }
@@ -7432,6 +7565,7 @@ class _$SetHomeFeedModeImpl implements SetHomeFeedMode {
     TResult? Function()? toggleSearchHistoryEnabled,
     TResult? Function()? toggleSearchHistoryVisibility,
     TResult? Function(String filePath)? setLastExportedFilePath,
+    TResult? Function()? toggleAutoPip,
   }) {
     return setHomeFeedMode?.call(mode);
   }
@@ -7472,6 +7606,7 @@ class _$SetHomeFeedModeImpl implements SetHomeFeedMode {
     TResult Function()? toggleSearchHistoryEnabled,
     TResult Function()? toggleSearchHistoryVisibility,
     TResult Function(String filePath)? setLastExportedFilePath,
+    TResult Function()? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (setHomeFeedMode != null) {
@@ -7526,6 +7661,7 @@ class _$SetHomeFeedModeImpl implements SetHomeFeedMode {
         toggleSearchHistoryVisibility,
     required TResult Function(SetLastExportedFilePath value)
         setLastExportedFilePath,
+    required TResult Function(ToggleAutoPip value) toggleAutoPip,
   }) {
     return setHomeFeedMode(this);
   }
@@ -7570,6 +7706,7 @@ class _$SetHomeFeedModeImpl implements SetHomeFeedMode {
     TResult? Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult? Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult? Function(ToggleAutoPip value)? toggleAutoPip,
   }) {
     return setHomeFeedMode?.call(this);
   }
@@ -7614,6 +7751,7 @@ class _$SetHomeFeedModeImpl implements SetHomeFeedMode {
     TResult Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult Function(ToggleAutoPip value)? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (setHomeFeedMode != null) {
@@ -7711,6 +7849,7 @@ class _$ToggleAudioFocusImpl implements ToggleAudioFocus {
     required TResult Function() toggleSearchHistoryEnabled,
     required TResult Function() toggleSearchHistoryVisibility,
     required TResult Function(String filePath) setLastExportedFilePath,
+    required TResult Function() toggleAutoPip,
   }) {
     return toggleAudioFocus();
   }
@@ -7751,6 +7890,7 @@ class _$ToggleAudioFocusImpl implements ToggleAudioFocus {
     TResult? Function()? toggleSearchHistoryEnabled,
     TResult? Function()? toggleSearchHistoryVisibility,
     TResult? Function(String filePath)? setLastExportedFilePath,
+    TResult? Function()? toggleAutoPip,
   }) {
     return toggleAudioFocus?.call();
   }
@@ -7791,6 +7931,7 @@ class _$ToggleAudioFocusImpl implements ToggleAudioFocus {
     TResult Function()? toggleSearchHistoryEnabled,
     TResult Function()? toggleSearchHistoryVisibility,
     TResult Function(String filePath)? setLastExportedFilePath,
+    TResult Function()? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (toggleAudioFocus != null) {
@@ -7845,6 +7986,7 @@ class _$ToggleAudioFocusImpl implements ToggleAudioFocus {
         toggleSearchHistoryVisibility,
     required TResult Function(SetLastExportedFilePath value)
         setLastExportedFilePath,
+    required TResult Function(ToggleAutoPip value) toggleAutoPip,
   }) {
     return toggleAudioFocus(this);
   }
@@ -7889,6 +8031,7 @@ class _$ToggleAudioFocusImpl implements ToggleAudioFocus {
     TResult? Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult? Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult? Function(ToggleAutoPip value)? toggleAutoPip,
   }) {
     return toggleAudioFocus?.call(this);
   }
@@ -7933,6 +8076,7 @@ class _$ToggleAudioFocusImpl implements ToggleAudioFocus {
     TResult Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult Function(ToggleAutoPip value)? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (toggleAudioFocus != null) {
@@ -8050,6 +8194,7 @@ class _$AddProfileImpl implements AddProfile {
     required TResult Function() toggleSearchHistoryEnabled,
     required TResult Function() toggleSearchHistoryVisibility,
     required TResult Function(String filePath) setLastExportedFilePath,
+    required TResult Function() toggleAutoPip,
   }) {
     return addProfile(profileName);
   }
@@ -8090,6 +8235,7 @@ class _$AddProfileImpl implements AddProfile {
     TResult? Function()? toggleSearchHistoryEnabled,
     TResult? Function()? toggleSearchHistoryVisibility,
     TResult? Function(String filePath)? setLastExportedFilePath,
+    TResult? Function()? toggleAutoPip,
   }) {
     return addProfile?.call(profileName);
   }
@@ -8130,6 +8276,7 @@ class _$AddProfileImpl implements AddProfile {
     TResult Function()? toggleSearchHistoryEnabled,
     TResult Function()? toggleSearchHistoryVisibility,
     TResult Function(String filePath)? setLastExportedFilePath,
+    TResult Function()? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (addProfile != null) {
@@ -8184,6 +8331,7 @@ class _$AddProfileImpl implements AddProfile {
         toggleSearchHistoryVisibility,
     required TResult Function(SetLastExportedFilePath value)
         setLastExportedFilePath,
+    required TResult Function(ToggleAutoPip value) toggleAutoPip,
   }) {
     return addProfile(this);
   }
@@ -8228,6 +8376,7 @@ class _$AddProfileImpl implements AddProfile {
     TResult? Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult? Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult? Function(ToggleAutoPip value)? toggleAutoPip,
   }) {
     return addProfile?.call(this);
   }
@@ -8272,6 +8421,7 @@ class _$AddProfileImpl implements AddProfile {
     TResult Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult Function(ToggleAutoPip value)? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (addProfile != null) {
@@ -8397,6 +8547,7 @@ class _$DeleteProfileImpl implements DeleteProfile {
     required TResult Function() toggleSearchHistoryEnabled,
     required TResult Function() toggleSearchHistoryVisibility,
     required TResult Function(String filePath) setLastExportedFilePath,
+    required TResult Function() toggleAutoPip,
   }) {
     return deleteProfile(profileName);
   }
@@ -8437,6 +8588,7 @@ class _$DeleteProfileImpl implements DeleteProfile {
     TResult? Function()? toggleSearchHistoryEnabled,
     TResult? Function()? toggleSearchHistoryVisibility,
     TResult? Function(String filePath)? setLastExportedFilePath,
+    TResult? Function()? toggleAutoPip,
   }) {
     return deleteProfile?.call(profileName);
   }
@@ -8477,6 +8629,7 @@ class _$DeleteProfileImpl implements DeleteProfile {
     TResult Function()? toggleSearchHistoryEnabled,
     TResult Function()? toggleSearchHistoryVisibility,
     TResult Function(String filePath)? setLastExportedFilePath,
+    TResult Function()? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (deleteProfile != null) {
@@ -8531,6 +8684,7 @@ class _$DeleteProfileImpl implements DeleteProfile {
         toggleSearchHistoryVisibility,
     required TResult Function(SetLastExportedFilePath value)
         setLastExportedFilePath,
+    required TResult Function(ToggleAutoPip value) toggleAutoPip,
   }) {
     return deleteProfile(this);
   }
@@ -8575,6 +8729,7 @@ class _$DeleteProfileImpl implements DeleteProfile {
     TResult? Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult? Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult? Function(ToggleAutoPip value)? toggleAutoPip,
   }) {
     return deleteProfile?.call(this);
   }
@@ -8619,6 +8774,7 @@ class _$DeleteProfileImpl implements DeleteProfile {
     TResult Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult Function(ToggleAutoPip value)? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (deleteProfile != null) {
@@ -8745,6 +8901,7 @@ class _$SwitchProfileImpl implements SwitchProfile {
     required TResult Function() toggleSearchHistoryEnabled,
     required TResult Function() toggleSearchHistoryVisibility,
     required TResult Function(String filePath) setLastExportedFilePath,
+    required TResult Function() toggleAutoPip,
   }) {
     return switchProfile(profileName);
   }
@@ -8785,6 +8942,7 @@ class _$SwitchProfileImpl implements SwitchProfile {
     TResult? Function()? toggleSearchHistoryEnabled,
     TResult? Function()? toggleSearchHistoryVisibility,
     TResult? Function(String filePath)? setLastExportedFilePath,
+    TResult? Function()? toggleAutoPip,
   }) {
     return switchProfile?.call(profileName);
   }
@@ -8825,6 +8983,7 @@ class _$SwitchProfileImpl implements SwitchProfile {
     TResult Function()? toggleSearchHistoryEnabled,
     TResult Function()? toggleSearchHistoryVisibility,
     TResult Function(String filePath)? setLastExportedFilePath,
+    TResult Function()? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (switchProfile != null) {
@@ -8879,6 +9038,7 @@ class _$SwitchProfileImpl implements SwitchProfile {
         toggleSearchHistoryVisibility,
     required TResult Function(SetLastExportedFilePath value)
         setLastExportedFilePath,
+    required TResult Function(ToggleAutoPip value) toggleAutoPip,
   }) {
     return switchProfile(this);
   }
@@ -8923,6 +9083,7 @@ class _$SwitchProfileImpl implements SwitchProfile {
     TResult? Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult? Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult? Function(ToggleAutoPip value)? toggleAutoPip,
   }) {
     return switchProfile?.call(this);
   }
@@ -8967,6 +9128,7 @@ class _$SwitchProfileImpl implements SwitchProfile {
     TResult Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult Function(ToggleAutoPip value)? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (switchProfile != null) {
@@ -9100,6 +9262,7 @@ class _$RenameProfileImpl implements RenameProfile {
     required TResult Function() toggleSearchHistoryEnabled,
     required TResult Function() toggleSearchHistoryVisibility,
     required TResult Function(String filePath) setLastExportedFilePath,
+    required TResult Function() toggleAutoPip,
   }) {
     return renameProfile(oldName, newName);
   }
@@ -9140,6 +9303,7 @@ class _$RenameProfileImpl implements RenameProfile {
     TResult? Function()? toggleSearchHistoryEnabled,
     TResult? Function()? toggleSearchHistoryVisibility,
     TResult? Function(String filePath)? setLastExportedFilePath,
+    TResult? Function()? toggleAutoPip,
   }) {
     return renameProfile?.call(oldName, newName);
   }
@@ -9180,6 +9344,7 @@ class _$RenameProfileImpl implements RenameProfile {
     TResult Function()? toggleSearchHistoryEnabled,
     TResult Function()? toggleSearchHistoryVisibility,
     TResult Function(String filePath)? setLastExportedFilePath,
+    TResult Function()? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (renameProfile != null) {
@@ -9234,6 +9399,7 @@ class _$RenameProfileImpl implements RenameProfile {
         toggleSearchHistoryVisibility,
     required TResult Function(SetLastExportedFilePath value)
         setLastExportedFilePath,
+    required TResult Function(ToggleAutoPip value) toggleAutoPip,
   }) {
     return renameProfile(this);
   }
@@ -9278,6 +9444,7 @@ class _$RenameProfileImpl implements RenameProfile {
     TResult? Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult? Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult? Function(ToggleAutoPip value)? toggleAutoPip,
   }) {
     return renameProfile?.call(this);
   }
@@ -9322,6 +9489,7 @@ class _$RenameProfileImpl implements RenameProfile {
     TResult Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult Function(ToggleAutoPip value)? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (renameProfile != null) {
@@ -9452,6 +9620,7 @@ class _$ExportSubscriptionsImpl implements ExportSubscriptions {
     required TResult Function() toggleSearchHistoryEnabled,
     required TResult Function() toggleSearchHistoryVisibility,
     required TResult Function(String filePath) setLastExportedFilePath,
+    required TResult Function() toggleAutoPip,
   }) {
     return exportSubscriptions(profileName);
   }
@@ -9492,6 +9661,7 @@ class _$ExportSubscriptionsImpl implements ExportSubscriptions {
     TResult? Function()? toggleSearchHistoryEnabled,
     TResult? Function()? toggleSearchHistoryVisibility,
     TResult? Function(String filePath)? setLastExportedFilePath,
+    TResult? Function()? toggleAutoPip,
   }) {
     return exportSubscriptions?.call(profileName);
   }
@@ -9532,6 +9702,7 @@ class _$ExportSubscriptionsImpl implements ExportSubscriptions {
     TResult Function()? toggleSearchHistoryEnabled,
     TResult Function()? toggleSearchHistoryVisibility,
     TResult Function(String filePath)? setLastExportedFilePath,
+    TResult Function()? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (exportSubscriptions != null) {
@@ -9586,6 +9757,7 @@ class _$ExportSubscriptionsImpl implements ExportSubscriptions {
         toggleSearchHistoryVisibility,
     required TResult Function(SetLastExportedFilePath value)
         setLastExportedFilePath,
+    required TResult Function(ToggleAutoPip value) toggleAutoPip,
   }) {
     return exportSubscriptions(this);
   }
@@ -9630,6 +9802,7 @@ class _$ExportSubscriptionsImpl implements ExportSubscriptions {
     TResult? Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult? Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult? Function(ToggleAutoPip value)? toggleAutoPip,
   }) {
     return exportSubscriptions?.call(this);
   }
@@ -9674,6 +9847,7 @@ class _$ExportSubscriptionsImpl implements ExportSubscriptions {
     TResult Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult Function(ToggleAutoPip value)? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (exportSubscriptions != null) {
@@ -9812,6 +9986,7 @@ class _$ImportSubscriptionsImpl implements ImportSubscriptions {
     required TResult Function() toggleSearchHistoryEnabled,
     required TResult Function() toggleSearchHistoryVisibility,
     required TResult Function(String filePath) setLastExportedFilePath,
+    required TResult Function() toggleAutoPip,
   }) {
     return importSubscriptions(filePath, profileName);
   }
@@ -9852,6 +10027,7 @@ class _$ImportSubscriptionsImpl implements ImportSubscriptions {
     TResult? Function()? toggleSearchHistoryEnabled,
     TResult? Function()? toggleSearchHistoryVisibility,
     TResult? Function(String filePath)? setLastExportedFilePath,
+    TResult? Function()? toggleAutoPip,
   }) {
     return importSubscriptions?.call(filePath, profileName);
   }
@@ -9892,6 +10068,7 @@ class _$ImportSubscriptionsImpl implements ImportSubscriptions {
     TResult Function()? toggleSearchHistoryEnabled,
     TResult Function()? toggleSearchHistoryVisibility,
     TResult Function(String filePath)? setLastExportedFilePath,
+    TResult Function()? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (importSubscriptions != null) {
@@ -9946,6 +10123,7 @@ class _$ImportSubscriptionsImpl implements ImportSubscriptions {
         toggleSearchHistoryVisibility,
     required TResult Function(SetLastExportedFilePath value)
         setLastExportedFilePath,
+    required TResult Function(ToggleAutoPip value) toggleAutoPip,
   }) {
     return importSubscriptions(this);
   }
@@ -9990,6 +10168,7 @@ class _$ImportSubscriptionsImpl implements ImportSubscriptions {
     TResult? Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult? Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult? Function(ToggleAutoPip value)? toggleAutoPip,
   }) {
     return importSubscriptions?.call(this);
   }
@@ -10034,6 +10213,7 @@ class _$ImportSubscriptionsImpl implements ImportSubscriptions {
     TResult Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult Function(ToggleAutoPip value)? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (importSubscriptions != null) {
@@ -10162,6 +10342,7 @@ class _$SetSubtitleSizeImpl implements SetSubtitleSize {
     required TResult Function() toggleSearchHistoryEnabled,
     required TResult Function() toggleSearchHistoryVisibility,
     required TResult Function(String filePath) setLastExportedFilePath,
+    required TResult Function() toggleAutoPip,
   }) {
     return setSubtitleSize(size);
   }
@@ -10202,6 +10383,7 @@ class _$SetSubtitleSizeImpl implements SetSubtitleSize {
     TResult? Function()? toggleSearchHistoryEnabled,
     TResult? Function()? toggleSearchHistoryVisibility,
     TResult? Function(String filePath)? setLastExportedFilePath,
+    TResult? Function()? toggleAutoPip,
   }) {
     return setSubtitleSize?.call(size);
   }
@@ -10242,6 +10424,7 @@ class _$SetSubtitleSizeImpl implements SetSubtitleSize {
     TResult Function()? toggleSearchHistoryEnabled,
     TResult Function()? toggleSearchHistoryVisibility,
     TResult Function(String filePath)? setLastExportedFilePath,
+    TResult Function()? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (setSubtitleSize != null) {
@@ -10296,6 +10479,7 @@ class _$SetSubtitleSizeImpl implements SetSubtitleSize {
         toggleSearchHistoryVisibility,
     required TResult Function(SetLastExportedFilePath value)
         setLastExportedFilePath,
+    required TResult Function(ToggleAutoPip value) toggleAutoPip,
   }) {
     return setSubtitleSize(this);
   }
@@ -10340,6 +10524,7 @@ class _$SetSubtitleSizeImpl implements SetSubtitleSize {
     TResult? Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult? Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult? Function(ToggleAutoPip value)? toggleAutoPip,
   }) {
     return setSubtitleSize?.call(this);
   }
@@ -10384,6 +10569,7 @@ class _$SetSubtitleSizeImpl implements SetSubtitleSize {
     TResult Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult Function(ToggleAutoPip value)? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (setSubtitleSize != null) {
@@ -10484,6 +10670,7 @@ class _$ToggleSearchHistoryEnabledImpl implements ToggleSearchHistoryEnabled {
     required TResult Function() toggleSearchHistoryEnabled,
     required TResult Function() toggleSearchHistoryVisibility,
     required TResult Function(String filePath) setLastExportedFilePath,
+    required TResult Function() toggleAutoPip,
   }) {
     return toggleSearchHistoryEnabled();
   }
@@ -10524,6 +10711,7 @@ class _$ToggleSearchHistoryEnabledImpl implements ToggleSearchHistoryEnabled {
     TResult? Function()? toggleSearchHistoryEnabled,
     TResult? Function()? toggleSearchHistoryVisibility,
     TResult? Function(String filePath)? setLastExportedFilePath,
+    TResult? Function()? toggleAutoPip,
   }) {
     return toggleSearchHistoryEnabled?.call();
   }
@@ -10564,6 +10752,7 @@ class _$ToggleSearchHistoryEnabledImpl implements ToggleSearchHistoryEnabled {
     TResult Function()? toggleSearchHistoryEnabled,
     TResult Function()? toggleSearchHistoryVisibility,
     TResult Function(String filePath)? setLastExportedFilePath,
+    TResult Function()? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (toggleSearchHistoryEnabled != null) {
@@ -10618,6 +10807,7 @@ class _$ToggleSearchHistoryEnabledImpl implements ToggleSearchHistoryEnabled {
         toggleSearchHistoryVisibility,
     required TResult Function(SetLastExportedFilePath value)
         setLastExportedFilePath,
+    required TResult Function(ToggleAutoPip value) toggleAutoPip,
   }) {
     return toggleSearchHistoryEnabled(this);
   }
@@ -10662,6 +10852,7 @@ class _$ToggleSearchHistoryEnabledImpl implements ToggleSearchHistoryEnabled {
     TResult? Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult? Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult? Function(ToggleAutoPip value)? toggleAutoPip,
   }) {
     return toggleSearchHistoryEnabled?.call(this);
   }
@@ -10706,6 +10897,7 @@ class _$ToggleSearchHistoryEnabledImpl implements ToggleSearchHistoryEnabled {
     TResult Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult Function(ToggleAutoPip value)? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (toggleSearchHistoryEnabled != null) {
@@ -10800,6 +10992,7 @@ class _$ToggleSearchHistoryVisibilityImpl
     required TResult Function() toggleSearchHistoryEnabled,
     required TResult Function() toggleSearchHistoryVisibility,
     required TResult Function(String filePath) setLastExportedFilePath,
+    required TResult Function() toggleAutoPip,
   }) {
     return toggleSearchHistoryVisibility();
   }
@@ -10840,6 +11033,7 @@ class _$ToggleSearchHistoryVisibilityImpl
     TResult? Function()? toggleSearchHistoryEnabled,
     TResult? Function()? toggleSearchHistoryVisibility,
     TResult? Function(String filePath)? setLastExportedFilePath,
+    TResult? Function()? toggleAutoPip,
   }) {
     return toggleSearchHistoryVisibility?.call();
   }
@@ -10880,6 +11074,7 @@ class _$ToggleSearchHistoryVisibilityImpl
     TResult Function()? toggleSearchHistoryEnabled,
     TResult Function()? toggleSearchHistoryVisibility,
     TResult Function(String filePath)? setLastExportedFilePath,
+    TResult Function()? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (toggleSearchHistoryVisibility != null) {
@@ -10934,6 +11129,7 @@ class _$ToggleSearchHistoryVisibilityImpl
         toggleSearchHistoryVisibility,
     required TResult Function(SetLastExportedFilePath value)
         setLastExportedFilePath,
+    required TResult Function(ToggleAutoPip value) toggleAutoPip,
   }) {
     return toggleSearchHistoryVisibility(this);
   }
@@ -10978,6 +11174,7 @@ class _$ToggleSearchHistoryVisibilityImpl
     TResult? Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult? Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult? Function(ToggleAutoPip value)? toggleAutoPip,
   }) {
     return toggleSearchHistoryVisibility?.call(this);
   }
@@ -11022,6 +11219,7 @@ class _$ToggleSearchHistoryVisibilityImpl
     TResult Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult Function(ToggleAutoPip value)? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (toggleSearchHistoryVisibility != null) {
@@ -11142,6 +11340,7 @@ class _$SetLastExportedFilePathImpl implements SetLastExportedFilePath {
     required TResult Function() toggleSearchHistoryEnabled,
     required TResult Function() toggleSearchHistoryVisibility,
     required TResult Function(String filePath) setLastExportedFilePath,
+    required TResult Function() toggleAutoPip,
   }) {
     return setLastExportedFilePath(filePath);
   }
@@ -11182,6 +11381,7 @@ class _$SetLastExportedFilePathImpl implements SetLastExportedFilePath {
     TResult? Function()? toggleSearchHistoryEnabled,
     TResult? Function()? toggleSearchHistoryVisibility,
     TResult? Function(String filePath)? setLastExportedFilePath,
+    TResult? Function()? toggleAutoPip,
   }) {
     return setLastExportedFilePath?.call(filePath);
   }
@@ -11222,6 +11422,7 @@ class _$SetLastExportedFilePathImpl implements SetLastExportedFilePath {
     TResult Function()? toggleSearchHistoryEnabled,
     TResult Function()? toggleSearchHistoryVisibility,
     TResult Function(String filePath)? setLastExportedFilePath,
+    TResult Function()? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (setLastExportedFilePath != null) {
@@ -11276,6 +11477,7 @@ class _$SetLastExportedFilePathImpl implements SetLastExportedFilePath {
         toggleSearchHistoryVisibility,
     required TResult Function(SetLastExportedFilePath value)
         setLastExportedFilePath,
+    required TResult Function(ToggleAutoPip value) toggleAutoPip,
   }) {
     return setLastExportedFilePath(this);
   }
@@ -11320,6 +11522,7 @@ class _$SetLastExportedFilePathImpl implements SetLastExportedFilePath {
     TResult? Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult? Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult? Function(ToggleAutoPip value)? toggleAutoPip,
   }) {
     return setLastExportedFilePath?.call(this);
   }
@@ -11364,6 +11567,7 @@ class _$SetLastExportedFilePathImpl implements SetLastExportedFilePath {
     TResult Function(ToggleSearchHistoryVisibility value)?
         toggleSearchHistoryVisibility,
     TResult Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult Function(ToggleAutoPip value)? toggleAutoPip,
     required TResult orElse(),
   }) {
     if (setLastExportedFilePath != null) {
@@ -11384,6 +11588,323 @@ abstract class SetLastExportedFilePath implements SettingsEvent {
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SetLastExportedFilePathImplCopyWith<_$SetLastExportedFilePathImpl>
       get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$ToggleAutoPipImplCopyWith<$Res> {
+  factory _$$ToggleAutoPipImplCopyWith(
+          _$ToggleAutoPipImpl value, $Res Function(_$ToggleAutoPipImpl) then) =
+      __$$ToggleAutoPipImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$ToggleAutoPipImplCopyWithImpl<$Res>
+    extends _$SettingsEventCopyWithImpl<$Res, _$ToggleAutoPipImpl>
+    implements _$$ToggleAutoPipImplCopyWith<$Res> {
+  __$$ToggleAutoPipImplCopyWithImpl(
+      _$ToggleAutoPipImpl _value, $Res Function(_$ToggleAutoPipImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of SettingsEvent
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$ToggleAutoPipImpl implements ToggleAutoPip {
+  _$ToggleAutoPipImpl();
+
+  @override
+  String toString() {
+    return 'SettingsEvent.toggleAutoPip()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$ToggleAutoPipImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initializeSettings,
+    required TResult Function(String? language) getDefaultLanguage,
+    required TResult Function(String? quality) getDefaultQuality,
+    required TResult Function(String? region) getDefaultRegion,
+    required TResult Function(String themeMode) changeTheme,
+    required TResult Function() toggleHistoryVisibility,
+    required TResult Function() toggleDislikeVisibility,
+    required TResult Function() toggleHlsPlayer,
+    required TResult Function() toggleCommentVisibility,
+    required TResult Function() toggleRelatedVideoVisibility,
+    required TResult Function(bool forceRefresh) fetchPipedInstances,
+    required TResult Function(bool forceRefresh) fetchInvidiousInstances,
+    required TResult Function(String instanceApi) setInstance,
+    required TResult Function(YouTubeServices service) setYTService,
+    required TResult Function() togglePipPlayer,
+    required TResult Function(String filter) setSearchFilter,
+    required TResult Function(String fitMode) setVideoFitMode,
+    required TResult Function(int seconds) setSkipInterval,
+    required TResult Function() toggleSponsorBlock,
+    required TResult Function(List<String> categories)
+        setSponsorBlockCategories,
+    required TResult Function() toggleOpenLinksInBrowser,
+    required TResult Function(String mode) setHomeFeedMode,
+    required TResult Function() toggleAudioFocus,
+    required TResult Function(String profileName) addProfile,
+    required TResult Function(String profileName) deleteProfile,
+    required TResult Function(String profileName) switchProfile,
+    required TResult Function(String oldName, String newName) renameProfile,
+    required TResult Function(String profileName) exportSubscriptions,
+    required TResult Function(String filePath, String profileName)
+        importSubscriptions,
+    required TResult Function(double size) setSubtitleSize,
+    required TResult Function() toggleSearchHistoryEnabled,
+    required TResult Function() toggleSearchHistoryVisibility,
+    required TResult Function(String filePath) setLastExportedFilePath,
+    required TResult Function() toggleAutoPip,
+  }) {
+    return toggleAutoPip();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initializeSettings,
+    TResult? Function(String? language)? getDefaultLanguage,
+    TResult? Function(String? quality)? getDefaultQuality,
+    TResult? Function(String? region)? getDefaultRegion,
+    TResult? Function(String themeMode)? changeTheme,
+    TResult? Function()? toggleHistoryVisibility,
+    TResult? Function()? toggleDislikeVisibility,
+    TResult? Function()? toggleHlsPlayer,
+    TResult? Function()? toggleCommentVisibility,
+    TResult? Function()? toggleRelatedVideoVisibility,
+    TResult? Function(bool forceRefresh)? fetchPipedInstances,
+    TResult? Function(bool forceRefresh)? fetchInvidiousInstances,
+    TResult? Function(String instanceApi)? setInstance,
+    TResult? Function(YouTubeServices service)? setYTService,
+    TResult? Function()? togglePipPlayer,
+    TResult? Function(String filter)? setSearchFilter,
+    TResult? Function(String fitMode)? setVideoFitMode,
+    TResult? Function(int seconds)? setSkipInterval,
+    TResult? Function()? toggleSponsorBlock,
+    TResult? Function(List<String> categories)? setSponsorBlockCategories,
+    TResult? Function()? toggleOpenLinksInBrowser,
+    TResult? Function(String mode)? setHomeFeedMode,
+    TResult? Function()? toggleAudioFocus,
+    TResult? Function(String profileName)? addProfile,
+    TResult? Function(String profileName)? deleteProfile,
+    TResult? Function(String profileName)? switchProfile,
+    TResult? Function(String oldName, String newName)? renameProfile,
+    TResult? Function(String profileName)? exportSubscriptions,
+    TResult? Function(String filePath, String profileName)? importSubscriptions,
+    TResult? Function(double size)? setSubtitleSize,
+    TResult? Function()? toggleSearchHistoryEnabled,
+    TResult? Function()? toggleSearchHistoryVisibility,
+    TResult? Function(String filePath)? setLastExportedFilePath,
+    TResult? Function()? toggleAutoPip,
+  }) {
+    return toggleAutoPip?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initializeSettings,
+    TResult Function(String? language)? getDefaultLanguage,
+    TResult Function(String? quality)? getDefaultQuality,
+    TResult Function(String? region)? getDefaultRegion,
+    TResult Function(String themeMode)? changeTheme,
+    TResult Function()? toggleHistoryVisibility,
+    TResult Function()? toggleDislikeVisibility,
+    TResult Function()? toggleHlsPlayer,
+    TResult Function()? toggleCommentVisibility,
+    TResult Function()? toggleRelatedVideoVisibility,
+    TResult Function(bool forceRefresh)? fetchPipedInstances,
+    TResult Function(bool forceRefresh)? fetchInvidiousInstances,
+    TResult Function(String instanceApi)? setInstance,
+    TResult Function(YouTubeServices service)? setYTService,
+    TResult Function()? togglePipPlayer,
+    TResult Function(String filter)? setSearchFilter,
+    TResult Function(String fitMode)? setVideoFitMode,
+    TResult Function(int seconds)? setSkipInterval,
+    TResult Function()? toggleSponsorBlock,
+    TResult Function(List<String> categories)? setSponsorBlockCategories,
+    TResult Function()? toggleOpenLinksInBrowser,
+    TResult Function(String mode)? setHomeFeedMode,
+    TResult Function()? toggleAudioFocus,
+    TResult Function(String profileName)? addProfile,
+    TResult Function(String profileName)? deleteProfile,
+    TResult Function(String profileName)? switchProfile,
+    TResult Function(String oldName, String newName)? renameProfile,
+    TResult Function(String profileName)? exportSubscriptions,
+    TResult Function(String filePath, String profileName)? importSubscriptions,
+    TResult Function(double size)? setSubtitleSize,
+    TResult Function()? toggleSearchHistoryEnabled,
+    TResult Function()? toggleSearchHistoryVisibility,
+    TResult Function(String filePath)? setLastExportedFilePath,
+    TResult Function()? toggleAutoPip,
+    required TResult orElse(),
+  }) {
+    if (toggleAutoPip != null) {
+      return toggleAutoPip();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(InitializeSettings value) initializeSettings,
+    required TResult Function(GetDefaultLanguage value) getDefaultLanguage,
+    required TResult Function(GetDefaultQuality value) getDefaultQuality,
+    required TResult Function(GetDefaultRegion value) getDefaultRegion,
+    required TResult Function(ChangeTheme value) changeTheme,
+    required TResult Function(ToggleHistoryVisibility value)
+        toggleHistoryVisibility,
+    required TResult Function(ToggleDislikeVisibility value)
+        toggleDislikeVisibility,
+    required TResult Function(ToggleHlsPlayer value) toggleHlsPlayer,
+    required TResult Function(ToggleCommentVisibility value)
+        toggleCommentVisibility,
+    required TResult Function(ToggleRelatedVideoVisibility value)
+        toggleRelatedVideoVisibility,
+    required TResult Function(FetchPipedInstances value) fetchPipedInstances,
+    required TResult Function(FetchInvidiousInstances value)
+        fetchInvidiousInstances,
+    required TResult Function(SetInstance value) setInstance,
+    required TResult Function(SetYTService value) setYTService,
+    required TResult Function(TogglePipPlayer value) togglePipPlayer,
+    required TResult Function(SetSearchFilter value) setSearchFilter,
+    required TResult Function(SetVideoFitMode value) setVideoFitMode,
+    required TResult Function(SetSkipInterval value) setSkipInterval,
+    required TResult Function(ToggleSponsorBlock value) toggleSponsorBlock,
+    required TResult Function(SetSponsorBlockCategories value)
+        setSponsorBlockCategories,
+    required TResult Function(ToggleOpenLinksInBrowser value)
+        toggleOpenLinksInBrowser,
+    required TResult Function(SetHomeFeedMode value) setHomeFeedMode,
+    required TResult Function(ToggleAudioFocus value) toggleAudioFocus,
+    required TResult Function(AddProfile value) addProfile,
+    required TResult Function(DeleteProfile value) deleteProfile,
+    required TResult Function(SwitchProfile value) switchProfile,
+    required TResult Function(RenameProfile value) renameProfile,
+    required TResult Function(ExportSubscriptions value) exportSubscriptions,
+    required TResult Function(ImportSubscriptions value) importSubscriptions,
+    required TResult Function(SetSubtitleSize value) setSubtitleSize,
+    required TResult Function(ToggleSearchHistoryEnabled value)
+        toggleSearchHistoryEnabled,
+    required TResult Function(ToggleSearchHistoryVisibility value)
+        toggleSearchHistoryVisibility,
+    required TResult Function(SetLastExportedFilePath value)
+        setLastExportedFilePath,
+    required TResult Function(ToggleAutoPip value) toggleAutoPip,
+  }) {
+    return toggleAutoPip(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(InitializeSettings value)? initializeSettings,
+    TResult? Function(GetDefaultLanguage value)? getDefaultLanguage,
+    TResult? Function(GetDefaultQuality value)? getDefaultQuality,
+    TResult? Function(GetDefaultRegion value)? getDefaultRegion,
+    TResult? Function(ChangeTheme value)? changeTheme,
+    TResult? Function(ToggleHistoryVisibility value)? toggleHistoryVisibility,
+    TResult? Function(ToggleDislikeVisibility value)? toggleDislikeVisibility,
+    TResult? Function(ToggleHlsPlayer value)? toggleHlsPlayer,
+    TResult? Function(ToggleCommentVisibility value)? toggleCommentVisibility,
+    TResult? Function(ToggleRelatedVideoVisibility value)?
+        toggleRelatedVideoVisibility,
+    TResult? Function(FetchPipedInstances value)? fetchPipedInstances,
+    TResult? Function(FetchInvidiousInstances value)? fetchInvidiousInstances,
+    TResult? Function(SetInstance value)? setInstance,
+    TResult? Function(SetYTService value)? setYTService,
+    TResult? Function(TogglePipPlayer value)? togglePipPlayer,
+    TResult? Function(SetSearchFilter value)? setSearchFilter,
+    TResult? Function(SetVideoFitMode value)? setVideoFitMode,
+    TResult? Function(SetSkipInterval value)? setSkipInterval,
+    TResult? Function(ToggleSponsorBlock value)? toggleSponsorBlock,
+    TResult? Function(SetSponsorBlockCategories value)?
+        setSponsorBlockCategories,
+    TResult? Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
+    TResult? Function(SetHomeFeedMode value)? setHomeFeedMode,
+    TResult? Function(ToggleAudioFocus value)? toggleAudioFocus,
+    TResult? Function(AddProfile value)? addProfile,
+    TResult? Function(DeleteProfile value)? deleteProfile,
+    TResult? Function(SwitchProfile value)? switchProfile,
+    TResult? Function(RenameProfile value)? renameProfile,
+    TResult? Function(ExportSubscriptions value)? exportSubscriptions,
+    TResult? Function(ImportSubscriptions value)? importSubscriptions,
+    TResult? Function(SetSubtitleSize value)? setSubtitleSize,
+    TResult? Function(ToggleSearchHistoryEnabled value)?
+        toggleSearchHistoryEnabled,
+    TResult? Function(ToggleSearchHistoryVisibility value)?
+        toggleSearchHistoryVisibility,
+    TResult? Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult? Function(ToggleAutoPip value)? toggleAutoPip,
+  }) {
+    return toggleAutoPip?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(InitializeSettings value)? initializeSettings,
+    TResult Function(GetDefaultLanguage value)? getDefaultLanguage,
+    TResult Function(GetDefaultQuality value)? getDefaultQuality,
+    TResult Function(GetDefaultRegion value)? getDefaultRegion,
+    TResult Function(ChangeTheme value)? changeTheme,
+    TResult Function(ToggleHistoryVisibility value)? toggleHistoryVisibility,
+    TResult Function(ToggleDislikeVisibility value)? toggleDislikeVisibility,
+    TResult Function(ToggleHlsPlayer value)? toggleHlsPlayer,
+    TResult Function(ToggleCommentVisibility value)? toggleCommentVisibility,
+    TResult Function(ToggleRelatedVideoVisibility value)?
+        toggleRelatedVideoVisibility,
+    TResult Function(FetchPipedInstances value)? fetchPipedInstances,
+    TResult Function(FetchInvidiousInstances value)? fetchInvidiousInstances,
+    TResult Function(SetInstance value)? setInstance,
+    TResult Function(SetYTService value)? setYTService,
+    TResult Function(TogglePipPlayer value)? togglePipPlayer,
+    TResult Function(SetSearchFilter value)? setSearchFilter,
+    TResult Function(SetVideoFitMode value)? setVideoFitMode,
+    TResult Function(SetSkipInterval value)? setSkipInterval,
+    TResult Function(ToggleSponsorBlock value)? toggleSponsorBlock,
+    TResult Function(SetSponsorBlockCategories value)?
+        setSponsorBlockCategories,
+    TResult Function(ToggleOpenLinksInBrowser value)? toggleOpenLinksInBrowser,
+    TResult Function(SetHomeFeedMode value)? setHomeFeedMode,
+    TResult Function(ToggleAudioFocus value)? toggleAudioFocus,
+    TResult Function(AddProfile value)? addProfile,
+    TResult Function(DeleteProfile value)? deleteProfile,
+    TResult Function(SwitchProfile value)? switchProfile,
+    TResult Function(RenameProfile value)? renameProfile,
+    TResult Function(ExportSubscriptions value)? exportSubscriptions,
+    TResult Function(ImportSubscriptions value)? importSubscriptions,
+    TResult Function(SetSubtitleSize value)? setSubtitleSize,
+    TResult Function(ToggleSearchHistoryEnabled value)?
+        toggleSearchHistoryEnabled,
+    TResult Function(ToggleSearchHistoryVisibility value)?
+        toggleSearchHistoryVisibility,
+    TResult Function(SetLastExportedFilePath value)? setLastExportedFilePath,
+    TResult Function(ToggleAutoPip value)? toggleAutoPip,
+    required TResult orElse(),
+  }) {
+    if (toggleAutoPip != null) {
+      return toggleAutoPip(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ToggleAutoPip implements SettingsEvent {
+  factory ToggleAutoPip() = _$ToggleAutoPipImpl;
 }
 
 /// @nodoc
@@ -11437,7 +11958,9 @@ mixin _$SettingsState {
   String? get lastExportedFilePath =>
       throw _privateConstructorUsedError; // Search history privacy
   bool get isSearchHistoryEnabled => throw _privateConstructorUsedError;
-  bool get isSearchHistoryVisible => throw _privateConstructorUsedError;
+  bool get isSearchHistoryVisible =>
+      throw _privateConstructorUsedError; // Auto PiP (enter PiP when pressing home button while video is playing)
+  bool get isAutoPipEnabled => throw _privateConstructorUsedError;
 
   /// Create a copy of SettingsState
   /// with the given fields replaced by the non-null parameter values.
@@ -11489,7 +12012,8 @@ abstract class $SettingsStateCopyWith<$Res> {
       double subtitleSize,
       String? lastExportedFilePath,
       bool isSearchHistoryEnabled,
-      bool isSearchHistoryVisible});
+      bool isSearchHistoryVisible,
+      bool isAutoPipEnabled});
 }
 
 /// @nodoc
@@ -11544,6 +12068,7 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
     Object? lastExportedFilePath = freezed,
     Object? isSearchHistoryEnabled = null,
     Object? isSearchHistoryVisible = null,
+    Object? isAutoPipEnabled = null,
   }) {
     return _then(_value.copyWith(
       defaultLanguage: null == defaultLanguage
@@ -11694,6 +12219,10 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
           ? _value.isSearchHistoryVisible
           : isSearchHistoryVisible // ignore: cast_nullable_to_non_nullable
               as bool,
+      isAutoPipEnabled: null == isAutoPipEnabled
+          ? _value.isAutoPipEnabled
+          : isAutoPipEnabled // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -11743,7 +12272,8 @@ abstract class _$$InitialImplCopyWith<$Res>
       double subtitleSize,
       String? lastExportedFilePath,
       bool isSearchHistoryEnabled,
-      bool isSearchHistoryVisible});
+      bool isSearchHistoryVisible,
+      bool isAutoPipEnabled});
 }
 
 /// @nodoc
@@ -11796,6 +12326,7 @@ class __$$InitialImplCopyWithImpl<$Res>
     Object? lastExportedFilePath = freezed,
     Object? isSearchHistoryEnabled = null,
     Object? isSearchHistoryVisible = null,
+    Object? isAutoPipEnabled = null,
   }) {
     return _then(_$InitialImpl(
       defaultLanguage: null == defaultLanguage
@@ -11946,6 +12477,10 @@ class __$$InitialImplCopyWithImpl<$Res>
           ? _value.isSearchHistoryVisible
           : isSearchHistoryVisible // ignore: cast_nullable_to_non_nullable
               as bool,
+      isAutoPipEnabled: null == isAutoPipEnabled
+          ? _value.isAutoPipEnabled
+          : isAutoPipEnabled // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -11990,7 +12525,8 @@ class _$InitialImpl implements _Initial {
       required this.subtitleSize,
       required this.lastExportedFilePath,
       required this.isSearchHistoryEnabled,
-      required this.isSearchHistoryVisible})
+      required this.isSearchHistoryVisible,
+      required this.isAutoPipEnabled})
       : _pipedInstances = pipedInstances,
         _invidiousInstances = invidiousInstances,
         _sponsorBlockCategories = sponsorBlockCategories,
@@ -12109,10 +12645,13 @@ class _$InitialImpl implements _Initial {
   final bool isSearchHistoryEnabled;
   @override
   final bool isSearchHistoryVisible;
+// Auto PiP (enter PiP when pressing home button while video is playing)
+  @override
+  final bool isAutoPipEnabled;
 
   @override
   String toString() {
-    return 'SettingsState(defaultLanguage: $defaultLanguage, defaultQuality: $defaultQuality, defaultRegion: $defaultRegion, themeMode: $themeMode, version: $version, isHistoryVisible: $isHistoryVisible, isDislikeVisible: $isDislikeVisible, isHlsPlayer: $isHlsPlayer, isHideComments: $isHideComments, isHideRelated: $isHideRelated, pipedInstances: $pipedInstances, pipedInstanceStatus: $pipedInstanceStatus, instance: $instance, invidiousInstances: $invidiousInstances, invidiousInstanceStatus: $invidiousInstanceStatus, ytService: $ytService, initialized: $initialized, settingsStatus: $settingsStatus, isPipDisabled: $isPipDisabled, connectingToInstance: $connectingToInstance, isTestingConnection: $isTestingConnection, userInstanceFailed: $userInstanceFailed, failedInstanceName: $failedInstanceName, searchFilter: $searchFilter, videoFitMode: $videoFitMode, skipInterval: $skipInterval, isSponsorBlockEnabled: $isSponsorBlockEnabled, sponsorBlockCategories: $sponsorBlockCategories, openLinksInBrowser: $openLinksInBrowser, homeFeedMode: $homeFeedMode, isAudioFocusEnabled: $isAudioFocusEnabled, currentProfile: $currentProfile, profiles: $profiles, subtitleSize: $subtitleSize, lastExportedFilePath: $lastExportedFilePath, isSearchHistoryEnabled: $isSearchHistoryEnabled, isSearchHistoryVisible: $isSearchHistoryVisible)';
+    return 'SettingsState(defaultLanguage: $defaultLanguage, defaultQuality: $defaultQuality, defaultRegion: $defaultRegion, themeMode: $themeMode, version: $version, isHistoryVisible: $isHistoryVisible, isDislikeVisible: $isDislikeVisible, isHlsPlayer: $isHlsPlayer, isHideComments: $isHideComments, isHideRelated: $isHideRelated, pipedInstances: $pipedInstances, pipedInstanceStatus: $pipedInstanceStatus, instance: $instance, invidiousInstances: $invidiousInstances, invidiousInstanceStatus: $invidiousInstanceStatus, ytService: $ytService, initialized: $initialized, settingsStatus: $settingsStatus, isPipDisabled: $isPipDisabled, connectingToInstance: $connectingToInstance, isTestingConnection: $isTestingConnection, userInstanceFailed: $userInstanceFailed, failedInstanceName: $failedInstanceName, searchFilter: $searchFilter, videoFitMode: $videoFitMode, skipInterval: $skipInterval, isSponsorBlockEnabled: $isSponsorBlockEnabled, sponsorBlockCategories: $sponsorBlockCategories, openLinksInBrowser: $openLinksInBrowser, homeFeedMode: $homeFeedMode, isAudioFocusEnabled: $isAudioFocusEnabled, currentProfile: $currentProfile, profiles: $profiles, subtitleSize: $subtitleSize, lastExportedFilePath: $lastExportedFilePath, isSearchHistoryEnabled: $isSearchHistoryEnabled, isSearchHistoryVisible: $isSearchHistoryVisible, isAutoPipEnabled: $isAutoPipEnabled)';
   }
 
   @override
@@ -12191,7 +12730,9 @@ class _$InitialImpl implements _Initial {
             (identical(other.isSearchHistoryEnabled, isSearchHistoryEnabled) ||
                 other.isSearchHistoryEnabled == isSearchHistoryEnabled) &&
             (identical(other.isSearchHistoryVisible, isSearchHistoryVisible) ||
-                other.isSearchHistoryVisible == isSearchHistoryVisible));
+                other.isSearchHistoryVisible == isSearchHistoryVisible) &&
+            (identical(other.isAutoPipEnabled, isAutoPipEnabled) ||
+                other.isAutoPipEnabled == isAutoPipEnabled));
   }
 
   @override
@@ -12233,7 +12774,8 @@ class _$InitialImpl implements _Initial {
         subtitleSize,
         lastExportedFilePath,
         isSearchHistoryEnabled,
-        isSearchHistoryVisible
+        isSearchHistoryVisible,
+        isAutoPipEnabled
       ]);
 
   /// Create a copy of SettingsState
@@ -12283,7 +12825,8 @@ abstract class _Initial implements SettingsState {
       required final double subtitleSize,
       required final String? lastExportedFilePath,
       required final bool isSearchHistoryEnabled,
-      required final bool isSearchHistoryVisible}) = _$InitialImpl;
+      required final bool isSearchHistoryVisible,
+      required final bool isAutoPipEnabled}) = _$InitialImpl;
 
   @override
   String get defaultLanguage;
@@ -12360,7 +12903,10 @@ abstract class _Initial implements SettingsState {
   @override
   bool get isSearchHistoryEnabled;
   @override
-  bool get isSearchHistoryVisible;
+  bool
+      get isSearchHistoryVisible; // Auto PiP (enter PiP when pressing home button while video is playing)
+  @override
+  bool get isAutoPipEnabled;
 
   /// Create a copy of SettingsState
   /// with the given fields replaced by the non-null parameter values.

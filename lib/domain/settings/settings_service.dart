@@ -66,4 +66,6 @@ abstract class SettingsService {
   // Search history privacy
   Future<Either<MainFailure, bool>> toggleSearchHistoryEnabled({required bool isEnabled});
   Future<Either<MainFailure, bool>> toggleSearchHistoryVisibility({required bool isVisible});
+  // Auto PiP
+  Future<Either<MainFailure, bool>> toggleAutoPip({required bool isEnabled});
 }

@@ -30,6 +30,7 @@ class NewPipeMediaKitPlayer extends StatefulWidget {
     this.isAudioFocusEnabled = true,
     this.subtitleSize = 18.0,
     this.sponsorSegments = const [],
+    this.isAutoPipEnabled = true,
   });
 
   final NewPipeWatchResp watchInfo;
@@ -42,6 +43,7 @@ class NewPipeMediaKitPlayer extends StatefulWidget {
   final bool isAudioFocusEnabled;
   final double subtitleSize;
   final List<SponsorSegment> sponsorSegments;
+  final bool isAutoPipEnabled;
 
   @override
   State<NewPipeMediaKitPlayer> createState() => _NewPipeMediaKitPlayerState();
@@ -77,6 +79,9 @@ class _NewPipeMediaKitPlayerState extends State<NewPipeMediaKitPlayer> {
   StreamSubscription<Tracks>? _tracksSubscription;
   List<VideoTrack> _hlsDashVideoTracks = [];
   VideoTrack? _currentVideoTrack;
+
+  // PiP state tracking - notify Android when playback state changes
+  StreamSubscription<bool>? _playingSubscription;
 
   late final SavedBloc _savedBloc;
   late final WatchBloc _watchBloc;
@@ -126,6 +131,7 @@ class _NewPipeMediaKitPlayerState extends State<NewPipeMediaKitPlayer> {
       _setupHistoryListener();
       _setupSponsorBlockListener();
       _setupTracksListener();
+      _setupPlayingStateListener();
     } finally {
       _isInitializing = false;
     }
@@ -147,6 +153,7 @@ class _NewPipeMediaKitPlayerState extends State<NewPipeMediaKitPlayer> {
       _sponsorBlockSubscription?.cancel();
       _historySubscription?.cancel();
       _tracksSubscription?.cancel();
+      _playingSubscription?.cancel();
       _skippedSegments.clear();
       _hlsDashVideoTracks = [];
       _currentVideoTrack = null;
@@ -289,6 +296,9 @@ class _NewPipeMediaKitPlayerState extends State<NewPipeMediaKitPlayer> {
       // Update global player controller state for PiP support
       _globalPlayer.setCurrentVideoId(widget.videoId);
 
+      // Enable auto-PiP based on settings (only on Android)
+      await _globalPlayer.enableAutoPip(widget.isAutoPipEnabled);
+
       // Check if widget is still mounted before calling setState
       if (mounted) {
         setState(() {
@@ -402,6 +412,9 @@ class _NewPipeMediaKitPlayerState extends State<NewPipeMediaKitPlayer> {
 
       // Start playback
       await _player.play();
+
+      // Notify native side that video is playing (for auto-PiP)
+      await _globalPlayer.updatePlaybackStateForPip();
 
       // Check mounted after play
       if (!mounted) return;
@@ -640,6 +653,15 @@ class _NewPipeMediaKitPlayerState extends State<NewPipeMediaKitPlayer> {
     });
   }
 
+  /// Setup listener to track playing state changes for PiP
+  void _setupPlayingStateListener() {
+    _playingSubscription?.cancel();
+    _playingSubscription = _player.stream.playing.listen((isPlaying) {
+      // Notify Android about playback state changes for auto-PiP
+      _globalPlayer.updatePlaybackStateForPip();
+    });
+  }
+
   /// Build StreamQualityInfo list from VideoTrack list (for HLS/DASH)
   List<StreamQualityInfo> _buildQualitiesFromTracks(List<VideoTrack> tracks) {
     return tracks.map((track) {
@@ -865,6 +887,7 @@ class _NewPipeMediaKitPlayerState extends State<NewPipeMediaKitPlayer> {
     _sponsorBlockSubscription?.cancel();
     _historySubscription?.cancel();
     _tracksSubscription?.cancel();
+    _playingSubscription?.cancel();
     _updateVideoHistory();
     // Don't dispose the global player - save state for PiP transition
     // The player will persist and can be restored when returning from PiP

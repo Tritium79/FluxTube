@@ -53,6 +53,8 @@ class SettingsState with _$SettingsState {
     // Search history privacy
     required bool isSearchHistoryEnabled,
     required bool isSearchHistoryVisible,
+    // Auto PiP (enter PiP when pressing home button while video is playing)
+    required bool isAutoPipEnabled,
   }) = _Initial;
 
   factory SettingsState.initialize() => SettingsState(
@@ -95,5 +97,6 @@ class SettingsState with _$SettingsState {
         lastExportedFilePath: null,
         isSearchHistoryEnabled: true,
         isSearchHistoryVisible: true,
+        isAutoPipEnabled: true,
       );
 }

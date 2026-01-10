@@ -480,5 +480,13 @@
         "example": "Video Title"
       }
     }
+  },
+  "autoPip": "Auto Picture-in-Picture",
+  "@autoPip": {
+    "description": "Setting to enable auto PiP when pressing home button"
+  },
+  "autoPipDescription": "Automatically enter PiP mode when pressing home button while video is playing",
+  "@autoPipDescription": {
+    "description": "Description for auto PiP setting"
   }
 }

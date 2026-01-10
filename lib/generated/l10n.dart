@@ -1978,6 +1978,26 @@ class S {
       args: [title],
     );
   }
+
+  /// `Auto Picture-in-Picture`
+  String get autoPip {
+    return Intl.message(
+      'Auto Picture-in-Picture',
+      name: 'autoPip',
+      desc: 'Setting to enable auto PiP when pressing home button',
+      args: [],
+    );
+  }
+
+  /// `Automatically enter PiP mode when pressing home button while video is playing`
+  String get autoPipDescription {
+    return Intl.message(
+      'Automatically enter PiP mode when pressing home button while video is playing',
+      name: 'autoPipDescription',
+      desc: 'Description for auto PiP setting',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

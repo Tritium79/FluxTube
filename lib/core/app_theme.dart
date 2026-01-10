@@ -4,7 +4,7 @@ import 'package:fluxtube/core/colors.dart';
 abstract class AppTheme {
   static ThemeData get lightTheme => ThemeData(
         useMaterial3: true,
-        indicatorColor: kGreyColor,
+        tabBarTheme: TabBarThemeData(indicatorColor: kGreyColor),
         primaryColorLight: kWhiteColor,
         primaryColorDark: kBlackColor,
         colorScheme: ColorScheme.fromSeed(seedColor: kBlackColor),
@@ -31,7 +31,7 @@ abstract class AppTheme {
       useMaterial3: true,
       primaryColorLight: kWhiteColor,
       primaryColorDark: kBlackColor,
-      indicatorColor: kWhiteColor.withValues(alpha: 0.5),
+      tabBarTheme: TabBarThemeData(indicatorColor: kWhiteColor.withValues(alpha: 0.5)),
       primaryIconTheme: const IconThemeData().copyWith(color: kWhiteColor),
       colorScheme: const ColorScheme.dark(),
       scaffoldBackgroundColor: kDarkColor,

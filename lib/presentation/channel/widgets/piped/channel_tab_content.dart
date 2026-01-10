@@ -10,7 +10,6 @@ import 'package:fluxtube/generated/l10n.dart';
 import 'package:fluxtube/presentation/shorts/screen_shorts.dart';
 import 'package:fluxtube/widgets/widgets.dart';
 import 'package:go_router/go_router.dart';
-import 'package:fluxtube/domain/watch/models/basic_info.dart';
 
 class ChannelTabContent extends StatefulWidget {
   const ChannelTabContent({
@@ -243,30 +242,5 @@ class _ChannelTabContentState extends State<ChannelTabContent>
         );
       },
     );
-  }
-
-  void _onVideoTap(BuildContext context, RelatedStream item) {
-    if (item.url != null) {
-      final videoId = item.url!.split('=').last;
-      final channelId = item.uploaderUrl?.split('/').last ?? '';
-
-      BlocProvider.of<WatchBloc>(context).add(
-        WatchEvent.setSelectedVideoBasicDetails(
-          details: VideoBasicInfo(
-            id: videoId,
-            title: item.title,
-            thumbnailUrl: item.thumbnail,
-            channelName: item.uploaderName,
-            channelId: channelId,
-            uploaderVerified: item.uploaderVerified,
-          ),
-        ),
-      );
-
-      context.pushNamed('watch', pathParameters: {
-        'videoId': videoId,
-        'channelId': channelId,
-      });
-    }
   }
 }

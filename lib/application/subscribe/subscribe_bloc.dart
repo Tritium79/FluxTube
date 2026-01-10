@@ -19,9 +19,6 @@ class SubscribeBloc extends Bloc<SubscribeEvent, SubscribeState> {
       : super(SubscribeState.initialize()) {
     // get all subscribed channel list from local storage
     on<GetAllSubscribeList>((event, emit) async {
-      // Store the current oldList before resetting subscribedChannels
-      final previousOldList = state.oldList;
-
       emit(state.copyWith(
           subscribeStatus: ApiStatus.loading, subscribedChannels: []));
 

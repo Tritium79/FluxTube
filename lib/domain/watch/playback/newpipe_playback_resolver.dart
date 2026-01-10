@@ -134,9 +134,9 @@ class NewPipePlaybackResolver {
 
   /// Resolve progressive stream (muxed video+audio, ≤360p)
   PlaybackConfiguration _resolveProgressiveStream({
-    required videoStream,
+    required dynamic videoStream,
     required String qualityLabel,
-    required List subtitles,
+    required List<dynamic> subtitles,
   }) {
     return PlaybackConfiguration(
       sourceType: MediaSourceType.progressive,
@@ -149,10 +149,10 @@ class NewPipePlaybackResolver {
 
   /// Resolve merging stream (video-only + audio, >360p)
   PlaybackConfiguration _resolveMergingStream({
-    required videoStream,
-    required audioStream,
+    required dynamic videoStream,
+    required dynamic audioStream,
     required String qualityLabel,
-    required List subtitles,
+    required List<dynamic> subtitles,
   }) {
     return PlaybackConfiguration(
       sourceType: MediaSourceType.merging,

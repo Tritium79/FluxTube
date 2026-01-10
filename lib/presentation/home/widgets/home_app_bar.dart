@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../core/app_info.dart';
 import '../../../core/colors.dart';
 import '../../../core/constants.dart';
 import '../../search/screen_search.dart';

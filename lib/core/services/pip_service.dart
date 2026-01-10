@@ -15,7 +15,6 @@ class PipService {
 
   bool _isInPipMode = false;
   bool _isAutoPipEnabled = false;
-  bool _isVideoPlaying = false;
 
   // Callbacks for PiP state changes
   final List<void Function(bool)> _pipModeListeners = [];
@@ -117,8 +116,6 @@ class PipService {
   /// This is used to determine whether to auto-enter PiP on home button press
   Future<void> setVideoPlaying(bool isPlaying) async {
     if (!Platform.isAndroid) return;
-
-    _isVideoPlaying = isPlaying;
 
     try {
       await _channel.invokeMethod('setVideoPlaying', {

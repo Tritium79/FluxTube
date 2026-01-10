@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluxtube/application/application.dart';
@@ -129,7 +128,7 @@ class _FeedVideoSectionState extends State<FeedVideoSection> {
   }
 }
 
-onSubscribeTapped(context, isSubscribed, channelId, channelDetails, locals) {
+void onSubscribeTapped(BuildContext context, bool isSubscribed, String channelId, dynamic channelDetails, S locals) {
   if (isSubscribed) {
     BlocProvider.of<SubscribeBloc>(context)
         .add(SubscribeEvent.deleteSubscribeInfo(id: channelId));

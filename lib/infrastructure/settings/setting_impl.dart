@@ -4,13 +4,11 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:drift/drift.dart';
 import 'package:fluxtube/core/enums.dart';
 import 'package:fluxtube/core/strings.dart';
 import 'package:fluxtube/domain/core/failure/main_failure.dart';
 import 'package:fluxtube/domain/settings/models/instance.dart';
 import 'package:fluxtube/domain/settings/settings_service.dart';
-import 'package:fluxtube/domain/subscribes/models/subscribe.dart';
 import 'package:fluxtube/infrastructure/database/database.dart';
 import 'package:injectable/injectable.dart';
 import 'package:path_provider/path_provider.dart';

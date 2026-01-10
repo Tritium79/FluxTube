@@ -300,7 +300,7 @@ class DownloadNotificationService {
     );
 
     final iosDetails = DarwinNotificationDetails(
-      subtitle: '${progress}%',
+      subtitle: '$progress%',
       presentAlert: false,
       presentBadge: false,
       presentSound: false,
@@ -455,7 +455,7 @@ class DownloadNotificationService {
     await _notifications.show(
       _getNotificationId(item.id!),
       _truncateTitle(item.title),
-      'Paused • $sizeText • ${progress}%',
+      'Paused • $sizeText • $progress%',
       details,
       payload: 'status:paused',
     );

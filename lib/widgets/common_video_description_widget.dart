@@ -135,8 +135,6 @@ class SubscribeRowWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size _size = MediaQuery.of(context).size;
-
     var _formattedSubCount = formatCount(subcount ?? '0');
 
     return Row(

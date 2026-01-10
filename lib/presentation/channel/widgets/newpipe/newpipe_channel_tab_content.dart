@@ -35,7 +35,6 @@ class NewPipeChannelTabContent extends StatefulWidget {
 class _NewPipeChannelTabContentState extends State<NewPipeChannelTabContent> {
   bool _isLoading = false;
   bool _isLoadingMore = false;
-  NewPipeChannelResp? _tabContent;
   String? _error;
   List<NewPipeRelatedStream> _allContent = [];
   String? _nextPage;
@@ -90,7 +89,6 @@ class _NewPipeChannelTabContentState extends State<NewPipeChannelTabContent> {
       );
       if (mounted) {
         setState(() {
-          _tabContent = content;
           _allContent = List.from(content.videos ?? []);
           _nextPage = content.nextPage;
           _isLoading = false;

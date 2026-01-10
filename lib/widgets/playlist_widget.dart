@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluxtube/core/colors.dart';
 import 'package:fluxtube/core/constants.dart';
-import 'package:fluxtube/generated/l10n.dart';
 import 'package:intl/intl.dart';
 
 class PlaylistWidget extends StatelessWidget {
@@ -29,7 +28,6 @@ class PlaylistWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final locals = S.of(context);
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return GestureDetector(

@@ -11,7 +11,7 @@ import 'package:fluxtube/widgets/widgets.dart';
 import 'package:go_router/go_router.dart';
 
 class ChannelRelatedVideoSection extends StatelessWidget {
-  ChannelRelatedVideoSection({
+  const ChannelRelatedVideoSection({
     super.key,
     required this.channelId,
     required this.locals,

@@ -142,7 +142,6 @@ class ApiClient {
         return MainFailure.networkError(message: 'Certificate error');
 
       case DioExceptionType.unknown:
-      default:
         return MainFailure.unknown(message: e.message);
     }
   }

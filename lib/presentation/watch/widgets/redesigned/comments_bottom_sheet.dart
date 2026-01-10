@@ -609,7 +609,7 @@ class _CommentRepliesSheetState extends State<_CommentRepliesSheet> {
                 child: Row(
                   children: [
                     Text(
-                      '${widget.locals.repliesPlural(widget.parentComment.replyCount ?? 0)}',
+                      widget.locals.repliesPlural(widget.parentComment.replyCount ?? 0),
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w600,
                       ),

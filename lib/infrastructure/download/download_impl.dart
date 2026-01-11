@@ -7,8 +7,7 @@ import 'dart:ui' show VoidCallback;
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:drift/drift.dart';
-import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
-import 'package:ffmpeg_kit_flutter_new/return_code.dart';
+import 'package:flutter/services.dart';
 import 'package:fluxtube/domain/core/failure/main_failure.dart';
 import 'package:fluxtube/domain/download/download_service.dart';
 import 'package:fluxtube/domain/download/models/download_item.dart' as domain;
@@ -24,6 +23,9 @@ import 'package:path_provider/path_provider.dart';
 class DownloadImpl implements DownloadService {
   AppDatabase get _db => AppDatabase.instance;
   final Dio _dio = Dio();
+
+  // Platform channel for native MediaMuxer
+  static const _muxerChannel = MethodChannel('com.fazilvk.fluxtube/muxer');
 
   // Track active downloads
   final Map<int, CancelToken> _cancelTokens = {};
@@ -512,26 +514,55 @@ class DownloadImpl implements DownloadService {
     }
   }
 
-  /// Mux video and audio streams into a single MP4 file using FFmpeg
+  /// Mux video and audio streams into a single MP4 file
+  /// Uses Android's native MediaMuxer API via platform channel
   Future<bool> _muxVideoAndAudio({
     required String videoPath,
     required String audioPath,
     required String outputPath,
   }) async {
     try {
-      // FFmpeg command to mux video and audio without re-encoding
-      // -i: input files
-      // -c:v copy: copy video codec (no re-encoding)
-      // -c:a aac: encode audio to AAC (widely compatible)
-      // -strict experimental: allow experimental codecs
-      // -shortest: finish when shortest stream ends
-      final command = '-i "$videoPath" -i "$audioPath" -c:v copy -c:a aac -strict experimental -shortest "$outputPath"';
+      if (Platform.isAndroid) {
+        // Use native Android MediaMuxer via platform channel
+        final result = await _muxerChannel.invokeMethod<bool>('muxVideoAudio', {
+          'videoPath': videoPath,
+          'audioPath': audioPath,
+          'outputPath': outputPath,
+        });
 
-      final session = await FFmpegKit.execute(command);
-      final returnCode = await session.getReturnCode();
+        if (result == true) {
+          log('[Download] Native MediaMuxer muxing successful');
+          return true;
+        }
 
-      return ReturnCode.isSuccess(returnCode);
+        log('[Download] Native MediaMuxer muxing failed');
+        return false;
+      } else {
+        // For non-Android platforms, try FFmpeg via Process
+        final result = await Process.run(
+          'ffmpeg',
+          [
+            '-i', videoPath,
+            '-i', audioPath,
+            '-c:v', 'copy',
+            '-c:a', 'copy',
+            '-shortest',
+            '-y',
+            outputPath,
+          ],
+          runInShell: Platform.isWindows,
+        );
+
+        if (result.exitCode == 0) {
+          log('[Download] FFmpeg muxing successful');
+          return true;
+        }
+
+        log('[Download] FFmpeg muxing failed (exit code: ${result.exitCode})');
+        return false;
+      }
     } catch (e) {
+      log('[Download] Muxing error: $e');
       return false;
     }
   }

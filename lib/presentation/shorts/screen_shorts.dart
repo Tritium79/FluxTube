@@ -98,6 +98,8 @@ class _ScreenShortsState extends State<ScreenShorts> {
       if (globalPlayer.currentVideoId != null) {
         await globalPlayer.pausePlayback();
       }
+      // Clear the media notification - Shorts don't need notification controls
+      await globalPlayer.clearMediaNotification();
     } catch (e) {
       debugPrint('[Shorts] Error pausing global player: $e');
     }
@@ -952,6 +954,9 @@ class _CommentTile extends StatelessWidget {
     required this.locals,
     this.replyCount,
     this.onReplyTap,
+    this.isHearted = false,
+    this.isPinned = false,
+    this.isVerified = false,
   });
 
   final String? avatarUrl;
@@ -960,6 +965,9 @@ class _CommentTile extends StatelessWidget {
   final String text;
   final String likeCount;
   final ThemeData theme;
+  final bool isHearted;
+  final bool isPinned;
+  final bool isVerified;
   final S locals;
   final int? replyCount;
   final VoidCallback? onReplyTap;
@@ -1000,24 +1008,31 @@ class _CommentTile extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Author & time
-                Row(
+                // Author, time & badges
+                Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  spacing: 6,
+                  runSpacing: 4,
                   children: [
-                    Flexible(
-                      child: Text(
-                        author,
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: isDark
-                              ? AppColors.onSurfaceVariantDark
-                              : AppColors.onSurfaceVariant,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                    Text(
+                      author,
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: isDark
+                            ? AppColors.onSurfaceVariantDark
+                            : AppColors.onSurfaceVariant,
                       ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    if (time.isNotEmpty) ...[
-                      const SizedBox(width: 8),
+                    // Verified badge
+                    if (isVerified)
+                      Icon(
+                        CupertinoIcons.checkmark_seal_fill,
+                        size: 12,
+                        color: AppColors.primary,
+                      ),
+                    if (time.isNotEmpty)
                       Text(
                         time,
                         style: theme.textTheme.bodySmall?.copyWith(
@@ -1025,7 +1040,77 @@ class _CommentTile extends StatelessWidget {
                           fontSize: 11,
                         ),
                       ),
-                    ],
+                    // Hearted badge
+                    if (isHearted)
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 6,
+                          vertical: 2,
+                        ),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Colors.red.shade400,
+                              Colors.pink.shade400,
+                            ],
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: const Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              CupertinoIcons.heart_fill,
+                              size: 10,
+                              color: Colors.white,
+                            ),
+                            SizedBox(width: 3),
+                            Text(
+                              'Liked',
+                              style: TextStyle(
+                                fontSize: 9,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    // Pinned badge
+                    if (isPinned)
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 6,
+                          vertical: 2,
+                        ),
+                        decoration: BoxDecoration(
+                          color: AppColors.primary.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: AppColors.primary.withValues(alpha: 0.3),
+                            width: 0.5,
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              CupertinoIcons.pin_fill,
+                              size: 10,
+                              color: AppColors.primary,
+                            ),
+                            const SizedBox(width: 3),
+                            Text(
+                              locals.pinned,
+                              style: TextStyle(
+                                fontSize: 9,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.primary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                   ],
                 ),
                 const SizedBox(height: 4),
@@ -1033,8 +1118,17 @@ class _CommentTile extends StatelessWidget {
                 RichReadMoreText(
                   HTML.toTextSpan(
                     context,
-                    text,
-                    defaultTextStyle: theme.textTheme.bodySmall,
+                    // Decode HTML entities
+                    text
+                        .replaceAll('&amp;', '&')
+                        .replaceAll('&lt;', '<')
+                        .replaceAll('&gt;', '>')
+                        .replaceAll('&quot;', '"')
+                        .replaceAll('&#39;', "'")
+                        .replaceAll('&nbsp;', ' '),
+                    defaultTextStyle: theme.textTheme.bodySmall?.copyWith(
+                      fontStyle: FontStyle.normal,
+                    ),
                   ),
                   settings: LineModeSettings(
                     trimLines: 4,
@@ -1755,6 +1849,9 @@ class _ShortsCommentsListState extends State<_ShortsCommentsList> {
             onReplyTap: canShowReplies
                 ? () => _showNewPipeReplies(context, comment)
                 : null,
+            isHearted: comment.isHearted ?? false,
+            isPinned: comment.isPinned ?? false,
+            isVerified: comment.authorVerified ?? false,
           );
         },
       );
@@ -1790,6 +1887,8 @@ class _ShortsCommentsListState extends State<_ShortsCommentsList> {
             locals: widget.locals,
             replyCount: comment.replies?.replyCount,
             onReplyTap: null, // Invidious reply API not implemented
+            isPinned: comment.isPinned ?? false,
+            isVerified: comment.verified ?? false,
           );
         },
       );
@@ -1830,6 +1929,9 @@ class _ShortsCommentsListState extends State<_ShortsCommentsList> {
             onReplyTap: canShowReplies
                 ? () => _showReplies(context, comment)
                 : null,
+            isHearted: comment.hearted ?? false,
+            isPinned: comment.pinned ?? false,
+            isVerified: comment.verified ?? false,
           );
         },
       );
@@ -1940,6 +2042,9 @@ class _NewPipeRepliesSheetState extends State<_NewPipeRepliesSheet> {
                 likeCount: widget.parentComment.likeCount?.toString() ?? '0',
                 theme: widget.theme,
                 locals: widget.locals,
+                isHearted: widget.parentComment.isHearted ?? false,
+                isPinned: widget.parentComment.isPinned ?? false,
+                isVerified: widget.parentComment.authorVerified ?? false,
               ),
             ),
             const Divider(height: 1),
@@ -1992,6 +2097,9 @@ class _NewPipeRepliesSheetState extends State<_NewPipeRepliesSheet> {
                         likeCount: reply.likeCount?.toString() ?? '0',
                         theme: widget.theme,
                         locals: widget.locals,
+                        isHearted: reply.isHearted ?? false,
+                        isPinned: reply.isPinned ?? false,
+                        isVerified: reply.authorVerified ?? false,
                       );
                     },
                   );
@@ -2110,6 +2218,9 @@ class _PipedRepliesSheetState extends State<_PipedRepliesSheet> {
                 likeCount: widget.parentComment.likeCount?.toString() ?? '0',
                 theme: widget.theme,
                 locals: widget.locals,
+                isHearted: widget.parentComment.hearted ?? false,
+                isPinned: widget.parentComment.pinned ?? false,
+                isVerified: widget.parentComment.verified ?? false,
               ),
             ),
             const Divider(height: 1),
@@ -2166,6 +2277,9 @@ class _PipedRepliesSheetState extends State<_PipedRepliesSheet> {
                         likeCount: reply.likeCount?.toString() ?? '0',
                         theme: widget.theme,
                         locals: widget.locals,
+                        isHearted: reply.hearted ?? false,
+                        isPinned: reply.pinned ?? false,
+                        isVerified: reply.verified ?? false,
                       );
                     },
                   );

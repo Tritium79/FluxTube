@@ -254,11 +254,20 @@ class ScreenHome extends StatelessWidget {
               region: settingsState.defaultRegion));
         });
       }
-      return _buildErrorOrTrendingSection(
-        context,
-        trendingState,
-        locals,
-        settingsState,
+      // Wrap with RefreshIndicator to allow retrying personalized feed
+      return RefreshIndicator(
+        onRefresh: () async {
+          trendingBloc.add(TrendingEvent.getForcedPersonalizedFeed(
+            profileName: settingsState.currentProfile,
+            serviceType: settingsState.ytService,
+          ));
+        },
+        child: _buildErrorOrTrendingSection(
+          context,
+          trendingState,
+          locals,
+          settingsState,
+        ),
       );
     }
 

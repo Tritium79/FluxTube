@@ -408,7 +408,14 @@ class CommentCard extends StatelessWidget {
                 RichReadMoreText(
                   HTML.toTextSpan(
                     context,
-                    comment.commentText ?? '',
+                    // Decode HTML entities
+                    (comment.commentText ?? '')
+                        .replaceAll('&amp;', '&')
+                        .replaceAll('&lt;', '<')
+                        .replaceAll('&gt;', '>')
+                        .replaceAll('&quot;', '"')
+                        .replaceAll('&#39;', "'")
+                        .replaceAll('&nbsp;', ' '),
                     defaultTextStyle: theme.textTheme.bodyMedium,
                   ),
                   settings: LineModeSettings(
@@ -739,7 +746,14 @@ class _ReplyCard extends StatelessWidget {
                 RichReadMoreText(
                   HTML.toTextSpan(
                     context,
-                    comment.commentText ?? '',
+                    // Decode HTML entities
+                    (comment.commentText ?? '')
+                        .replaceAll('&amp;', '&')
+                        .replaceAll('&lt;', '<')
+                        .replaceAll('&gt;', '>')
+                        .replaceAll('&quot;', '"')
+                        .replaceAll('&#39;', "'")
+                        .replaceAll('&nbsp;', ' '),
                     defaultTextStyle: theme.textTheme.bodyMedium,
                   ),
                   settings: LineModeSettings(

@@ -1,3 +1,8 @@
+# Optimization settings
+-optimizationpasses 5
+-allowaccessmodification
+-repackageclasses ''
+
 # Flutter default ProGuard rules
 -keep class io.flutter.app.** { *; }
 -keep class io.flutter.plugin.**  { *; }
@@ -48,6 +53,31 @@
 
 # Prevent R8 from removing classes needed at runtime
 -keep class * extends java.lang.Exception
+
+# Audio Service / Media Session
+-keep class com.ryanheise.audioservice.** { *; }
+-keep class androidx.media.** { *; }
+-keep class android.support.v4.media.** { *; }
+
+# Android Notification classes
+-keep class android.app.Notification { *; }
+-keep class android.app.Notification$* { *; }
+-keep class android.app.NotificationManager { *; }
+-keep class android.app.NotificationChannel { *; }
+-keep class androidx.core.app.NotificationCompat { *; }
+-keep class androidx.core.app.NotificationCompat$* { *; }
+
+# MediaMuxer Handler - Keep classes for video/audio muxing
+-keep class com.fazilvk.fluxtube.MediaMuxerHandler { *; }
+-keepclassmembers class com.fazilvk.fluxtube.MediaMuxerHandler { *; }
+
+# Android Media APIs used by MediaMuxerHandler
+-keep class android.media.MediaMuxer { *; }
+-keep class android.media.MediaExtractor { *; }
+-keep class android.media.MediaFormat { *; }
+-keep class android.media.MediaCodec { *; }
+-keep class android.media.MediaCodec$BufferInfo { *; }
+-keepclassmembers class android.media.** { *; }
 
 # Google Play Core (Flutter deferred components)
 -dontwarn com.google.android.play.core.splitcompat.SplitCompatApplication

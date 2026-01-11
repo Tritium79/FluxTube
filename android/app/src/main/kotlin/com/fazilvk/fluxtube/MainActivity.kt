@@ -14,10 +14,12 @@ class MainActivity: AudioServiceFragmentActivity() {
     companion object {
         private const val NEWPIPE_CHANNEL = "com.fazilvk.fluxtube/newpipe"
         private const val PIP_CHANNEL = "com.fazilvk.fluxtube/pip"
+        private const val MUXER_CHANNEL = "com.fazilvk.fluxtube/muxer"
     }
 
     private var newPipeHandler: NewPipeMethodHandler? = null
     private var pipChannel: MethodChannel? = null
+    private var muxerHandler: MediaMuxerHandler? = null
 
     // PiP state
     private var isPipModeEnabled = false
@@ -33,6 +35,11 @@ class MainActivity: AudioServiceFragmentActivity() {
         // Register NewPipe method channel
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, NEWPIPE_CHANNEL)
             .setMethodCallHandler(newPipeHandler)
+
+        // Initialize and register MediaMuxer handler
+        muxerHandler = MediaMuxerHandler()
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, MUXER_CHANNEL)
+            .setMethodCallHandler(muxerHandler)
 
         // Register PiP method channel
         pipChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, PIP_CHANNEL)

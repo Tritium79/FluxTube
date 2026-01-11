@@ -73,45 +73,49 @@ class FluxTubeAudioHandler extends BaseAudioHandler with SeekHandler {
       return;
     }
 
-    final player = _globalPlayer.player;
-    final isPlaying = player.state.playing;
-    final position = player.state.position;
-    final duration = player.state.duration;
-    final buffering = player.state.buffering;
+    try {
+      final player = _globalPlayer.player;
+      final isPlaying = player.state.playing;
+      final position = player.state.position;
+      final duration = player.state.duration;
+      final buffering = player.state.buffering;
 
-    // Update duration in media item if it changed
-    final currentDuration = _currentMediaItem?.duration;
-    if (duration.inSeconds > 0 && (currentDuration == null || currentDuration.inSeconds == 0)) {
-      _currentMediaItem = _currentMediaItem!.copyWith(duration: duration);
-      mediaItem.add(_currentMediaItem);
+      // Update duration in media item if it changed
+      final currentDuration = _currentMediaItem?.duration;
+      if (duration.inSeconds > 0 && (currentDuration == null || currentDuration.inSeconds == 0)) {
+        _currentMediaItem = _currentMediaItem!.copyWith(duration: duration);
+        mediaItem.add(_currentMediaItem);
+      }
+
+      playbackState.add(PlaybackState(
+        controls: [
+          MediaControl.rewind,
+          if (isPlaying) MediaControl.pause else MediaControl.play,
+          MediaControl.fastForward,
+          MediaControl.stop,
+        ],
+        systemActions: const {
+          MediaAction.play,
+          MediaAction.pause,
+          MediaAction.stop,
+          MediaAction.seek,
+          MediaAction.seekForward,
+          MediaAction.seekBackward,
+          MediaAction.fastForward,
+          MediaAction.rewind,
+        },
+        androidCompactActionIndices: const [0, 1, 2],
+        processingState: buffering
+            ? AudioProcessingState.buffering
+            : AudioProcessingState.ready,
+        playing: isPlaying,
+        updatePosition: position,
+        bufferedPosition: player.state.buffer,
+        speed: player.state.rate,
+      ));
+    } catch (e) {
+      log('[AudioHandler] Error updating playback state: $e');
     }
-
-    playbackState.add(PlaybackState(
-      controls: [
-        MediaControl.rewind,
-        if (isPlaying) MediaControl.pause else MediaControl.play,
-        MediaControl.fastForward,
-        MediaControl.stop,
-      ],
-      systemActions: const {
-        MediaAction.play,
-        MediaAction.pause,
-        MediaAction.stop,
-        MediaAction.seek,
-        MediaAction.seekForward,
-        MediaAction.seekBackward,
-        MediaAction.fastForward,
-        MediaAction.rewind,
-      },
-      androidCompactActionIndices: const [0, 1, 2],
-      processingState: buffering
-          ? AudioProcessingState.buffering
-          : AudioProcessingState.ready,
-      playing: isPlaying,
-      updatePosition: position,
-      bufferedPosition: player.state.buffer,
-      speed: player.state.rate,
-    ));
   }
 
   /// Set the current media item (video/audio info) for notification

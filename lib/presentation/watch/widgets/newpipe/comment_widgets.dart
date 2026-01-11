@@ -401,7 +401,7 @@ class _NewPipeCommentSectionState extends State<NewPipeCommentSection> {
             ),
             const SizedBox(height: 8),
             Text(
-              'Be the first to comment on this video',
+              'Comments are disabled or unavailable for this video',
               style: theme.textTheme.bodySmall?.copyWith(
                 color: isDark
                     ? AppColors.onSurfaceVariantDark
@@ -560,6 +560,23 @@ class _ModernCommentCard extends StatelessWidget {
                               fontSize: isReply ? 12 : 13,
                             ),
                           ),
+                          // Verified badge
+                          if (comment.authorVerified == true)
+                            Icon(
+                              CupertinoIcons.checkmark_seal_fill,
+                              size: isReply ? 12 : 14,
+                              color: AppColors.primary,
+                            ),
+                          // Commented time
+                          if (comment.uploadDate != null &&
+                              comment.uploadDate!.isNotEmpty)
+                            Text(
+                              comment.uploadDate!,
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                color: AppColors.disabled,
+                                fontSize: isReply ? 10 : 11,
+                              ),
+                            ),
                           // Author hearted badge - NEXT TO NAME
                           if (comment.isHearted == true)
                             Container(

@@ -11,6 +11,8 @@ import 'package:fluxtube/domain/watch/models/piped/video/video_stream.dart';
 import 'package:fluxtube/domain/watch/models/piped/video/watch_resp.dart';
 import 'package:fluxtube/domain/watch/playback/models/generic_quality_info.dart';
 import 'package:fluxtube/domain/watch/playback/models/generic_subtitle.dart';
+import 'package:fluxtube/domain/watch/playback/models/generic_audio_track.dart';
+import 'package:fluxtube/domain/watch/playback/piped_stream_helper.dart';
 import 'package:fluxtube/presentation/watch/widgets/player/generic_player_controls_overlay.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
@@ -66,6 +68,11 @@ class _PipedMediaKitPlayerState extends State<PipedMediaKitPlayer> {
   bool _isChangingQuality = false;
   bool _isSeekingToPosition = false; // Track initial seek to saved position
   late BoxFit _currentFitMode;
+
+  // Audio track state
+  List<GenericAudioTrackInfo>? _availableAudioTracks;
+  String? _currentAudioTrackId;
+  bool _isChangingAudioTrack = false;
 
   // SponsorBlock
   StreamSubscription<Duration>? _sponsorBlockSubscription;
@@ -165,6 +172,17 @@ class _PipedMediaKitPlayerState extends State<PipedMediaKitPlayer> {
     _availableQualities?.sort((a, b) => b.resolution.compareTo(a.resolution));
     _currentQualityLabel = widget.defaultQuality;
 
+    // Build audio tracks list
+    _availableAudioTracks = PipedStreamHelper.getAvailableAudioTracks(widget.watchInfo.audioStreams);
+
+    // Restore audio track from global state
+    final savedAudioTrack = _globalPlayer.currentAudioTrackId;
+    if (savedAudioTrack != null && _availableAudioTracks!.any((t) => t.trackId == savedAudioTrack)) {
+      _currentAudioTrackId = savedAudioTrack;
+    } else if (_availableAudioTracks!.isNotEmpty) {
+      _currentAudioTrackId = _availableAudioTracks!.first.trackId;
+    }
+
     // Mark as initialized immediately - player is already playing
     _isInitialized = true;
 
@@ -222,6 +240,13 @@ class _PipedMediaKitPlayerState extends State<PipedMediaKitPlayer> {
       }
 
       _currentQualityLabel = targetQuality;
+
+      // Build audio tracks list
+      _availableAudioTracks = PipedStreamHelper.getAvailableAudioTracks(widget.watchInfo.audioStreams);
+      if (_availableAudioTracks!.isNotEmpty) {
+        _currentAudioTrackId = _availableAudioTracks!.first.trackId;
+        _globalPlayer.setCurrentAudioTrackId(_currentAudioTrackId);
+      }
 
       // Update global player controller state for PiP support
       // IMPORTANT: Set video ID BEFORE setupMediaSource so notification can be updated
@@ -520,8 +545,8 @@ class _PipedMediaKitPlayerState extends State<PipedMediaKitPlayer> {
             initialData: false,
             builder: (context, snapshot) {
               final isBuffering = snapshot.data ?? false;
-              // Show loading for buffering, quality change, or seeking to position
-              if (!isBuffering && !_isChangingQuality && !_isSeekingToPosition) {
+              // Show loading for buffering, quality change, audio track change, or seeking to position
+              if (!isBuffering && !_isChangingQuality && !_isSeekingToPosition && !_isChangingAudioTrack) {
                 return const SizedBox.shrink();
               }
               return Container(
@@ -538,6 +563,15 @@ class _PipedMediaKitPlayerState extends State<PipedMediaKitPlayer> {
                         const SizedBox(height: 12),
                         const Text(
                           'Changing quality...',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ] else if (_isChangingAudioTrack) ...[
+                        const SizedBox(height: 12),
+                        const Text(
+                          'Changing audio track...',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 14,
@@ -581,7 +615,55 @@ class _PipedMediaKitPlayerState extends State<PipedMediaKitPlayer> {
       isLive: widget.watchInfo.livestream == true,
       currentFitMode: _currentFitMode,
       onFitModeChanged: _onFitModeChanged,
+      audioTracks: _availableAudioTracks,
+      currentAudioTrack: _currentAudioTrackId,
+      onAudioTrackChanged: _changeAudioTrack,
+      isInitializing: !_isInitialized,
     );
+  }
+
+  /// Change audio track (for multi-language support)
+  Future<void> _changeAudioTrack(String newTrackId) async {
+    if (_currentAudioTrackId == newTrackId) return;
+    if (_availableAudioTracks == null || _availableAudioTracks!.isEmpty) return;
+
+    // Find the track
+    final track = _availableAudioTracks!.firstWhere(
+      (t) => t.trackId == newTrackId,
+      orElse: () => _availableAudioTracks!.first,
+    );
+
+    if (track.url == null || track.url!.isEmpty) {
+      debugPrint('[PipedPlayer] No audio URL for track: $newTrackId');
+      return;
+    }
+
+    setState(() {
+      _isChangingAudioTrack = true;
+    });
+
+    try {
+      debugPrint('[PipedPlayer] Changing audio track to: ${track.displayName}');
+
+      // Set the audio track
+      await _player.setAudioTrack(AudioTrack.uri(track.url!));
+
+      // Update state
+      _currentAudioTrackId = newTrackId;
+      _globalPlayer.setCurrentAudioTrackId(newTrackId);
+
+      _showToast('Audio: ${track.displayName}');
+      debugPrint('[PipedPlayer] Audio track changed to: ${track.displayName}');
+    } catch (e) {
+      debugPrint('[PipedPlayer] Error changing audio track: $e');
+      _showError('Failed to change audio track');
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isChangingAudioTrack = false;
+        });
+      }
+    }
   }
 
   void _onFitModeChanged(BoxFit newFitMode) {

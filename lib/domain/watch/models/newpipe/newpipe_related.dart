@@ -17,6 +17,8 @@ class NewPipeRelatedStream {
   final String? uploadDate;
   final bool? isLive;
   final bool? isShort;
+  // Content availability: UNKNOWN, AVAILABLE, MEMBERSHIP, PAID, UPCOMING
+  final String? contentAvailability;
   // Channel-specific fields
   final int? subscriberCount;
   final bool? isVerified;
@@ -40,6 +42,7 @@ class NewPipeRelatedStream {
     this.uploadDate,
     this.isLive,
     this.isShort,
+    this.contentAvailability,
     this.subscriberCount,
     this.isVerified,
     this.description,

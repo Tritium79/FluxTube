@@ -11,6 +11,7 @@ import 'package:fluxtube/domain/watch/models/basic_info.dart';
 import 'package:fluxtube/domain/watch/models/newpipe/newpipe_related.dart';
 import 'package:fluxtube/domain/watch/models/newpipe/newpipe_watch_resp.dart';
 import 'package:fluxtube/generated/l10n.dart';
+import 'package:fluxtube/presentation/search/widgets/newpipe/home_video_info_card_widget.dart';
 import 'package:fluxtube/presentation/shorts/screen_shorts.dart';
 import 'package:go_router/go_router.dart';
 
@@ -792,6 +793,16 @@ class _LargeVideoCard extends StatelessWidget {
                 ),
               ),
             ),
+
+            // Content availability badge (top left)
+            if (video.contentAvailability != null)
+              Positioned(
+                top: 10,
+                left: 10,
+                child: ContentAvailabilityBadge(
+                  availability: video.contentAvailability!,
+                ),
+              ),
           ],
         ),
       ),

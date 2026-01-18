@@ -582,10 +582,15 @@ class WatchBloc extends Bloc<WatchEvent, WatchState> {
       var newState = videoResult.fold(
         (MainFailure failure) => state.copyWith(
           fetchNewPipeWatchInfoStatus: ApiStatus.error,
+          newPipeErrorMessage: failure.maybeWhen(
+            unknown: (message) => message,
+            orElse: () => null,
+          ),
         ),
         (NewPipeWatchResp resp) => state.copyWith(
           newPipeWatchResp: resp,
           fetchNewPipeWatchInfoStatus: ApiStatus.loaded,
+          newPipeErrorMessage: null,
           oldId: event.id,
         ),
       );

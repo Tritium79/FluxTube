@@ -35,6 +35,10 @@ class GlobalPlayerController extends ChangeNotifier {
   // Stream source info to avoid re-resolving
   String? _currentVideoUrl;
 
+  // Audio track and subtitle selection (persists across widget rebuilds)
+  String? _currentAudioTrackId;
+  String? _currentSubtitleCode;
+
   /// Setup listener for native PiP mode changes
   void _setupPipListener() {
     _pipService.addPipModeListener(_onSystemPipModeChanged);
@@ -85,6 +89,20 @@ class GlobalPlayerController extends ChangeNotifier {
   Duration get lastPosition => _lastPosition;
   bool get hasActivePlayer => _player != null && _currentVideoId != null;
   PipService get pipService => _pipService;
+
+  // Audio track and subtitle getters/setters
+  String? get currentAudioTrackId => _currentAudioTrackId;
+  String? get currentSubtitleCode => _currentSubtitleCode;
+
+  void setCurrentAudioTrackId(String? trackId) {
+    _currentAudioTrackId = trackId;
+    log('[GlobalPlayer] Set audio track ID: $trackId');
+  }
+
+  void setCurrentSubtitleCode(String? subtitleCode) {
+    _currentSubtitleCode = subtitleCode;
+    log('[GlobalPlayer] Set subtitle code: $subtitleCode');
+  }
 
   /// Set the current video ID - called by media player when playback starts
   void setCurrentVideoId(String videoId) {
@@ -400,6 +418,8 @@ class GlobalPlayerController extends ChangeNotifier {
     _isPipMode = false;
     _lastPosition = Duration.zero;
     _wasPlaying = false;
+    _currentAudioTrackId = null;
+    _currentSubtitleCode = null;
 
     // Notify native side that video stopped (for auto-PiP)
     await _pipService.setVideoPlaying(false);

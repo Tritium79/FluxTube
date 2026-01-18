@@ -826,6 +826,8 @@ class NewPipeMethodHandler : MethodChannel.MethodCallHandler {
             "uploadDate" to (item as? org.schabi.newpipe.extractor.stream.StreamInfoItem)?.textualUploadDate,
             "isLive" to ((item as? org.schabi.newpipe.extractor.stream.StreamInfoItem)?.streamType?.name == "LIVE_STREAM"),
             "isShort" to (item as? org.schabi.newpipe.extractor.stream.StreamInfoItem)?.isShortFormContent,
+            // Content availability (v0.25.0+): UNKNOWN, AVAILABLE, MEMBERSHIP, PAID, UPCOMING
+            "contentAvailability" to (item as? org.schabi.newpipe.extractor.stream.StreamInfoItem)?.contentAvailability?.name,
             // Channel-specific fields
             "subscriberCount" to (item as? org.schabi.newpipe.extractor.channel.ChannelInfoItem)?.subscriberCount,
             "isVerified" to (item as? org.schabi.newpipe.extractor.channel.ChannelInfoItem)?.isVerified,

@@ -28,10 +28,11 @@ class ErrorRetryWidget extends StatelessWidget {
     final isDark = theme.brightness == Brightness.dark;
 
     return Center(
-      child: Padding(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.all(AppSpacing.xl),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Lottie animation

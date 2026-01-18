@@ -17,6 +17,8 @@ class NewPipeTrendingResp {
   final String? uploadDate;
   final bool? isLive;
   final bool? isShort;
+  // Content availability: UNKNOWN, AVAILABLE, MEMBERSHIP, PAID, UPCOMING
+  final String? contentAvailability;
 
   NewPipeTrendingResp({
     this.url,
@@ -32,6 +34,7 @@ class NewPipeTrendingResp {
     this.uploadDate,
     this.isLive,
     this.isShort,
+    this.contentAvailability,
   });
 
   factory NewPipeTrendingResp.fromJson(Map<String, dynamic> json) =>

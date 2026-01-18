@@ -573,6 +573,7 @@ class _InvidiousMediaKitPlayerState extends State<InvidiousMediaKitPlayer> {
       isLive: widget.watchInfo.liveNow == true,
       currentFitMode: _currentFitMode,
       onFitModeChanged: _onFitModeChanged,
+      isInitializing: !_isInitialized,
     );
   }
 

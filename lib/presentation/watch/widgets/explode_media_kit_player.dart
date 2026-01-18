@@ -561,6 +561,7 @@ class _ExplodeMediaKitPlayerState extends State<ExplodeMediaKitPlayer> {
       isLive: widget.liveUrl != null,
       currentFitMode: _currentFitMode,
       onFitModeChanged: _onFitModeChanged,
+      isInitializing: !_isInitialized,
     );
   }
 

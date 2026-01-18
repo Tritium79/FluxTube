@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluxtube/domain/watch/models/newpipe/newpipe_subtitle.dart';
 import 'package:fluxtube/domain/watch/playback/models/stream_quality_info.dart';
+import 'package:fluxtube/domain/watch/playback/newpipe_stream_helper.dart';
 
 /// Settings page enum - exported for direct navigation
 enum SettingsPage {
@@ -9,6 +10,7 @@ enum SettingsPage {
   speed,
   quality,
   captions,
+  audioTrack,
 }
 
 /// YouTube-like player settings bottom sheet
@@ -26,6 +28,9 @@ class PlayerSettingsSheet extends StatefulWidget {
     required this.onSubtitleChanged,
     required this.isLive,
     this.initialPage = SettingsPage.main,
+    this.audioTracks,
+    this.currentAudioTrackId,
+    this.onAudioTrackChanged,
   });
 
   final double currentSpeed;
@@ -39,6 +44,9 @@ class PlayerSettingsSheet extends StatefulWidget {
   final Function(String?) onSubtitleChanged;
   final bool isLive;
   final SettingsPage initialPage;
+  final List<AudioTrackInfo>? audioTracks;
+  final String? currentAudioTrackId;
+  final Function(String)? onAudioTrackChanged;
 
   @override
   State<PlayerSettingsSheet> createState() => _PlayerSettingsSheetState();
@@ -91,6 +99,8 @@ class _PlayerSettingsSheetState extends State<PlayerSettingsSheet> {
         return _buildQualityPage();
       case SettingsPage.captions:
         return _buildCaptionsPage();
+      case SettingsPage.audioTrack:
+        return _buildAudioTrackPage();
     }
   }
 
@@ -129,9 +139,29 @@ class _PlayerSettingsSheetState extends State<PlayerSettingsSheet> {
             onTap: () => setState(() => _currentPage = SettingsPage.captions),
           ),
 
+        // Audio track option (only show if multiple tracks available)
+        if (widget.audioTracks != null && widget.audioTracks!.length > 1)
+          _buildSettingsTile(
+            icon: CupertinoIcons.music_note,
+            title: 'Audio track',
+            value: _getCurrentAudioTrackLabel(),
+            onTap: () => setState(() => _currentPage = SettingsPage.audioTrack),
+          ),
+
         const SizedBox(height: 16),
       ],
     );
+  }
+
+  String _getCurrentAudioTrackLabel() {
+    if (widget.audioTracks == null || widget.audioTracks!.isEmpty) {
+      return 'Default';
+    }
+    final currentTrack = widget.audioTracks!.firstWhere(
+      (t) => t.trackId == widget.currentAudioTrackId,
+      orElse: () => widget.audioTracks!.first,
+    );
+    return currentTrack.displayName;
   }
 
   Widget _buildSpeedPage() {
@@ -246,6 +276,48 @@ class _PlayerSettingsSheetState extends State<PlayerSettingsSheet> {
         const SizedBox(height: 16),
       ],
     );
+  }
+
+  Widget _buildAudioTrackPage() {
+    return Column(
+      key: const ValueKey('audioTrack'),
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _buildHeader('Audio track', showBackButton: widget.initialPage == SettingsPage.main),
+        const Divider(color: Colors.white12, height: 1),
+        ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * 0.4,
+          ),
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: widget.audioTracks!.length,
+            itemBuilder: (context, index) {
+              final track = widget.audioTracks![index];
+              final isSelected = track.trackId == widget.currentAudioTrackId;
+
+              return _buildOptionTile(
+                title: track.displayName,
+                subtitle: _getAudioTrackSubtitle(track),
+                isSelected: isSelected,
+                onTap: () {
+                  widget.onAudioTrackChanged?.call(track.trackId);
+                  Navigator.pop(context);
+                },
+              );
+            },
+          ),
+        ),
+        const SizedBox(height: 16),
+      ],
+    );
+  }
+
+  String? _getAudioTrackSubtitle(AudioTrackInfo track) {
+    if (track.isOriginal) {
+      return 'Original';
+    }
+    return null;
   }
 
   Widget _buildHandle() {

@@ -53,6 +53,7 @@ class WatchState with _$WatchState {
     // NEWPIPE
     required NewPipeWatchResp newPipeWatchResp,
     required ApiStatus fetchNewPipeWatchInfoStatus,
+    String? newPipeErrorMessage,
     required NewPipeCommentsResp newPipeComments,
     required ApiStatus fetchNewPipeCommentsStatus,
     required ApiStatus fetchMoreNewPipeCommentsStatus,
@@ -119,6 +120,7 @@ class WatchState with _$WatchState {
         // NEWPIPE
         newPipeWatchResp: NewPipeWatchResp(),
         fetchNewPipeWatchInfoStatus: ApiStatus.initial,
+        newPipeErrorMessage: null,
         newPipeComments: NewPipeCommentsResp(),
         fetchNewPipeCommentsStatus: ApiStatus.initial,
         fetchMoreNewPipeCommentsStatus: ApiStatus.initial,

@@ -254,6 +254,7 @@ class _NewPipeScreenWatchState extends State<NewPipeScreenWatch>
                         child: InstanceAutoCheckWidget(
                           videoId: widget.id,
                           lottie: 'assets/cat-404.zip',
+                          errorMessage: state.newPipeErrorMessage,
                           onRetry: () => BlocProvider.of<WatchBloc>(context)
                               .add(WatchEvent.getNewPipeWatchInfo(
                                   id: widget.id)),

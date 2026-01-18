@@ -91,6 +91,36 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       final bool autoPipEnabled =
           settingsMap[autoPipEnabledKey] != "false";
 
+      // SponsorBlock settings
+      final bool sponsorBlockEnabled =
+          settingsMap[sponsorBlockEnabledKey] == "true";
+      final List<String> sponsorBlockCats = settingsMap[sponsorBlockCategoriesKey] != null
+          ? settingsMap[sponsorBlockCategoriesKey]!.split(',')
+          : ['sponsor', 'intro', 'outro', 'selfpromo'];
+
+      // Subtitle size
+      final double subtitleSizeValue = double.tryParse(
+          settingsMap[subtitleSizeKey] ?? '32.0') ?? 32.0;
+
+      // Comments and Related Videos visibility
+      final bool hideComments = settingsMap[commentsVisibility] == "true";
+      final bool hideRelated = settingsMap[relatedVideoVisibility] == "true";
+
+      // Home feed mode
+      final String homeFeed = settingsMap[homeFeedModeKey] ?? HomeFeedMode.feedOrTrending.name;
+
+      // Video fit mode
+      final String videoFit = settingsMap[videoFitModeKey] ?? 'contain';
+
+      // Skip interval
+      final int skipIntervalValue = int.tryParse(settingsMap[skipIntervalKey] ?? '10') ?? 10;
+
+      // Open links in browser
+      final bool openInBrowser = settingsMap[openLinksInBrowserKey] == "true";
+
+      // Audio focus
+      final bool audioFocusEnabled = settingsMap[audioFocusEnabledKey] != "false";
+
       newState = newState.copyWith(
         version: packageInfo.version,
         themeMode: defaultThemeMode,
@@ -102,6 +132,16 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
         isSearchHistoryEnabled: searchHistoryEnabled,
         isSearchHistoryVisible: searchHistoryVisible,
         isAutoPipEnabled: autoPipEnabled,
+        isSponsorBlockEnabled: sponsorBlockEnabled,
+        sponsorBlockCategories: sponsorBlockCats,
+        subtitleSize: subtitleSizeValue,
+        isHideComments: hideComments,
+        isHideRelated: hideRelated,
+        homeFeedMode: homeFeed,
+        videoFitMode: videoFit,
+        skipInterval: skipIntervalValue,
+        openLinksInBrowser: openInBrowser,
+        isAudioFocusEnabled: audioFocusEnabled,
       );
 
       if (ytService == YouTubeServices.invidious.name) {

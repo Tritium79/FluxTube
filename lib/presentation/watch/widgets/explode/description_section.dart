@@ -20,7 +20,9 @@ class ExplodeDescriptionSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final description = watchInfo.description ?? locals.noVideoDescription;
+    final description = watchInfo.description.isEmpty
+        ? locals.noVideoDescription
+        : watchInfo.description;
 
     return SizedBox(
       height: _height * 0.40,

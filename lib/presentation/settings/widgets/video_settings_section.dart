@@ -72,10 +72,10 @@ List<DropdownMenuItem<int>> _getSkipIntervals(S locals) => [
 ];
 
 List<DropdownMenuItem<double>> _getSubtitleSizes(S locals) => [
-  DropdownMenuItem(value: 14.0, child: Text(locals.subtitleSizeSmall)),
-  DropdownMenuItem(value: 18.0, child: Text(locals.subtitleSizeMedium)),
-  DropdownMenuItem(value: 24.0, child: Text(locals.subtitleSizeLarge)),
-  DropdownMenuItem(value: 32.0, child: Text(locals.subtitleSizeExtraLarge)),
+  DropdownMenuItem(value: 24.0, child: Text(locals.subtitleSizeSmall)),
+  DropdownMenuItem(value: 32.0, child: Text(locals.subtitleSizeMedium)),
+  DropdownMenuItem(value: 42.0, child: Text(locals.subtitleSizeLarge)),
+  DropdownMenuItem(value: 54.0, child: Text(locals.subtitleSizeExtraLarge)),
 ];
 
 class VideoSettingsSection extends StatelessWidget {

@@ -3,8 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
+import 'package:fluxtube/core/player/global_player_controller.dart';
 import 'package:fluxtube/domain/watch/models/newpipe/newpipe_subtitle.dart';
 import 'package:fluxtube/domain/watch/playback/models/stream_quality_info.dart';
+import 'package:fluxtube/domain/watch/playback/newpipe_stream_helper.dart';
 import 'package:screen_brightness/screen_brightness.dart';
 import 'package:volume_controller/volume_controller.dart';
 
@@ -25,6 +27,10 @@ class PlayerControlsOverlay extends StatefulWidget {
     this.enableBrightnessVolumeGestures = true,
     this.currentFitMode = BoxFit.contain,
     this.onFitModeChanged,
+    this.availableAudioTracks,
+    this.currentAudioTrackId,
+    this.onAudioTrackChanged,
+    this.isInitializing = false,
   });
 
   final Player player;
@@ -38,6 +44,11 @@ class PlayerControlsOverlay extends StatefulWidget {
   final bool enableBrightnessVolumeGestures;
   final BoxFit currentFitMode;
   final Function(BoxFit)? onFitModeChanged;
+  final List<AudioTrackInfo>? availableAudioTracks;
+  final String? currentAudioTrackId;
+  final Function(String)? onAudioTrackChanged;
+  /// When true, shows a loading spinner instead of play/pause button
+  final bool isInitializing;
 
   @override
   State<PlayerControlsOverlay> createState() => _PlayerControlsOverlayState();
@@ -60,6 +71,9 @@ class _PlayerControlsOverlayState extends State<PlayerControlsOverlay>
   // Long press speed boost
   bool _isLongPressing = false;
   double _previousSpeed = 1.0;
+
+  // Global player for persisting state
+  final GlobalPlayerController _globalPlayer = GlobalPlayerController();
 
   // Playback state
   double _currentSpeed = 1.0;
@@ -118,6 +132,28 @@ class _PlayerControlsOverlayState extends State<PlayerControlsOverlay>
 
     _initBrightnessAndVolume();
     _startHideTimer();
+
+    // Restore subtitle state from global player
+    _restoreSubtitleState();
+  }
+
+  @override
+  void didUpdateWidget(PlayerControlsOverlay oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // If subtitles list changed and we don't have a current subtitle set,
+    // try to restore from global state
+    if (oldWidget.subtitles != widget.subtitles && _currentSubtitle == null) {
+      _restoreSubtitleState();
+    }
+  }
+
+  void _restoreSubtitleState() {
+    final savedSubtitle = _globalPlayer.currentSubtitleCode;
+    if (savedSubtitle != null && widget.subtitles.any((s) => s.languageCode == savedSubtitle)) {
+      setState(() {
+        _currentSubtitle = savedSubtitle;
+      });
+    }
   }
 
   StreamSubscription<double>? _volumeSubscription;
@@ -390,6 +426,34 @@ class _PlayerControlsOverlayState extends State<PlayerControlsOverlay>
         currentSubtitle: _currentSubtitle,
         onSubtitleChanged: _handleSubtitleChange,
         isLive: widget.isLive,
+        audioTracks: widget.availableAudioTracks,
+        currentAudioTrackId: widget.currentAudioTrackId,
+        onAudioTrackChanged: widget.onAudioTrackChanged,
+      ),
+    ).then((_) => _startHideTimer());
+  }
+
+  void _showSpeedSheet() {
+    _hideTimer?.cancel();
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (context) => PlayerSettingsSheet(
+        currentSpeed: _currentSpeed,
+        speeds: _speeds,
+        onSpeedChanged: _setPlaybackSpeed,
+        currentQuality: widget.currentQuality,
+        qualities: widget.availableQualities,
+        onQualityChanged: widget.onQualityChanged,
+        subtitles: widget.subtitles,
+        currentSubtitle: _currentSubtitle,
+        onSubtitleChanged: _handleSubtitleChange,
+        isLive: widget.isLive,
+        initialPage: SettingsPage.speed,
+        audioTracks: widget.availableAudioTracks,
+        currentAudioTrackId: widget.currentAudioTrackId,
+        onAudioTrackChanged: widget.onAudioTrackChanged,
       ),
     ).then((_) => _startHideTimer());
   }
@@ -415,6 +479,9 @@ class _PlayerControlsOverlayState extends State<PlayerControlsOverlay>
         onSubtitleChanged: _handleSubtitleChange,
         isLive: widget.isLive,
         initialPage: SettingsPage.quality,
+        audioTracks: widget.availableAudioTracks,
+        currentAudioTrackId: widget.currentAudioTrackId,
+        onAudioTrackChanged: widget.onAudioTrackChanged,
       ),
     ).then((_) => _startHideTimer());
   }
@@ -440,12 +507,27 @@ class _PlayerControlsOverlayState extends State<PlayerControlsOverlay>
         onSubtitleChanged: _handleSubtitleChange,
         isLive: widget.isLive,
         initialPage: SettingsPage.captions,
+        audioTracks: widget.availableAudioTracks,
+        currentAudioTrackId: widget.currentAudioTrackId,
+        onAudioTrackChanged: widget.onAudioTrackChanged,
       ),
     ).then((_) => _startHideTimer());
   }
 
   void _handleSubtitleChange(String? subtitle) {
+    // If clicking the same subtitle that's already active, turn it off
+    if (subtitle != null && subtitle == _currentSubtitle) {
+      debugPrint('Same subtitle clicked, turning off: $subtitle');
+      setState(() => _currentSubtitle = null);
+      _globalPlayer.setCurrentSubtitleCode(null);
+      widget.player.setSubtitleTrack(SubtitleTrack.no());
+      return;
+    }
+
     setState(() => _currentSubtitle = subtitle);
+    // Save to global state for persistence across widget rebuilds
+    _globalPlayer.setCurrentSubtitleCode(subtitle);
+
     if (subtitle != null) {
       final sub = widget.subtitles.firstWhere(
         (s) => s.languageCode == subtitle,
@@ -941,6 +1023,25 @@ class _PlayerControlsOverlayState extends State<PlayerControlsOverlay>
   }
 
   Widget _buildPlayPauseButton() {
+    // Show loading spinner when initializing (before playback starts)
+    if (widget.isInitializing) {
+      return Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white.withValues(alpha: 0.2),
+          shape: BoxShape.circle,
+        ),
+        child: const SizedBox(
+          width: 40,
+          height: 40,
+          child: CircularProgressIndicator(
+            color: Colors.white,
+            strokeWidth: 3,
+          ),
+        ),
+      );
+    }
+
     return StreamBuilder<bool>(
       stream: widget.player.stream.playing,
       initialData: widget.player.state.playing,
@@ -993,7 +1094,7 @@ class _PlayerControlsOverlayState extends State<PlayerControlsOverlay>
                   // Speed indicator (if not 1x) - tappable
                   if (_currentSpeed != 1.0)
                     GestureDetector(
-                      onTap: _showSettingsSheet,
+                      onTap: _showSpeedSheet,
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                         margin: const EdgeInsets.only(right: 8),

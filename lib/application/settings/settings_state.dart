@@ -93,7 +93,7 @@ class SettingsState with _$SettingsState {
         isAudioFocusEnabled: true,
         currentProfile: 'default',
         profiles: ['default'],
-        subtitleSize: 18.0,
+        subtitleSize: 32.0,
         lastExportedFilePath: null,
         isSearchHistoryEnabled: true,
         isSearchHistoryVisible: true,

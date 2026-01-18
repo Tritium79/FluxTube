@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluxtube/domain/watch/playback/models/generic_subtitle.dart';
 import 'package:fluxtube/domain/watch/playback/models/generic_quality_info.dart';
+import 'package:fluxtube/domain/watch/playback/models/generic_audio_track.dart';
 
 /// Settings page enum for generic player
 enum GenericSettingsPage {
@@ -9,6 +10,7 @@ enum GenericSettingsPage {
   speed,
   quality,
   captions,
+  audioTrack,
 }
 
 /// YouTube-like player settings bottom sheet for generic services (Piped, Explode, Invidious)
@@ -26,6 +28,9 @@ class GenericPlayerSettingsSheet extends StatefulWidget {
     required this.onSubtitleChanged,
     required this.isLive,
     this.initialPage = GenericSettingsPage.main,
+    this.audioTracks,
+    this.currentAudioTrack,
+    this.onAudioTrackChanged,
   });
 
   final double currentSpeed;
@@ -39,6 +44,9 @@ class GenericPlayerSettingsSheet extends StatefulWidget {
   final Function(String?) onSubtitleChanged;
   final bool isLive;
   final GenericSettingsPage initialPage;
+  final List<GenericAudioTrackInfo>? audioTracks;
+  final String? currentAudioTrack;
+  final Function(String)? onAudioTrackChanged;
 
   @override
   State<GenericPlayerSettingsSheet> createState() => _GenericPlayerSettingsSheetState();
@@ -91,6 +99,8 @@ class _GenericPlayerSettingsSheetState extends State<GenericPlayerSettingsSheet>
         return _buildQualityPage();
       case GenericSettingsPage.captions:
         return _buildCaptionsPage();
+      case GenericSettingsPage.audioTrack:
+        return _buildAudioTrackPage();
     }
   }
 
@@ -129,9 +139,29 @@ class _GenericPlayerSettingsSheetState extends State<GenericPlayerSettingsSheet>
             onTap: () => setState(() => _currentPage = GenericSettingsPage.captions),
           ),
 
+        // Audio track option (only show if multiple tracks available)
+        if (widget.audioTracks != null && widget.audioTracks!.length > 1)
+          _buildSettingsTile(
+            icon: CupertinoIcons.music_note,
+            title: 'Audio track',
+            value: _getCurrentAudioTrackLabel(),
+            onTap: () => setState(() => _currentPage = GenericSettingsPage.audioTrack),
+          ),
+
         const SizedBox(height: 16),
       ],
     );
+  }
+
+  String _getCurrentAudioTrackLabel() {
+    if (widget.audioTracks == null || widget.audioTracks!.isEmpty) {
+      return 'Default';
+    }
+    final currentTrack = widget.audioTracks!.firstWhere(
+      (t) => t.trackId == widget.currentAudioTrack,
+      orElse: () => widget.audioTracks!.first,
+    );
+    return currentTrack.displayName;
   }
 
   Widget _buildSpeedPage() {
@@ -246,6 +276,55 @@ class _GenericPlayerSettingsSheetState extends State<GenericPlayerSettingsSheet>
         const SizedBox(height: 16),
       ],
     );
+  }
+
+  Widget _buildAudioTrackPage() {
+    return Column(
+      key: const ValueKey('audioTrack'),
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _buildHeader('Audio track', showBackButton: widget.initialPage == GenericSettingsPage.main),
+        const Divider(color: Colors.white12, height: 1),
+        ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * 0.5,
+          ),
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: widget.audioTracks?.length ?? 0,
+            itemBuilder: (context, index) {
+              final track = widget.audioTracks![index];
+              final isSelected = track.trackId == widget.currentAudioTrack;
+
+              return _buildOptionTile(
+                title: track.displayName,
+                subtitle: _getAudioTrackSubtitle(track),
+                isSelected: isSelected,
+                onTap: () {
+                  widget.onAudioTrackChanged?.call(track.trackId);
+                  Navigator.pop(context);
+                },
+              );
+            },
+          ),
+        ),
+        const SizedBox(height: 16),
+      ],
+    );
+  }
+
+  String? _getAudioTrackSubtitle(GenericAudioTrackInfo track) {
+    final parts = <String>[];
+    if (track.isOriginal) {
+      parts.add('Original');
+    }
+    if (track.format != null) {
+      parts.add(track.format!.toUpperCase());
+    }
+    if (track.bitrate != null && track.bitrate! > 0) {
+      parts.add('${(track.bitrate! / 1000).round()}kbps');
+    }
+    return parts.isNotEmpty ? parts.join(' • ') : null;
   }
 
   Widget _buildHandle() {

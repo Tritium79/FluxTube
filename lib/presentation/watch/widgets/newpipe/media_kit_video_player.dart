@@ -64,7 +64,6 @@ class _NewPipeMediaKitPlayerState extends State<NewPipeMediaKitPlayer> {
   bool _isInitializing = false; // Guard against concurrent initializations
   bool _isRestoringFromPip = false;
   bool _isChangingQuality = false;
-  bool _isInitialBuffering = true; // Track initial buffering phase
   late BoxFit _currentFitMode;
 
   // SponsorBlock
@@ -79,6 +78,11 @@ class _NewPipeMediaKitPlayerState extends State<NewPipeMediaKitPlayer> {
   StreamSubscription<Tracks>? _tracksSubscription;
   List<VideoTrack> _hlsDashVideoTracks = [];
   VideoTrack? _currentVideoTrack;
+
+  // Audio track selection
+  List<AudioTrackInfo>? _availableAudioTracks;
+  String? _currentAudioTrackId;
+  bool _isChangingAudioTrack = false;
 
   // PiP state tracking - notify Android when playback state changes
   StreamSubscription<bool>? _playingSubscription;
@@ -162,7 +166,6 @@ class _NewPipeMediaKitPlayerState extends State<NewPipeMediaKitPlayer> {
         _isInitialized = false;
         _isInitializing = false;
         _isRestoringFromPip = false;
-        _isInitialBuffering = true;
         _lastSavedPositionSeconds = -1;
       });
       // Initialize new video using the guarded method
@@ -175,6 +178,8 @@ class _NewPipeMediaKitPlayerState extends State<NewPipeMediaKitPlayer> {
              widget.watchInfo.videoStreams!.isNotEmpty) {
       debugPrint('[NewPipePlayer] watchInfo updated for same video, updating qualities');
       _availableQualities = NewPipeStreamHelper.getAvailableQualities(widget.watchInfo);
+      _availableAudioTracks = NewPipeStreamHelper.getAvailableAudioTracks(
+          widget.watchInfo.audioStreams ?? []);
     }
   }
 
@@ -183,7 +188,23 @@ class _NewPipeMediaKitPlayerState extends State<NewPipeMediaKitPlayer> {
     // Get available qualities for UI
     _availableQualities =
         NewPipeStreamHelper.getAvailableQualities(widget.watchInfo);
+    _availableAudioTracks = NewPipeStreamHelper.getAvailableAudioTracks(
+        widget.watchInfo.audioStreams ?? []);
     _currentQualityLabel = widget.defaultQuality;
+    // Restore audio track from global state if available
+    if (_availableAudioTracks != null && _availableAudioTracks!.isNotEmpty) {
+      final savedTrackId = _globalPlayer.currentAudioTrackId;
+      if (savedTrackId != null && _availableAudioTracks!.any((t) => t.trackId == savedTrackId)) {
+        _currentAudioTrackId = savedTrackId;
+      } else {
+        final originalTrack = _availableAudioTracks!.firstWhere(
+          (t) => t.isOriginal && !t.isDubbed && !t.isDescriptive,
+          orElse: () => _availableAudioTracks!.first,
+        );
+        _currentAudioTrackId = originalTrack.trackId;
+        _globalPlayer.setCurrentAudioTrackId(_currentAudioTrackId);
+      }
+    }
 
     // Resolve config for UI controls
     _currentConfig = _resolver.resolve(
@@ -195,14 +216,10 @@ class _NewPipeMediaKitPlayerState extends State<NewPipeMediaKitPlayer> {
     // Mark as initialized immediately - player is already playing
     _isInitialized = true;
 
-    // Check if player is still buffering (e.g., went to PiP while loading)
-    // If buffering, keep showing the loading indicator - StreamBuilder will clear it when done
-    _isInitialBuffering = _player.state.buffering;
-
     // Exit PiP mode in background (don't await)
     _globalPlayer.exitPipMode();
 
-    debugPrint('[NewPipePlayer] Restored from PiP successfully (sync), buffering: $_isInitialBuffering');
+    debugPrint('[NewPipePlayer] Restored from PiP successfully (sync)');
   }
 
   Future<void> _initializePlayback() async {
@@ -241,6 +258,25 @@ class _NewPipeMediaKitPlayerState extends State<NewPipeMediaKitPlayer> {
       // Get available qualities
       _availableQualities =
           NewPipeStreamHelper.getAvailableQualities(widget.watchInfo);
+
+      // Get available audio tracks
+      _availableAudioTracks = NewPipeStreamHelper.getAvailableAudioTracks(
+          widget.watchInfo.audioStreams ?? []);
+      // Restore audio track from global state if available, otherwise set default
+      if (_availableAudioTracks != null && _availableAudioTracks!.isNotEmpty) {
+        final savedTrackId = _globalPlayer.currentAudioTrackId;
+        if (savedTrackId != null && _availableAudioTracks!.any((t) => t.trackId == savedTrackId)) {
+          _currentAudioTrackId = savedTrackId;
+        } else {
+          // First try to find an explicitly original, non-dubbed track
+          final originalTrack = _availableAudioTracks!.firstWhere(
+            (t) => t.isOriginal && !t.isDubbed && !t.isDescriptive,
+            orElse: () => _availableAudioTracks!.first,
+          );
+          _currentAudioTrackId = originalTrack.trackId;
+          _globalPlayer.setCurrentAudioTrackId(_currentAudioTrackId);
+        }
+      }
 
       // Determine initial quality
       String targetQuality = widget.defaultQuality;
@@ -444,7 +480,6 @@ class _NewPipeMediaKitPlayerState extends State<NewPipeMediaKitPlayer> {
         debugPrint('Seeked to position: ${widget.playbackPosition}s (after play)');
       }
 
-      // Note: _isInitialBuffering will be cleared by StreamBuilder when buffering stops
       debugPrint('Started playback');
     } catch (e) {
       debugPrint('Error setting up media source: $e');
@@ -893,6 +928,61 @@ class _NewPipeMediaKitPlayerState extends State<NewPipeMediaKitPlayer> {
     debugPrint('Quality changed to: $newQualityLabel');
   }
 
+  /// Change audio track (for multi-track videos like dubbed content)
+  Future<void> changeAudioTrack(String newTrackId) async {
+    if (_currentAudioTrackId == newTrackId) return;
+    if (_availableAudioTracks == null || _availableAudioTracks!.isEmpty) return;
+
+    // Find the target track
+    final targetTrack = _availableAudioTracks!.firstWhere(
+      (t) => t.trackId == newTrackId,
+      orElse: () => _availableAudioTracks!.first,
+    );
+
+    // Get the best stream for this track
+    final audioStream = targetTrack.bestStream;
+    if (audioStream?.url == null) {
+      debugPrint('[NewPipePlayer] No valid audio stream for track: $newTrackId');
+      _showError('Audio track not available');
+      return;
+    }
+
+    setState(() {
+      _isChangingAudioTrack = true;
+    });
+
+    try {
+      debugPrint('[NewPipePlayer] Changing audio track to: ${targetTrack.displayName} ($newTrackId)');
+
+      // Set the new audio track
+      await _player.setAudioTrack(AudioTrack.uri(audioStream!.url!));
+
+      // Wait for audio to stabilize
+      await Future.delayed(const Duration(milliseconds: 200));
+
+      if (!mounted) return;
+
+      setState(() {
+        _currentAudioTrackId = newTrackId;
+        _isChangingAudioTrack = false;
+      });
+
+      // Save to global state for persistence across widget rebuilds
+      _globalPlayer.setCurrentAudioTrackId(newTrackId);
+
+      _showToast('Audio: ${targetTrack.displayName}');
+      debugPrint('[NewPipePlayer] Audio track changed to: ${targetTrack.displayName}');
+    } catch (e) {
+      debugPrint('[NewPipePlayer] Error changing audio track: $e');
+      if (mounted) {
+        setState(() {
+          _isChangingAudioTrack = false;
+        });
+        _showError('Failed to change audio track');
+      }
+    }
+  }
+
   @override
   void dispose() {
     _sponsorBlockSubscription?.cancel();
@@ -974,64 +1064,43 @@ class _NewPipeMediaKitPlayerState extends State<NewPipeMediaKitPlayer> {
           // Buffering indicator overlay
           StreamBuilder<bool>(
             stream: _player.stream.buffering,
-            initialData: _player.state.buffering,
-            builder: (context, bufferingSnapshot) {
-              final isBuffering = bufferingSnapshot.data ?? false;
-              final isPlaying = _player.state.playing && _player.state.position.inSeconds > 0;
-
-              // Auto-clear initial buffering flag when video starts playing
-              if (_isInitialBuffering && isPlaying && mounted) {
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  if (mounted && _isInitialBuffering) {
-                    setState(() {
-                      _isInitialBuffering = false;
-                    });
-                  }
-                });
-              }
-
-              // Show loading for buffering or quality change
-              final shouldShowOverlay = isBuffering || _isChangingQuality;
-              if (!shouldShowOverlay) {
+            initialData: false,
+            builder: (context, snapshot) {
+              final isBuffering = snapshot.data ?? false;
+              // Show loading for buffering, quality change, or audio track change
+              if (!isBuffering && !_isChangingQuality && !_isChangingAudioTrack) {
                 return const SizedBox.shrink();
               }
-
-              // Determine the message to show
-              String? message;
-              if (_isChangingQuality) {
-                message = 'Changing quality...';
-              } else if (_isInitialBuffering && !isPlaying) {
-                // Only show initial load message if video hasn't started playing yet
-                final isLive = widget.watchInfo.isLive == true;
-                message = (widget.playbackPosition > 0 && !isLive) ? 'Resuming playback...' : 'Loading video...';
-              }
-              // For regular buffering (after video started), just show spinner without message
-
-              // Allow touch interactions - don't block controls during loading
-              return IgnorePointer(
-                ignoring: true, // Let touches pass through to controls below
-                child: Container(
-                  color: Colors.black.withValues(alpha: 0.3),
-                  child: Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const CircularProgressIndicator(
-                          color: Colors.white,
-                          strokeWidth: 3,
-                        ),
-                        if (message != null) ...[
-                          const SizedBox(height: 12),
-                          Text(
-                            message,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                            ),
+              return Container(
+                color: Colors.black.withValues(alpha: 0.3),
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const CircularProgressIndicator(
+                        color: Colors.white,
+                        strokeWidth: 3,
+                      ),
+                      if (_isChangingQuality) ...[
+                        const SizedBox(height: 12),
+                        const Text(
+                          'Changing quality...',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
                           ),
-                        ],
+                        ),
+                      ] else if (_isChangingAudioTrack) ...[
+                        const SizedBox(height: 12),
+                        const Text(
+                          'Changing audio track...',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                        ),
                       ],
-                    ),
+                    ],
                   ),
                 ),
               );
@@ -1056,6 +1125,10 @@ class _NewPipeMediaKitPlayerState extends State<NewPipeMediaKitPlayer> {
       isLive: widget.watchInfo.isLive == true,
       currentFitMode: _currentFitMode,
       onFitModeChanged: _onFitModeChanged,
+      availableAudioTracks: _availableAudioTracks,
+      currentAudioTrackId: _currentAudioTrackId,
+      onAudioTrackChanged: changeAudioTrack,
+      isInitializing: !_isInitialized,
     );
   }
 

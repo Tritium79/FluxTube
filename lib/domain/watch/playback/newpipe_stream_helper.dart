@@ -271,4 +271,175 @@ class NewPipeStreamHelper {
     if (qualities.isEmpty) return null;
     return qualities.first.label;
   }
+
+  /// Get available audio tracks grouped by track ID/locale
+  /// Returns a list of AudioTrackInfo representing distinct audio tracks
+  static List<AudioTrackInfo> getAvailableAudioTracks(
+    List<NewPipeAudioStream> audioStreams,
+  ) {
+    if (audioStreams.isEmpty) return [];
+
+    final trackMap = <String, List<NewPipeAudioStream>>{};
+
+    // Group streams by audio track identifier
+    for (var stream in audioStreams) {
+      if (stream.url == null || stream.url!.isEmpty) continue;
+
+      // Use audioTrackId if available, otherwise fall back to locale or 'default'
+      final trackId = stream.audioTrackId ??
+                      stream.audioLocale ??
+                      (stream.isOriginal ? 'original' : 'default');
+
+      trackMap.putIfAbsent(trackId, () => []).add(stream);
+    }
+
+    // Convert to AudioTrackInfo list
+    final tracks = <AudioTrackInfo>[];
+
+    for (var entry in trackMap.entries) {
+      final streams = entry.value;
+      if (streams.isEmpty) continue;
+
+      // Use the first stream for metadata (all streams in group share same track info)
+      final representative = streams.first;
+
+      // Determine display name
+      String displayName;
+      if (representative.audioTrackName != null &&
+          representative.audioTrackName!.isNotEmpty) {
+        displayName = representative.audioTrackName!;
+      } else if (representative.audioLocale != null) {
+        displayName = _getLanguageDisplayName(representative.audioLocale!);
+      } else if (representative.isOriginal) {
+        displayName = 'Original';
+      } else {
+        displayName = 'Default';
+      }
+
+      // Add type suffix if dubbed or descriptive
+      if (representative.isDubbed) {
+        displayName += ' (Dubbed)';
+      } else if (representative.isDescriptive) {
+        displayName += ' (Descriptive)';
+      }
+
+      tracks.add(AudioTrackInfo(
+        trackId: entry.key,
+        displayName: displayName,
+        locale: representative.audioLocale,
+        isOriginal: representative.isOriginal,
+        isDubbed: representative.isDubbed,
+        isDescriptive: representative.isDescriptive,
+        streams: sortAudioStreams(streams),
+      ));
+    }
+
+    // Sort: Original first (not dubbed), then non-dubbed, then dubbed, then alphabetically
+    // When metadata is missing, non-dubbed is preferred over unknown
+    tracks.sort((a, b) {
+      // Dubbed tracks go last
+      if (a.isDubbed && !b.isDubbed) return 1;
+      if (!a.isDubbed && b.isDubbed) return -1;
+
+      // Descriptive tracks go after dubbed
+      if (a.isDescriptive && !b.isDescriptive) return 1;
+      if (!a.isDescriptive && b.isDescriptive) return -1;
+
+      // Explicitly marked Original tracks come first
+      if (a.isOriginal && !b.isOriginal) return -1;
+      if (!a.isOriginal && b.isOriginal) return 1;
+
+      // Then alphabetically by display name
+      return a.displayName.compareTo(b.displayName);
+    });
+
+    return tracks;
+  }
+
+  /// Get best audio stream from a specific track (around 128kbps target)
+  static NewPipeAudioStream? getBestStreamForTrack(
+    AudioTrackInfo track, {
+    int targetBitrate = 128,
+  }) {
+    if (track.streams.isEmpty) return null;
+
+    // Find stream closest to target bitrate
+    NewPipeAudioStream? best = track.streams.first;
+    int smallestDiff = double.maxFinite.toInt();
+
+    for (var stream in track.streams) {
+      final bitrate = stream.averageBitrate ?? 0;
+      final diff = (bitrate - targetBitrate).abs();
+
+      if (diff < smallestDiff) {
+        smallestDiff = diff;
+        best = stream;
+      }
+    }
+
+    return best;
+  }
+
+  /// Convert locale code to display name
+  static String _getLanguageDisplayName(String locale) {
+    // Common language codes
+    const languageNames = {
+      'en': 'English',
+      'en-US': 'English (US)',
+      'en-GB': 'English (UK)',
+      'es': 'Spanish',
+      'es-ES': 'Spanish (Spain)',
+      'es-MX': 'Spanish (Mexico)',
+      'fr': 'French',
+      'de': 'German',
+      'it': 'Italian',
+      'pt': 'Portuguese',
+      'pt-BR': 'Portuguese (Brazil)',
+      'ru': 'Russian',
+      'ja': 'Japanese',
+      'ko': 'Korean',
+      'zh': 'Chinese',
+      'zh-CN': 'Chinese (Simplified)',
+      'zh-TW': 'Chinese (Traditional)',
+      'hi': 'Hindi',
+      'ar': 'Arabic',
+      'tr': 'Turkish',
+      'pl': 'Polish',
+      'nl': 'Dutch',
+      'sv': 'Swedish',
+      'th': 'Thai',
+      'vi': 'Vietnamese',
+      'id': 'Indonesian',
+      'ml': 'Malayalam',
+      'ta': 'Tamil',
+      'te': 'Telugu',
+    };
+
+    return languageNames[locale] ?? locale.toUpperCase();
+  }
+}
+
+/// Represents a distinct audio track with its available streams
+class AudioTrackInfo {
+  final String trackId;
+  final String displayName;
+  final String? locale;
+  final bool isOriginal;
+  final bool isDubbed;
+  final bool isDescriptive;
+  final List<NewPipeAudioStream> streams;
+
+  const AudioTrackInfo({
+    required this.trackId,
+    required this.displayName,
+    this.locale,
+    this.isOriginal = false,
+    this.isDubbed = false,
+    this.isDescriptive = false,
+    required this.streams,
+  });
+
+  /// Get best quality stream for this track (targets ~128kbps)
+  NewPipeAudioStream? get bestStream =>
+      NewPipeStreamHelper.getBestStreamForTrack(this);
 }

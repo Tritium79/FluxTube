@@ -21,6 +21,7 @@ NewPipeTrendingResp _$NewPipeTrendingRespFromJson(Map<String, dynamic> json) =>
       uploadDate: json['uploadDate'] as String?,
       isLive: json['isLive'] as bool?,
       isShort: json['isShort'] as bool?,
+      contentAvailability: json['contentAvailability'] as String?,
     );
 
 Map<String, dynamic> _$NewPipeTrendingRespToJson(
@@ -39,6 +40,7 @@ Map<String, dynamic> _$NewPipeTrendingRespToJson(
       'uploadDate': instance.uploadDate,
       'isLive': instance.isLive,
       'isShort': instance.isShort,
+      'contentAvailability': instance.contentAvailability,
     };
 
 NewPipeTrendingListResp _$NewPipeTrendingListRespFromJson(

@@ -83,7 +83,7 @@ class SettingImpl implements SettingsService {
       {"name": openLinksInBrowserKey, "default": "false"},
       {"name": audioFocusEnabledKey, "default": "true"},
       {"name": sponsorBlockEnabledKey, "default": "false"},
-      {"name": subtitleSizeKey, "default": "18.0"},
+      {"name": subtitleSizeKey, "default": "32.0"},
       {"name": autoPipEnabledKey, "default": "true"},
     ];
 

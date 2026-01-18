@@ -16,11 +16,13 @@ class InstanceAutoCheckWidget extends StatefulWidget {
     required this.videoId,
     required this.onRetry,
     this.lottie = 'assets/cat-404.zip',
+    this.errorMessage,
   });
 
   final String videoId;
   final VoidCallback onRetry;
   final String lottie;
+  final String? errorMessage;
 
   @override
   State<InstanceAutoCheckWidget> createState() => _InstanceAutoCheckWidgetState();
@@ -63,14 +65,14 @@ class _InstanceAutoCheckWidgetState extends State<InstanceAutoCheckWidget> {
               ),
             kHeightBox10,
             Text(
-              'Video unavailable',
+              _getErrorTitle(),
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
             ),
             kHeightBox5,
             Text(
-              'The current instance may be experiencing issues',
+              _getErrorSubtitle(),
               style: TextStyle(
                 color: kGreyColor,
                 fontSize: 13,
@@ -327,6 +329,40 @@ class _InstanceAutoCheckWidgetState extends State<InstanceAutoCheckWidget> {
         );
       },
     );
+  }
+
+  String _getErrorTitle() {
+    final msg = widget.errorMessage?.toLowerCase() ?? '';
+    if (msg.contains('paid') || msg.contains('purchase')) {
+      return 'Paid Video';
+    } else if (msg.contains('member') || msg.contains('membership')) {
+      return 'Members Only';
+    } else if (msg.contains('age') || msg.contains('sign in')) {
+      return 'Age Restricted';
+    } else if (msg.contains('private')) {
+      return 'Private Video';
+    } else if (msg.contains('unavailable') || msg.contains('not available')) {
+      return 'Video Unavailable';
+    } else if (msg.contains('live') || msg.contains('premiere')) {
+      return 'Not Yet Available';
+    }
+    return 'Video Unavailable';
+  }
+
+  String _getErrorSubtitle() {
+    final msg = widget.errorMessage?.toLowerCase() ?? '';
+    if (msg.contains('paid') || msg.contains('purchase')) {
+      return 'This video requires purchase to watch';
+    } else if (msg.contains('member') || msg.contains('membership')) {
+      return 'This video is only available for channel members';
+    } else if (msg.contains('age') || msg.contains('sign in')) {
+      return 'This video is age-restricted and cannot be played';
+    } else if (msg.contains('private')) {
+      return 'This video is private';
+    } else if (msg.contains('live') || msg.contains('premiere')) {
+      return 'This video has not started yet';
+    }
+    return 'The current instance may be experiencing issues';
   }
 
   Future<void> _startInstanceCheck(List<Instance> instances, String ytService) async {

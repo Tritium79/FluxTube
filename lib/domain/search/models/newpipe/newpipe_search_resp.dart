@@ -38,6 +38,8 @@ class NewPipeSearchItem {
   final String? uploadDate;
   final bool? isLive;
   final bool? isShort;
+  // Content availability: UNKNOWN, AVAILABLE, MEMBERSHIP, PAID, UPCOMING
+  final String? contentAvailability;
   // Channel fields
   final int? subscriberCount;
   final bool? isVerified;
@@ -59,6 +61,7 @@ class NewPipeSearchItem {
     this.uploadDate,
     this.isLive,
     this.isShort,
+    this.contentAvailability,
     this.subscriberCount,
     this.isVerified,
     this.description,

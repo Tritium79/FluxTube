@@ -11420,6 +11420,7 @@ mixin _$WatchState {
   NewPipeWatchResp get newPipeWatchResp => throw _privateConstructorUsedError;
   ApiStatus get fetchNewPipeWatchInfoStatus =>
       throw _privateConstructorUsedError;
+  String? get newPipeErrorMessage => throw _privateConstructorUsedError;
   NewPipeCommentsResp get newPipeComments => throw _privateConstructorUsedError;
   ApiStatus get fetchNewPipeCommentsStatus =>
       throw _privateConstructorUsedError;
@@ -11493,6 +11494,7 @@ abstract class $WatchStateCopyWith<$Res> {
       bool isMoreInvidiousReplyCommentsFetchCompleted,
       NewPipeWatchResp newPipeWatchResp,
       ApiStatus fetchNewPipeWatchInfoStatus,
+      String? newPipeErrorMessage,
       NewPipeCommentsResp newPipeComments,
       ApiStatus fetchNewPipeCommentsStatus,
       ApiStatus fetchMoreNewPipeCommentsStatus,
@@ -11559,6 +11561,7 @@ class _$WatchStateCopyWithImpl<$Res, $Val extends WatchState>
     Object? isMoreInvidiousReplyCommentsFetchCompleted = null,
     Object? newPipeWatchResp = null,
     Object? fetchNewPipeWatchInfoStatus = null,
+    Object? newPipeErrorMessage = freezed,
     Object? newPipeComments = null,
     Object? fetchNewPipeCommentsStatus = null,
     Object? fetchMoreNewPipeCommentsStatus = null,
@@ -11732,6 +11735,10 @@ class _$WatchStateCopyWithImpl<$Res, $Val extends WatchState>
           ? _value.fetchNewPipeWatchInfoStatus
           : fetchNewPipeWatchInfoStatus // ignore: cast_nullable_to_non_nullable
               as ApiStatus,
+      newPipeErrorMessage: freezed == newPipeErrorMessage
+          ? _value.newPipeErrorMessage
+          : newPipeErrorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
       newPipeComments: null == newPipeComments
           ? _value.newPipeComments
           : newPipeComments // ignore: cast_nullable_to_non_nullable
@@ -11827,6 +11834,7 @@ abstract class _$$InitialImplCopyWith<$Res>
       bool isMoreInvidiousReplyCommentsFetchCompleted,
       NewPipeWatchResp newPipeWatchResp,
       ApiStatus fetchNewPipeWatchInfoStatus,
+      String? newPipeErrorMessage,
       NewPipeCommentsResp newPipeComments,
       ApiStatus fetchNewPipeCommentsStatus,
       ApiStatus fetchMoreNewPipeCommentsStatus,
@@ -11891,6 +11899,7 @@ class __$$InitialImplCopyWithImpl<$Res>
     Object? isMoreInvidiousReplyCommentsFetchCompleted = null,
     Object? newPipeWatchResp = null,
     Object? fetchNewPipeWatchInfoStatus = null,
+    Object? newPipeErrorMessage = freezed,
     Object? newPipeComments = null,
     Object? fetchNewPipeCommentsStatus = null,
     Object? fetchMoreNewPipeCommentsStatus = null,
@@ -12064,6 +12073,10 @@ class __$$InitialImplCopyWithImpl<$Res>
           ? _value.fetchNewPipeWatchInfoStatus
           : fetchNewPipeWatchInfoStatus // ignore: cast_nullable_to_non_nullable
               as ApiStatus,
+      newPipeErrorMessage: freezed == newPipeErrorMessage
+          ? _value.newPipeErrorMessage
+          : newPipeErrorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
       newPipeComments: null == newPipeComments
           ? _value.newPipeComments
           : newPipeComments // ignore: cast_nullable_to_non_nullable
@@ -12154,6 +12167,7 @@ class _$InitialImpl implements _Initial {
       required this.isMoreInvidiousReplyCommentsFetchCompleted,
       required this.newPipeWatchResp,
       required this.fetchNewPipeWatchInfoStatus,
+      this.newPipeErrorMessage,
       required this.newPipeComments,
       required this.fetchNewPipeCommentsStatus,
       required this.fetchMoreNewPipeCommentsStatus,
@@ -12275,6 +12289,8 @@ class _$InitialImpl implements _Initial {
   @override
   final ApiStatus fetchNewPipeWatchInfoStatus;
   @override
+  final String? newPipeErrorMessage;
+  @override
   final NewPipeCommentsResp newPipeComments;
   @override
   final ApiStatus fetchNewPipeCommentsStatus;
@@ -12305,7 +12321,7 @@ class _$InitialImpl implements _Initial {
 
   @override
   String toString() {
-    return 'WatchState(oldId: $oldId, isTapComments: $isTapComments, isDescriptionTapped: $isDescriptionTapped, isPipEnabled: $isPipEnabled, title: $title, playBack: $playBack, selectedVideoBasicDetails: $selectedVideoBasicDetails, watchResp: $watchResp, comments: $comments, commentReplies: $commentReplies, fetchWatchInfoStatus: $fetchWatchInfoStatus, fetchCommentsStatus: $fetchCommentsStatus, fetchCommentRepliesStatus: $fetchCommentRepliesStatus, fetchMoreCommentsStatus: $fetchMoreCommentsStatus, isMoreCommentsFetchCompleted: $isMoreCommentsFetchCompleted, fetchMoreCommentRepliesStatus: $fetchMoreCommentRepliesStatus, isMoreReplyCommentsFetchCompleted: $isMoreReplyCommentsFetchCompleted, explodeWatchResp: $explodeWatchResp, fetchExplodeWatchInfoStatus: $fetchExplodeWatchInfoStatus, fetchSubtitlesStatus: $fetchSubtitlesStatus, subtitles: $subtitles, liveStreamUrl: $liveStreamUrl, fetchExplodeLiveStreamStatus: $fetchExplodeLiveStreamStatus, relatedVideos: $relatedVideos, fetchExplodedRelatedVideosStatus: $fetchExplodedRelatedVideosStatus, muxedStreams: $muxedStreams, fetchExplodeMuxedStreamsStatus: $fetchExplodeMuxedStreamsStatus, invidiousWatchResp: $invidiousWatchResp, fetchInvidiousWatchInfoStatus: $fetchInvidiousWatchInfoStatus, invidiousComments: $invidiousComments, fetchInvidiousCommentsStatus: $fetchInvidiousCommentsStatus, invidiousCommentReplies: $invidiousCommentReplies, fetchInvidiousCommentRepliesStatus: $fetchInvidiousCommentRepliesStatus, fetchMoreInvidiousCommentsStatus: $fetchMoreInvidiousCommentsStatus, isMoreInvidiousCommentsFetchCompleted: $isMoreInvidiousCommentsFetchCompleted, fetchMoreInvidiousCommentRepliesStatus: $fetchMoreInvidiousCommentRepliesStatus, isMoreInvidiousReplyCommentsFetchCompleted: $isMoreInvidiousReplyCommentsFetchCompleted, newPipeWatchResp: $newPipeWatchResp, fetchNewPipeWatchInfoStatus: $fetchNewPipeWatchInfoStatus, newPipeComments: $newPipeComments, fetchNewPipeCommentsStatus: $fetchNewPipeCommentsStatus, fetchMoreNewPipeCommentsStatus: $fetchMoreNewPipeCommentsStatus, isMoreNewPipeCommentsFetchCompleted: $isMoreNewPipeCommentsFetchCompleted, newPipeCommentReplies: $newPipeCommentReplies, fetchNewPipeCommentRepliesStatus: $fetchNewPipeCommentRepliesStatus, fetchMoreNewPipeCommentRepliesStatus: $fetchMoreNewPipeCommentRepliesStatus, isMoreNewPipeReplyCommentsFetchCompleted: $isMoreNewPipeReplyCommentsFetchCompleted, sponsorSegments: $sponsorSegments, fetchSponsorSegmentsStatus: $fetchSponsorSegmentsStatus)';
+    return 'WatchState(oldId: $oldId, isTapComments: $isTapComments, isDescriptionTapped: $isDescriptionTapped, isPipEnabled: $isPipEnabled, title: $title, playBack: $playBack, selectedVideoBasicDetails: $selectedVideoBasicDetails, watchResp: $watchResp, comments: $comments, commentReplies: $commentReplies, fetchWatchInfoStatus: $fetchWatchInfoStatus, fetchCommentsStatus: $fetchCommentsStatus, fetchCommentRepliesStatus: $fetchCommentRepliesStatus, fetchMoreCommentsStatus: $fetchMoreCommentsStatus, isMoreCommentsFetchCompleted: $isMoreCommentsFetchCompleted, fetchMoreCommentRepliesStatus: $fetchMoreCommentRepliesStatus, isMoreReplyCommentsFetchCompleted: $isMoreReplyCommentsFetchCompleted, explodeWatchResp: $explodeWatchResp, fetchExplodeWatchInfoStatus: $fetchExplodeWatchInfoStatus, fetchSubtitlesStatus: $fetchSubtitlesStatus, subtitles: $subtitles, liveStreamUrl: $liveStreamUrl, fetchExplodeLiveStreamStatus: $fetchExplodeLiveStreamStatus, relatedVideos: $relatedVideos, fetchExplodedRelatedVideosStatus: $fetchExplodedRelatedVideosStatus, muxedStreams: $muxedStreams, fetchExplodeMuxedStreamsStatus: $fetchExplodeMuxedStreamsStatus, invidiousWatchResp: $invidiousWatchResp, fetchInvidiousWatchInfoStatus: $fetchInvidiousWatchInfoStatus, invidiousComments: $invidiousComments, fetchInvidiousCommentsStatus: $fetchInvidiousCommentsStatus, invidiousCommentReplies: $invidiousCommentReplies, fetchInvidiousCommentRepliesStatus: $fetchInvidiousCommentRepliesStatus, fetchMoreInvidiousCommentsStatus: $fetchMoreInvidiousCommentsStatus, isMoreInvidiousCommentsFetchCompleted: $isMoreInvidiousCommentsFetchCompleted, fetchMoreInvidiousCommentRepliesStatus: $fetchMoreInvidiousCommentRepliesStatus, isMoreInvidiousReplyCommentsFetchCompleted: $isMoreInvidiousReplyCommentsFetchCompleted, newPipeWatchResp: $newPipeWatchResp, fetchNewPipeWatchInfoStatus: $fetchNewPipeWatchInfoStatus, newPipeErrorMessage: $newPipeErrorMessage, newPipeComments: $newPipeComments, fetchNewPipeCommentsStatus: $fetchNewPipeCommentsStatus, fetchMoreNewPipeCommentsStatus: $fetchMoreNewPipeCommentsStatus, isMoreNewPipeCommentsFetchCompleted: $isMoreNewPipeCommentsFetchCompleted, newPipeCommentReplies: $newPipeCommentReplies, fetchNewPipeCommentRepliesStatus: $fetchNewPipeCommentRepliesStatus, fetchMoreNewPipeCommentRepliesStatus: $fetchMoreNewPipeCommentRepliesStatus, isMoreNewPipeReplyCommentsFetchCompleted: $isMoreNewPipeReplyCommentsFetchCompleted, sponsorSegments: $sponsorSegments, fetchSponsorSegmentsStatus: $fetchSponsorSegmentsStatus)';
   }
 
   @override
@@ -12379,6 +12395,7 @@ class _$InitialImpl implements _Initial {
             (identical(other.isMoreInvidiousReplyCommentsFetchCompleted, isMoreInvidiousReplyCommentsFetchCompleted) || other.isMoreInvidiousReplyCommentsFetchCompleted == isMoreInvidiousReplyCommentsFetchCompleted) &&
             (identical(other.newPipeWatchResp, newPipeWatchResp) || other.newPipeWatchResp == newPipeWatchResp) &&
             (identical(other.fetchNewPipeWatchInfoStatus, fetchNewPipeWatchInfoStatus) || other.fetchNewPipeWatchInfoStatus == fetchNewPipeWatchInfoStatus) &&
+            (identical(other.newPipeErrorMessage, newPipeErrorMessage) || other.newPipeErrorMessage == newPipeErrorMessage) &&
             (identical(other.newPipeComments, newPipeComments) || other.newPipeComments == newPipeComments) &&
             (identical(other.fetchNewPipeCommentsStatus, fetchNewPipeCommentsStatus) || other.fetchNewPipeCommentsStatus == fetchNewPipeCommentsStatus) &&
             (identical(other.fetchMoreNewPipeCommentsStatus, fetchMoreNewPipeCommentsStatus) || other.fetchMoreNewPipeCommentsStatus == fetchMoreNewPipeCommentsStatus) &&
@@ -12433,6 +12450,7 @@ class _$InitialImpl implements _Initial {
         isMoreInvidiousReplyCommentsFetchCompleted,
         newPipeWatchResp,
         fetchNewPipeWatchInfoStatus,
+        newPipeErrorMessage,
         newPipeComments,
         fetchNewPipeCommentsStatus,
         fetchMoreNewPipeCommentsStatus,
@@ -12495,6 +12513,7 @@ abstract class _Initial implements WatchState {
       required final bool isMoreInvidiousReplyCommentsFetchCompleted,
       required final NewPipeWatchResp newPipeWatchResp,
       required final ApiStatus fetchNewPipeWatchInfoStatus,
+      final String? newPipeErrorMessage,
       required final NewPipeCommentsResp newPipeComments,
       required final ApiStatus fetchNewPipeCommentsStatus,
       required final ApiStatus fetchMoreNewPipeCommentsStatus,
@@ -12585,6 +12604,8 @@ abstract class _Initial implements WatchState {
   NewPipeWatchResp get newPipeWatchResp;
   @override
   ApiStatus get fetchNewPipeWatchInfoStatus;
+  @override
+  String? get newPipeErrorMessage;
   @override
   NewPipeCommentsResp get newPipeComments;
   @override

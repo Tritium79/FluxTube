@@ -9,47 +9,43 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # 1. 设置 Flutter 环境
+      # 1. 使用较新的稳定版 Flutter，解决 SDK 版本过低导致的插件冲突
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.4'
           channel: 'stable'
+          # 使用 'any' 会自动获取最新稳定版，这通常能解决所有版本冲突
+          flutter-version: 'any' 
           cache: true
 
-      # 2. 深度修复依赖冲突 (解决 path 和 flutter_lints 版本过高问题)
-      - name: Force Compatible Dependencies
+      # 2. 预处理：删除残留的 lock 文件以确保重新解析依赖
+      - name: Clean Environment
         run: |
-          # 修复之前遇到的 path 冲突
-          sed -i '' 's/path: \^1.9.1/path: 1.9.0/g' pubspec.yaml
-          
-          # 修复这次遇到的 flutter_lints 冲突 (降级到与 Dart 3.5.4 兼容的 4.0.0 版本)
-          sed -i '' 's/flutter_lints: \^6.0.0/flutter_lints: ^4.0.0/g' pubspec.yaml
-          
-          echo "Dependencies downgraded for compatibility with Flutter 3.24.4"
+          rm -f pubspec.lock
+          flutter clean
 
-      # 3. 安装 Dart 依赖
+      # 3. 安装依赖
       - name: Install Dart Dependencies
         run: |
           flutter pub get
-          # 生成数据库和国际化代码
+          # 运行项目必要的代码生成命令
           flutter pub run build_runner build --delete-conflicting-outputs
           dart run intl_utils:generate
 
-      # 4. 安装 iOS 原生依赖 (CocoaPods)
+      # 4. 安装 iOS 原生依赖
       - name: Install CocoaPods
         run: |
           cd ios
-          # 使用 --repo-update 确保 FFmpeg 等插件能被正确拉取
+          # 确保原生库环境也是最新的
           pod install --repo-update
           cd ..
 
-      # 5. 构建 iOS 工程 (不签名)
+      # 5. 构建 iOS (不签名)
       - name: Build iOS (No Codesign)
         run: |
           flutter build ios --release --no-codesign
 
-      # 6. 封装为 IPA
+      # 6. 打包 IPA
       - name: Create IPA (Payload trick)
         run: |
           mkdir -p Payload
@@ -57,14 +53,14 @@ jobs:
             cp -r build/ios/iphoneos/Runner.app Payload/
             zip -r FluxTube-Unsigned.ipa Payload
           else
-            echo "Error: Runner.app not found."
+            echo "Error: Runner.app not found. Build failed."
             exit 1
           fi
           
-      # 7. 上传产物
+      # 7. 上传
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: FluxTube-iOS-Unsigned
           path: FluxTube-Unsigned.ipa
-          retention-days: 7
+          retention-days: 5

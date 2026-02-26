@@ -1,39 +1,58 @@
 name: Build iOS IPA
 
 on:
-  workflow_dispatch: # 支持手动触发
+  workflow_dispatch:
 
 jobs:
   build:
-    runs-on: macos-latest # 必须在 macOS 环境下构建 iOS
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
 
+      # 1. 设置 Flutter 环境
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.4' # README 中指定的版本
+          flutter-version: '3.24.4'
           channel: 'stable'
+          cache: true # 开启缓存加速后续构建
 
-      - name: Install Dependencies
+      # 2. 获取 Dart 依赖
+      - name: Install Dart Dependencies
         run: |
           flutter pub get
-          # 运行项目 README 要求的生成代码命令
+          # 必须先运行 build_runner 生成必要的代码（如 Isar/Bloc 相关代码）
           flutter pub run build_runner build --delete-conflicting-outputs
           dart run intl_utils:generate
 
+      # 3. 安装 iOS 原生依赖 (这是最关键的修复步骤)
+      - name: Install CocoaPods
+        run: |
+          cd ios
+          # 确保 Podfile 存在且同步
+          pod install --repo-update
+          cd ..
+
+      # 4. 构建 iOS 工程 (不签名)
       - name: Build iOS (No Codesign)
         run: |
-          # 这一步生成 .app 文件，由于没有证书，我们跳过签名
+          # 使用 --release 模式，跳过签名
           flutter build ios --release --no-codesign
 
+      # 5. 封装为 IPA
       - name: Create IPA (Payload trick)
         run: |
-          # 手动将 .app 包装成 .ipa 格式
           mkdir -p Payload
-          mv build/ios/iphoneos/Runner.app Payload/
-          zip -r FluxTube.ipa Payload
+          # 检查文件路径是否存在，增加容错性
+          if [ -d "build/ios/iphoneos/Runner.app" ]; then
+            cp -r build/ios/iphoneos/Runner.app Payload/
+            zip -r FluxTube.ipa Payload
+          else
+            echo "Error: Runner.app not found. Build might have failed."
+            exit 1
+          fi
           
+      # 6. 上传产物
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:

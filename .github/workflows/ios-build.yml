@@ -1,7 +1,7 @@
 name: Build iOS IPA
 
 on:
-  workflow_dispatch: # 支持在 GitHub Actions 页面手动点击运行
+  workflow_dispatch:
 
 jobs:
   build:
@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # 1. 设置 Flutter 环境 (匹配原项目指定的 3.24.4)
+      # 1. 设置 Flutter 环境
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -17,38 +17,39 @@ jobs:
           channel: 'stable'
           cache: true
 
-      # 2. 修复 path 1.9.1 冲突问题
-      # 原理：强制将 pubspec.yaml 中的 path 版本降至 1.9.0 以匹配 Flutter SDK
-      - name: Fix Dependency Conflict
+      # 2. 深度修复依赖冲突 (解决 path 和 flutter_lints 版本过高问题)
+      - name: Force Compatible Dependencies
         run: |
+          # 修复之前遇到的 path 冲突
           sed -i '' 's/path: \^1.9.1/path: 1.9.0/g' pubspec.yaml
-          echo "Dependency version override applied."
+          
+          # 修复这次遇到的 flutter_lints 冲突 (降级到与 Dart 3.5.4 兼容的 4.0.0 版本)
+          sed -i '' 's/flutter_lints: \^6.0.0/flutter_lints: ^4.0.0/g' pubspec.yaml
+          
+          echo "Dependencies downgraded for compatibility with Flutter 3.24.4"
 
-      # 3. 安装 Dart 依赖并生成代码
+      # 3. 安装 Dart 依赖
       - name: Install Dart Dependencies
         run: |
           flutter pub get
-          # 生成 Isar 数据库和 Bloc 相关的必要代码
+          # 生成数据库和国际化代码
           flutter pub run build_runner build --delete-conflicting-outputs
-          # 生成国际化多语言代码
           dart run intl_utils:generate
 
       # 4. 安装 iOS 原生依赖 (CocoaPods)
       - name: Install CocoaPods
         run: |
           cd ios
-          # 更新 repo 以确保能找到最新的 FFmpeg 等插件
+          # 使用 --repo-update 确保 FFmpeg 等插件能被正确拉取
           pod install --repo-update
           cd ..
 
-      # 5. 构建 iOS 工程 (不签名模式)
+      # 5. 构建 iOS 工程 (不签名)
       - name: Build iOS (No Codesign)
         run: |
-          # 仅编译出 Runner.app
           flutter build ios --release --no-codesign
 
-      # 6. 伪装打包成 IPA
-      # 这种方式生成的 IPA 适合通过 Sideloadly, AltStore 或 TrollStore 安装
+      # 6. 封装为 IPA
       - name: Create IPA (Payload trick)
         run: |
           mkdir -p Payload
@@ -56,14 +57,14 @@ jobs:
             cp -r build/ios/iphoneos/Runner.app Payload/
             zip -r FluxTube-Unsigned.ipa Payload
           else
-            echo "Error: Runner.app not found. Build may have failed."
+            echo "Error: Runner.app not found."
             exit 1
           fi
           
-      # 7. 将编译好的 IPA 上传到 GitHub Actions 产物中
+      # 7. 上传产物
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: FluxTube-iOS-IPA
+          name: FluxTube-iOS-Unsigned
           path: FluxTube-Unsigned.ipa
-          retention-days: 7 # 产物保存 7 天
+          retention-days: 7

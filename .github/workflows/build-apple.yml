@@ -1,0 +1,73 @@
+name: Build iOS and macOS
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # 1. 环境准备
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: 'any' 
+          cache: true
+
+      - name: Clean Environment
+        run: |
+          rm -f pubspec.lock
+          flutter clean
+
+      # 2. 安装 Dart 依赖
+      - name: Install Dart Dependencies
+        run: |
+          flutter pub get
+          flutter pub run build_runner build --delete-conflicting-outputs
+          dart run intl_utils:generate
+
+      # --- iOS 构建部分 ---
+      - name: Install iOS Pods
+        run: |
+          cd ios
+          pod install --repo-update
+          cd ..
+
+      - name: Build iOS (No Codesign)
+        run: flutter build ios --release --no-codesign
+
+      - name: Package iOS IPA
+        run: |
+          mkdir -p Payload
+          cp -r build/ios/iphoneos/Runner.app Payload/
+          zip -r FluxTube-iOS-Unsigned.ipa Payload
+
+      # --- macOS 构建部分 ---
+      - name: Build macOS
+        run: |
+          # 开启 macOS 构建支持（有时 Actions 环境默认未开启）
+          flutter config --enable-macos-desktop
+          flutter build macos --release
+
+      - name: Package macOS App
+        run: |
+          # macOS 产物直接压缩 build/macos/Build/Products/Release 下的 .app
+          cd build/macos/Build/Products/Release
+          zip -r ../../../../../FluxTube-macOS.zip FluxTube.app
+          cd ../../../../../
+
+      # --- 产物上传 ---
+      - name: Upload iOS Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: FluxTube-iOS-Unsigned
+          path: FluxTube-iOS-Unsigned.ipa
+
+      - name: Upload macOS Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: FluxTube-macOS-Desktop
+          path: FluxTube-macOS.zip
